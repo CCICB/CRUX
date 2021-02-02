@@ -1,0 +1,41 @@
+Package: shinymaftoolsr
+Title: shinymaftoolsr
+Version: 0.0.0.9000
+Authors@R: person('Sam', 'El-Kamand', email = 'selkamand@ccia.org.au', role = c('cre', 'aut'))
+Description: Shiny app for exploring somatic variation in cancer. Powered by maftools.
+License: MIT + file LICENSE
+biocViews:
+Imports: 
+    config (>= 0.3),
+    golem (>= 0.3.0),
+    shiny (>= 1.5.0),
+    processx (>= 3.4.4),
+    attempt (>= 0.3.1),
+    DT (>= 0.16),
+    glue (>= 1.4.2),
+    htmltools (>= 0.5.0),
+    magrittr (>= 2.0.1),
+    testthat (>= 3.0.0),
+    utilitybelt (>= 0.0.0.9000),
+    purrr (>= 0.3.4),
+    assertthat (>= 0.2.1),
+    maftools (>= 2.6.0),
+    TCGAmutations (>= 0.3.0),
+    rlist (>= 0.4.6.1),
+    shinyFiles (>= 0.9.0),
+    fs (>= 1.5.0),
+    shinyFeedback (>= 0.3.0),
+    rhandsontable (>= 0.3.7),
+    excelR (>= 0.4.0),
+    dplyr (>= 1.0.2),
+    grDevices (>= 4.0.3),
+    bsplus (>= 0.1.2),
+    shinyBS (>= 0.62),
+    shinycssloaders (>= 1.0.0),
+    pryr (>= 0.1.4),
+    utilitybeltshiny (>= 0.0.0.9000)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+URL: https://github.com/selkamand/shinymaftoolsr.git
+BugReports: https://github.com/selkamand/shinymaftoolsr.git/issues
