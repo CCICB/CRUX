@@ -8,7 +8,7 @@ pcawg_load(
   dataset_name,
  
     directory_containing_projectfiles = system.file("extdata/pcawg_no_intergenic_by_project_code_rds",
-    package = "shinymaftoolsr")
+    package = "shinymaftools")
 )
 }
 \arguments{

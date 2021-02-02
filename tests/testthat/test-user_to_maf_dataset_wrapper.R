@@ -1,5 +1,5 @@
 test_that("Creation of maf_dataset_wrapper from tcga dataset is successful", {
-  valid_maf_filepath <- system.file("test_data/tcga_laml.subsampled.maf.gz" ,package="shinymaftoolsr")
+  valid_maf_filepath <- system.file("test_data/tcga_laml.subsampled.maf.gz" ,package="shinymaftools")
   
   
   maf_dataset_wrapper <- user_data_filepath_to_class_maf_dataset_wrapper(filepath = valid_maf_filepath, display_name = "Subsampled TCGA laml", short_name="LAML_Subsampled")
@@ -10,12 +10,12 @@ test_that("Creation of maf_dataset_wrapper from tcga dataset is successful", {
   expect_error(user_data_filepath_to_class_maf_dataset_wrapper(filepath = "Randompath_ASdlkjadlkjaasda", display_name = "Subsampled TCGA laml", short_name="LAML_Subsampled"))
   
   
-  valid_maf_filepath <- system.file("test_data/tcga_laml.subsubsampled.maf.gz" ,package="shinymaftoolsr")
+  valid_maf_filepath <- system.file("test_data/tcga_laml.subsubsampled.maf.gz" ,package="shinymaftools")
   maf_dataset_wrapper <- user_data_filepath_to_class_maf_dataset_wrapper(filepath = valid_maf_filepath, display_name = "Subsampled TCGA laml", short_name="LAML_Subsampled")
 })
 
 test_that("Creation of maf_dataset_wrapper from user-defined dataset AND deposition into the datapool is successful", {
-  valid_maf_filepath <- system.file("test_data/tcga_laml.subsampled.maf.gz" ,package="shinymaftoolsr")
+  valid_maf_filepath <- system.file("test_data/tcga_laml.subsampled.maf.gz" ,package="shinymaftools")
   
   expect_s3_class(
     user_to_dataset_to_data_pool(maf_data_pool = new_maf_data_pool(), filepath = valid_maf_filepath, display_name = "DisplayName", short_name="ShortName", data_source = "Me"), 

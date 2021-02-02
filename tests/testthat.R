@@ -1,4 +1,4 @@
 library(testthat)
-library(shinymaftoolsr)
+library(shinymaftools)
 
-test_check("shinymaftoolsr")
+test_check("shinymaftools")

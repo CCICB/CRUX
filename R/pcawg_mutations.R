@@ -9,7 +9,7 @@
 #'
 #' @examples
 #' pcawg_available()
-pcawg_available <- function(file_listing_projects = system.file("extdata/pcawg_no_intergenic_by_project_code_rds/pcawg_projects.tsv",package="shinymaftoolsr")){
+pcawg_available <- function(file_listing_projects = system.file("extdata/pcawg_no_intergenic_by_project_code_rds/pcawg_projects.tsv",package="shinymaftools")){
   utilitybelt::assert_that(file.exists(file_listing_projects))
   available_datasets_df <- read.csv(file = file_listing_projects, header = TRUE, sep = "\t") 
   return(available_datasets_df)
@@ -27,7 +27,7 @@ pcawg_available <- function(file_listing_projects = system.file("extdata/pcawg_n
 #'
 #' @examples
 #' pcawg_load("Biliary-AdenoCA")
-pcawg_load <- function(dataset_name, directory_containing_projectfiles = system.file("extdata/pcawg_no_intergenic_by_project_code_rds",package="shinymaftoolsr")){
+pcawg_load <- function(dataset_name, directory_containing_projectfiles = system.file("extdata/pcawg_no_intergenic_by_project_code_rds",package="shinymaftools")){
   utilitybelt::assert_non_empty_string(dataset_name)
   utilitybelt::assert_that(file.exists(directory_containing_projectfiles))
   utilitybelt::assert_that(dataset_name %in% pcawg_available()[[1]], msg = utilitybelt::fmterror("pcawg_load: Could not find dataset [", dataset_name, "]. To see available datasets, please run pcawg_available()"))

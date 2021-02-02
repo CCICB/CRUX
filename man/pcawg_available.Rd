@@ -7,7 +7,7 @@
 pcawg_available(
  
     file_listing_projects = system.file("extdata/pcawg_no_intergenic_by_project_code_rds/pcawg_projects.tsv",
-    package = "shinymaftoolsr")
+    package = "shinymaftools")
 )
 }
 \arguments{

@@ -1,5 +1,5 @@
-Package: shinymaftoolsr
-Title: shinymaftoolsr
+Package: shinymaftools
+Title: shinymaftools
 Version: 0.0.0.9000
 Authors@R: person('Sam', 'El-Kamand', email = 'selkamand@ccia.org.au', role = c('cre', 'aut'))
 Description: Shiny app for exploring somatic variation in cancer. Powered by maftools.
@@ -37,5 +37,5 @@ Imports:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
-URL: https://github.com/selkamand/shinymaftoolsr.git
-BugReports: https://github.com/selkamand/shinymaftoolsr.git/issues
+URL: https://github.com/selkamand/shinymaftools.git
+BugReports: https://github.com/selkamand/shinymaftools.git/issues

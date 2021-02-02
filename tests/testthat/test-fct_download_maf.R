@@ -1,5 +1,5 @@
 test_that("download_maf works", {
-  maf.path=system.file("test_data/tcga_laml.subsampled.maf.gz",package = "shinymaftoolsr")
+  maf.path=system.file("test_data/tcga_laml.subsampled.maf.gz",package = "shinymaftools")
   maf.maf = maftools::read.maf(maf = maf.path, verbose = FALSE)
   output.path=tempfile(pattern = "test_download_maf")
   

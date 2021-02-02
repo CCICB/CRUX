@@ -26,7 +26,7 @@ pcawg_dataset_to_maf_dataset_wrapper <- function(pcawg_study_abbreviation){
     data_description = paste0("PCAWG dataset: ", full_study_name), 
     is_dataset_downloadable = FALSE,
     function_to_load_data  = function(filepath) { pcawg_load(pcawg_study_abbreviation) }, 
-    name_of_data_source = "PCAWG", local_path_to_data = system.file("extdata/pcawg_no_intergenic_by_project_code_rds", paste0(pcawg_study_abbreviation, ".RDs"), package = "shinymaftoolsr"), datatype_of_stored_object = ".RDs"
+    name_of_data_source = "PCAWG", local_path_to_data = system.file("extdata/pcawg_no_intergenic_by_project_code_rds", paste0(pcawg_study_abbreviation, ".RDs"), package = "shinymaftools"), datatype_of_stored_object = ".RDs"
   )
 }
 
