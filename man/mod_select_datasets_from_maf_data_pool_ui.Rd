@@ -4,7 +4,11 @@
 \alias{mod_select_datasets_from_maf_data_pool_ui}
 \title{select_dataset_from_maf_data_pool UI Function}
 \usage{
-mod_select_datasets_from_maf_data_pool_ui(id, label = "select")
+mod_select_datasets_from_maf_data_pool_ui(
+  id,
+  label = "select",
+  panel_heading = "Select Dataset"
+)
 }
 \arguments{
 \item{id, input, output, session}{Internal parameters for {shiny}.}
