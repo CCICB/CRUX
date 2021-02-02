@@ -35,7 +35,9 @@ Imports:
     pryr (>= 0.1.4),
     utilitybeltshiny (>= 0.0.0.9000),
     dipsaus (>= 0.1.2),
-    colourpicker (>= 1.1.0)
+    colourpicker (>= 1.1.0),
+    UpSetR (>= 1.4.0),
+    ggVennDiagram (>= 0.3)
 Remotes:
     selkamand/utilitybelt,
     selkamand/utilitybeltshiny,
