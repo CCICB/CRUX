@@ -39,7 +39,8 @@ Imports:
 Remotes:
     selkamand/utilitybelt,
     selkamand/utilitybeltshiny,
-    Thinkr-open/golem
+    Thinkr-open/golem,
+    PoisonAlien/TCGAmutations
 biocViews:
 Encoding: UTF-8
 LazyData: true
