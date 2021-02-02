@@ -19,6 +19,11 @@ app_server <- function( input, output, session ) {
   moduleEnrichmentAnalysisServer(id="mod_enrichment_analyis", maf_data_pool)
   moduleUtilitiesServer(id = "mod_utilities", maf_data_pool)
   
+  
+  #Stop Program when browser is closed
+  session$onSessionEnded(function() {
+    stopApp()
+  })
   #maf = reactive({maftools::read.maf(system.file("test_data/tcga_laml.subsampled.maf.gz", package = "shinymaftools"))})
   #mod_utilities_create_clinical_data_spreadsheet_server(id = "mod_create_clinical_data_spreadsheet", maf = maf)
   
