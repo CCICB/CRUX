@@ -5,7 +5,7 @@ Authors@R: person('Sam', 'El-Kamand', email = 'selkamand@ccia.org.au', role = c(
 Description: Shiny app for exploring somatic variation in cancer. Powered by maftools.
 License: MIT + file LICENSE
 biocViews:
-Imports: 
+Imports:
     config (>= 0.3),
     golem (>= 0.3.0),
     shiny (>= 1.5.0),
@@ -34,6 +34,10 @@ Imports:
     shinycssloaders (>= 1.0.0),
     pryr (>= 0.1.4),
     utilitybeltshiny (>= 0.0.0.9000)
+Remotes:
+    selkamand/utilitybelt
+    selkamand/utilitybeltshiny
+    PoisonAlien/TCGAmutations
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
