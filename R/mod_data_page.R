@@ -15,8 +15,8 @@ mod_data_page_ui <- function(id){
     shinyWidgets::verticalTabsetPanel(menuSide = "left", contentWidth = 11,
       
       shinyWidgets::verticalTabPanel(title = "Datasets", mod_datapool_viewer_ui(id = ns("mod_datapool_viewer"))),
-      shinyWidgets::verticalTabPanel(title = "Import Dataset", mod_data_import_ui(id = ns("mod_data_import"))),
-      shinyWidgets::verticalTabPanel(title = "Edit Dataset", mod_edit_dataset_ui(id = ns("mod_edit_dataset"))) 
+      shinyWidgets::verticalTabPanel(title = "Import Dataset", mod_data_import_ui(id = ns("mod_data_import")))
+      #shinyWidgets::verticalTabPanel(title = "Edit Dataset", mod_edit_dataset_ui(id = ns("mod_edit_dataset"))) 
       ),
     
     )
@@ -32,7 +32,7 @@ mod_data_page_server <- function(id, maf_data_pool){
     ns <- session$ns
     mod_datapool_viewer_server(id = "mod_datapool_viewer", maf_data_pool = maf_data_pool)
     mod_data_import_server(id = "mod_data_import", maf_data_pool = maf_data_pool)
-    mod_edit_dataset_server(id = "mod_edit_dataset", maf_data_pool = maf_data_pool)
+    #mod_edit_dataset_server(id = "mod_edit_dataset", maf_data_pool = maf_data_pool)
   })
 }
     

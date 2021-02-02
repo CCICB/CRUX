@@ -11,37 +11,36 @@ mod_compare_cohorts2_ui <- function(id){
   ns <- NS(id)
   tagList(
     shinyWidgets::panel(heading = "Select Data",
-      shinyWidgets::radioGroupButtons(
-        inputId = ns("in_radiogroup_select_type_of_data_import"),
-        #choices = c("Two Distinct Datasets", "Subsets of a Single Dataset"), 
-        choiceNames = c("Two Distinct Datasets", "Subsets of a Single Dataset"),
-        choiceValues = c("two_datasets", "two_subsets"),
-        label = "What Do You Want To Compare?", 
-        status="info",
-        justified = FALSE, 
-        individual = TRUE
-        ),
+      # shinyWidgets::radioGroupButtons(
+      #   inputId = ns("in_radiogroup_select_type_of_data_import"),
+      #   #choices = c("Two Distinct Datasets", "Subsets of a Single Dataset"), 
+      #   choiceNames = c("Two Distinct Datasets", "Subsets of a Single Dataset"),
+      #   choiceValues = c("two_datasets", "two_subsets"),
+      #   label = "What Do You Want To Compare?", 
+      #   status="info",
+      #   justified = FALSE, 
+      #   individual = TRUE
+      #   ),
       
       #Select Two Distinct Datasets
       shinyWidgets::panel(heading = "Step 1: Select Data",
-        conditionalPanel(
-          condition = "input.in_radiogroup_select_type_of_data_import == 'two_datasets'", 
-          ns = ns,
+        # conditionalPanel(
+        #   condition = "input.in_radiogroup_select_type_of_data_import == 'two_datasets'", 
+        #   ns = ns,
           #mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_ui(ns("select_dataset1"), panel = FALSE),
           #mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_ui(ns("select_dataset2"), panel = FALSE),
           fluidRow(
           col_6(mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_ui(ns("select_dataset1"), panel = FALSE)),
           col_6(mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_ui(ns("select_dataset2"), panel = FALSE))
-          )
-          #mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_and_metadata
           ),
+          # ),
         
         #Select A subset of 1 dataet
-        conditionalPanel(
-          condition = "input.in_radiogroup_select_type_of_data_import == 'two_subsets'", 
-          ns = ns,
-          p("Selecting Two Subsets")
-        ),
+        # conditionalPanel(
+        #   condition = "input.in_radiogroup_select_type_of_data_import == 'two_subsets'", 
+        #   ns = ns,
+        #   p("Selecting Two Subsets")
+        # ),
       ),
       
       icon_down_arrow(fontsize = "40px",alignment = "center"),br(),
