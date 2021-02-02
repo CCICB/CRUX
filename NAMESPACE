@@ -2,6 +2,8 @@
 
 export("%>%")
 export(TCGAmutations_load_with_typed_metadata)
+export(app_server)
+export(app_ui)
 export(assert_that_class_is_maf_data_pool)
 export(assert_that_class_is_maf_dataset_wrapper)
 export(bool_to_colour)
