@@ -34,7 +34,8 @@ Imports:
     shinycssloaders (>= 1.0.0),
     pryr (>= 0.1.4),
     utilitybeltshiny (>= 0.0.0.9000),
-    dipsaus (>= 0.1.2)
+    dipsaus (>= 0.1.2),
+    colourpicker (>= 1.1.0)
 Remotes:
     selkamand/utilitybelt,
     selkamand/utilitybeltshiny,
