@@ -67,11 +67,5 @@ filename_remove_extension_maf <- function(filename){
   filename %>% sub(pattern = "\\.gz$", replacement = "", x = .) %>% sub(pattern = "\\.maf$", replacement = "", x = .) %>% return()
 }
 
-#Input a maf object. Returns table containing ALL MAF data. Nonsynonymous AND synonymous
-maf_get_all_data <- function(maf, include_silent_mutations=T) {
-  if(include_silent_mutations)
-    data.table::rbindlist(list(maf@data, maf@maf.silent), use.names = TRUE, fill = TRUE) %>% return()
-  else
-    return(maf@data)
-}
+
 

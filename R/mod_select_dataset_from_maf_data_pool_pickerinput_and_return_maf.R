@@ -16,7 +16,6 @@ mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_ui <- function(
 }
     
 #' smod_select_dataset_from_data_pool_dropdown_and_return_maf_ Server Functions
-#' @inheritParams mod_select_dataset_from_dropdown_ui
 #' @param maf_data_pool the maf_data_pool (maf_data_pool; reactiveVal)
 #'
 #' @description wraps mod_select_dataset_from_maf_data_pool_pickerinput_server.

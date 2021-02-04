@@ -1,4 +1,4 @@
-#' mod_compare_cohorts2 UI Function
+#' mod_compare_cohorts UI Function
 #'
 #' @description A shiny Module.
 #'
@@ -7,10 +7,9 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
-mod_compare_cohorts2_ui <- function(id){
+mod_compare_cohorts_ui <- function(id){
   ns <- NS(id)
   tagList(
-    shinyWidgets::panel(heading = "Select Data",
       # shinyWidgets::radioGroupButtons(
       #   inputId = ns("in_radiogroup_select_type_of_data_import"),
       #   #choices = c("Two Distinct Datasets", "Subsets of a Single Dataset"), 
@@ -62,14 +61,13 @@ mod_compare_cohorts2_ui <- function(id){
         ),
         br()
       )
-    )
   )
 }
     
-#' mod_compare_cohorts2 Server Functions
+#' mod_compare_cohorts Server Functions
 #'
 #' @noRd 
-mod_compare_cohorts2_server <- function(id, maf_data_pool){
+mod_compare_cohorts_server <- function(id, maf_data_pool){
   utilitybeltshiny::assert_reactive(object = maf_data_pool)
   moduleServer( id, function(input, output, session){
     ns <- session$ns
@@ -105,7 +103,7 @@ mod_compare_cohorts2_server <- function(id, maf_data_pool){
 }
     
 ## To be copied in the UI
-# mod_mod_compare_cohorts2_ui("mod_compare_cohorts2_ui_1")
+# mod_mod_compare_cohorts_ui("mod_compare_cohorts_ui_1")
     
 ## To be copied in the server
-# mod_mod_compare_cohorts2_server("mod_compare_cohorts2_ui_1")
+# mod_mod_compare_cohorts_server("mod_compare_cohorts_ui_1")

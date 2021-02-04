@@ -20,7 +20,7 @@ mod_tabulate_maf_server <- function(id, maf){
     function(input, output, session){
       
       
-      maf_datatable <- reactive({ validate(need(!is.null(maf()),message = "Please import a valid MAF")); maf_get_all_data(maf = maf(), include_silent_mutations = input$in_check_toggle_synonymous) })
+      maf_datatable <- reactive({ validate(need(!is.null(maf()),message = "Please import a valid MAF")); maftools_get_all_data(maf = maf(), include_silent_mutations = input$in_check_toggle_synonymous) })
       
       output$cond <- reactive({
         !is.null(maf_datatable()) %>% return()

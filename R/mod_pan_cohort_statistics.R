@@ -10,7 +10,10 @@
 mod_pan_cohort_statistics_ui <- function(id){
   ns <- shiny::NS(id)
   tagList(
-    mod_select_dataset_from_maf_data_pool_pickerinput_ui(ns("in_picker_dataset")),
+    shinyWidgets::panel(
+      heading="Step 1: Select Dataset",
+      mod_select_dataset_from_maf_data_pool_pickerinput_ui(ns("in_picker_dataset"), panel = FALSE)
+    ),
     mod_single_cohort_summary_tables_and_plots_ui(id = ns("tables_and_plots"))
   )
 }
