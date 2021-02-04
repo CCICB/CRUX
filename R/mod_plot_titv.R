@@ -4,7 +4,8 @@
 mod_plot_titv_graphs_ui <- function(id){
   ns <- NS(id)
   tagList(
-    plotOutput(outputId=ns("out_plot_titv")) %>% shinycssloaders::withSpinner(),
+    plotOutput(outputId=ns("out_plot_titv"), height = "500px") %>% shinycssloaders::withSpinner(),
+    br(),
     shinyWidgets::panel(heading = "Options",
           shiny::selectInput(inputId = ns("in_select_plot_type"), label = "Plot type", choices = c("both", "bar", "box"), selected = "both", multiple = F),
           checkboxInput(inputId = ns("in_check_show_barcodes"), label = "Show barcodes", value = TRUE),

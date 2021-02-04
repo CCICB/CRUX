@@ -93,7 +93,7 @@ moduleDownloadPlotServer <- function(id, session_parent, plotOutputId, plotting_
       })
       
       fileName <- reactive({
-        paste0(input$sin_text_file_prefix, ".",input$in_pick_download_format)
+        paste0(input$in_text_file_prefix, ".",input$in_pick_download_format)
         })
       
       
