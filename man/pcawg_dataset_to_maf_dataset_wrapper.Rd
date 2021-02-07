@@ -4,7 +4,7 @@
 \alias{pcawg_dataset_to_maf_dataset_wrapper}
 \title{Create dataset wrapper from pcawg dataset}
 \usage{
-pcawg_dataset_to_maf_dataset_wrapper(pcawg_study_abbreviation)
+pcawg_dataset_to_maf_dataset_wrapper(maf_data_pool, pcawg_study_abbreviation)
 }
 \arguments{
 \item{pcawg_study_abbreviation}{Name of PCAWG study. Use pcawg_available to see options (string)}

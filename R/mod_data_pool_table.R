@@ -35,7 +35,7 @@ mod_datapool_viewer_server <- function(id, maf_data_pool){
       DT::datatable(data = maf_data_pool_df(), options = list(scrollX = TRUE), class = "display nowrap")
       })
     
-    output$out_dt_data_pool <- DT::renderDataTable({maf_data_pool_datatable()}, options = list(scrollX = TRUE), class = "display nowrap")
+    output$out_dt_data_pool <- DT::renderDataTable({maf_data_pool_datatable()})
     
     # output$out_dt_data_pool_network <- sigmajs::renderSigmajs({ maf_data_pool_network() })
   })

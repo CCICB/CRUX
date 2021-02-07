@@ -1,6 +1,6 @@
 test_that("Does loading/unloading functionality work", {
   #Generate wrapper
-  my_data <- tcga_dataset_to_maf_dataset_wrapper(tcga_study_abbreviation = "ACC")
+  my_data <- tcga_dataset_to_maf_dataset_wrapper(maf_data_pool = new_maf_data_pool(), tcga_study_abbreviation = "ACC")
 
   #Load data
   my_data_loaded <- maf_data_set_wrapper_load_data(my_data)

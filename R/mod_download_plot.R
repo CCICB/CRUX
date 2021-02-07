@@ -3,19 +3,17 @@
 #' Creates a shinyWidgets::downloadbttn
 #'
 #' @param id Module ID
-#' @param label "The label that should appear on the button."
-#' @param style "Style of the button, to choose between simple, bordered, minimal, stretch, jelly, gradient, fill, material-circle, material-flat, pill, float, unite."
-#' @param color "Color of the button : default, primary, warning, danger, success, royal."
-#' @param size "Size of the button : xs,sm, md, lg."
-#' @param tooltip_placement
-#' @param tooltip_text
-#' @inheritParams shinyWidgets::tooltipOptions
+#' @param label The label that should appear on the button.
+#' @param style Style of the button, to choose between simple, bordered, minimal, stretch, jelly, gradient, fill, material-circle, material-flat, pill, float, unite.
+#' @param color Color of the button : default, primary, warning, danger, success, royal.
+#' @param size Size of the button : xs,sm, md, lg.
+#' @param tooltip_placement Where the tooltip should appear relative to its target (top, bottom, left, or right). Defaults to "right" (string)
+#' @param tooltip_text Tooltip text (string)
+#' @inheritParams shinyWidgets::tooltipOptions 
 #' @inheritParams shinyWidgets::dropdownButton
-#' @return 
+#' @return Nothing. Function run for its side effects
 #' @export
-#'
-#' @examples
-moduleDownloadPlotUI <- function(id, circle = FALSE, label = "Download", style = "unite", color = "default", size="sm", status = "default", icon = NULL, tooltip_placement = "right", tooltip_text = "", right = FALSE, up=FALSE, width="200px", margin="10px", inline = FALSE){
+moduleDownloadPlotUI <- function(id, circle = FALSE, label = "Download", style = "unite", color = "default", size="default", status = "default", icon = NULL, tooltip_placement = "right", tooltip_text = "", right = FALSE, up=FALSE, width="200px", margin="10px", inline = FALSE, ...){
   ns <- NS(id)
   tagList(
     #shinyWidgets::downloadBttn(outputId = ns("out_download_bttn"), label = label, style = style, color = color, size = size),
@@ -32,6 +30,7 @@ moduleDownloadPlotUI <- function(id, circle = FALSE, label = "Download", style =
       width = width, 
       margin = margin, 
       inline = inline, 
+      ...,
       
       shiny::selectizeInput(
         inputId = ns("in_pick_download_format"), 
@@ -72,7 +71,7 @@ moduleDownloadPlotUI <- function(id, circle = FALSE, label = "Download", style =
 #' @param parent Session object of the calling module (used to extract plot details)
 #' @param plotOutputId "ID of the rendered plot"
 #' @param plotting_function "function that when run with no arguments will create the plot. Can make by wrapping the plot call in its own function. e.g. for plot(mtcars) you could do:  plotting_function <- reactive ({ function() {plot(mtcars)} }) then pass 'plotting_function()'"
-#' @param default_filename defualt basename of downloaded file
+#' @param default_filename defualt basename of downloaded file (string; non-reactive)
 #'
 #' @return
 #' @export

@@ -5,6 +5,7 @@
 \title{Constructor Objects of Class: \strong{maf_dataset_wrapper}}
 \usage{
 new_maf_dataset_wrapper(
+  maf_data_pool,
   display_name,
   short_name,
   unique_name,
@@ -23,6 +24,8 @@ new_maf_dataset_wrapper(
 )
 }
 \arguments{
+\item{maf_data_pool}{A maf_data_pool object. Used to check supplied 'unique_name' is actually going to be unique. If not, characaters are appended to make it truly unique in the context of the supplied dataframe.  (maf_data_pool)}
+
 \item{display_name}{Name that the end-user will see (string)}
 
 \item{short_name}{Abbreviated dataset name (string)}

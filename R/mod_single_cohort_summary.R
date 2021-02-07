@@ -37,7 +37,7 @@ mod_single_cohort_summary_tables_server <- function(id, maf, cohortName){
       
       active_summary_table <- reactive({ message(input$tabset_active_panel); input$tabset_active_panel })
       
-      observe({message("active_summary_table: ", active_summary_table())})
+      #observe({message("active_summary_table: ", active_summary_table())})
     }
   )
 }
@@ -56,7 +56,8 @@ mod_single_cohort_summary_plots_ui <- function(id){
                   tabPanel(title = "Mutated Pathways", mod_plot_oncogenic_pathways_ui(id = ns("mod_oncopathways"))),
                   tabPanel(title = "Pathway Specific Plots", mod_plot_oncogenic_pathways_focused_ui(id = ns("mod_oncopathways_specific"))),
                   tabPanel(title = "Lollipop", mod_plot_lollipop_ui(id = ns("mod_plot_lollipop"))),
-                  tabPanel(title = "Somatic Interactions", mod_somatic_interactions_ui(id = ns("mod_somatic_interactions")))
+                  tabPanel(title = "Somatic Interactions", mod_plot_somatic_interactions_ui(id = ns("mod_somatic_interactions"))),
+                  tabPanel(title = "Pfam Domains", mod_plot_pfam_domains_ui(id = ns("mod_pfam_domains")))
                   ), 
       br()
     )
@@ -73,7 +74,8 @@ mod_single_cohort_summary_plots_server <- function(id, maf, cohortName) {
       mod_plot_oncogenic_pathways_server(id ="mod_oncopathways", maf = maf)
       mod_plot_oncogenic_pathways_focused_server(id = "mod_oncopathways_specific", maf = maf)
       mod_plot_lollipop_server(id = "mod_plot_lollipop", maf = maf, name_cohort = cohortName)
-      mod_somatic_interactions_server(id = "mod_somatic_interactions", maf = maf)
+      mod_plot_somatic_interactions_server(id = "mod_somatic_interactions", maf = maf)
+      mod_plot_pfam_domains_server(id = "mod_pfam_domains", maf=maf)
   }
   )
 }
@@ -103,10 +105,9 @@ mod_single_cohort_summary_tables_and_plots_ui <- function(id, print_instructions
   tagList(
     uielement,
     mod_single_cohort_summary_tables_ui(id = ns("maf1")),
-    br(), br(),
+    br(),
     
-    mod_single_cohort_summary_plots_ui(id=ns("maf1_plots")),
-    br(), br()
+    mod_single_cohort_summary_plots_ui(id=ns("maf1_plots"))
     )
   }
 
@@ -127,8 +128,6 @@ mod_single_cohort_summary_tables_and_plots_server <- function(id, maf, cohortNam
     function(input, output, session){
       mod_single_cohort_summary_tables_server(id = "maf1", maf = maf, cohortName = cohortName)
       mod_single_cohort_summary_plots_server(id = "maf1_plots",  maf = maf, cohortName = cohortName)
-      #mod_single_cohort_summary_tables_server(id = "maf2",= list_maf2)
-      #mod_single_cohort_summary_plots_server(id = "maf2_plots",= list_maf2)
   }
   )
 }

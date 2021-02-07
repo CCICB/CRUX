@@ -7,6 +7,7 @@
 user_data_filepath_to_class_maf_dataset_wrapper(
   filepath,
   clinicalData = NA,
+  maf_data_pool,
   display_name,
   short_name,
   description = "User specified file",
@@ -18,6 +19,8 @@ user_data_filepath_to_class_maf_dataset_wrapper(
 \item{filepath}{tab delimited MAF file. File can also be gz compressed. Required. Alternatively, you can also provide already read MAF file as a dataframe.}
 
 \item{clinicalData}{Clinical data associated with each sample/Tumor_Sample_Barcode in MAF. Could be a text file or a data.frame. Default NULL.}
+
+\item{maf_data_pool}{A maf_data_pool object. Used to check supplied 'unique_name' is actually going to be unique. If not, characaters are appended to make it truly unique in the context of the supplied dataframe.  (maf_data_pool)}
 
 \item{display_name}{Name that the end-user will see (string)}
 

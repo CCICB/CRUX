@@ -4,19 +4,6 @@ moduleEnrichmentAnalysisUI <- function(id){
     tabsetPanel(
       tabPanel(title = "Clinical Enrichment", 
                
-               shinyWidgets::panel(heading = "Instructions",
-                     tags$ol(
-                       tags$li("Import a dataset using the", tags$b( "Import MAF " ), "sidebar panel"),
-                       tags$li("Import a clinical feature file using the ", tags$b(" Import clinical feature file "), "sidebar panel"),
-                       tags$li("Use the ", tags$b(" Configure Analysis "), "to select your clinical feature of interest (must have at least two levels)")
-                     ),
-                     p(
-                       "If your data is split over several MAFs, see", tags$b(" Utilites => Merge Mafs"),".", 
-                       "If you don't have a clinical feature file, see", tags$b(" Utilities => Add Clinical Data"),".",
-                       "For other queries, see", tags$b(" Help ")
-                     )
-               ),
-               
                shinyWidgets::panel(heading = "Configure Analysis",
                  mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_ui(id = ns("mod_select_dataset_from_maf_data_pool")),
                  uiOutput(outputId = ns("out_pick_clinical_feature")),
@@ -50,13 +37,18 @@ moduleEnrichmentAnalysisServer <- function(id, maf_data_pool){
   moduleServer(id,
     function(input, output, session){
 
-      maf = mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_server(id = "mod_select_dataset_from_maf_data_pool", maf_data_pool)
+
+      # Select Data -------------------------------------------------------------
+      maf_unvalidated = mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_server(id = "mod_select_dataset_from_maf_data_pool", maf_data_pool)
+      maf <- reactive({ validate(need(!is.null(maf_unvalidated()),message = "Loading ..." )); return(maf_unvalidated()) })
+      
       
       has_clinical_data <- reactive({ return(ncol(maf()@clinical.data) > 1) })
       
       clinical_features <- reactive({ 
         validate(need(has_clinical_data(), message = "Please upload clinical feature file"))
-        maftools::getClinicalData(maf()) %>% colnames %>% tail(-1)
+        maf() %>% maftools::getClinicalData() %>% dplyr::summarise(dplyr::across(.fns = function(x) length(unique(x)))) %>% tidyr::pivot_longer(cols = everything()) %>% dplyr::filter(value > 1) %>% dplyr::pull(name) %>% purrr::keep(.!="Tumor_Sample_Barcode") %>% return() 
+        
         })
       minmut <- reactive({
         sample_number <-maf()@summary %>% dplyr::filter(ID=="Samples") %>% dplyr::pull(2) %>% as.numeric()

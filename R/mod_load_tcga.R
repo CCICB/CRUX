@@ -62,7 +62,7 @@ moduleLoadTCGAServer <- function(id, optional_argument){
 #' @export
 #'
 get_tcga_mafs <- function(study_name){
-  tcga_maf <- TCGAmutations::tcga_load(input$in_multi_tcga, source = "MC3") #Could add option to swti
+  tcga_maf <- TCGAmutations::tcga_load(input$in_multi_tcga, source = "Firehose") #Could add option to swti
   
   if (is.list(tcga_maf))
     tcga_maf <- maftools::merge_mafs(tcga_maf)

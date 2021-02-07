@@ -7,12 +7,12 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
-mod_somatic_interactions_ui <- function(id){
+mod_plot_somatic_interactions_ui <- function(id){
   ns <- NS(id)
   tagList(
     div(
       br(),
-      plotOutput(outputId = ns("out_plot_somatic_interactions"), height = "600px"),
+      plotOutput(outputId = ns("out_plot_somatic_interactions"), height = "600px") %>% shinycssloaders::withSpinner(),
       br()
     ) %>% shinycssloaders::withSpinner(),
     
@@ -49,7 +49,7 @@ mod_somatic_interactions_ui <- function(id){
 #'
 #' @param maf a maf object (maf)
 #'
-mod_somatic_interactions_server <- function(id, maf){
+mod_plot_somatic_interactions_server <- function(id, maf){
   utilitybeltshiny::assert_reactive(maf)
   
   moduleServer( id, function(input, output, session){
@@ -98,7 +98,7 @@ mod_somatic_interactions_server <- function(id, maf){
 }
 
 ## To be copied in the UI
-# mod_somatic_interactions_ui("somatic_interactions_ui_1")
+# mod_plot_somatic_interactions_ui("somatic_interactions_ui_1")
 
 ## To be copied in the server
-# mod_somatic_interactions_server("somatic_interactions_ui_1")
+# mod_plot_somatic_interactions_server("somatic_interactions_ui_1")

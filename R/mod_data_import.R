@@ -167,7 +167,7 @@ mod_data_import_server <- function(id, maf_data_pool){
     
     any_back_button_clicked <- reactive({ (input$in_bttn_restart1 + input$in_bttn_restart2 + input$in_bttn_restart3) > 0 })
     observeEvent( any_back_button_clicked() , {
-      message("Resetting")
+      #message("Resetting")
       reset_data_import_wizard()
     })
     

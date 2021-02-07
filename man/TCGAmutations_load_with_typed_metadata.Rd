@@ -4,7 +4,7 @@
 \alias{TCGAmutations_load_with_typed_metadata}
 \title{Load TCGA data}
 \usage{
-TCGAmutations_load_with_typed_metadata(study, source = "MC3")
+TCGAmutations_load_with_typed_metadata(study, source = "Firehose")
 }
 \arguments{
 \item{study}{Study names to load. Use  \code{\link[TCGAmutations]{tcga_available}} to see available options.}
@@ -17,7 +17,7 @@ MAF object with correctly typed clinical.data dataframe (MAF)
 }
 \description{
 Load TCGA data with correctly typed clinical data. 
-By default, TCGAmutations::tcga_load makes all MC3 dataset clinical features character vectors
+By default, TCGAmutations::tcga_load makes all Firehose dataset clinical features character vectors
 }
 \examples{
 TCGAmutations_load_with_typed_metadata(study = "GBM")

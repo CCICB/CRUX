@@ -45,6 +45,7 @@ mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper
 #' 
 #' @return maf_dataset_wrapper.
 mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_server <- function(id, maf_data_pool, label = "Dataset"){
+  #browser()
   utilitybeltshiny::assert_reactive(maf_data_pool)
   
   moduleServer( id, function(input, output, session){

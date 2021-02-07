@@ -164,6 +164,7 @@ mod_merge_server <- function(id, maf_data_pool){
       isolate({
         validate(need(metadata()$all_valid == TRUE, message = "Please import valid metadata"))
         new_maf_dataset_wrapper = new_maf_dataset_wrapper(
+          maf_data_pool = maf_data_pool(),
           display_name = metadata()$display_name,
           short_name = metadata()$short_name,
           clinical_data = maftools::getClinicalData(merged_maf()),

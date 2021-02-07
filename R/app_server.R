@@ -7,7 +7,8 @@
 #' @export
 app_server <- function( input, output, session ) {
   starting_maf_data_pool <- new_maf_data_pool()
-  starting_maf_data_pool <- tcga_datasets_to_data_pool(starting_maf_data_pool)
+  starting_maf_data_pool <- tcga_datasets_to_data_pool(starting_maf_data_pool, source = "Firehose")
+  #starting_maf_data_pool <- tcga_datasets_to_data_pool(starting_maf_data_pool, source = "MC3")
   
   
   #starting_maf_data_pool <- pcawg_datasets_to_data_pool(starting_maf_data_pool)
@@ -21,7 +22,8 @@ app_server <- function( input, output, session ) {
   moduleEnrichmentAnalysisServer(id="mod_enrichment_analyis", maf_data_pool)
   moduleUtilitiesServer(id = "mod_utilities", maf_data_pool)
   mod_external_tools_server(id= "mod_external_tools", maf_data_pool)
-  
+  mod_sample_level_analysis_server(id = "mod_sample_level_analysis", maf_data_pool)
+  mod_cnv_server(id = "mod_cnv_level_analysis", maf_data_pool)
   #Stop Program when browser is closed
   session$onSessionEnded(function() {
     stopApp()

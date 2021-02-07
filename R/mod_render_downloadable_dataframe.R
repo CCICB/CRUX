@@ -1,36 +1,78 @@
 #Returns a taglist contianing a rendered datatable with a download button that appears only when data is loaded
-mod_render_downloadabledataframe_ui <- function(id, downloadbttn_label="Download", tooltip_text = "", tooltip_pos = "right"){
+mod_render_downloadabledataframe_ui <- function(id, downloadbttn_label="", class="btn-default", tooltip_text = "", tooltip_pos = "right", shinycssloader=TRUE){
   ns <- NS(id)
   tagList(
     br(),
-    DT::dataTableOutput(outputId = ns("out_dt_maf")) %>% shinycssloaders::withSpinner(),
     
-    conditionalPanel(condition = "output.cond", ns=ns,
-        br(),
-        #moduleDownloadDatatableUI(ns("mod_download_table"), downloadbttn_label, tooltip_text = tooltip_text, tooltip_pos=tooltip_pos)
+    #fluidRow(
+    div(
+      id = "Big Container", style = "display: flex; height: auto; align-items: center",
+      div(
+        style = 'width: 97%; display: inline-block',
+        utilitybeltshiny::conditionalUI(shinycssloader, tagList(
+          DT::dataTableOutput(outputId = ns("out_dt_maf"), width = "inherit", height = "auto") %>% shinycssloaders::withSpinner()
+        )),
+        utilitybeltshiny::conditionalUI(shinycssloader==FALSE, tagList(
+          DT::dataTableOutput(outputId = ns("out_dt_maf"), width = "inherit", height = "auto")
+        ))
+        
+      ),
+      div(
+        style = 'width: 2%; height: 80%; display: inline-block; margin-left: 15px;',
+        id="toolbar",
+        conditionalPanel(
+          condition = "output.cond", ns=ns, style = "height: 100%; width: 100%",
+          #br(),
+          downloadButton(outputId = ns("out_bttn_download_dataframe"), icon = NULL, label = downloadbttn_label, class=class, style = "width: 100%; padding: 0; height: 30px;display: grid; align-content: space-evenly;"),
+          shinyBS::bsTooltip(id = ns("out_bttn_download_dataframe"), title = tooltip_text, placement = tooltip_pos),
+          #shinyWidgets::awesomeCheckbox(inputId = ns("in_check_column_filter"), value = TRUE, label = "")
+          #moduleDownloadDatatableUI(ns("mod_download_table"), downloadbttn_label, tooltip_text = tooltip_text, tooltip_pos=tooltip_pos)
+        ),
       )
+    )
+    #)
   )
 }
 
-mod_render_downloadabledataframe_server <- function(id, tabular_data_object, basename, rownames=F, colnames=T){
+
+mod_render_downloadabledataframe_server <- function(id, tabular_data_object, basename, rownames=FALSE, colnames=TRUE){
+  utilitybeltshiny::assert_reactive(tabular_data_object)
   moduleServer(id,
-    function(input, output, session){
-      
-      datatable_object <- reactive({ 
-        validate(need(!is.null(tabular_data_object()), "Please upload your data")) 
-        tabular_data_object()})
-      
-      output$cond <- reactive({
-        !is.null(datatable_object()) %>% return()
-      })
-      outputOptions(output, "cond", suspendWhenHidden = FALSE)
-      
-      output$out_dt_maf <- DT::renderDataTable({ datatable_object() }, options = list(scrollX = TRUE), class = "display nowrap")
-      
-      filename <- reactive({paste0(basename, ".tsv")})
-      
-      #moduleDownloadDatatableServer(id = "mod_download_table", data_to_write = datatable_object(), filename_full = filename, rownames = rownames, colnames = colnames)
-  }
+               function(input, output, session){
+                 
+                 datatable_object <- reactive({ 
+                   validate(need(!is.null(tabular_data_object()), "Loading ... ")) 
+                   tabular_data_object()})
+                 
+                 output$cond <- reactive({
+                   !is.null(datatable_object()) %>% return()
+                 })
+                 outputOptions(output, "cond", suspendWhenHidden = FALSE)
+                 
+                 toggle_column_filter <- reactive({
+                   if(is.null(input$in_check_column_filter))
+                     return('none')
+                   else if(input$in_check_column_filter)
+                     return('top')
+                   else
+                     return('none')
+                 }) 
+                 
+                 output$out_dt_maf <- DT::renderDataTable({ 
+                   DT::datatable(datatable_object(), options = list(scrollX = TRUE), class = "display nowrap", filter = "top")
+                 })
+                 
+                 filename <- reactive({
+                   prefix=ifelse(is.reactive(basename), yes=basename(), no = basename)
+                   paste0(prefix, ".tsv")
+                 })
+                 
+                 output$out_bttn_download_dataframe <- downloadHandler(filename = filename, function(file){
+                   data.table::fwrite(datatable_object(), file = file, sep = "\t", col.names = colnames, row.names = rownames)
+                 })
+                 
+                 #moduleDownloadDatatableServer(id = "mod_download_table", data_to_write = datatable_object(), filename_full = filename, rownames = rownames, colnames = colnames)
+               }
   )
 }
 

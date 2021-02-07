@@ -32,7 +32,7 @@ mod_shinyfile_import_server <- function(id){
   moduleServer(id, function(input, output, session){
     ns <- session$ns
     #browser()
-    volumes <- c(Home = fs::path_home(), wd = ".", shinyFiles::getVolumes()())
+    volumes <- c(Home = fs::path_home(), wd = ".", shinyFiles::getVolumes()(), example_data = system.file(package="shinymaftools", "example_data"))
     shinyFiles::shinyFileChoose(input, id = "id_shinyfiles_button", roots = volumes, session = session)
     
     chosenfilepath <- reactive({

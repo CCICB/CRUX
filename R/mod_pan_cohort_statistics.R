@@ -11,8 +11,10 @@ mod_pan_cohort_statistics_ui <- function(id){
   ns <- shiny::NS(id)
   tagList(
     shinyWidgets::panel(
-      heading="Step 1: Select Dataset",
-      mod_select_dataset_from_maf_data_pool_pickerinput_ui(ns("in_picker_dataset"), panel = FALSE)
+      #heading="Step 1: Select Dataset",
+      heading="Select Dataset",
+      mod_select_dataset_from_maf_data_pool_pickerinput_ui(ns("in_picker_dataset"), panel = FALSE),
+      # mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_server(ns("mod_select_dataset"))
     ),
     mod_single_cohort_summary_tables_and_plots_ui(id = ns("tables_and_plots"))
   )
@@ -26,9 +28,17 @@ mod_pan_cohort_statistics_server <- function(id, maf_data_pool){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    observeEvent(maf_data_pool(), message("MAF_DATAPOOL_JUST_CHANGED"))
+    #observeEvent(maf_data_pool(), message("MAF_DATAPOOL_JUST_CHANGED"))
+
+    # Select Datasets ---------------------------------------------------------
+    # maf_dataset_wrapper <- mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_server(id = "mod_select_dataset", maf_data_pool = maf_data_pool)
+    # maf <- reactive({ browser(); maf_dataset_wrapper()$loaded_data })
+    # cohort_name <- reactive({ maf_dataset_wrapper()$display_name })
     
     
+    # Observe So Its Always seen
+    # observe({maf_dataset_wrapper()})
+
     selected_dataset_unique_name <- reactive({
       mod_select_dataset_from_maf_data_pool_pickerinput_server(id = "in_picker_dataset", maf_data_pool = isolate(maf_data_pool))()
       })
@@ -47,10 +57,9 @@ mod_pan_cohort_statistics_server <- function(id, maf_data_pool){
       return(maf_data_wrapper[["display_name"]])
 
     })
-    
+    # 
     
     mod_single_cohort_summary_tables_and_plots_server(id = "tables_and_plots", maf = single_cohort_maf, cohortName = cohort_name)
-    #unique_name to maf object ()
   })
 }
     

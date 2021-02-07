@@ -4,10 +4,12 @@
 \alias{tcga_datasets_to_data_pool}
 \title{Adds all TCGA cohort to data pool}
 \usage{
-tcga_datasets_to_data_pool(maf_data_pool)
+tcga_datasets_to_data_pool(maf_data_pool, source = "Firehose")
 }
 \arguments{
 \item{maf_data_pool}{the data pool to add the dataset wrapper to (maf_data_pool)}
+
+\item{source}{'MC3' or 'Firehose'. Source of TCGA data to use. See ?TCGAmutations::tcga_load for details (string)}
 }
 \value{
 returns a data pool object with extra dataset added (maf_data_pool)
@@ -15,11 +17,8 @@ returns a data pool object with extra dataset added (maf_data_pool)
 \description{
 Takes a maf_data_poolobject and adds maf_dataset_wrappers for all tcga datasets available
 }
-\details{
-(UNTESTED)
-}
 \examples{
-tcga_dataset_to_data_pool("ACC", new_maf_data_pool())
+tcga_datasets_to_data_pool(new_maf_data_pool())
 }
 \seealso{
 Other DataToWrapper: 

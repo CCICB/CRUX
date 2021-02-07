@@ -29,33 +29,33 @@ mod_select_dataset_from_maf_data_pool_pickerinput_ui <- function(id, panel=TRUE)
 #' @inheritParams shinyWidgets::pickerOptions
 #' @returns a character vector of unique_names or NULL if none are selected
 mod_select_dataset_from_maf_data_pool_pickerinput_server <- function(id, maf_data_pool, label = "Dataset", style = "btn-outline-primary" ,multiple=FALSE, max_selected_datasets = 40){
-  
   utilitybeltshiny::assert_reactive(maf_data_pool)
-  #if(!is.null(max_selected_datasets)) utilitybelt::assert_is_whole_number(max_selected_datasets)
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
+
+    # Choices Vector -----------------------------------------------------------------
     choiceValues <- reactive({
+      #browser()
       possible_data = maf_data_pool_to_dataframe(maf_data_pool = maf_data_pool())
       choice_values <- possible_data[["unique_name"]]
       names(choice_values) <- paste0(possible_data[["display_name"]] %>% gsub(pattern = "_", replacement = " ", x = .), "   |",possible_data[["short_name"]], "|  ") 
       return(choice_values)
     })
     
+
+    # Sources  (For Subtext) -----------------------------------------------------------------
     choiceLabels <- reactive({
       isolate({possible_data = maf_data_pool_to_dataframe(maf_data_pool = maf_data_pool())})
       choice_labels <- sapply(
         seq_along(possible_data[["short_name"]]),
         function(x)
-          #tagList(
-          #  possible_data[["display_name"]][[x]] %>% gsub(pattern = "_", replacement = " ", x = .),
-            #tags$code(possible_data[["name_of_data_source"]][[x]], style = "font-size: 60%;")
           possible_data[["name_of_data_source"]][[x]]
-          #)
       )
       return(choice_labels)
     })
+    
     
     last_selected = reactiveVal(NULL)
     output$out_ui_pick_dataset <- renderUI({

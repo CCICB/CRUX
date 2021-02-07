@@ -11,13 +11,14 @@
 #' @export 
 #'
 #' @family DataToWrapper
-user_data_filepath_to_class_maf_dataset_wrapper <- function(filepath, clinicalData=NA, display_name, short_name, description = "User specified file", data_source = "USER", loaded_data=NA){
+user_data_filepath_to_class_maf_dataset_wrapper <- function(filepath, clinicalData=NA, maf_data_pool, display_name, short_name, description = "User specified file", data_source = "USER", loaded_data=NA){
   utilitybelt::assert_that(assertthat::is.string(filepath), msg = utilitybelt::fmterror("user_data_filepath_to_class_maf_dataset_wrapper: filepath must be a string (single length character vector), Not a: ", class(filepath)))
   
   utilitybelt::assert_that(file.exists(filepath))
   
   #Assume filepath is pointing to a maf file
   new_maf_dataset_wrapper(
+    maf_data_pool = maf_data_pool,
     display_name = display_name, 
     short_name = short_name,
     unique_name = paste0("USER_", filepath), 
@@ -47,6 +48,6 @@ user_data_filepath_to_class_maf_dataset_wrapper <- function(filepath, clinicalDa
 #' @family DataToWrapper
 user_to_dataset_to_data_pool <- function(maf_data_pool, filepath, clinicalData=NA, display_name, short_name, description = "User specified file", data_source = "USER", loaded_data = NA ){
   #browser()
-  dataset_wrapper <- user_data_filepath_to_class_maf_dataset_wrapper(filepath = filepath, clinicalData=clinicalData, display_name=display_name, short_name=short_name, description=description, data_source=data_source, loaded_data = loaded_data)   
+  dataset_wrapper <- user_data_filepath_to_class_maf_dataset_wrapper(filepath = filepath, clinicalData=clinicalData, maf_data_pool = maf_data_pool, display_name=display_name, short_name=short_name, description=description, data_source=data_source, loaded_data = loaded_data)   
   maf_data_pool_add_dataset(maf_dataset_wrapper = dataset_wrapper, maf_data_pool = maf_data_pool)
 }

@@ -4,12 +4,18 @@
 \alias{tcga_dataset_to_data_pool}
 \title{Add TCGA cohort to data pool}
 \usage{
-tcga_dataset_to_data_pool(tcga_study_abbreviation, maf_data_pool)
+tcga_dataset_to_data_pool(
+  tcga_study_abbreviation,
+  maf_data_pool,
+  source = "Firehose"
+)
 }
 \arguments{
 \item{tcga_study_abbreviation}{a TCGA cohort abbreviation (see TCGAmutations::tcga_available()) (string)}
 
 \item{maf_data_pool}{the data pool to add the dataset wrapper to (maf_data_pool)}
+
+\item{source}{'MC3' or 'Firehose'. Source of TCGA data to use. See ?TCGAmutations::tcga_load for details (string)}
 }
 \value{
 returns a data pool object with extra dataset added (maf_data_pool)

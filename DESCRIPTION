@@ -37,7 +37,9 @@ Imports:
     dipsaus (>= 0.1.2),
     colourpicker (>= 1.1.0),
     UpSetR (>= 1.4.0),
-    ggVennDiagram (>= 0.3)
+    ggVennDiagram (>= 0.3),
+    mclust (>= 5.4.7),
+    R.utils
 Remotes:
     selkamand/utilitybelt,
     selkamand/utilitybeltshiny,

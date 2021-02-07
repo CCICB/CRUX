@@ -27,18 +27,22 @@ moduleDownloadPlotUI(
 
 \item{circle}{Logical. Use a circle button}
 
-\item{label}{"The label that should appear on the button."}
+\item{label}{The label that should appear on the button.}
 
-\item{style}{"Style of the button, to choose between simple, bordered, minimal, stretch, jelly, gradient, fill, material-circle, material-flat, pill, float, unite."}
+\item{style}{Style of the button, to choose between simple, bordered, minimal, stretch, jelly, gradient, fill, material-circle, material-flat, pill, float, unite.}
 
-\item{color}{"Color of the button : default, primary, warning, danger, success, royal."}
+\item{color}{Color of the button : default, primary, warning, danger, success, royal.}
 
-\item{size}{"Size of the button : xs,sm, md, lg."}
+\item{size}{Size of the button : xs,sm, md, lg.}
 
 \item{status}{Add a class to the buttons, you can use Bootstrap status like 'info', 'primary', 'danger', 'warning' or 'success'.
 Or use an arbitrary strings to add a custom class, e.g. : with \code{status = 'myClass'}, buttons will have class \code{btn-myClass}.}
 
 \item{icon}{An icon to appear on the button.}
+
+\item{tooltip_placement}{Where the tooltip should appear relative to its target (top, bottom, left, or right). Defaults to "right" (string)}
+
+\item{tooltip_text}{Tooltip text (string)}
 
 \item{right}{Logical. The dropdown menu starts on the right.}
 
@@ -51,7 +55,7 @@ Or use an arbitrary strings to add a custom class, e.g. : with \code{status = 'm
 \item{inline}{use an inline (\code{span()}) or block container (\code{div()}) for the output.}
 }
 \value{
-
+Nothing. Function run for its side effects
 }
 \description{
 Creates a shinyWidgets::downloadbttn

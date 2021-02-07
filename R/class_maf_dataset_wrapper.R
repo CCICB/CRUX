@@ -4,7 +4,7 @@
 #' Constructor Objects of Class: \strong{maf_dataset_wrapper}
 #'
 #' maf_dataset_wrapper objects store the details of each dataset including the functions to download/load the data and its current status 
-#'
+#' @param maf_data_pool A maf_data_pool object. Used to check supplied 'unique_name' is actually going to be unique. If not, characaters are appended to make it truly unique in the context of the supplied dataframe.  (maf_data_pool)
 #' @param display_name Name that the end-user will see (string)
 #' @param short_name Abbreviated dataset name (string)
 #' @param unique_name Some unique identifier. (string)
@@ -42,7 +42,7 @@
 #' 
 #' @export
 #'
-new_maf_dataset_wrapper <- function(display_name, short_name, unique_name, start_status, data_description, is_dataset_downloadable, function_to_download_data = function() {return(NA)}, is_dataset_loadable = TRUE,function_to_load_data, name_of_data_source="unknown", local_path_to_data="", clinical_data=NA, datatype_of_stored_object="", derived_from = NA, loaded_data=NA) {
+new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, unique_name, start_status, data_description, is_dataset_downloadable, function_to_download_data = function() {return(NA)}, is_dataset_loadable = TRUE,function_to_load_data, name_of_data_source="unknown", local_path_to_data="", clinical_data=NA, datatype_of_stored_object="", derived_from = NA, loaded_data=NA) {
   #Dev options
   classname = "maf_dataset_wrapper"
   status_options <- c("not_downloaded","not_loaded", "ready")
@@ -53,6 +53,7 @@ new_maf_dataset_wrapper <- function(display_name, short_name, unique_name, start
   }
   
   #browser()
+  assert_that_class_is_maf_data_pool(maf_data_pool)
   utilitybelt::assert_non_empty_string(display_name)
   utilitybelt::assert_non_empty_string(unique_name)
   utilitybelt::assert_non_empty_string(short_name)
@@ -69,12 +70,14 @@ new_maf_dataset_wrapper <- function(display_name, short_name, unique_name, start
   utilitybelt::assert_that(is.na(clinical_data) || is.data.frame(clinical_data), msg= utilitybelt::fmterror("new_maf_dataset_wrapper: Clinical_data must be a dataframe or NULL. It cannot be a: ", class(clinical_data)))
   utilitybelt::assert_that(identical(loaded_data, NA) || utilitybelt::class_is(loaded_data, "MAF"))
   
+  #Make unique_name actually unique
+  actually_unique_name <- maf_data_pool_make_name_unique(maf_data_pool = maf_data_pool, unique_name)
   
   #Construct Class
   maf_dataset_wrapper <- list(
     display_name=display_name,
     short_name=short_name,
-    unique_name=unique_name,
+    unique_name=actually_unique_name,
     status=start_status, 
     data_description = data_description,
     download_data = function_to_download_data,

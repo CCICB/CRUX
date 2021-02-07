@@ -16,11 +16,19 @@ mod_plot_oncogenic_pathways_ui <- function(id){
 }
 
 mod_plot_oncogenic_pathways_server <- function(id, maf){
+  utilitybeltshiny::assert_reactive(maf)
+  
   moduleServer(id,
     function(input, output, session){
       
+      #Validate
+      maf_validated <- reactive({ validate(need(!is.null(maf()),message = "Loading ..." )); return(maf()) })
+      
       #Plot
-      plot_oncogenic_pathways <- reactive({ function() { maftools::OncogenicPathways(maf = maf()) } })
+      plot_oncogenic_pathways <- reactive({ 
+        validate(need(!is.null(maf_validated()),message = "Loading ... ")); 
+        function() { maftools::OncogenicPathways(maf = maf_validated()) } })
+      
       output$out_plot_oncogenic_pathways <- renderPlot({plot_oncogenic_pathways()()})
       moduleDownloadPlotServer(id = "mod_download", session_parent = session, plotOutputId = "out_plot_oncogenic_pathways", plotting_function = plot_oncogenic_pathways(), default_filename = "oncogenic_pathways")
       

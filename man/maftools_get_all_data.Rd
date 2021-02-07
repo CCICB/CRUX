@@ -17,3 +17,6 @@ a data.frame in MAF form where each variant has a separate row (data.frame)
 \description{
 Input a maf object. Returns table containing ALL MAF data. Nonsynonymous AND synonymous
 }
+\examples{
+maftools_get_all_data(TCGAmutations::tcga_load("GBM"))
+}
