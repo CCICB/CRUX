@@ -32,7 +32,6 @@ mod_cnv_ui <- function(id){
       
       wellPanel(textOutput(outputId = ns("out_text_directory"))),
       htmlOutput(outputId = ns("out_dir_looks_like_gistic"))
-      
     ),
     
 
@@ -62,8 +61,17 @@ mod_cnv_ui <- function(id){
       )
     ),
     
+    # Step 5: Ensure Your Variant Dataset Sample Names Match Your CNV (GISTIC) Sample Names ------------------------------------------------------------------
     shinyWidgets::panel(
-      heading = "Step 5: Choose Analysis / Visualisation",
+      heading = "Step 5: Ensure your SNV vs CNV (GISTIC) sample names match",
+      plotOutput(outputId = ns("out_plot_sample_name_overlap"), height = "300px", width="auto")
+    ),
+    
+    
+
+    # Step 6: Analyse / Visualise ------------------------------------------------------------------
+    shinyWidgets::panel(
+      heading = "Step 6: Choose Analysis / Visualisation",
       tabsetPanel(
         tabPanel(title = "Gene Summary", mod_render_downloadabledataframe_ui(id=ns("mod_downloadable_df_gene_summary"))),
         tabPanel(title = "Sample Summary", mod_render_downloadabledataframe_ui(id=ns("mod_downloadable_df_sample_summary"))),
@@ -196,6 +204,14 @@ mod_cnv_server <- function(id, maf_data_pool){
       )
     })
     
+
+    # Sample Name Overlap -----------------------------------------------------
+
+    output$out_plot_sample_name_overlap <- renderPlot({
+      maftools_maf_and_gistic_sample_name_overlap_venn(maf = maf(), gistic = gistic())
+    })
+    
+    
     # Summaries ---------------------------------------------------------------
     cytoband_summary_df <- reactive({ validate(need(!is.null(gistic()), message = "Waiting for valid gistic")); maftools::getCytobandSummary(gistic()) })
     sample_summary_df <- reactive({ validate(need(!is.null(gistic()), message = "Waiting for valid gistic")); maftools::getSampleSummary(gistic()) })
@@ -261,6 +277,44 @@ gistic_check_circle <- function() {
 gistic_bad_path <- function() {
   icon("exclamation-triangle") %>% 
     bsplus::bs_embed_tooltip(title = "The folder you selected doesn't have the files we'd expect in the output of a GISTIC run!", placement = "right")
+}
+
+
+maftools_maf_and_gistic_sample_name_overlap_venn <- function(maf, gistic) {
+  assertthat::assert_that(utilitybelt::class_is(gistic, "GISTIC"))
+  
+  maf_sample_names <- maf %>% 
+    maftools::getSampleSummary() %>% 
+    dplyr::pull(Tumor_Sample_Barcode) 
+  
+  gistic_sample_names <- gistic %>%
+    maftools::getSampleSummary() %>% 
+    dplyr::pull(Tumor_Sample_Barcode) 
+  
+  ggVennDiagram::ggVennDiagram(list( "SNV" = maf_sample_names, "CNV" = gistic_sample_names)) +
+    ggplot2::ggtitle("Tumor Sample Barcode Overlap") + ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5, size = 18, face = "bold"))
+}
+
+maftools_maf_and_gistic_random_sample_names <- function(maf, gistic) {
+  assertthat::assert_that(utilitybelt::class_is(gistic, "GISTIC"))
+  
+  maf_sample_names <- maf %>% 
+    maftools::getSampleSummary() %>% 
+    dplyr::pull(Tumor_Sample_Barcode) 
+  
+  gistic_sample_names <- gistic %>%
+    maftools::getSampleSummary() %>% 
+    dplyr::pull(Tumor_Sample_Barcode) 
+  
+  if(length(maf_sample_names) == 0 || length(gistic_sample_names) == 0){
+   message("[maftools_maf_and_gistic_random_sample_names] either maf_sample_names or gistic_sample_names are empty. Returning NULL") 
+    return(NULL)
+  }
+
+  dplyr::tibble(
+    RANDOM_SAMPLE_NAMES_IN_DATASET = maf_sample_names[runif(n = 5, min = 1, max = length(maf_sample_names))],
+    RANDOM_SAMPLE_NAMES_IN_GISTIC =  gistic_sample_names[runif(n = 5, min = 1, max = length(gistic_sample_names))]
+   )
 }
 
 ## To be copied in the UI
