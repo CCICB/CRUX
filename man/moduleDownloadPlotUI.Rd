@@ -10,7 +10,7 @@ moduleDownloadPlotUI(
   label = "Download",
   style = "unite",
   color = "default",
-  size = "sm",
+  size = "default",
   status = "default",
   icon = NULL,
   tooltip_placement = "right",
@@ -19,7 +19,8 @@ moduleDownloadPlotUI(
   up = FALSE,
   width = "200px",
   margin = "10px",
-  inline = FALSE
+  inline = FALSE,
+  ...
 )
 }
 \arguments{
@@ -53,6 +54,8 @@ Or use an arbitrary strings to add a custom class, e.g. : with \code{status = 'm
 \item{margin}{Value of the dropdown margin-right and margin-left menu content.}
 
 \item{inline}{use an inline (\code{span()}) or block container (\code{div()}) for the output.}
+
+\item{...}{List of tag to be displayed into the dropdown menu.}
 }
 \value{
 Nothing. Function run for its side effects

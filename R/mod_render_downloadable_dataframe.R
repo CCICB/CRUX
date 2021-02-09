@@ -10,7 +10,7 @@ mod_render_downloadabledataframe_ui <- function(id, downloadbttn_label="", class
       div(
         style = 'width: 97%; display: inline-block',
         utilitybeltshiny::conditionalUI(shinycssloader, tagList(
-          DT::dataTableOutput(outputId = ns("out_dt_maf"), width = "inherit", height = "auto") %>% shinycssloaders::withSpinner()
+          DT::dataTableOutput(outputId = ns("out_dt_maf"), width = "inherit", height = "auto") %>% shinycssloaders::withSpinner(proxy.height = "200px")
         )),
         utilitybeltshiny::conditionalUI(shinycssloader==FALSE, tagList(
           DT::dataTableOutput(outputId = ns("out_dt_maf"), width = "inherit", height = "auto")

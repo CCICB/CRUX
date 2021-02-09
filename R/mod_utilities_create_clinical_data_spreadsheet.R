@@ -29,7 +29,7 @@ mod_utilities_create_clinical_data_spreadsheet_ui <- function(id){
     
     shinyWidgets::panel(
       heading="Debug",
-      DT::dataTableOutput(outputId = ns("out_dt_latest_df")) %>% shinycssloaders::withSpinner(),
+      DT::dataTableOutput(outputId = ns("out_dt_latest_df")) %>% shinycssloaders::withSpinner(proxy.height = "200px"),
       shinyWidgets::actionBttn(ns("in_bttn_browser"), label="browser")
     ),
     

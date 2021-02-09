@@ -5,7 +5,7 @@ mod_plot_oncogenic_pathways_focused_ui <- function(id){
   ns <- NS(id)
   tagList(
     
-    plotOutput(outputId=ns("out_plot_complete_pathway")) %>% shinycssloaders::withSpinner(), 
+    plotOutput(outputId=ns("out_plot_complete_pathway")) %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
     shinyWidgets::panel(heading = "Options",
           uiOutput(outputId = ns("out_ui_pathwaylist")),
           shinyWidgets::awesomeCheckbox(inputId = ns("in_check_show_all_genes"), label = "Show all genes", value = F) %>% 

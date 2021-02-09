@@ -24,7 +24,7 @@ mod_merge_ui <- function(id){
         
         shinyWidgets::panel(
           heading = "Tumor Sample Barcode Overlap",
-          plotOutput(outputId = ns("out_plot_tsb_overlap")) %>% shinycssloaders::withSpinner()
+          plotOutput(outputId = ns("out_plot_tsb_overlap")) %>% shinycssloaders::withSpinner(proxy.height = "200px")
         )
         ),
       

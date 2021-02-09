@@ -4,7 +4,7 @@
 mod_plot_titv_graphs_ui <- function(id){
   ns <- NS(id)
   tagList(
-    plotOutput(outputId=ns("out_plot_titv"), height = "500px") %>% shinycssloaders::withSpinner(),
+    plotOutput(outputId=ns("out_plot_titv"), height = "500px") %>% shinycssloaders::withSpinner(proxy.height = "200px"),
     br(),
     shinyWidgets::panel(heading = "Options",
           shiny::selectInput(inputId = ns("in_select_plot_type"), label = "Plot type", choices = c("both", "bar", "box"), selected = "both", multiple = F),

@@ -53,11 +53,11 @@ mod_compare_cohorts_ui <- function(id){
       
       shinyWidgets::panel(heading = "Step 3: View Results",
         tabsetPanel(
-          tabPanel(title = "Tabular Summary", DT::dataTableOutput(outputId = ns("out_maf_compare_summary")) %>% shinycssloaders::withSpinner()),
-          tabPanel(title = "Rainforest Plot Summary",modulePlotRainforestUI(id = ns("mod_plot_rainforest")) %>% shinycssloaders::withSpinner()),
-          tabPanel(title = "Lollipop", modulePlotLollipop2UI(ns("id_lollipop")) %>% shinycssloaders::withSpinner()),
-          tabPanel(title = "coBarplot", modulePlotCobarplotUI(ns("id_cobarplot")) %>% shinycssloaders::withSpinner()),
-          tabPanel(title = "coOncoplot", modulePlotCooncoplotUI(ns("id_cooncoplot")) %>% shinycssloaders::withSpinner())
+          tabPanel(title = "Tabular Summary", DT::dataTableOutput(outputId = ns("out_maf_compare_summary")) %>% shinycssloaders::withSpinner(proxy.height = "200px")),
+          tabPanel(title = "Rainforest Plot Summary",modulePlotRainforestUI(id = ns("mod_plot_rainforest")) %>% shinycssloaders::withSpinner(proxy.height = "200px")),
+          tabPanel(title = "Lollipop", modulePlotLollipop2UI(ns("id_lollipop")) %>% shinycssloaders::withSpinner(proxy.height = "200px")),
+          tabPanel(title = "coBarplot", modulePlotCobarplotUI(ns("id_cobarplot")) %>% shinycssloaders::withSpinner(proxy.height = "200px")),
+          tabPanel(title = "coOncoplot", modulePlotCooncoplotUI(ns("id_cooncoplot")) %>% shinycssloaders::withSpinner(proxy.height = "200px"))
         ),
         br()
       )

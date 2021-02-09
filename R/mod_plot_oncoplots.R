@@ -4,7 +4,7 @@
 mod_plot_oncoplot_ui <- function(id){
   ns <- NS(id)
   tagList(
-    plotOutput(outputId=ns("out_plot_oncoplot")) %>% shinycssloaders::withSpinner(), 
+    plotOutput(outputId=ns("out_plot_oncoplot")) %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
     shinyWidgets::panel(heading = "Options",
           shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_show_sample_names"), label = "Show Sample Names", value = FALSE),
           conditionalPanel(condition = "input.in_checkbox_show_sample_names", ns=ns, numericInput(inputId = ns("in_num_fontsize_sample"), label = "Fontsize: Sample Names", min=0, step = 0.1, value = 1.0)),

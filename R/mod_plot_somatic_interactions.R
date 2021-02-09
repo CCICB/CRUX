@@ -12,15 +12,15 @@ mod_plot_somatic_interactions_ui <- function(id){
   tagList(
     div(
       br(),
-      plotOutput(outputId = ns("out_plot_somatic_interactions"), height = "600px") %>% shinycssloaders::withSpinner(),
+      plotOutput(outputId = ns("out_plot_somatic_interactions"), height = "600px") %>% shinycssloaders::withSpinner(proxy.height = "200px"),
       br()
-    ) %>% shinycssloaders::withSpinner(),
+    ) %>% shinycssloaders::withSpinner(proxy.height = "200px"),
     
     conditionalPanel(
       ns = ns,
       condition = "input.in_check_show_table",
       br(),
-      DT::dataTableOutput(outputId = ns("out_dt_tabular_coocurrance_matrix")) %>% shinycssloaders::withSpinner(),
+      DT::dataTableOutput(outputId = ns("out_dt_tabular_coocurrance_matrix")) %>% shinycssloaders::withSpinner(proxy.height = "200px"),
       br()
     ),
     

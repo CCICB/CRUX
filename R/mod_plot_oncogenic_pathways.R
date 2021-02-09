@@ -6,7 +6,7 @@ mod_plot_oncogenic_pathways_ui <- function(id){
   tagList(
     mod_render_downloadabledataframe_ui(id = ns("mod_downloadable_table_oncogenic_pathways")),
     hr(),
-    plotOutput(outputId=ns("out_plot_oncogenic_pathways")) %>% shinycssloaders::withSpinner(), 
+    plotOutput(outputId=ns("out_plot_oncogenic_pathways")) %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
     shinyWidgets::panel(heading = "Options",
         #shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_use_custom_genes"), label = "Custom genes", value = FALSE),
         #conditionalPanel(condition = "input.in_checkbox_use_custom_genes", ns=ns, uiOutput(outputId = ns("out_ui_genelist"

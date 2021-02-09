@@ -5,7 +5,7 @@ moduleLoadTCGAUI <- function(id){
   ns <- NS(id)
   tagList(
     shinyWidgets::panel(heading="TCGA",
-          DT::dataTableOutput(outputId = ns("out_dt_tcga_available"), width = "100%") %>% shinycssloaders::withSpinner(), 
+          DT::dataTableOutput(outputId = ns("out_dt_tcga_available"), width = "100%") %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
           shinyWidgets::multiInput(
             inputId = ns("in_multi_tcga"), 
             label = "TCGA cohorts",

@@ -3,7 +3,7 @@ mod_tabulate_maf_ui <- function(id){
   ns <- NS(id)
   tagList(
     br(),
-    DT::dataTableOutput(outputId = ns("out_dt_maf")) %>% shinycssloaders::withSpinner(),
+    DT::dataTableOutput(outputId = ns("out_dt_maf")) %>% shinycssloaders::withSpinner(proxy.height = "200px"),
     
     conditionalPanel(condition = "output.cond", ns=ns,
       shinyWidgets::panel(

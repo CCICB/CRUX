@@ -29,8 +29,8 @@
 modulePlotLollipop2UI <- function(id){
   ns <- NS(id)
   tagList(
-    plotOutput(outputId=ns("out_plot_lollipop")) %>% shinycssloaders::withSpinner(), 
-    DT::dataTableOutput(outputId = ns("out_dt_transcript_table")) %>% shinycssloaders::withSpinner(),
+    plotOutput(outputId=ns("out_plot_lollipop")) %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
+    DT::dataTableOutput(outputId = ns("out_dt_transcript_table")) %>% shinycssloaders::withSpinner(proxy.height = "200px"),
     
     shinyWidgets::panel(heading = "Options",
         uiOutput(outputId = ns("out_ui_genelist")),

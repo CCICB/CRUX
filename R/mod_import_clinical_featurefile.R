@@ -10,7 +10,7 @@ mod_import_clinical_featurefile_ui <- function(id){
   ns <- NS(id)
   tagList(
     mod_shinyfile_import_ui(ns("mod_shinyfiles_get_path_to_metadata_df"), title = "Import Clinical Feature File", label = "Import Clinical Feature File", multiple = FALSE),
-    DT::dataTableOutput(ns("out_dt_clinical_data")) %>% shinycssloaders::withSpinner()
+    DT::dataTableOutput(ns("out_dt_clinical_data")) %>% shinycssloaders::withSpinner(proxy.height = "200px")
   )
 }
     

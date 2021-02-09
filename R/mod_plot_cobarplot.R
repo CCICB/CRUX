@@ -5,7 +5,7 @@
 modulePlotCobarplotUI <- function(id){
   ns <- NS(id)
   tagList(
-    plotOutput(outputId=ns("out_plot_cobarplot")) %>% shinycssloaders::withSpinner(), 
+    plotOutput(outputId=ns("out_plot_cobarplot")) %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
     shinyWidgets::panel(heading = "Options",
         shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_use_custom_genes"), label = "Custom genes", value = FALSE),
         conditionalPanel(condition = "input.in_checkbox_use_custom_genes", ns=ns, uiOutput(outputId = ns("out_ui_genelist"))),

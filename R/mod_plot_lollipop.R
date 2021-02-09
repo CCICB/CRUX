@@ -29,10 +29,10 @@
 mod_plot_lollipop_ui <- function(id){
   ns <- NS(id)
   tagList(
-    plotOutput(outputId=ns("out_plot_lollipop")) %>% shinycssloaders::withSpinner(), 
+    plotOutput(outputId=ns("out_plot_lollipop")) %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
     
     shinyWidgets::panel(heading = "Transcripts",
-      DT::dataTableOutput(outputId = ns("out_dt_transcript_table")) %>% shinycssloaders::withSpinner()
+      DT::dataTableOutput(outputId = ns("out_dt_transcript_table")) %>% shinycssloaders::withSpinner(proxy.height = "200px")
     ),
     
     shinyWidgets::panel(heading = "Options",

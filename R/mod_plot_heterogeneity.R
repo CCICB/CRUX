@@ -10,7 +10,7 @@
 mod_plot_heterogeneity_ui <- function(id){
   ns <- NS(id)
   tagList(
-    plotOutput(ns("out_plot_heterogeneity")) %>% shinycssloaders::withSpinner(),
+    plotOutput(ns("out_plot_heterogeneity")) %>% shinycssloaders::withSpinner(proxy.height = "200px"),
     
     br(),
     hr(),

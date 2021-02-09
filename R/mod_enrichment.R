@@ -14,12 +14,12 @@ moduleEnrichmentAnalysisUI <- function(id){
                shinyWidgets::panel(heading = "Output",
                   shinyWidgets::panel(heading = "Tables",
                      tabsetPanel(
-                       tabPanel(title = "Feature Sizes", DT::dataTableOutput(outputId = ns("out_dt_cf_size")) %>% shinycssloaders::withSpinner(), br()),
-                       tabPanel(title = "Groupwise", DT::dataTableOutput(outputId = ns("out_dt_groupwise")) %>% shinycssloaders::withSpinner() , br()),
-                       tabPanel(title = "Pairwise", DT::dataTableOutput(outputId = ns("out_dt_pairwise")) %>% shinycssloaders::withSpinner(), br())
+                       tabPanel(title = "Feature Sizes", DT::dataTableOutput(outputId = ns("out_dt_cf_size")) %>% shinycssloaders::withSpinner(proxy.height = "200px"), br()),
+                       tabPanel(title = "Groupwise", DT::dataTableOutput(outputId = ns("out_dt_groupwise")) %>% shinycssloaders::withSpinner(proxy.height = "200px") , br()),
+                       tabPanel(title = "Pairwise", DT::dataTableOutput(outputId = ns("out_dt_pairwise")) %>% shinycssloaders::withSpinner(proxy.height = "200px"), br())
                        )),
                   shinyWidgets::panel(heading = "Plot",
-                       plotOutput(outputId = ns("out_plot_enrichment_results")) %>% shinycssloaders::withSpinner(),
+                       plotOutput(outputId = ns("out_plot_enrichment_results")) %>% shinycssloaders::withSpinner(proxy.height = "200px"),
                        shinyWidgets::panel(heading = "Options", 
                              numericInput(inputId = ns("in_num_pvalue"), label = "P value Threshold (plot) ", value = 0.05, min = 0, step = 0.01),
                              moduleDownloadPlotUI(id = ns("mod_download_enrichment_plot"))

@@ -4,7 +4,7 @@
 modulePlotCooncoplotUI <- function(id){
   ns <- NS(id)
   tagList(
-    plotOutput(outputId=ns("out_plot_cooncoplot")) %>% shinycssloaders::withSpinner(), 
+    plotOutput(outputId=ns("out_plot_cooncoplot")) %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
     shinyWidgets::panel(heading = "Options",
           shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_show_sample_names"), label = "Show sample names", value = FALSE),
         

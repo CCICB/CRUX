@@ -13,7 +13,7 @@ mod_plot_pfam_domains_ui <- function(id){
     br(),
     wellPanel("What domains in a given cancer cohort are most frequently affected?"),
     
-    plotOutput(outputId = ns("out_plot_pfam")) %>% shinycssloaders::withSpinner(),
+    plotOutput(outputId = ns("out_plot_pfam")) %>% shinycssloaders::withSpinner(proxy.height = "200px"),
     br(),
     conditionalPanel(
       condition = "input.in_check_toggle_domain_summary",

@@ -11,7 +11,7 @@ mod_plot_rainfall_ui <- function(id){
   ns <- NS(id)
   tagList(
       
-      plotOutput(ns("out_plot_rainfall")) %>% shinycssloaders::withSpinner(),
+      plotOutput(ns("out_plot_rainfall")) %>% shinycssloaders::withSpinner(proxy.height = "200px"),
       br(),hr(),
       tags$strong("Kataegis detected at:"),
       mod_render_downloadabledataframe_ui(id = ns("out_dt_kataegis"), downloadbttn_label = "", shinycssloader = FALSE),

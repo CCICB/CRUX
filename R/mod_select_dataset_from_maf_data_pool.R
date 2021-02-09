@@ -17,7 +17,7 @@ mod_select_datasets_from_maf_data_pool_ui <- function(id, label="select", panel_
     shinyWidgets::panel(
       heading = panel_heading,
       
-      shiny::uiOutput(outputId = ns("out_ui_pick_dataset")), #%>% shinycssloaders::withSpinner(),
+      shiny::uiOutput(outputId = ns("out_ui_pick_dataset")), #%>% shinycssloaders::withSpinner(proxy.height = "200px"),
       fluidRow(
         col_10(),
         col_2(
