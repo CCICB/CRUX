@@ -18,3 +18,16 @@ icon_down_arrow <- function(fontsize="60px", alignment = "center"){
            tags$i(class = "glyphicon glyphicon-arrow-down", style = style_)
   )
 }
+
+#' HTML_alert
+#'
+#' @param text Alert text (string)
+#' @param status Boostrap status. One of primary,secondary,success,danger,warning,info,light,dark (string)
+#'
+#' @return html-flagged text (string")
+#' @export
+#'
+html_alert <- function(text, status="warning"){
+  HTML(text = paste0(p(text, class=paste0("alert alert-", status)))) %>%
+    return()
+}
