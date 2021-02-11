@@ -1,5 +1,5 @@
 
-mod_single_cohort_summary_tables_ui <- function(id, panel_heading = "Summary of Input" ){
+mod_single_cohort_summary_tables_ui <- function(id, panel_heading = "Tabular Summary" ){
   ns <- NS(id)
   
   tagList(

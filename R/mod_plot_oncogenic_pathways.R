@@ -4,11 +4,13 @@
 mod_plot_oncogenic_pathways_ui <- function(id){
   ns <- NS(id)
   tagList(
-    mod_render_downloadabledataframe_ui(id = ns("mod_downloadable_table_oncogenic_pathways")),
     hr(),
     plotOutput(outputId=ns("out_plot_oncogenic_pathways")) %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
+    hr(),
+    mod_render_downloadabledataframe_ui(id = ns("mod_downloadable_table_oncogenic_pathways")),
+    
     shinyWidgets::panel(heading = "Options",
-        #shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_use_custom_genes"), label = "Custom genes", value = FALSE),
+                        numericInput(ns("in_num_font"), label = "Font size", value = 1, min = 0 , step = 0.2),
         #conditionalPanel(condition = "input.in_checkbox_use_custom_genes", ns=ns, uiOutput(outputId = ns("out_ui_genelist"
         moduleDownloadPlotUI(ns("mod_download"))
     )
@@ -27,7 +29,7 @@ mod_plot_oncogenic_pathways_server <- function(id, maf){
       #Plot
       plot_oncogenic_pathways <- reactive({ 
         validate(need(!is.null(maf_validated()),message = "Loading ... ")); 
-        function() { maftools::OncogenicPathways(maf = maf_validated()) } })
+        function() { maftools::OncogenicPathways(maf = maf_validated(), fontSize = input$in_num_font ) } })
       
       output$out_plot_oncogenic_pathways <- renderPlot({plot_oncogenic_pathways()()})
       moduleDownloadPlotServer(id = "mod_download", session_parent = session, plotOutputId = "out_plot_oncogenic_pathways", plotting_function = plot_oncogenic_pathways(), default_filename = "oncogenic_pathways")

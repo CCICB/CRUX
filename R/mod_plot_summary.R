@@ -4,15 +4,16 @@
 mod_plot_maf_summary_ui <- function(id){
   ns <- NS(id)
   tagList(
-    plotOutput(outputId=ns("out_plot_summary")) %>% shinycssloaders::withSpinner(proxy.height = "200px"),
-    
+    div(
+    plotOutput(outputId=ns("out_plot_summary"), height = "400px") %>% shinycssloaders::withSpinner(proxy.height = "200px"),
+    ),
     shinyWidgets::panel(
       heading = "Options",
       fluidRow(
         col_3(
           shinyWidgets::awesomeCheckbox(inputId = ns("in_check_rm_outlier"), label = "Remove outliers from boxplot", value = TRUE),
           shinyWidgets::awesomeCheckbox(inputId = ns("in_check_dashhboard"), label = "Dashboard style", value = TRUE),
-          shinyWidgets::awesomeCheckbox(inputId = ns("in_check_titv_raw"), label = "Plot titv raw counts instead of fractions", value = TRUE),
+          shinyWidgets::awesomeCheckbox(inputId = ns("in_check_titv_raw"), label = "Plot raw TiTv  counts", value = TRUE),
           shinyWidgets::awesomeCheckbox(inputId = ns("in_check_logscale"), label = "Logscale", value = FALSE),
           ),
         col_3(
@@ -22,7 +23,7 @@ mod_plot_maf_summary_ui <- function(id){
           ),
       col_3(
         numericInput(inputId = ns("in_num_fontsize_base"), label = "Fontsize: Base", value = 1, min = 0, step = 0.2),
-        numericInput(inputId = ns("in_num_fontsize_title"), label = "Fontsize: Title", value = 1, min = 0, step = 0.2),
+        numericInput(inputId = ns("in_num_fontsize_title"), label = "Fontsize: Title", value = 1.2, min = 0, step = 0.2),
         ),
       col_3(
         numericInput(inputId = ns("in_num_fontsize_subtitle"), label = "Fontsize: Subtitle", value = 0.8, min = 0, step = 0.1),

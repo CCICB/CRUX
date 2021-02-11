@@ -141,9 +141,9 @@ moduleEnrichmentAnalysisServer <- function(id, maf_data_pool){
                    plot_clinical_enrichment()() 
                    } )
                  
-                 output$out_dt_cf_size <- DT::renderDataTable(clinical_enrichment()$cf_sizes, options = list(scrollX = TRUE), class = "display nowrap")
-                 output$out_dt_groupwise <- DT::renderDataTable(clinical_enrichment()$groupwise_comparision, options = list(scrollX = TRUE), class = "display nowrap")
-                 output$out_dt_pairwise <- DT::renderDataTable(clinical_enrichment()$pairwise_comparision, options = list(scrollX = TRUE), class = "display nowrap")
+                 output$out_dt_cf_size <- DT::renderDataTable(clinical_enrichment()$cf_sizes, options = list(scrollX = TRUE), class = "display nowrap", filter = 'top')
+                 output$out_dt_groupwise <- DT::renderDataTable(clinical_enrichment()$groupwise_comparision, options = list(scrollX = TRUE), class = "display nowrap", filter = 'top')
+                 output$out_dt_pairwise <- DT::renderDataTable(clinical_enrichment()$pairwise_comparision, options = list(scrollX = TRUE), class = "display nowrap", filter = 'top')
                  output$out_plot_enrichment_results <- renderPlot({ maftools::plotEnrichmentResults(enrich_res = clinical_enrichment(), pVal = input$in_num_pvalue ) })
                  moduleDownloadPlotServer(id = "mod_download_enrichment_plot", session_parent = session, plotOutputId = "out_plot_enrichment_results", plotting_function = plot_clinical_enrichment(), default_filename = "enrichment")
                }

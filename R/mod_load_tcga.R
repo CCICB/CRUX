@@ -28,7 +28,7 @@ moduleLoadTCGAServer <- function(id, optional_argument){
   moduleServer(id,
     function(input, output, session){
       
-      output$out_dt_tcga_available <- DT::renderDataTable({ tcga_datasets_df }, options = list(scrollX = TRUE), class = "display nowrap")
+      output$out_dt_tcga_available <- DT::renderDataTable({ tcga_datasets_df }, options = list(scrollX = TRUE), class = "display nowrap", filter = 'top')
       
       # tcga_maf_loaded_maf <- reactive({
       #   validate(need(!is.null(input$in_multi_tcga), message = "Please choose TCGA cohorts"))

@@ -54,10 +54,10 @@ mod_compare_cohorts_ui <- function(id){
       shinyWidgets::panel(heading = "Step 3: View Results",
         tabsetPanel(
           tabPanel(title = "Tabular Summary", DT::dataTableOutput(outputId = ns("out_maf_compare_summary")) %>% shinycssloaders::withSpinner(proxy.height = "200px")),
-          tabPanel(title = "Rainforest Plot Summary",modulePlotRainforestUI(id = ns("mod_plot_rainforest")) %>% shinycssloaders::withSpinner(proxy.height = "200px")),
-          tabPanel(title = "Lollipop", modulePlotLollipop2UI(ns("id_lollipop")) %>% shinycssloaders::withSpinner(proxy.height = "200px")),
-          tabPanel(title = "coBarplot", modulePlotCobarplotUI(ns("id_cobarplot")) %>% shinycssloaders::withSpinner(proxy.height = "200px")),
-          tabPanel(title = "coOncoplot", modulePlotCooncoplotUI(ns("id_cooncoplot")) %>% shinycssloaders::withSpinner(proxy.height = "200px"))
+          tabPanel(title = "Rainforest Plot Summary",modulePlotRainforestUI(id = ns("mod_plot_rainforest"))),
+          tabPanel(title = "Lollipop", modulePlotLollipop2UI(ns("id_lollipop"))),
+          tabPanel(title = "coBarplot", modulePlotCobarplotUI(ns("id_cobarplot"))),
+          tabPanel(title = "coOncoplot", modulePlotCooncoplotUI(ns("id_cooncoplot")))
         ),
         br()
       )
@@ -94,7 +94,7 @@ mod_compare_cohorts_server <- function(id, maf_data_pool){
     
     
     #Output Modules
-    output$out_maf_compare_summary <- DT::renderDataTable(maf_compare()$results, options = list(scrollX = TRUE), class = "display nowrap")
+    output$out_maf_compare_summary <- DT::renderDataTable(maf_compare()$results, options = list(scrollX = TRUE), class = "display nowrap", filter = "top")
     modulePlotRainforestServer(id = "mod_plot_rainforest", mafCompareObject = maf_compare)
     modulePlotLollipop2Server(id = "id_lollipop", maf1 = maf1, maf2 = maf2, name_cohort1 = maf1_name, name_cohort2 = maf2_name)
     modulePlotCooncoplotServer(id="id_cooncoplot", maf1 = maf1, maf2 = maf2, name_cohort1 = maf1_name, name_cohort2 = maf2_name)

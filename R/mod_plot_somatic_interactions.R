@@ -10,12 +10,9 @@
 mod_plot_somatic_interactions_ui <- function(id){
   ns <- NS(id)
   tagList(
-    div(
+      plotOutput(outputId = ns("out_plot_somatic_interactions"), height = "550px")  %>% shinycssloaders::withSpinner(proxy.height = "200px"),
+      
       br(),
-      plotOutput(outputId = ns("out_plot_somatic_interactions"), height = "600px") %>% shinycssloaders::withSpinner(proxy.height = "200px"),
-      br()
-    ) %>% shinycssloaders::withSpinner(proxy.height = "200px"),
-    
     conditionalPanel(
       ns = ns,
       condition = "input.in_check_show_table",
@@ -26,19 +23,23 @@ mod_plot_somatic_interactions_ui <- function(id){
     
     shinyWidgets::panel(
       heading = "Options",
-      shinyWidgets::prettyCheckbox(ns("in_check_show_table"), label = "Toggle Tabular Output", value = FALSE),
-      
-      numericInput(inputId = ns("in_num_topn"), value = 25, label = "Top N Genes", step = 1, min = 1),
-      shinyBS::bsTooltip(id = ns("in_num_topn"), title = "check for interactions among top 'n' number of genes. Defaults to top 25. genes"),
-      
-      numericInput(inputId = ns("in_num_fontsize"), value = 0.8, label = "Font Size", step = 0.2, min = 0),
-      shinyWidgets::prettyCheckbox(ns("in_check_showsigsymbols"), label = "Toggle Significance Symbols", value = TRUE),
-      shinyWidgets::prettyCheckbox(ns("in_check_showcounts"), label = "Toggle Counts", value = FALSE),
-      shinyWidgets::pickerInput(ns("in_pick_countstats"), label = "Counted Stat", choices = c("all", "sig")),
-      shinyWidgets::pickerInput(ns("in_pick_counttype"), label = "Count Type", choices = c("all", 'cooccur', "mutexcl")),
-      
-      shinyWidgets::pickerInput(inputId = ns("in_pick_genes"), label = "Genes", choices = c(), multiple = TRUE, options = shinyWidgets::pickerOptions(actionsBox = TRUE, liveSearch = TRUE)),
+      fluidRow(
+      shinyWidgets::prettyCheckbox(ns("in_check_show_table"), label = "Toggle Tabular Output", value = FALSE) %>% col_2(style = "margin-top: 26px"),
+      numericInput(inputId = ns("in_num_topn"), value = 25, label = "Top N Genes", step = 1, min = 1)  %>% col_2(),
+      shinyBS::bsTooltip(id = ns("in_num_topn"), title = "check for interactions among top 'n' number of genes. Defaults to top 25 genes"),
+      shinyWidgets::pickerInput(inputId = ns("in_pick_genes"), label = "Genes", choices = c(), multiple = TRUE, options = shinyWidgets::pickerOptions(actionsBox = TRUE, liveSearch = TRUE)) %>% col_2(),
       shinyBS::bsTooltip(id = ns("in_pick_genes"), title = "List of genes among which interactions should be tested. If not provided, test will be performed between top 'N' genes."),
+      numericInput(inputId = ns("in_num_fontsize"), value = 0.8, label = "Font Size", step = 0.2, min = 0) %>% col_2(), 
+      ),
+      fluidRow(
+      shinyWidgets::prettyCheckbox(ns("in_check_showsigsymbols"), label = "Toggle Significance Symbols", value = TRUE) %>% col_2(style = "margin-top: 26px"),
+      numericInput(inputId = ns("in_num_size_sig_symbols"), value = 2, label = "Size of Significance Symbols", step = 0.2, min = 0) %>% col_2(),
+      shinyWidgets::prettyCheckbox(ns("in_check_showcounts"), label = "Toggle Counts", value = FALSE) %>% col_2(style = "margin-top: 26px"),
+      shinyWidgets::pickerInput(ns("in_pick_countstats"), label = "Counted Stat", choices = c("all", "sig")) %>% col_2(),
+      shinyWidgets::pickerInput(ns("in_pick_counttype"), label = "Count Type", choices = c("all", 'cooccur', "mutexcl")) %>% col_2()
+      ),
+      
+      
       
       moduleDownloadPlotUI(id = ns("mod_download_plot_interactions"))
     )
@@ -67,7 +68,8 @@ mod_plot_somatic_interactions_server <- function(id, maf){
           showSigSymbols = input$in_check_showsigsymbols,
           showCounts = input$in_check_showcounts,
           countStats = input$in_pick_countstats, 
-          countType = input$in_pick_counttype
+          countType = input$in_pick_counttype, 
+          sigSymbolsSize = input$in_num_size_sig_symbols
         ) %>% return()
       }
     })

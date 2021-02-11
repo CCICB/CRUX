@@ -27,7 +27,7 @@ mod_tabulate_maf_server <- function(id, maf){
       })
       outputOptions(output, "cond", suspendWhenHidden = FALSE)
       
-      output$out_dt_maf <- DT::renderDataTable({ maf_datatable() }, options = list(scrollX = TRUE), class = "display nowrap")
+      output$out_dt_maf <- DT::renderDataTable({ maf_datatable() }, options = list(scrollX = TRUE), class = "display nowrap", filter = "top")
       
       moduleDownloadMafServer(id = "mod_download_maf", maf=maf())
   }

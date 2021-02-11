@@ -38,11 +38,11 @@ app_ui <- function(request) {
       shiny::tabsetPanel(
         shiny::tabPanel(title = "Data", mod_data_page_ui(id = "mod_data_page")),
         shiny::tabPanel(title = "Pan Cohort Statistics", mod_pan_cohort_statistics_ui(id = "mod_pan_cohort_statistics")),
-        shiny::tabPanel(title = "Sample Level Analysis", mod_sample_level_analysis_ui(id = "mod_sample_level_analysis")),
         # shiny::tabPanel(title = "Compare Cohorts", moduleCompareCohortsUI(id = "mod_compare_cohorts")),
         shiny::tabPanel(title = "Compare Cohorts", mod_compare_cohorts_ui(id = "mod_compare_cohorts")),
         shiny::tabPanel(title = "Enrichment", moduleEnrichmentAnalysisUI(id = "mod_enrichment_analyis")),
         shiny::tabPanel(title = "Copy Number Analysis", mod_cnv_ui(id = "mod_cnv_level_analysis")),
+        shiny::tabPanel(title = "Sample Level Analysis", mod_sample_level_analysis_ui(id = "mod_sample_level_analysis")),
         shiny::tabPanel(title = "External Tools", mod_external_tools_ui(id= "mod_external_tools")),
         shiny::tabPanel(title = "Utilities", moduleUtilitiesUI(id = "mod_utilities")),
         shiny::tabPanel(title = "Help")

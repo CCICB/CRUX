@@ -32,7 +32,7 @@ mod_datapool_viewer_server <- function(id, maf_data_pool){
       })
     
     maf_data_pool_datatable <- reactive({
-      DT::datatable(data = maf_data_pool_df(), options = list(scrollX = TRUE), class = "display nowrap")
+      DT::datatable(data = maf_data_pool_df(), options = list(scrollX = TRUE), class = "display nowrap", filter = 'top')
       })
     
     output$out_dt_data_pool <- DT::renderDataTable({maf_data_pool_datatable()})

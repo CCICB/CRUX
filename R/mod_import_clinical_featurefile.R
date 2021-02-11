@@ -45,7 +45,7 @@ mod_import_clinical_featurefile_server <- function(id, maf_path){
      validate(need(!is.null(maf_with_clinical_data()), message = "Please import Clinical Feature File"))
      #validate(need(!is.null(maf_with_clinical_data), message = "Please import a Clinical Data file"))
      maftools::getClinicalData(maf_with_clinical_data())
-     }, options = list(scrollX = TRUE), class = "display nowrap")
+     }, options = list(scrollX = TRUE), class = "display nowrap", filter = 'top')
    
      
     return(maf_with_clinical_data)

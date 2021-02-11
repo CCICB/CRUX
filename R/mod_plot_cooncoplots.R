@@ -6,6 +6,10 @@ modulePlotCooncoplotUI <- function(id){
   tagList(
     plotOutput(outputId=ns("out_plot_cooncoplot")) %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
     shinyWidgets::panel(heading = "Options",
+                        mod_select_maf_clinical_data_column_ui(id = ns("mod_clinical_feature_1"), label = "Clinical Feature 1", multiple = FALSE),
+                        mod_select_maf_clinical_data_column_ui(id = ns("mod_clinical_feature_2"), label = "Clinical Feature 2", multiple = FALSE),
+                        shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_sort_by_annotation_1"), label = "Sort by annotation 1", value = FALSE),
+                        shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_sort_by_annotation_2"), label = "Sort by annotation 2", value = FALSE),
           shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_show_sample_names"), label = "Show sample names", value = FALSE),
         
           shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_use_custom_genes"), label = "Custom genes", value = FALSE),
@@ -34,6 +38,11 @@ modulePlotCooncoplotServer <- function(id, maf1, name_cohort1 = NULL, maf2, name
           return(NULL)
         })
       
+      
+      clinicalFeatures1 <- mod_select_maf_clinical_data_column_server(id = "mod_clinical_feature_1", maf = maf1, forced_to_pick_at_least_1 = FALSE)
+      clinicalFeatures2 <- mod_select_maf_clinical_data_column_server(id = "mod_clinical_feature_2", maf = maf2, forced_to_pick_at_least_1 = FALSE)
+      
+      
       plot_cooncoplot <- reactive({ 
         validate(need(!is.null(maf1()) & !is.null(maf2()), "Please import MAF file"))
         function() { 
@@ -47,7 +56,12 @@ modulePlotCooncoplotServer <- function(id, maf1, name_cohort1 = NULL, maf2, name
                      geneNamefont  = input$in_num_fontsize,
                      SampleNamefont =  input$in_num_fontsize_sample,
                      titleFontSize = input$in_num_fontsize_title,
-                     legendFontSize = input$in_num_fontsize_legend
+                     legendFontSize = input$in_num_fontsize_legend, 
+                     clinicalFeatures1 = clinicalFeatures1(),
+                     clinicalFeatures2 = clinicalFeatures2(),
+                     sortByAnnotation1 = input$in_checkbox_sort_by_annotation_1, 
+                     sortByAnnotation2 = input$in_checkbox_sort_by_annotation_2
+                     
                      ) 
           } %>% return()
         })

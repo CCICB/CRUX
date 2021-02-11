@@ -7,16 +7,18 @@ mod_plot_titv_graphs_ui <- function(id){
     plotOutput(outputId=ns("out_plot_titv"), height = "500px") %>% shinycssloaders::withSpinner(proxy.height = "200px"),
     br(),
     shinyWidgets::panel(heading = "Options",
-          shiny::selectInput(inputId = ns("in_select_plot_type"), label = "Plot type", choices = c("both", "bar", "box"), selected = "both", multiple = F),
-          checkboxInput(inputId = ns("in_check_show_barcodes"), label = "Show barcodes", value = TRUE),
-          checkboxInput(inputId = ns("in_check_plot_notch"), label = "Plot notch", value = FALSE),
-          checkboxInput(inputId = ns("in_check_use_syn"), label = "Include Synonymous Variants", value = FALSE),
-          numericInput(inputId = ns("in_num_fontsize"), label = "Fontsize: Y axis titles", value = 1, min = 0, step = 0.2),
-          numericInput(inputId = ns("in_num_fontsize_axis_x"), label = "Fontsize: X axis tick labels", value = 1, min = 0, step = 0.2),
-          numericInput(inputId = ns("in_num_fontsize_axis_y"), label = "Fontsize: Y axis tick labels", value = 1, min = 0, step = 0.2),
-          
-          conditionalPanel(condition = "input.in_check_show_barcodes", ns=ns, numericInput(inputId = ns("in_num_fontsize_samples"), label = "Fontsize: sample names", value = 1, min = 0, step = 0.2)),
-          
+                        fluidRow(
+          shiny::selectInput(inputId = ns("in_select_plot_type"), label = "Plot type", choices = c("both", "bar", "box"), selected = "both", multiple = F) %>% col_3(),
+          checkboxInput(inputId = ns("in_check_show_barcodes"), label = "Show barcodes", value = TRUE) %>% col_3(style="margin-top: 24px"),
+          checkboxInput(inputId = ns("in_check_plot_notch"), label = "Plot notch", value = FALSE) %>% col_3(style="margin-top: 24px"),
+          checkboxInput(inputId = ns("in_check_use_syn"), label = "Include Synonymous Variants", value = FALSE) %>% col_3(style="margin-top: 24px"),
+                        ),
+          fluidRow(
+            numericInput(inputId = ns("in_num_fontsize"), label = "Fontsize: Y axis titles", value = 1, min = 0, step = 0.2) %>% col_3(),
+            numericInput(inputId = ns("in_num_fontsize_axis_x"), label = "Fontsize: X axis tick labels", value = 1, min = 0, step = 0.2) %>% col_3(),
+            numericInput(inputId = ns("in_num_fontsize_axis_y"), label = "Fontsize: Y axis tick labels", value = 1, min = 0, step = 0.2) %>% col_3(),
+            conditionalPanel(condition = "input.in_check_show_barcodes", ns=ns, numericInput(inputId = ns("in_num_fontsize_samples"), label = "Fontsize: sample names", value = 1, min = 0, step = 0.2)) %>% col_3(),
+          ),
           moduleDownloadPlotUI(ns("mod_download"))
     )
   )

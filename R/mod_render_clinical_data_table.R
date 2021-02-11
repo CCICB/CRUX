@@ -32,7 +32,7 @@ mod_render_clinical_data_table_server <- function(id, maf){
       maftools::getClinicalData(maf()) %>% return()
     })
     
-    output$clinical_feature_table <- DT::renderDataTable({ clinical_data_df()}, options = list(scrollX = TRUE), class = "display nowrap")
+    output$clinical_feature_table <- DT::renderDataTable({ clinical_data_df()}, options = list(scrollX = TRUE), class = "display nowrap", filter = 'top')
   })
 }
     

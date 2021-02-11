@@ -127,7 +127,7 @@ mod_utilities_create_clinical_data_spreadsheet_server <- function(id, maf){
         browser()
       })
 
-      output$out_dt_latest_df <- DT::renderDataTable({ maftools::getClinicalData(my_maf()) }, options = list(scrollX = TRUE), class = "display nowrap")
+      output$out_dt_latest_df <- DT::renderDataTable({ maftools::getClinicalData(my_maf()) }, options = list(scrollX = TRUE), class = "display nowrap", filter = 'top')
       
       # Return Clinical Feature Dataframe ---------------------------------------
       return(latest_saved_df)

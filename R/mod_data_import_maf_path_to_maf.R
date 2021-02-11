@@ -104,7 +104,7 @@ mod_data_import_maf_path_to_maf_server <- function(id, maf_path, clinicalData){
     })
     output$out_dt_maf_summary <-  DT::renderDataTable({
       maf_summary_dt()
-    }, options = list(scrollX = TRUE), class = "display nowrap")
+    }, options = list(scrollX = TRUE), class = "display nowrap", filter = 'top')
                             
     return(maf)
   })
