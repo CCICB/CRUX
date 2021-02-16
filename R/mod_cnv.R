@@ -18,8 +18,8 @@ mod_cnv_ui <- function(id){
       heading = "Step 1: Select Dataset",
       mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_ui(id = ns("mod_select_dataset_wrapper"), panel = FALSE) %>% shinycssloaders::withSpinner(proxy.height = "200px")
     ),
+    icon_down_arrow(),br(),
     
-
     # Step 2: Select GISTIC directory -----------------------------------------
     shinyWidgets::panel(
       heading = HTML(paste0("Step 2: Select GISTIC directory   ", as.character(select_gistic_help_icon()), sep = " ")),
@@ -33,7 +33,7 @@ mod_cnv_ui <- function(id){
       wellPanel(textOutput(outputId = ns("out_text_directory"))),
       htmlOutput(outputId = ns("out_dir_looks_like_gistic"))
     ),
-    
+    icon_down_arrow(),br(),
 
     # Step 3: Check automatic identification of GISTIC files ------------------
     shinyWidgets::panel(
@@ -46,7 +46,7 @@ mod_cnv_ui <- function(id){
         
       )
     ),
-    
+    icon_down_arrow(),br(),
 
     # Step 4: Configure Analysis ----------------------------------------------
     shinyWidgets::panel(
@@ -60,24 +60,24 @@ mod_cnv_ui <- function(id){
         col_4() 
       )
     ),
-    
+    icon_down_arrow(),br(),
     # Step 5: Ensure Your Variant Dataset Sample Names Match Your CNV (GISTIC) Sample Names ------------------------------------------------------------------
     shinyWidgets::panel(
       heading = "Step 5: Ensure your SNV vs CNV (GISTIC) sample names match",
       plotOutput(outputId = ns("out_plot_sample_name_overlap"), height = "300px", width="auto")
     ),
-    
+    icon_down_arrow(),br(),
     
 
     # Step 6: Analyse / Visualise ------------------------------------------------------------------
     shinyWidgets::panel(
       heading = "Step 6: Choose Analysis / Visualisation",
       tabsetPanel(
+        tabPanel(title = "Genome Plot", mod_plot_gistic_genome_ui(ns("mod_plot_genome"))),
+        tabPanel(title = "Oncoplot", mod_plot_gistic_oncoplot_ui(ns("mod_plot_oncoplot"))),
         tabPanel(title = "Gene Summary", mod_render_downloadabledataframe_ui(id=ns("mod_downloadable_df_gene_summary"))),
         tabPanel(title = "Sample Summary", mod_render_downloadabledataframe_ui(id=ns("mod_downloadable_df_sample_summary"))),
-        tabPanel(title = "Cytoband Summary", mod_render_downloadabledataframe_ui(id=ns("mod_downloadable_df_cytoband_summary"))),
-        tabPanel(title = "Genome Plot", mod_plot_gistic_genome_ui(ns("mod_plot_genome"))),
-        tabPanel(title = "Oncoplot", mod_plot_gistic_oncoplot_ui(ns("mod_plot_oncoplot")))
+        tabPanel(title = "Cytoband Summary", mod_render_downloadabledataframe_ui(id=ns("mod_downloadable_df_cytoband_summary")))
       ),
       br()
     )

@@ -148,6 +148,8 @@ mod_external_tools_server <- function(id, maf_data_pool){
     
     #Download
     output$out_downloadbttn_exported_data <- downloadHandler(filename = filename, function(file){
+      #browser()
+      validate(need(!is.null(maf()), message = "Loading ... "))
       conversion_function = external_tools_get_property_by_tool_name(tool_name = tool_name(), property_to_retrieve = "maf_conversion_function")
       conversion_function(maf(), file)
     })

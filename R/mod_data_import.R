@@ -48,8 +48,10 @@ mod_data_import_ui <- function(id){
           shinyWidgets::panel(
            heading="Step 3: Tumor Level Metadata",
            mod_shinyfiles_get_clinical_featurefile_path_ui(id = ns("mod_get_clinical_featurefile_path")),
+           downloadButton("out_download_template", label = "Download Template"),
            hr(),
-           mod_render_clinical_data_table_ui(ns("mod_render_clinical_data_table"))
+           mod_render_clinical_data_table_ui(ns("mod_render_clinical_data_table")) %>%
+             shinycssloaders::withSpinner(proxy.height = 300)
           ),
           fluidRow(
             col_10(),
@@ -177,6 +179,14 @@ mod_data_import_server <- function(id, maf_data_pool){
       #TODO find a way to reset shinyfile inputs
     }
     # output$out_dt_placeholder <- DT::renderDataTable({ clinical_data() }, options = list(scrollX = TRUE), class = "display nowrap")
+    
+    output$out_download_template <- downloadHandler(filename = "clinical_features_template", function(file){
+      #validate(need(!is.null(maf()),message = "Loading"))
+      browser()
+      message("DOWNLOADNNG")
+      #maftools::getClinicalData(maf()) %>%
+      data.table::fwrite(x=mtcars,file=file, sep="\t")
+      })
   })
 }
 

@@ -9,14 +9,6 @@ moduleSubsetMafsUI <- function(id){
     div(
       id=ns("SubsetDatasetUI"),
       
-      # shinyWidgets::panel(heading = "Instructions", 
-      #     tags$ol(
-      #       tags$li("Select Dataset"),
-      #       tags$li("Choose features you want to keep. If your dataset was VCF derived, the INFO / FILTER columns may be present under 'subset by anything else'"),
-      #       tags$li("Add subset dataset to your data pool")
-      #       )
-      #    ),
-    
       shinyWidgets::panel(heading = "Step 1: Select Dataset",
         #Select Dataset -------------------------------------------------------------------------
         #mod_select_dataset_from_maf_data_pool_pickerinput_ui(ns("in_picker_dataset"), panel = FALSE)
@@ -24,6 +16,7 @@ moduleSubsetMafsUI <- function(id){
         #textOutput(outputId = ns("debugtest"))
       ),
       
+      icon_down_arrow(),br(),
       
       shinyWidgets::panel(heading = "Step 2: Configure Subsetting",
         #Subset by Sample-------------------------------------------------------------------------
@@ -38,6 +31,7 @@ moduleSubsetMafsUI <- function(id){
         shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_subset_by_clinical_feature"), label = "Subset by clinical feature"),
         conditionalPanel(condition = "input.in_checkbox_subset_by_clinical_feature", ns = ns, uiOutput(outputId = ns("out_ui_clinquery_field_list"))),
         conditionalPanel(condition = "input.in_checkbox_subset_by_clinical_feature && !output.field_is_numeric", ns = ns, uiOutput(outputId = ns("out_ui_clinquery_field_values"))),
+        conditionalPanel(condition = "input.in_checkbox_subset_by_clinical_feature", ns = ns, plotOutput(ns("out_plot_clinfeature_summary"))),
         
         conditionalPanel(
           condition = "input.in_checkbox_subset_by_clinical_feature && output.field_is_numeric", 
@@ -46,13 +40,14 @@ moduleSubsetMafsUI <- function(id){
           shinyWidgets::pickerInput(inputId = ns("in_pick_clinquery_operator"), label = "Operator", choices = c("==", ">", ">=", "<","<="), selected = "==")
         ),
         
-  
         # Subset By MAF column (a.k.a. other) ----------------------------------------------------
         shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_subset_by_other"), label = "Subset by anything else"),
         shinyBS::bsTooltip(id = ns("in_checkbox_subset_by_other"), title="Filter by any MAF column. If MAF was made using vcf2maf, this usually includes VCF INFO/FILTER fields. A common operation using these columns is to subset where FILTER == PASS", placement = "right"),
         conditionalPanel(condition = "input.in_checkbox_subset_by_other", ns = ns, uiOutput(outputId = ns("out_ui_other_field_list"))),
         conditionalPanel(condition = "input.in_checkbox_subset_by_other", ns = ns, uiOutput(outputId = ns("out_ui_maf_field_values")))
         ),
+      
+      icon_down_arrow(),br(),
       
       shinyWidgets::panel(heading = "Step 2.5: Debug Mode",
         # Debug Mode ----------------------------------------------------
@@ -67,12 +62,15 @@ moduleSubsetMafsUI <- function(id){
         )
       ),
       
-  
+      icon_down_arrow(),br(),
+      
       # MAF Summary Tables -------------------------------------------------
       shinyWidgets::panel(heading = "Step 3: Review Subset MAF", 
         mod_single_cohort_summary_tables_ui(id = ns("out_dt_subset_stats")), br()
       ),
-  
+
+      icon_down_arrow(),br(),
+      
       # Add To Data Pool --------------------------------------------------------
       shinyWidgets::panel(heading = "Step 4: Add to Data Pool",
           #Metadata
@@ -98,7 +96,8 @@ moduleSubsetMafsServer <- function(id, maf_data_pool){
         validate(need(!is.null(maf_dataset_wrapper()), message = "Please select a dataset"))
         return(maf_dataset_wrapper()$loaded_data)
       })
-
+      
+      
       # Subset By Sample ----------------------------------------------------------
       tumour_sample_list <- reactive({ maftools::getSampleSummary(maf()) %>% dplyr::pull(Tumor_Sample_Barcode) %>% unique() %>% as.character() %>% sort() %>% return()})
       output$out_ui_tsb <- renderUI({ shinyWidgets::pickerInput( inputId = session$ns("in_pick_tsb"), label = "Samples", choices = tumour_sample_list() %>% sort %>% unique(), options = shinyWidgets::pickerOptions(liveSearch = T, actionsBox = T), multiple = T)  })
@@ -143,6 +142,12 @@ moduleSubsetMafsServer <- function(id, maf_data_pool){
         }
       })
 
+      #Plot clinical feature information
+      output$out_plot_clinfeature_summary <- renderPlot({
+        #Add detection of what happens at gene level
+        maftools_clinical_data_visually_summarise(maf = maf(), clinical_feature = input$in_pick_clinquery_field, threshold = input$in_num_clinquery_theshold, selected_items = input$in_pick_clinquery_values)
+        })
+      
       # Subset by MAF column ----------------------------------------------------
       maf_fields <- reactive({ colnames(maf()@data) %>% sort %>% unique %>% return() })
       output$out_ui_other_field_list <- renderUI({ validate(need(!is.null(maf_fields()), message = "Loading MAF fields")); shinyWidgets::pickerInput( inputId = session$ns("in_pick_field"), label = "Field", choices = maf_fields(), options = shinyWidgets::pickerOptions(liveSearch = T, actionsBox = T), multiple = F)  })
@@ -243,9 +248,10 @@ moduleSubsetMafsServer <- function(id, maf_data_pool){
 
 
       # Add Metadata ------------------------------------------------------------
-      display_name <- reactive({maf_dataset_wrapper()$display_name})
-      short_name <- reactive({maf_dataset_wrapper()$short_name})
-      data_source <- reactive({ maf_dataset_wrapper()$name_of_data_source})
+      display_name <- reactive({maf();subset_maf(); maf_dataset_wrapper()$display_name}) #added the first statments to trigger function when relevant items change
+      short_name <- reactive({maf(); subset_maf(); maf_dataset_wrapper()$short_name})
+      data_source <- reactive({maf();subset_maf(); maf_dataset_wrapper()$name_of_data_source})
+      
       default_display_name <- reactive({ 
         if(is.null(genes()) && is.null(tsb()) && is.null(query()) && is.null(clinquery())) return(NULL)
         paste0(display_name()," [",subset_text_summary_all(),"]") 

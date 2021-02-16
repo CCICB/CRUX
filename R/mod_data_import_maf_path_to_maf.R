@@ -12,7 +12,7 @@ mod_data_import_maf_path_to_maf_ui <- function(id){
 
     shinyWidgets::panel(
       heading = "Preview",
-        uiOutput(outputId = ns("out_text_error_message")),
+        htmlOutput(outputId = ns("out_text_error_message")),
         DT::dataTableOutput(outputId = ns("out_dt_maf_summary")),
         br()
         
@@ -93,10 +93,10 @@ mod_data_import_maf_path_to_maf_server <- function(id, maf_path, clinicalData){
       return(msg)
     })
     
-    output$out_text_error_message <- renderUI({
+    output$out_text_error_message <- renderText({
       HTML(msg())
-      }, )
-    
+      })
+
     maf_summary_dt <- reactive({
       validate(need(is.null(msg()), message = "Problem with imported files"))
       validate(need(!is.null(maf()), message = "Please import a valid MAF file"))

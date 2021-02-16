@@ -8,16 +8,20 @@ moduleEnrichmentAnalysisUI <- function(id){
                                    mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_ui(id = ns("mod_select_dataset_from_maf_data_pool"), panel = FALSE)
                                    
                ),
+               icon_down_arrow(),br(),
+               
                shinyWidgets::panel(heading = "Step 2: Configure Analysis Data",
                                    uiOutput(outputId = ns("out_pick_clinical_feature")),
                                    numericInput(inputId = ns("in_num_minmut"), label = "Minimum Number of Mutations", value = 5, min = 0, step = 1)
                ),
+               icon_down_arrow(),br(),
                
                shinyWidgets::panel(heading = "Step 3: Check Clinical Feature Is Appropriate",
                                    htmlOutput(outputId = ns("out_html_is_feature_appropriateness_alerts")),
                                    htmlOutput(outputId = ns("out_html_feature_value_are_frequent_enough")),
                                    plotOutput(outputId = ns("out_plot_feature_distribution"))
                ),
+               icon_down_arrow(),br(),
                
                shinyWidgets::panel(heading = "Step 3: View Tabular Results",
                                    tabsetPanel(
@@ -25,6 +29,7 @@ moduleEnrichmentAnalysisUI <- function(id){
                                      tabPanel(title = "Groupwise", DT::dataTableOutput(outputId = ns("out_dt_groupwise")) %>% shinycssloaders::withSpinner(proxy.height = "200px") , br()),
                                      tabPanel(title = "Pairwise", DT::dataTableOutput(outputId = ns("out_dt_pairwise")) %>% shinycssloaders::withSpinner(proxy.height = "200px"), br())
                                    )),
+               icon_down_arrow(),br(),
                
                shinyWidgets::panel(heading = "Step 4: View Plots",
                                    plotOutput(outputId = ns("out_plot_enrichment_results")) %>% shinycssloaders::withSpinner(proxy.height = "200px"),

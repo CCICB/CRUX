@@ -1,10 +1,11 @@
 moduleUtilitiesUI <- function(id){
   ns <- NS(id)
   tagList(
+    br(),
     shiny::tabsetPanel(id = ns("utilities"), 
        #         tabPanel(title = "Merge Datasets", value = 'merge', shinyWidgets::panel(moduleMergeMafsUI(id = ns("mod_merge")))),
-                tabPanel(title = "Subset Data", value = 'subset', shinyWidgets::panel(moduleSubsetMafsUI(id=ns("mod_subset")))),
-                tabPanel(title = "Merge data", value = 'merge', shinyWidgets::panel(mod_merge_ui(id=ns("mod_merge"))))
+                tabPanel(title = "Subset Data", value = 'subset', shinyWidgets::panel(moduleSubsetMafsUI(id=ns("mod_subset")),style = "background: #4d5375")),
+                tabPanel(title = "Merge data", value = 'merge', shinyWidgets::panel(mod_merge_ui(id=ns("mod_merge")),style = "background: #4d5375"))
     )
   )
 }

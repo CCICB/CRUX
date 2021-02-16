@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @family arrows
-icon_down_arrow <- function(fontsize="60px", alignment = "center"){
+icon_down_arrow <- function(fontsize="40px", alignment = "center"){
   utilitybelt::assert_non_empty_string(fontsize)
   utilitybelt::assert_non_empty_string(alignment)
   

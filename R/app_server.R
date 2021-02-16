@@ -8,6 +8,7 @@
 app_server <- function( input, output, session ) {
   starting_maf_data_pool <- new_maf_data_pool()
   starting_maf_data_pool <- tcga_datasets_to_data_pool(starting_maf_data_pool, source = "Firehose")
+  #starting_maf_data_pool <- pcawg_datasets_to_data_pool(starting_maf_data_pool)
   #starting_maf_data_pool <- tcga_datasets_to_data_pool(starting_maf_data_pool, source = "MC3")
   
   
