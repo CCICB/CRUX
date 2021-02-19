@@ -36,6 +36,7 @@ mod_plot_gistic_oncoplot_ui <- function(id){
         numericInput(ns("in_num_sepwd_samples"), label = "Sepwd: Samples", value = 0.25, min = 0.01, step = 1) %>% col_3()
       ),
       
+      numericInput(ns("in_num_topn"), label = "Top N", value = 10, min = 1, step = 1),
       moduleDownloadPlotUI(id = ns("mod_download_plot"))
       #mod_select_maf_column_value_ui(id = ns("mod_select_clinical_feature_value")),
     )
@@ -69,7 +70,8 @@ mod_plot_gistic_oncoplot_server <- function(id, gistic, maf){
           gene_mar = input$in_num_mar_gene, 
           barcode_mar = input$in_num_mar_barcodes, 
           sepwd_genes = input$in_num_sepwd_genes, 
-          sepwd_samples = input$in_num_sepwd_samples
+          sepwd_samples = input$in_num_sepwd_samples,
+          top = input$in_num_topn
         )
       }
     })

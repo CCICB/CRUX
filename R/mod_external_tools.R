@@ -82,8 +82,11 @@ mod_external_tools_server <- function(id, maf_data_pool){
     # Select Data -------------------------------------------------------------
     maf_dataset_wrapper <- reactive({
       validate(need(!is.null(maf_data_pool()), message = "Please wait while we load data"))
-      maf_dataset_wrapper_ <- mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_server(id = "mod_select_dataset", maf_data_pool = maf_data_pool)
-      return(maf_dataset_wrapper_())
+      mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_server(id = "mod_select_dataset", maf_data_pool = maf_data_pool)() %>%
+        return()
+      #maf_dataset_wrapper_ = 
+      #browser()
+      #return(maf_dataset_wrapper_())
     })
     
     #An observe to make sure we get maf_dataset_wrapper in a non-lazy manner
@@ -150,6 +153,7 @@ mod_external_tools_server <- function(id, maf_data_pool){
     output$out_downloadbttn_exported_data <- downloadHandler(filename = filename, function(file){
       #browser()
       validate(need(!is.null(maf()), message = "Loading ... "))
+      #browser()
       conversion_function = external_tools_get_property_by_tool_name(tool_name = tool_name(), property_to_retrieve = "maf_conversion_function")
       conversion_function(maf(), file)
     })

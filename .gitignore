@@ -40,3 +40,6 @@ vignettes/*.pdf
 
 #ZCC data
 inst/example_data/*zcc*
+
+#Becker GBM data
+inst/example_data/Becker_GBM_Exomes*
