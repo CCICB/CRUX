@@ -25,30 +25,50 @@ app_ui <- function(request) {
     shinyWidgets::setShadow(class = "panel"),
     
     # List the first level UI elements here 
-    fluidPage(
-      titlePanel("shinymaftools"),
+    shinydashboard::dashboardPage(
+      header = shinydashboard::dashboardHeader(title = HTML(paste0("shiny",tags$strong("maftools"))), shinydashboard::dropdownMenu(type = "notifications", headerText = "DNA")), 
+      sidebar = shinydashboard::dashboardSidebar(
+        shinydashboard::sidebarMenu(
+          shinydashboard::menuItem("Data", tabName = "Data", icon = icon("table"), selected = TRUE,
+                                   shinydashboard::menuSubItem(text = "Available Data", tabName = "DataPool", icon = icon("database")),
+                                   shinydashboard::menuSubItem(text = "Import Data", tabName = "DataImport", icon = icon("file-upload"))
+                                   ),
+          shinydashboard::menuItem("Pan Cohort Statistics", tabName = "PanCohortStatistics", icon = icon("chart-bar")),
+          shinydashboard::menuItem("Compare Cohorts", tabName = "CompareCohorts", icon = icon("balance-scale-left")),
+          shinydashboard::menuItem("Enrichment", tabName = "Enrichment", icon = icon("dna")),
+          shinydashboard::menuItem("Copy Number Analysis", tabName = "CopyNumberAnalysis", icon = icon("stream")), #align-center
+          shinydashboard::menuItem("Sample Level Analysis", tabName = "SampleLevelAnalysis", icon = icon("microscope")), # maybe th icon?
+          shinydashboard::menuItem("External Tools", tabName = "ExternalTools", icon = icon("sign-out-alt")),
+          shinydashboard::menuItem("Expression", tabName = "ExpressionAnalysis", icon = icon("th"), badgeLabel = "Coming Soon", badgeColor = "maroon"), # maybe th icon?
+          shinydashboard::menuItem("Utilities", tabName = "Utilities", icon = icon("toolbox"), 
+                                   shinydashboard::menuSubItem(text = "Subset", tabName = "Subset", icon = icon("star-half-alt")),
+                                   shinydashboard::menuSubItem(text = "Merge", tabName = "Merge", icon = icon("layer-group"))
+                                   ),
+          shinydashboard::menuItem("Manual", tabName = "Manual", icon = icon("book"), badgeLabel = "Coming Soon", badgeColor = "maroon")
+        )
+        ),
       
-      # Set background colour ---------------------------------------------------
-      #shinyWidgets::setBackgroundColor(color = "#F8F8FF"),
-      #shinyWidgets::setBackgroundColor(color = "black"),
-      #shinyWidgets::setBackgroundColor(color = "#31363e"),
-      #shinyWidgets::setBackgroundColor(color = "#699b94"),
-      shinyWidgets::setBackgroundColor(color = "#74bfbf"),
-      
-      shiny::tabsetPanel(
-        shiny::tabPanel(title = "Data", mod_data_page_ui(id = "mod_data_page")),
-        shiny::tabPanel(title = "Pan Cohort Statistics", mod_pan_cohort_statistics_ui(id = "mod_pan_cohort_statistics")),
-        # shiny::tabPanel(title = "Compare Cohorts", moduleCompareCohortsUI(id = "mod_compare_cohorts")),
-        shiny::tabPanel(title = "Compare Cohorts", mod_compare_cohorts_ui(id = "mod_compare_cohorts")),
-        shiny::tabPanel(title = "Enrichment", moduleEnrichmentAnalysisUI(id = "mod_enrichment_analyis")),
-        shiny::tabPanel(title = "Copy Number Analysis", mod_cnv_ui(id = "mod_cnv_level_analysis")),
-        shiny::tabPanel(title = "Sample Level Analysis", mod_sample_level_analysis_ui(id = "mod_sample_level_analysis")),
-        shiny::tabPanel(title = "External Tools", mod_external_tools_ui(id= "mod_external_tools")),
-        shiny::tabPanel(title = "Utilities", moduleUtilitiesUI(id = "mod_utilities")),
-        shiny::tabPanel(title = "Help")
-        #shiny::tabPanel(title="Test Space", mod_utilities_create_clinical_data_spreadsheet_ui(id = "mod_create_clinical_data_spreadsheet"))
+      body =shinydashboard::dashboardBody(
+        # dashboardthemes::shinyDashboardThemes(
+        #   theme = "onenote"
+        # ),
+        # 
+        shinydashboard::tabItems(
+          shinydashboard::tabItem(tabName = "DataPool", mod_datapool_viewer_ui(id = "mod_datapool_viewer")),
+          shinydashboard::tabItem(tabName = "DataImport", mod_data_import_ui(id = "mod_data_import")),
+          shinydashboard::tabItem(tabName = "PanCohortStatistics", mod_pan_cohort_statistics_ui(id = "mod_pan_cohort_statistics")),
+          shinydashboard::tabItem(tabName = "CompareCohorts", mod_compare_cohorts_ui(id = "mod_compare_cohorts")),
+          shinydashboard::tabItem(tabName = "Enrichment", moduleEnrichmentAnalysisUI(id = "mod_enrichment_analyis")),
+          shinydashboard::tabItem(tabName = "CopyNumberAnalysis", mod_cnv_ui(id = "mod_cnv_level_analysis")),
+          shinydashboard::tabItem(tabName = "SampleLevelAnalysis", mod_sample_level_analysis_ui(id = "mod_sample_level_analysis")),
+          shinydashboard::tabItem(tabName = "ExternalTools", mod_external_tools_ui(id= "mod_external_tools")),
+          #shinydashboard::tabItem(tabName = "Utilities", moduleUtilitiesUI(id = "mod_utilities")),
+          shinydashboard::tabItem(tabName = "Subset", moduleSubsetMafsUI(id = "mod_subset")),
+          shinydashboard::tabItem(tabName = "Merge", mod_merge_ui(id = "mod_merge")),
+          shinydashboard::tabItem(tabName = "Manual")
+        )
       )
-      
+      #)
     )
   )
 }

@@ -651,6 +651,13 @@
       "Repository": "CRAN",
       "Hash": "3e9b8a51dfdc95395632b25ce3ce8ebc"
     },
+    "ggthemes": {
+      "Package": "ggthemes",
+      "Version": "4.2.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "617fb2c300f68e8b1ba21043fba88fd7"
+    },
     "gh": {
       "Package": "gh",
       "Version": "1.2.0",
@@ -1330,6 +1337,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "f39bb3c44a9b496723ec7e86f9a771d8"
+    },
+    "shinydashboard": {
+      "Package": "shinydashboard",
+      "Version": "0.7.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "133639dc106955eee4ffb8ec73edac37"
     },
     "shinyjs": {
       "Package": "shinyjs",

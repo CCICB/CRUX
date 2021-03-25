@@ -17,11 +17,15 @@ app_server <- function( input, output, session ) {
   maf_data_pool <- reactiveVal(starting_maf_data_pool)
   # List the first level callModules here
   
-  mod_data_page_server(id = "mod_data_page", maf_data_pool)
+  #mod_data_page_server(id = "mod_data_page", maf_data_pool)
+  mod_datapool_viewer_server(id = "mod_datapool_viewer", maf_data_pool = maf_data_pool)
+  mod_data_import_server(id = "mod_data_import", maf_data_pool = maf_data_pool)
   mod_pan_cohort_statistics_server(id = "mod_pan_cohort_statistics", maf_data_pool)
   mod_compare_cohorts_server(id = "mod_compare_cohorts", maf_data_pool = maf_data_pool)
   moduleEnrichmentAnalysisServer(id="mod_enrichment_analyis", maf_data_pool)
-  moduleUtilitiesServer(id = "mod_utilities", maf_data_pool)
+  #moduleUtilitiesServer(id = "mod_utilities", maf_data_pool)
+  mod_merge_server(id = "mod_merge", maf_data_pool = maf_data_pool)
+  moduleSubsetMafsServer(id = "mod_subset", maf_data_pool)
   mod_external_tools_server(id= "mod_external_tools", maf_data_pool)
   mod_sample_level_analysis_server(id = "mod_sample_level_analysis", maf_data_pool)
   mod_cnv_server(id = "mod_cnv_level_analysis", maf_data_pool)

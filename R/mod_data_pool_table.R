@@ -12,9 +12,13 @@
 mod_datapool_viewer_ui <- function(id){
   ns <- NS(id)
   tagList(
-      shiny::wellPanel(p(strong(a("PCAWG", href="https://dcc.icgc.org/pcawg", target="_blank")), "and" , strong(a("TCGA", href="https://www.cancer.gov/about-nci/organization/ccg/research/structural-genomics/tcga", target="_blank"))," datasets are immediately available to you. To import your own data, use the ",strong("Import Dataset"), " tab.")),
+    shinyWidgets::panel(
+    shiny::wellPanel(p(strong(a("PCAWG", href="https://dcc.icgc.org/pcawg", target="_blank")), "and" , strong(a("TCGA", href="https://www.cancer.gov/about-nci/organization/ccg/research/structural-genomics/tcga", target="_blank"))," datasets are immediately available to you. To import your own data, use the ",strong("Import Dataset"), " tab."))
+    ),
+    shinyWidgets::panel(heading = "Available Datasets",
       DT::dataTableOutput(outputId = ns("out_dt_data_pool")) %>% shinycssloaders::withSpinner(proxy.height = "200px"),
     )
+  )
 }
     
 #' datapool_viewer Server Functions
