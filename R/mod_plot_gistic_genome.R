@@ -56,6 +56,11 @@ mod_plot_gistic_genome_server <- function(id, gistic, maf){
         dplyr::pull(Hugo_Symbol) %>%
         sort() %>%
         unique()
+
+      # validate(need(!is.null(gistic()), message = "Loading ..."))
+      # gistic()@gene.summary[[1]] %>%
+      #   sort() %>% 
+      #   unique()
     })
     observeEvent(mutGenes(), { shinyWidgets::updatePickerInput(session = session, inputId = "in_pick_mutgenes", choices = mutGenes(), selected = character(0))})
     

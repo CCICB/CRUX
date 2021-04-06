@@ -163,3 +163,10 @@ maftools_flagged_genes <- function(){
                         "HELZ2", "HERC2", "ABCA4") 
  return(top100flags)
 }
+
+
+maftools_gistic = function(gistic){
+  gistic@data
+  #gistic@cnMatrix %>%  as.data.frame() %>% tibble::rownames_to_column("Cytoband") %>% tidyr::pivot_longer(2:ncol(.),names_to = "Sample", values_to = "MutationType") %>% dplyr::tibble() 
+}
+

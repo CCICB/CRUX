@@ -75,6 +75,7 @@ mod_cnv_ui <- function(id){
       tabsetPanel(
         tabPanel(title = "Genome Plot", mod_plot_gistic_genome_ui(ns("mod_plot_genome"))),
         tabPanel(title = "Oncoplot", mod_plot_gistic_oncoplot_ui(ns("mod_plot_oncoplot"))),
+        tabPanel(title = "Oncoplot Summary", mod_render_downloadabledataframe_ui(id=ns("mod_downloadable_df_oncoplot_data"))),
         tabPanel(title = "Gene Summary", mod_render_downloadabledataframe_ui(id=ns("mod_downloadable_df_gene_summary"))),
         tabPanel(title = "Sample Summary", mod_render_downloadabledataframe_ui(id=ns("mod_downloadable_df_sample_summary"))),
         tabPanel(title = "Cytoband Summary", mod_render_downloadabledataframe_ui(id=ns("mod_downloadable_df_cytoband_summary")))
@@ -112,7 +113,7 @@ mod_cnv_server <- function(id, maf_data_pool){
     # Output Gistic Folder Path -----------------------------------------------
     output$out_text_directory <- renderText({ gistic_folder_validated() })
     
-    # Lets Look Inside the folder and grab the results ---------------------------------------------
+    #Look Inside the folder and grab the results ---------------------------------------------
     observeEvent(gistic_folder_validated(), {
       # browser()
       contents.v <- dir(gistic_folder_validated(), recursive = FALSE, full.names = FALSE)
@@ -216,14 +217,18 @@ mod_cnv_server <- function(id, maf_data_pool){
     cytoband_summary_df <- reactive({ validate(need(!is.null(gistic()), message = "Waiting for valid gistic")); maftools::getCytobandSummary(gistic()) })
     sample_summary_df <- reactive({ validate(need(!is.null(gistic()), message = "Waiting for valid gistic")); maftools::getSampleSummary(gistic()) })
     gene_summary_df <- reactive({ validate(need(!is.null(gistic()), message = "Waiting for valid gistic")); maftools::getGeneSummary(gistic()) })
+    oncoplot_data_df <- reactive({ validate(need(!is.null(gistic()), message = "Waiting for valid gistic")); gistic()@data %>% type.convert() })
     
     # Analyses -----------------------------------------------------------------
     output$out_dt_cytoband_summary <- mod_render_downloadabledataframe_server(id = "mod_downloadable_df_cytoband_summary", tabular_data_object = cytoband_summary_df, basename = "GISTIC_Cytoband_Summary")
     output$out_dt_sample_summary <- mod_render_downloadabledataframe_server(id = "mod_downloadable_df_sample_summary", tabular_data_object =  sample_summary_df, "GISTIC_Sample_Summary")
     output$out_dt_gene_summary <- mod_render_downloadabledataframe_server(id = "mod_downloadable_df_gene_summary", tabular_data_object =  gene_summary_df, "GISTIC_Gene_Summary")
+    #output$out_dt_oncoplot_summary <-
+    mod_render_downloadabledataframe_server(id = "mod_downloadable_df_oncoplot_data", tabular_data_object = oncoplot_data_df, basename = "GISTIC_Oncoplot_Data")
     
     mod_plot_gistic_genome_server("mod_plot_genome", gistic=gistic, maf=maf)
     mod_plot_gistic_oncoplot_server("mod_plot_oncoplot", gistic=gistic, maf=maf)
+    
   })
 }
 

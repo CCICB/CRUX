@@ -39,13 +39,13 @@ Imports:
     UpSetR (>= 1.4.0),
     ggVennDiagram (>= 0.3),
     mclust (>= 5.4.7),
-    R.utils
+    R.utils,
+    shinydashboard
 Remotes:
     selkamand/utilitybelt,
     selkamand/utilitybeltshiny,
-    PoisonAlien/TCGAmutations,
+    selkamand/TCGAmutations,
     Thinkr-open/golem,
-    PoisonAlien/maftools,
     ebailey78/shinyBS
 Encoding: UTF-8
 LazyData: true

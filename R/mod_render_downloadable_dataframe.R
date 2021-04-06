@@ -23,7 +23,7 @@ mod_render_downloadabledataframe_ui <- function(id, downloadbttn_label="", class
         conditionalPanel(
           condition = "output.cond", ns=ns, style = "height: 100%; width: 100%",
           #br(),
-          downloadButton(outputId = ns("out_bttn_download_dataframe"), icon = NULL, label = downloadbttn_label, class=class, style = "width: 100%; padding: 0; height: 30px;display: grid; align-content: space-evenly;"),
+          downloadButton(outputId = ns("out_bttn_download_dataframe"), icon = icon("download"), label = downloadbttn_label, class=class, style = "width: 100%; padding: 0; height: 30px;display: grid; align-content: space-evenly;"),
           shinyBS::bsTooltip(id = ns("out_bttn_download_dataframe"), title = tooltip_text, placement = tooltip_pos),
           #shinyWidgets::awesomeCheckbox(inputId = ns("in_check_column_filter"), value = TRUE, label = "")
           #moduleDownloadDatatableUI(ns("mod_download_table"), downloadbttn_label, tooltip_text = tooltip_text, tooltip_pos=tooltip_pos)

@@ -4,7 +4,7 @@
 \alias{icon_down_arrow}
 \title{icon_down_arrow}
 \usage{
-icon_down_arrow(fontsize = "60px", alignment = "center")
+icon_down_arrow(fontsize = "40px", alignment = "center")
 }
 \arguments{
 \item{fontsize}{a valid css fontsize, e.g. 60px (string)}
