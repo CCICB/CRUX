@@ -81,7 +81,7 @@ external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibb
 #' 
 #' @examples 
 #' external_tools_get_property_by_tool_name(tool_name = "OncodriveFML", "website")
-external_tools_get_property_by_tool_name <- function(tool_name, property_to_retrieve, external_tools_df=external_tool_metadata){
+external_tools_get_property_by_tool_name <- function(tool_name, property_to_retrieve, external_tools_df=shinymaftools::external_tool_metadata){
   #browser()
   assertthat::assert_that(assertthat::is.string(property_to_retrieve))
   assertthat::assert_that(

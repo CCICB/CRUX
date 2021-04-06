@@ -13,5 +13,5 @@ test_that("external_tools_convert_maf_to_bbglab", {
 
 test_that("external_tool_metadata dataset is up to date", {
   #if this fails try running external_tools_update_builtin_dataset()
-  expect_equal(external_tools_load_all_tools(), external_tool_metadata)
+  expect_equal(external_tools_load_all_tools(), shinymaftools::external_tool_metadata)
 })

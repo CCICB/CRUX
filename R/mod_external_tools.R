@@ -30,8 +30,8 @@ mod_external_tools_ui <- function(id){
       heading="Step 2: Select Tool",
       shinyWidgets::pickerInput(
         inputId = ns("in_pick_tool"), 
-        choices = external_tool_metadata %>% dplyr::pull(tool_name), 
-        choicesOpt = list(subtext=external_tool_metadata %>% dplyr::pull(tool_class)),
+        choices = shinymaftools::external_tool_metadata %>% dplyr::pull(tool_name), 
+        choicesOpt = list(subtext=shinymaftools::external_tool_metadata %>% dplyr::pull(tool_class)),
         options = shinyWidgets::pickerOptions(actionsBox=TRUE, liveSearch = TRUE), 
         width = "100%"
         ),
