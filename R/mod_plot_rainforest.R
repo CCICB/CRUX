@@ -32,7 +32,7 @@ modulePlotRainforestUI <- function(id){
     plotOutput(outputId=ns("out_plot_rainforest"), height = "600px") %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
     shinyWidgets::panel(
       
-      
+      #Core UI
       shinyWidgets::radioGroupButtons(inputId = ns("in_radio_group_pval_vs_fdr"), label = "Significance", choices = c("P-value", "FDR")),
       conditionalPanel(condition = "input.in_radio_group_pval_vs_fdr == 'P-value'", ns = ns, numericInput(inputId = ns("in_numeric_pvalue"), label = "p-value threshold", value = 0.05, min = 0, max = 1, step = 0.01)),
       conditionalPanel(condition = "input.in_radio_group_pval_vs_fdr == 'FDR'", ns = ns, numericInput(inputId = ns("in_numeric_fdr"), label = "fdr threshold", value = 0.05, min = 0, max = 1, step = 0.01)),
@@ -41,12 +41,13 @@ modulePlotRainforestUI <- function(id){
       numericInput(inputId = ns("in_title_size"), label = "title size", value = 1.2, min = 0.01, step = 0.2),
       colourpicker::colourInput(inputId = ns("in_colours_cohort1"), label = textOutput(ns("out_name_cohort1")), palette = "square", value = "#B0004E"), 
       colourpicker::colourInput(inputId = ns("in_colours_cohort2"), label = textOutput(ns("out_name_cohort2")), palette = "square", value = "#2A4CE3"),
-      downloadButton(outputId = ns("out_download_rainforest"), label = "Download"),
+      moduleDownloadPlotUI(id = ns("mod_download_plot")),
       
+      #Tooltips
       shinyBS::bsTooltip(ns("in_radio_group_pval_vs_fdr"), "Should we use raw  or fdr corrected p values to determine which genes are visible in the plot"),
       shinyBS::bsTooltip(ns("in_numeric_pvalue"), "P value threshold which determines which genes are visible in the plot"),
-      shinyBS::bsTooltip(ns("in_numeric_fdr"), "fdr threshold which determines which genes are visible in the plot"),
-      shinyBS::bsTooltip(ns("out_download_rainforest"), "Download file as svg")
+      shinyBS::bsTooltip(ns("in_numeric_fdr"), "fdr threshold which determines which genes are visible in the plot")
+      
     )
   )
 }
@@ -59,16 +60,25 @@ modulePlotRainforestServer <- function(id, mafCompareObject){
       name_cohort2 <- reactive ({ mafCompareObject()$SampleSummary$Cohort[2] })
       output$out_name_cohort1 <- renderText({ name_cohort1() })
       output$out_name_cohort2 <- renderText({ name_cohort2() })
-      output$out_plot_rainforest <- renderPlot({
-        
+      
+      plot_rainforest <- reactive({ 
+        validate(need(!is.null(mafCompareObject()), "Please import MAF file"))
+        function() { 
         plotforest(mafCompareRes = mafCompareObject(), pVal = input$in_numeric_pvalue, fdr = input$in_numeric_fdr, threshold_on_fdr = (input$in_radio_group_pval_vs_fdr=="FDR"), color =c(input$in_colours_cohort1, input$in_colours_cohort2), geneFontSize = input$in_numeric_gene_fontsize, lineWidth = input$in_numeric_linewidth, titleSize = input$in_title_size)
+        }
+      })
+      
+      output$out_plot_rainforest <- renderPlot({
+        plot_rainforest()()
+        #plotforest(mafCompareRes = mafCompareObject(), pVal = input$in_numeric_pvalue, fdr = input$in_numeric_fdr, threshold_on_fdr = (input$in_radio_group_pval_vs_fdr=="FDR"), color =c(input$in_colours_cohort1, input$in_colours_cohort2), geneFontSize = input$in_numeric_gene_fontsize, lineWidth = input$in_numeric_linewidth, titleSize = input$in_title_size)
         })
-      output$out_download_rainforest <- shiny::downloadHandler(filename = "compare_two_cohorts_rainforest.svg",
-                                                               content = function(file) {
-                                                                 svg(file)
-                                                                 plotforest(mafCompareRes = mafCompareObject(), pVal = input$in_numeric_pvalue, fdr = input$in_numeric_fdr, threshold_on_fdr = (input$in_radio_group_pval_vs_fdr=="FDR"), color =c(input$in_colours_cohort1, input$in_colours_cohort2), geneFontSize = input$in_numeric_gene_fontsize)
-                                                                 dev.off()
-                                                                 })
+      # output$out_download_rainforest <- shiny::downloadHandler(filename = "compare_two_cohorts_rainforest.svg",
+      #                                                          content = function(file) {
+      #                                                            svg(file)
+      #                                                            plotforest(mafCompareRes = mafCompareObject(), pVal = input$in_numeric_pvalue, fdr = input$in_numeric_fdr, threshold_on_fdr = (input$in_radio_group_pval_vs_fdr=="FDR"), color =c(input$in_colours_cohort1, input$in_colours_cohort2), geneFontSize = input$in_numeric_gene_fontsize)
+      #                                                            dev.off()
+      #                                                            })
+      moduleDownloadPlotServer(id = "mod_download_plot", session_parent = session, plotOutputId = "out_plot_rainforest", plotting_function = plot_rainforest(), default_filename = "rainforest")
   }
   )
 }
