@@ -57,17 +57,18 @@ mod_select_maf_column_server <- function(id, maf){
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
-mod_select_maf_clinical_data_column_ui <- function(id, label = "Select Property", multiple = FALSE){
+mod_select_maf_clinical_data_column_ui <- function(id, label = "Select Property", multiple = FALSE, tooltip_text = "", tooltip_position = "right"){
   ns <- NS(id)
   tagList(
-    shinyWidgets::pickerInput(inputId = ns("in_pick_maf_column"), label = label, choices = c(), selected = character(0), multiple = multiple, options = shinyWidgets::pickerOptions(actionsBox = TRUE, liveSearch = TRUE))
+    shinyWidgets::pickerInput(inputId = ns("in_pick_maf_column"), label = label, choices = c(), selected = character(0), multiple = multiple, options = shinyWidgets::pickerOptions(actionsBox = TRUE, liveSearch = TRUE)) %>%
+      shinyBS::tipify(title = tooltip_text, placement = tooltip_position)
   )
 }
 
 #' select_maf_column Server Functions
 #'
 #' @noRd 
-mod_select_maf_clinical_data_column_server <- function(id, maf, forced_to_pick_at_least_1=TRUE){
+mod_select_maf_clinical_data_column_server <- function(id, maf, forced_to_pick_at_least_1=TRUE, message_when_none_are_selected = "Please Select a Clinical Feature ..."){
   utilitybeltshiny::assert_reactive(maf)
   
   moduleServer( id, function(input, output, session){
@@ -85,7 +86,7 @@ mod_select_maf_clinical_data_column_server <- function(id, maf, forced_to_pick_a
     
     in_pick_maf_column <- reactive({ 
       if(forced_to_pick_at_least_1){
-        validate(need(!is.null(input[["in_pick_maf_column"]]),message = "Please Select a Clinical Feature ..." ))
+        validate(need(!is.null(input[["in_pick_maf_column"]]),message = message_when_none_are_selected ))
       }
       else{
         if(is.null(input[["in_pick_maf_column"]]))

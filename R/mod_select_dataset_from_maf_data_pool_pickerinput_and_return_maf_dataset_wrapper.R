@@ -36,6 +36,7 @@ mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper
 #' \strong{unique name:} \tab \tab \code{maf_dataset_wrapper()$unique_name} \cr
 #' \strong{short name:} \tab \tab \code{maf_dataset_wrapper()$short_name} \cr
 #' \strong{full name:} \tab \tab \code{maf_dataset_wrapper()$display_name} \cr 
+#' \strong{source:} \tab \tab \code{maf_dataset_wrapper()$name_of_data_source} \cr 
 #' }
 #' 
 #' 
@@ -56,13 +57,6 @@ mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper
     })
     
     #outputOptions(output, "in_picker_dataset", suspendWhenHidden = FALSE)
-    
-    # maf <- reactive({
-    #   validate(need(!is.null(selected_dataset_unique_name()), message = "Please select a dataset"))
-    #   new_data_pool <- maf_data_pool_robust_load(isolate(maf_data_pool()), selected_dataset_unique_name())
-    #   isolate(maf_data_pool(new_data_pool))
-    #   maf_data_pool_unique_name_to_maf_nonreactive(maf_data_pool = isolate(maf_data_pool()), unique_name = selected_dataset_unique_name())
-    # })
     
     maf_dataset_wrapper <- eventReactive(selected_dataset_unique_name(), { #Run only when pickerinput selected dataset changes changes
       isolate({

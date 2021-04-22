@@ -35,7 +35,19 @@ mod_render_downloadabledataframe_ui <- function(id, downloadbttn_label="", class
 }
 
 
-mod_render_downloadabledataframe_server <- function(id, tabular_data_object, basename, rownames=FALSE, colnames=TRUE){
+#' Title
+#'
+#' @param id shiny paramater
+#' @param tabular_data_object tabular data object (usually data.frame or data.table)
+#' @param basename name of downloaded file (flag)
+#' @param rownames download with rownames (flag)
+#' @param colnames download with colnames (flag)
+#' @param filter Position of filter search box: one of 'top', 'bottom' or 'none'  (string)
+#'
+#' @export
+mod_render_downloadabledataframe_server <- function(id, tabular_data_object, basename, rownames=FALSE, colnames=TRUE, filter="top"){
+  assertthat::assert_that(filter %in% c("top", "bottom", "none"), msg = "mod_render_downloadabledataframe_server: filter argument should be one of 'top', 'bottom' or 'none'")
+  
   utilitybeltshiny::assert_reactive(tabular_data_object)
   moduleServer(id,
                function(input, output, session){
@@ -59,7 +71,7 @@ mod_render_downloadabledataframe_server <- function(id, tabular_data_object, bas
                  }) 
                  
                  output$out_dt_maf <- DT::renderDataTable({ 
-                   DT::datatable(datatable_object(), options = list(scrollX = TRUE), class = "display nowrap", filter = "top")
+                   DT::datatable(datatable_object(), options = list(scrollX = TRUE), class = "display nowrap", filter = filter)
                  })
                  
                  filename <- reactive({

@@ -33,14 +33,24 @@ modulePlotRainforestUI <- function(id){
     shinyWidgets::panel(
       
       #Core UI
-      shinyWidgets::radioGroupButtons(inputId = ns("in_radio_group_pval_vs_fdr"), label = "Significance", choices = c("P-value", "FDR")),
-      conditionalPanel(condition = "input.in_radio_group_pval_vs_fdr == 'P-value'", ns = ns, numericInput(inputId = ns("in_numeric_pvalue"), label = "p-value threshold", value = 0.05, min = 0, max = 1, step = 0.01)),
-      conditionalPanel(condition = "input.in_radio_group_pval_vs_fdr == 'FDR'", ns = ns, numericInput(inputId = ns("in_numeric_fdr"), label = "fdr threshold", value = 0.05, min = 0, max = 1, step = 0.01)),
-      numericInput(inputId = ns("in_numeric_gene_fontsize"), label = "Gene Fontsize", value = 1.2, min = 0.01, step = 0.6),
-      numericInput(inputId = ns("in_numeric_linewidth"), label = "Line Width", value = 2.2, min = 0.01, step = 0.2),
-      numericInput(inputId = ns("in_title_size"), label = "title size", value = 1.2, min = 0.01, step = 0.2),
-      colourpicker::colourInput(inputId = ns("in_colours_cohort1"), label = textOutput(ns("out_name_cohort1")), palette = "square", value = "#B0004E"), 
-      colourpicker::colourInput(inputId = ns("in_colours_cohort2"), label = textOutput(ns("out_name_cohort2")), palette = "square", value = "#2A4CE3"),
+      fluidRow(
+      
+        col_1(shinyWidgets::radioGroupButtons(inputId = ns("in_radio_group_pval_vs_fdr"), label = "Significance", choices = c("P-value", "FDR"))),
+      col_2(
+        conditionalPanel(condition = "input.in_radio_group_pval_vs_fdr == 'P-value'", ns = ns, numericInput(inputId = ns("in_numeric_pvalue"), label = "p-value threshold", value = 0.05, min = 0, max = 1, step = 0.01)),
+        conditionalPanel(condition = "input.in_radio_group_pval_vs_fdr == 'FDR'", ns = ns, numericInput(inputId = ns("in_numeric_fdr"), label = "fdr threshold", value = 0.05, min = 0, max = 1, step = 0.01))
+      ),
+      
+      col_3(colourpicker::colourInput(inputId = ns("in_colours_cohort1"), label = textOutput(ns("out_name_cohort1")), palette = "square", value = "#B0004E")), 
+      col_3(colourpicker::colourInput(inputId = ns("in_colours_cohort2"), label = textOutput(ns("out_name_cohort2")), palette = "square", value = "#2A4CE3"))
+      
+      ),
+      
+      fluidRow(
+        col_4(numericInput(inputId = ns("in_numeric_gene_fontsize"), label = "Gene Fontsize", value = 1.2, min = 0.01, step = 0.6)),
+        col_4(numericInput(inputId = ns("in_numeric_linewidth"), label = "Line Width", value = 2.2, min = 0.01, step = 0.2)),
+        col_4(numericInput(inputId = ns("in_title_size"), label = "title size", value = 1.2, min = 0.01, step = 0.2))
+      ),
       moduleDownloadPlotUI(id = ns("mod_download_plot")),
       
       #Tooltips

@@ -36,6 +36,7 @@ external_tools_get_property_by_tool_name
 \item website
 \item doi
 \item requires_maf_export
+\item requires_gene_selection
 \item maf_conversion_function 
 \item extension
 }

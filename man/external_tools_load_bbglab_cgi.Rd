@@ -2,7 +2,7 @@
 % Please edit documentation in R/fct_external_tools_load_dataframe.R
 \name{external_tools_load_bbglab_cgi}
 \alias{external_tools_load_bbglab_cgi}
-\title{Load tool metadata into global variable}
+\title{Load tool metadata into environment. Returns}
 \usage{
 external_tools_load_bbglab_cgi(external_tools_df = data.frame())
 }

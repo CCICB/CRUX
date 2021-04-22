@@ -29,13 +29,16 @@ app_ui <- function(request) {
       header = shinydashboard::dashboardHeader(title = HTML(paste0("shiny",tags$strong("maftools"))), shinydashboard::dropdownMenu(type = "notifications", headerText = "DNA")), 
       sidebar = shinydashboard::dashboardSidebar(
         shinydashboard::sidebarMenu(
-          shinydashboard::menuItem("Data", tabName = "Data", icon = icon("table"), selected = TRUE,
+          shinydashboard::menuItem("Home", tabName = "Home", icon = icon("home"), selected = TRUE),
+          shinydashboard::menuItem("Data", tabName = "Data", icon = icon("table"),
                                    shinydashboard::menuSubItem(text = "Available Data", tabName = "DataPool", icon = icon("database")),
                                    shinydashboard::menuSubItem(text = "Import Data", tabName = "DataImport", icon = icon("file-upload"))
                                    ),
           shinydashboard::menuItem("Pan Cohort Statistics", tabName = "PanCohortStatistics", icon = icon("chart-bar")),
           shinydashboard::menuItem("Compare Cohorts", tabName = "CompareCohorts", icon = icon("balance-scale-left")),
           shinydashboard::menuItem("Enrichment", tabName = "Enrichment", icon = icon("dna")),
+          shinydashboard::menuItem("Survival Analysis", tabName = "Survival", icon = icon("heartbeat")),
+          shinydashboard::menuItem("Mutational Signatures", tabName = "MutSig", icon = icon("signature")),
           shinydashboard::menuItem("Copy Number Analysis", tabName = "CopyNumberAnalysis", icon = icon("stream")), #align-center
           shinydashboard::menuItem("Sample Level Analysis", tabName = "SampleLevelAnalysis", icon = icon("microscope")), # maybe th icon?
           shinydashboard::menuItem("External Tools", tabName = "ExternalTools", icon = icon("sign-out-alt")),
@@ -54,11 +57,14 @@ app_ui <- function(request) {
         # ),
         # 
         shinydashboard::tabItems(
+          shinydashboard::tabItem(tabName = "Home", mod_home_ui(id = "mod_home")),
           shinydashboard::tabItem(tabName = "DataPool", mod_datapool_viewer_ui(id = "mod_datapool_viewer")),
           shinydashboard::tabItem(tabName = "DataImport", mod_data_import_ui(id = "mod_data_import")),
           shinydashboard::tabItem(tabName = "PanCohortStatistics", mod_pan_cohort_statistics_ui(id = "mod_pan_cohort_statistics")),
           shinydashboard::tabItem(tabName = "CompareCohorts", mod_compare_cohorts_ui(id = "mod_compare_cohorts")),
           shinydashboard::tabItem(tabName = "Enrichment", moduleEnrichmentAnalysisUI(id = "mod_enrichment_analyis")),
+          shinydashboard::tabItem(tabName = "Survival", mod_survival_analysis_ui(id = "mod_survival_analysis")),
+          shinydashboard::tabItem(tabName = "MutSig", mod_mutational_signatures_ui(id = "mod_mutational_signatures")),
           shinydashboard::tabItem(tabName = "CopyNumberAnalysis", mod_cnv_ui(id = "mod_cnv_level_analysis")),
           shinydashboard::tabItem(tabName = "SampleLevelAnalysis", mod_sample_level_analysis_ui(id = "mod_sample_level_analysis")),
           shinydashboard::tabItem(tabName = "ExternalTools", mod_external_tools_ui(id= "mod_external_tools")),
@@ -86,6 +92,10 @@ golem_add_external_resources <- function(){
   add_resource_path(
     'www', app_sys('app/www')
   )
+  
+  golem::add_resource_path(
+    'img', app_sys('app/img')
+    )
  
   #Allow shinybs to actually work
   shiny::addResourcePath("sbs", system.file("www", package="shinyBS"))

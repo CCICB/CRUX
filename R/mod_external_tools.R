@@ -23,6 +23,10 @@ mod_external_tools_ui <- function(id){
       mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_ui(id = ns("mod_select_dataset"),panel = FALSE),
     ),
     
+
+    # Step 1.5: render name of dataset to make sure updates to selected maf are carried through to the download button ----------------------------------------------------------------
+    textOutput(ns("tmp")), 
+    
     icon_down_arrow(), br(),
     
     # Step 2: Select Tool --------------------------------------------------
@@ -39,6 +43,18 @@ mod_external_tools_ui <- function(id){
     ), #%>% div(style = "display: flex; justify-content: center"),
                                
     icon_down_arrow(), br(),
+    
+    
+    
+    # Step 2.5: Select Gene if required ---------------------------------------
+    conditionalPanel(condition = 'output.requires_gene_selection', ns = ns,
+      shinyWidgets::panel(
+        heading="Step 3: Select Gene",
+         selectizeInput(inputId = ns("in_select_gene"), label = "Select Gene", choices = NULL, multiple = FALSE)
+      ),
+      
+      icon_down_arrow(), br()
+    ),
     
     # Step 3: Download Data --------------------------------------------------
     shinyWidgets::panel(
@@ -84,27 +100,46 @@ mod_external_tools_server <- function(id, maf_data_pool){
       validate(need(!is.null(maf_data_pool()), message = "Please wait while we load data"))
       mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_server(id = "mod_select_dataset", maf_data_pool = maf_data_pool)() %>%
         return()
-      #maf_dataset_wrapper_ = 
-      #browser()
-      #return(maf_dataset_wrapper_())
     })
     
-    #An observe to make sure we get maf_dataset_wrapper in a non-lazy manner
-    observe({ maf_dataset_wrapper() })
+    # Step 1.5: render name of dataset to make sure updates to selected maf are carried through to the download button ----------------------------------------------------------------
+    output$temp <- renderText({maf_dataset_wrapper()$display_name})
     
+    #Get MAF
     maf <- reactive({
       validate(need(!is.null(maf_dataset_wrapper()), message = "Please wait while we load data"));
       maf_dataset_wrapper()$loaded_data
     })
     
+    # Get MAF Name
     display_name <- reactive({ 
       maf_dataset_wrapper()$display_name 
     })
     
-    #output$test <- renderPrint({ display_name() })
     
+    # Populate Gene List ------------------------------------------------------
+    genes <- reactive({
+      validate(need(!is.null(maf()), message = "Waiting for data to load"))
+      message("Fetching Genes")
+      maftools::getGeneSummary(maf())[[1]]
+      })
+    
+    #Update Input
+    observeEvent(genes(), {
+      updateSelectizeInput(session = session, inputId = "in_select_gene", choices = genes(), server = TRUE)
+    })
+
+    
+    # Get tool name
     tool_name <- reactive({ validate(need(!is.null(input$in_pick_tool), message = "Please wait while we load data")); input$in_pick_tool })
     
+    #Conditionally Render the gene selection UI
+    output$requires_gene_selection <- reactive({ 
+      maf() # Run when maf updates
+      if(external_tools_get_property_by_tool_name(tool_name = tool_name(), property_to_retrieve = "requires_gene_selection")) return(TRUE)
+      else return(FALSE)
+    })
+    outputOptions(output, "requires_gene_selection", suspendWhenHidden = FALSE)
 
     # Description of Tool -----------------------------------------------------
     output$out_html_tool_description <- renderText({
@@ -147,15 +182,22 @@ mod_external_tools_server <- function(id, maf_data_pool){
     extension <- reactive({ external_tools_get_property_by_tool_name(tool_name = tool_name(), property_to_retrieve = "extension") })
     
     #Create filename
-    filename <- reactive({ paste0(maf_dataset_wrapper()$display_name,"_", tool_name(), ".", extension())})
+    filename <- reactive({maf();  paste0(maf_dataset_wrapper()$display_name,"_", tool_name(), ".", extension())})
     
     #Download
     output$out_downloadbttn_exported_data <- downloadHandler(filename = filename, function(file){
-      #browser()
       validate(need(!is.null(maf()), message = "Loading ... "))
-      #browser()
       conversion_function = external_tools_get_property_by_tool_name(tool_name = tool_name(), property_to_retrieve = "maf_conversion_function")
-      conversion_function(maf(), file)
+      requires_gene_name = external_tools_get_property_by_tool_name(tool_name = tool_name(), property_to_retrieve = "requires_gene_selection")
+      
+      if(requires_gene_name){
+        conversion_function(maf(), file, input$in_select_gene)
+      }
+      else
+      {
+        conversion_function(maf(), file)
+      }
+      
     })
     
   })

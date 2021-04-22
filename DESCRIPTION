@@ -40,7 +40,9 @@ Imports:
     ggVennDiagram (>= 0.3),
     mclust (>= 5.4.7),
     R.utils,
-    shinydashboard
+    shinydashboard,
+    NMF,
+    BiocManager
 Remotes:
     selkamand/utilitybelt,
     selkamand/utilitybeltshiny,

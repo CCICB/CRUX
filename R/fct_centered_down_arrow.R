@@ -26,7 +26,6 @@ icon_down_arrow <- function(fontsize="40px", alignment = "center"){
 #'
 #' @return html-flagged text (string")
 #' @export
-#'
 html_alert <- function(text, status="warning"){
   HTML(text = paste0(p(text, class=paste0("alert alert-", status)))) %>%
     return()

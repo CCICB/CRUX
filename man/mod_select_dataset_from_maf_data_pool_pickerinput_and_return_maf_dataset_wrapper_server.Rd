@@ -36,6 +36,7 @@ Instead of simply returning a unique_name, this function will:
 \strong{unique name:} \tab \tab \code{maf_dataset_wrapper()$unique_name} \cr
 \strong{short name:} \tab \tab \code{maf_dataset_wrapper()$short_name} \cr
 \strong{full name:} \tab \tab \code{maf_dataset_wrapper()$display_name} \cr 
+\strong{source:} \tab \tab \code{maf_dataset_wrapper()$name_of_data_source} \cr 
 }
 
 
