@@ -50,13 +50,12 @@ mod_mutational_signatures_ui <- function(id){ #THIS IS THE ONLY MODULE THAT USES
       icon_down_arrow(), br(),
       # Step 4: Look at TNM matrix ----------------------------------------------
       shinyWidgets::panel(heading = "Results",
-      tabsetPanel(
-        tabPanel(title = "Trinucleotide Matrix", mod_render_downloadabledataframe_ui(ns("mod_text_matrix"),shinycssloader = TRUE )),
-        tabPanel(title = "APOBEC Differences", mod_plot_apobec_diff_ui(ns("mod_plot_apobec"))),
-        tabPanel(title = "Signature Analysis",
-                 plotOutput(ns("out_plot_cophenetic"))
-                 )
+        tabsetPanel(
+          tabPanel(title = "Trinucleotide Matrix", mod_render_downloadabledataframe_ui(ns("mod_text_matrix"),shinycssloader = TRUE )),
+          tabPanel(title = "APOBEC Differences", mod_plot_apobec_diff_ui(ns("mod_plot_apobec"))),
+          tabPanel(title = "Signature Analysis", wellPanel("We reccomend using Signal for mutational signature analysis. Go to External Tools and select 'Signal' for instructions on how to do this")
         )
+      )
     )
     )
     
@@ -123,19 +122,6 @@ mod_mutational_signatures_server <- function(id, maf_data_pool){
     
     #Plot apobec differences
     mod_plot_apobec_diff_server("mod_plot_apobec", maf = maf, tnm = trinucleotide_matrix)
-    
-
-    # Step 5: Signature analysis ----------------------------------------------
-    signatures <- reactive({
-      #library(NMF)
-      #Make sure user is sure: implement later
-      shinyWidgets::confirmSweetAlert(session = session, inputId = "in_confirm_sweet_alert", text = "Signature analysis can take a long time, are you sure you want to continue", closeOnClickOutside = FALSE, showCloseButton = FALSE)
-      #maftools::estimateSignatures(mat = trinucleotide_matrix(), nTry = 6, parallel = 4 ) # Add NMF:: calls on functions
-    })
-    
-    output$out_plot_cophenetic <- renderPlot({
-       # maftools::plotCophenetic(signatures(), bestFit = 1)
-      })
     
     
   })

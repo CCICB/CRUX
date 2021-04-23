@@ -53,6 +53,7 @@ mod_single_cohort_summary_plots_ui <- function(id){
                   tabPanel(title = "TiTv", mod_plot_titv_graphs_ui(id = ns("mod_plot_titv"))),
                   tabPanel(title = "TMB", mod_plot_tmb_in_context_of_tcga_ui(id = ns("id_plot_tcga"))),
                   tabPanel(title = "Oncoplot", mod_plot_oncoplot_ui(id = ns("mod_oncoplot"))),
+                  tabPanel(title = "Drug-Gene Interactions", mod_druggability_ui(id = ns("mod_druggability"))),
                   tabPanel(title = "Mutated Pathways", mod_plot_oncogenic_pathways_ui(id = ns("mod_oncopathways"))),
                   tabPanel(title = "Pathway Specific Plots", mod_plot_oncogenic_pathways_focused_ui(id = ns("mod_oncopathways_specific"))),
                   tabPanel(title = "Lollipop", mod_plot_lollipop_ui(id = ns("mod_plot_lollipop"))),
@@ -76,6 +77,8 @@ mod_single_cohort_summary_plots_server <- function(id, maf, cohortName) {
       mod_plot_lollipop_server(id = "mod_plot_lollipop", maf = maf, name_cohort = cohortName)
       mod_plot_somatic_interactions_server(id = "mod_somatic_interactions", maf = maf)
       mod_plot_pfam_domains_server(id = "mod_pfam_domains", maf=maf)
+      mod_druggability_server(id = "mod_druggability", maf)
+      
   }
   )
 }
