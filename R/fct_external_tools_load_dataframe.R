@@ -336,7 +336,7 @@ external_tools_convert_maf_to_signal2 <- function(maf, filepath){
   temp_directory = tempdir()
   
   #Download 30 samples at a time
-  chunked_names <- split(sample_names, ceiling(seq_along(sample_names)/30))
+  chunked_names <- split(sample_names, ceiling(seq_along(sample_names)/30)) #Change 30 to higher numbers to do larger batches. Once signal is beefed up, we should be able to upload all samples at once
   
   files =  paste0(tempdir(), "/signal_input", seq_along(chunked_names), ".tsv")
   
