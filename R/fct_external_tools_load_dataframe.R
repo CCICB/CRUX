@@ -17,6 +17,7 @@
 #' @param tool_class class of tool. Usually 'Positive Selection', 'Variant Interpretation' (string)
 #' @param tool_description brief description of tool (string)
 #' @param instructions brief description of how to use the tool. Any HTML tags in the string will be correctly resolved. (string)
+#' @param platform what platform do we access the tool from. Examples include web, desktop app, cli  (string)
 #' @param website url of tool (string)
 #' @param doi publicatoin doi (string)
 #' @param requires_maf_export does the tool require a maf to be exported in some other form (flag)
@@ -26,14 +27,15 @@
 #' 
 #' @return dataframe containing external_tool_metadata
 #' @export
-external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibble(), tool_name, tool_id, tool_group, tool_class, tool_description, instructions = "No instructions available yet. You're on your own buddy", website, doi, requires_maf_export = TRUE, requires_gene_selection = FALSE, maf_conversion_function = NA, extension="tsv") {
+external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibble(), tool_name, tool_id, tool_group, tool_class, tool_description, instructions = "No instructions available yet. You're on your own buddy", platform = "Web App", website, doi, requires_maf_export = TRUE, requires_gene_selection = FALSE, maf_conversion_function = NA, extension="tsv") {
   assertthat::assert_that(is.data.frame(external_tools_df))
   utilitybelt::assert_non_empty_string(tool_name)
   utilitybelt::assert_non_empty_string(tool_id)
   utilitybelt::assert_non_empty_string(tool_group)
   utilitybelt::assert_non_empty_string(tool_class)
   utilitybelt::assert_non_empty_string(tool_description)
-  assertthat::assert_that(assertthat::is.string(instructions)) 
+  assertthat::assert_that(assertthat::is.string(instructions))
+  assertthat::assert_that(assertthat::is.string(platform))
   utilitybelt::assert_non_empty_string(website)
   utilitybelt::assert_non_empty_string(doi)
   assertthat::assert_that(assertthat::is.flag(requires_maf_export))
@@ -47,10 +49,10 @@ external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibb
   }
   
   new_df <- data.frame(
-    tool_name, tool_id, tool_group, tool_class, tool_description, instructions, website, doi, requires_maf_export, requires_gene_selection, I(list(maf_conversion_function)), extension
+    tool_name, tool_id, tool_group, tool_class, tool_description, instructions, platform, website, doi, requires_maf_export, requires_gene_selection, I(list(maf_conversion_function)), extension
   )
   
-  names(new_df) <- c("tool_name","tool_id","tool_group","tool_class","tool_description", "instructions","website","doi", "requires_maf_export", "requires_gene_selection", "maf_conversion_function", "extension")
+  names(new_df) <- c("tool_name","tool_id","tool_group","tool_class","tool_description", "instructions", "platform","website","doi", "requires_maf_export", "requires_gene_selection", "maf_conversion_function", "extension")
   
   new_df <- rbind(external_tools_df, new_df)
   
@@ -305,7 +307,7 @@ external_tools_load_cbioportal_mutation_mapper <- function(external_tools_df = d
     tool_name = "cBioportal Mutation Mapper",
     tool_id = "cbioportal_mutation_mapper",
     tool_group = "cBioPortal",
-    tool_class = "Lollipop Plot",
+    tool_class = "Lollipop",
     tool_description = "Interprets mutations with protein annotations",
     requires_gene_selection = TRUE,
     website = "https://www.cbioportal.org/mutation_mapper",
@@ -365,7 +367,7 @@ external_tools_load_maf_to_signal2 <- function(external_tools_df = data.frame())
     external_tools_df = external_tools_df,
     tool_name = "Signal",
     tool_id = "signal",
-    tool_group = "Mutational Signature Analysis",
+    tool_group = "Nik-Zainal Group",
     tool_class = "Mutational Signature Analysis",
     tool_description = "Identifies known mutational signatures in each sample",
     requires_gene_selection = FALSE,
@@ -483,7 +485,7 @@ external_tools_load_maf_to_mutalisk_cohort_level <- function(external_tools_df =
     external_tools_df = external_tools_df,
     tool_name = "Mutalisk: Cohort Level",
     tool_id = "mutalisk-cohort_level",
-    tool_group = "Mutational Signature Analysis",
+    tool_group = "Lee et al.",
     tool_class = "Mutational Signature Analysis",
     tool_description = "Identifies mutational signatures in a cohort",
     requires_gene_selection = FALSE,
@@ -539,7 +541,7 @@ external_tools_load_maf_to_cravat <- function(external_tools_df = data.frame()){
     external_tools_df = external_tools_df,
     tool_name = "OpenCRAVAT",
     tool_id = "open_cravat",
-    tool_group = "Variant Annotation",
+    tool_group = "KarchinLab",
     tool_class = "Variant Annotation",
     tool_description = "Highly customisable annotation of all variants in a cohort",
     requires_gene_selection = FALSE,
@@ -820,6 +822,63 @@ external_tools_load_ucsc <- function(external_tools_df = data.frame()){
 }
 
 
+# UCSC TumorMap -----------------------------------------------------------
+
+external_tools_convert_maf_to_tumormap_return_dataframe <- function(maf, topn = 20){
+  topn_altered_genes <- maf %>% 
+    maftools::getGeneSummary() %>%
+    dplyr::arrange(desc(MutatedSamples)) %>%
+    dplyr::pull(Hugo_Symbol) %>%
+    head(n=topn)
+    
+  tsbs = maf %>% 
+    maftools_get_all_data() %>%
+    dplyr::pull(Tumor_Sample_Barcode)
+  
+  genes <- maf %>% 
+    maftools_get_all_data() %>% 
+    dplyr::pull(Hugo_Symbol)
+  
+  combos_in_mafs = paste(tsbs, genes)
+  
+  crossed_df <- tidyr::crossing(topn_altered_genes, tsbs) 
+  
+  crossed_df["Gene_Mutated"] <- (paste(crossed_df[["tsbs"]], crossed_df[["topn_altered_genes"]]) %in% combos_in_mafs) %>%
+    as.numeric()
+  
+  
+  genes_mutated_df <- crossed_df %>% tidyr::pivot_wider(names_from = "tsbs", values_from = Gene_Mutated)
+  return(genes_mutated_df)
+  # tsb_crossed_df = tidyr::crossing(sample1=tsbs, sample2=tsbs)
+  # #return(tsb_crossed_df)
+  # 
+  # #browser()
+  # app(1:nrow(tsb_crossed_df), function(n) { jaccard(genes_mutated_df, as.character(tsb_crossed_df[[1]][n]) , as.character(tsb_crossed_df[[2]][n])) } ) %>%
+  #   return()
+  # 
+  # topn_altered_genes %in% maf_df[maf_df$Tumor_Sample_Barcode == tsb, "Hugo_Symbol"]
+  # 
+  # #maf_df[match(topn_altered_genes, maf_df[["Hugo_Symbol"]]), c("Hugo_Symbol","Tumor_Sample_Barcode")]
+  # purrr::map_dfc(tsbs, function(tsb){
+  #   topn_altered_genes %in% maf_df[maf_df$Tumor_Sample_Barcode == tsb, "Hugo_Symbol"]
+  #   }) %>%
+  #   `colnames<-`(tsbs)
+  # 
+  
+    #dplyr::filter(Hugo_Symbol %in% topn_altered_genes)
+}
+
+
+jaccard <- function(df, vec1, vec2) {
+  sums = rowSums(df[,c(vec1, vec2)])
+  
+  similarity = length(sums[sums==2])
+  total = length(sums[sums==1]) + similarity
+  
+  similarity/total
+}
+#dist = TCGAmutations::tcga_load("ACC") %>% external_tools_convert_maf_to_tumormap_return_dataframe() %>% dplyr::select(-1) %>% t() %>% dist(method = "binary")
+#(dist) %>% as.matrix() %>% as.data.frame() %>% tibble::rownames_to_column("Sample") %>% write.table(file = "~/Downloads/ACC.test.tsv", sep = "\t", quote = FALSE, row.names = TRUE, col.names = TRUE
 
 # For all tools -----------------------------------------------------------
 #' Load tool metadata into global variable

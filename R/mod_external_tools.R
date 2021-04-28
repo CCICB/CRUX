@@ -36,7 +36,18 @@ mod_external_tools_ui <- function(id){
       shinyWidgets::pickerInput(
         inputId = ns("in_pick_tool"), 
         choices = shinymaftools::external_tool_metadata %>% dplyr::pull(tool_name), 
-        choicesOpt = list(subtext=shinymaftools::external_tool_metadata %>% dplyr::pull(tool_class)),
+        choicesOpt = list(
+          content=
+          paste0(
+          shinymaftools::external_tool_metadata$tool_name,
+          shinymaftools::external_tool_metadata$tool_class %>%
+            paste0("<span class='label label-primary' style='margin-left: 10px' >",., "</span>"),
+          shinymaftools::external_tool_metadata$tool_group %>%
+            paste0("<span class='label label-warning' style='margin-left: 10px' >",., "</span>"),
+          shinymaftools::external_tool_metadata$platform %>%
+            paste0("<span class='label label-danger' style='margin-left: 10px' >",., "</span>")
+          #subtext=
+          )),
         options = shinyWidgets::pickerOptions(actionsBox=TRUE, liveSearch = TRUE), 
         width = "100%"
         ),
@@ -73,7 +84,7 @@ mod_external_tools_ui <- function(id){
     
     icon_down_arrow(), br(),
     
-    # Step 5: Navigate to Website --------------------------------------------------
+    # Step 5: Show Instructions --------------------------------------------------
     shinyWidgets::panel(
       heading="Step 5: Configure and Run Analysis",
       htmlOutput(outputId = ns("out_html_instructions"))
