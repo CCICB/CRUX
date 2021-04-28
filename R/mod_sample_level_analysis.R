@@ -13,7 +13,7 @@ mod_sample_level_analysis_ui <- function(id){
     br(),
     shinyWidgets::panel(
       heading="Step 1: Select Cohort",
-      mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_ui(id = ns("mod_select_dataset"), panel = FALSE)
+      mod_select_maf_dataset_wrapper_ui(id = ns("mod_select_dataset"), panel = FALSE)
     ),
     
     shinyWidgets::panel(
@@ -42,7 +42,7 @@ mod_sample_level_analysis_server <- function(id, maf_data_pool){
     ns <- session$ns
     
     # Select Data -------------------------------------------------------------
-    maf_dataset_wrappper_unvalidated <- mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_server(id = "mod_select_dataset", maf_data_pool = maf_data_pool)
+    maf_dataset_wrappper_unvalidated <- mod_select_maf_dataset_wrapper_server(id = "mod_select_dataset", maf_data_pool = maf_data_pool)
     observe({ maf_dataset_wrappper_unvalidated()})
     
     maf_dataset_wrappper <- reactive({

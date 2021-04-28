@@ -27,7 +27,7 @@ tcga_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, tcga_study_abbrev
     start_status = "not_loaded", 
     data_description = paste0(source, " data from study: ", full_study_name), 
     is_dataset_downloadable = FALSE,
-    function_to_load_data  = function(filepath) { TCGAmutations_load_with_typed_metadata(tcga_study_abbreviation, source) },
+    function_to_load_data  = function(filepath) { TCGAmutations_load_with_typed_metadata(tcga_study_abbreviation, source) %>% maftools_chrom_23_and_24_to_X_and_Y() },
     name_of_data_source = "TCGA", local_path_to_data = system.file(paste0("extdata/", source, "/", tcga_study_abbreviation, ".RDs"), package = "TCGAmutations"), datatype_of_stored_object = ".RDs"
   )
 }

@@ -50,7 +50,6 @@ maftools_plot_rainfall <- function(maf, tsb, detectChangePoints = TRUE, ref.buil
   return(NULL)
 }
 
-
 #' maftools_clinical_data_get_levels
 #'
 #' @inheritParams maftools_clinical_data_visually_summarise
@@ -144,24 +143,9 @@ maftools_clinical_data_visually_summarise <- function(maf, clinical_feature = "T
 }
 
 maftools_flagged_genes <- function(){
- top100flags = c("TTN", "MUC16", "OBSCN", "AHNAK2", "SYNE1", 
-                        "FLG", "MUC5B", "DNAH17", "PLEC", "DST", "SYNE2", "NEB", 
-                        "HSPG2", "LAMA5", "AHNAK", "HMCN1", "USH2A", "DNAH11", 
-                        "MACF1", "MUC17", "DNAH5", "GPR98", "FAT1", "PKD1", 
-                        "MDN1", "RNF213", "RYR1", "DNAH2", "DNAH3", "DNAH8", 
-                        "DNAH1", "DNAH9", "ABCA13", "APOB", "SRRM2", "CUBN", 
-                        "SPTBN5", "PKHD1", "LRP2", "FBN3", "CDH23", "DNAH10", 
-                        "FAT4", "RYR3", "PKHD1L1", "FAT2", "CSMD1", "PCNT", 
-                        "COL6A3", "FRAS1", "FCGBP", "DNAH7", "RP1L1", "PCLO", 
-                        "ZFHX3", "COL7A1", "LRP1B", "FAT3", "EPPK1", "VPS13C", 
-                        "HRNR", "MKI67", "MYO15A", "STAB1", "ZAN", "UBR4", "VPS13B", 
-                        "LAMA1", "XIRP2", "BSN", "KMT2C", "ALMS1", "CELSR1", 
-                        "TG", "LAMA3", "DYNC2H1", "KMT2D", "BRCA2", "CMYA5", 
-                        "SACS", "STAB2", "AKAP13", "UTRN", "VWF", "VPS13D", 
-                        "ANK3", "FREM2", "PKD1L1", "LAMA2", "ABCA7", "LRP1", 
-                        "ASPM", "MYOM2", "PDE4DIP", "TACC2", "MUC2", "TEP1", 
-                        "HELZ2", "HERC2", "ABCA4") 
- return(top100flags)
+  flags  = c("TTN", "MUC16", "OBSCN", "AHNAK2", "SYNE1", "FLG", "MUC5B",
+             "DNAH17", "PLEC", "DST", "SYNE2", "NEB", "HSPG2", "LAMA5", "AHNAK",
+             "HMCN1", "USH2A", "DNAH11", "MACF1", "MUC17")
 }
 
 
@@ -170,3 +154,92 @@ maftools_gistic = function(gistic){
   #gistic@cnMatrix %>%  as.data.frame() %>% tibble::rownames_to_column("Cytoband") %>% tidyr::pivot_longer(2:ncol(.),names_to = "Sample", values_to = "MutationType") %>% dplyr::tibble() 
 }
 
+#' Convert chromosomes 23 and 24 to x and y in maf object. This will convert  
+#' 
+#' Takes a maf object and returns that same object but converts and chromosomes named 23 or 24  (or chr23 / chr24) to X and Y.
+#' @param maf A MAF object (MAF)
+#'
+#' @return a MAF object with chr23/chr24 converted to "X" & "Y"
+#' @export
+#'
+#' @examples
+maftools_chrom_23_and_24_to_X_and_Y <- function(maf){
+  maf@data <- maf@data %>% 
+    dplyr::mutate(Chromosome  =dplyr::case_when(
+      Chromosome == "23" ~ "X",
+      Chromosome == "chr23" ~ "chrX",
+      Chromosome == "24" ~ "Y",
+      Chromosome == "chr24" ~ "chrY",
+      TRUE ~ as.character(Chromosome)
+    ) %>% as.character()
+    )
+  
+  maf@maf.silent <- maf@maf.silent %>% 
+    dplyr::mutate(Chromosome  =dplyr::case_when(
+      Chromosome == "23" ~ "X",
+      Chromosome == "chr23" ~ "chrX",
+      Chromosome == "24" ~ "Y",
+      Chromosome == "chr24" ~ "chrY",
+      TRUE ~ as.character(Chromosome)
+    ) %>% as.character()
+    )
+  return(maf)
+}
+
+
+
+
+# RNAseq functionality ----------------------------------------------------
+
+#' Read RNAseq file
+#'
+#' @param rnaseq_file (string)
+#'
+#' @return Dataframe containing at least three columns, named "Tumor_Sample_Barcode", "Hugo_Symbol" and "TPM". May optionally include columns named "Fold_Change" and "Transcript" (dataframe)
+#' @export
+#'
+read_rnaseq_file <- function(rnaseq_file){
+  
+  assertthat::assert_that(assertthat::is.string(rnaseq_file), msg = "[read_rnaseq_file] expected rnaseq_file to be a string")
+  
+  #Assert file exists
+  assertthat::assert_that(file.exists(rnaseq_file), msg = paste0("Could not find file: ", rnaseq_file))
+  
+  #Read Data
+  rnaseq_df <- data.table::fread(rnaseq_file)
+  
+  #Assert number of columns is correct
+  assertthat::assert_that(ncol(rnaseq_df) >= 3, msg = paste0("RNAseq files requires at between 3 and 5 columns, not [", ncol(rnaseq_df) ,"]. Please include a header line with the following terms: 'Tumor_Sample_Barcode', 'Hugo_Symbol', 'TPM'. Optionally, include 'RefSeq_Transcript' and 'Fold_Change' columns"))
+  
+  #Assert file has header
+  rnaseq_colnames <- colnames(rnaseq_df)
+  assertthat::assert_that(! "V1" %in% rnaseq_colnames, msg = "File should have a header containing: 'Tumor_Sample_Barcode', 'Hugo_Symbol', 'TPM', [Optional] 'Transcript', [Optional] 'Fold_Change'")
+  
+  #Assert names of columns is correct
+  valid_colnames <- c("Tumor_Sample_Barcode", "Hugo_Symbol", "TPM", "Transcript", "Fold_Change")
+  expected_colnames <- c("Tumor_Sample_Barcode", "Hugo_Symbol", "TPM") 
+  
+  expected_colnames_in_file <- expected_colnames[expected_colnames %in% rnaseq_colnames]
+  expected_colnames_missing_in_file <- expected_colnames[! expected_colnames %in% rnaseq_colnames]
+  
+  message("Found columns: ", paste0(expected_colnames_in_file, collapse = ", "))
+  
+  #Assert that all are column names in file are valid
+  assertthat::assert_that(all(rnaseq_colnames %in% valid_colnames), msg = paste0("Unexpected columns found: ", paste0(rnaseq_colnames[!rnaseq_colnames %in% valid_colnames], collapse = ",")))
+  
+  #Assert expected Column names are all in the file
+  assertthat::assert_that(all(expected_colnames %in% rnaseq_colnames), msg = paste0("File missing the following columns: ", paste0(expected_colnames_missing_in_file, collapse = ",")))
+  
+  #Assert there are no duplicate column names:
+  assertthat::assert_that(!any(duplicated(rnaseq_colnames)), msg = paste0("Duplicated column names are not allowed. Duplicated columns found: ", paste0(rnaseq_colnames[duplicated(rnaseq_colnames)], collapse = ",")))
+  
+  #Assert that type of each column is appropriate:
+  assertthat::assert_that(class(rnaseq_df[["Hugo_Symbol"]]) == "character", msg = paste0("Hugo_Symbol column should contain characters. Your supplied values were of the class: ", class(rnaseq_df[["Hugo_Symbol"]])))
+  assertthat::assert_that(class(rnaseq_df[["TPM"]]) %in% c("numeric", "integer", "double"), msg = paste0("TPM column should only contain numbers. Your supplied values were of the class: ", class(rnaseq_df[["TPM"]])))
+  
+  if("Fold_Change" %in% rnaseq_colnames)
+    assertthat::assert_that(class(rnaseq_df[["Fold_Change"]]) %in% c("numeric", "integer", "double"), paste0(msg = "Fold_Change column should only contain characters. Your supplied values were of the class: ", class(rnaseq_df[["Fold_Change"]])))
+  
+  #Ok, we can be pretty confident the data looks good
+  return(rnaseq_df)
+}

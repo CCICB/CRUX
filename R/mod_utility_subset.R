@@ -12,7 +12,7 @@ moduleSubsetMafsUI <- function(id){
       shinyWidgets::panel(heading = "Step 1: Select Dataset",
         #Select Dataset -------------------------------------------------------------------------
         #mod_select_dataset_from_maf_data_pool_pickerinput_ui(ns("in_picker_dataset"), panel = FALSE)
-        mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_ui(id = ns("in_picker_dataset"), panel = FALSE)
+        mod_select_maf_dataset_wrapper_ui(id = ns("in_picker_dataset"), panel = FALSE)
         #textOutput(outputId = ns("debugtest"))
       ),
       
@@ -88,7 +88,7 @@ moduleSubsetMafsServer <- function(id, maf_data_pool){
     function(input, output, session){
 
       # Select Dataset ----------------------------------------------------------
-      maf_dataset_wrapper = mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_server(id = "in_picker_dataset", maf_data_pool = maf_data_pool)
+      maf_dataset_wrapper = mod_select_maf_dataset_wrapper_server(id = "in_picker_dataset", maf_data_pool = maf_data_pool)
 
       #output$debugtest <- renderText({maf_dataset_wrapper()$short_name})
 

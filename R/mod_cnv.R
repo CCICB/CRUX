@@ -10,13 +10,13 @@
 mod_cnv_ui <- function(id){
   ns <- NS(id)
   tagList(
-    #mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_ui(id = ns("mod_select_maf_dataset_wrapper"))
+    #mod_select_maf_dataset_wrapper_ui(id = ns("mod_select_maf_dataset_wrapper"))
     #all_lesions.conf_XX.txt, amp_genes.conf_XX.txt, del_genes.conf_XX.txt and scores.gistic, where XX is the confidence level.
     
     # Step 1: Import Data -----------------------------------------------------
     shinyWidgets::panel(
       heading = "Step 1: Select Dataset",
-      mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_ui(id = ns("mod_select_dataset_wrapper"), panel = FALSE) %>% shinycssloaders::withSpinner(proxy.height = "200px")
+      mod_select_maf_dataset_wrapper_ui(id = ns("mod_select_dataset_wrapper"), panel = FALSE) %>% shinycssloaders::withSpinner(proxy.height = "200px")
     ),
     icon_down_arrow(),br(),
     
@@ -101,7 +101,7 @@ mod_cnv_server <- function(id, maf_data_pool){
     
     
     # Step 1: Import Data -----------------------------------------------------
-    maf_dataset_wrapper <- mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_server(id = "mod_select_dataset_wrapper", maf_data_pool = maf_data_pool)
+    maf_dataset_wrapper <- mod_select_maf_dataset_wrapper_server(id = "mod_select_dataset_wrapper", maf_data_pool = maf_data_pool)
     maf_dataset_wrapper_validated <- reactive({ validate(need(!is.null(maf_dataset_wrapper()),message = "Loading ..." )); return(maf_dataset_wrapper()) })
     observe({ maf_dataset_wrapper_validated() ; maf() })
     maf <- reactive({ maf_dataset_wrapper_validated()$loaded_data })

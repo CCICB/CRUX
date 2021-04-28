@@ -35,25 +35,28 @@ mod_select_dataset_from_maf_data_pool_pickerinput_server <- function(id, maf_dat
     ns <- session$ns
     
     
-    # Choices Vector -----------------------------------------------------------------
-    choiceValues <- reactive({
-      #browser()
-      possible_data = maf_data_pool_to_dataframe(maf_data_pool = maf_data_pool())
-      choice_values <- possible_data[["unique_name"]]
-      names(choice_values) <- paste0(possible_data[["display_name"]] %>% gsub(pattern = "_", replacement = " ", x = .), "   |",possible_data[["short_name"]], "|  ") 
-      return(choice_values)
+    maf_data_pool_df <- reactive({ maf_data_pool_to_dataframe(maf_data_pool()) })
+    
+    unique_dataset_names <- reactive({ 
+      maf_data_pool_df()[["unique_name"]]
+    } )
+    
+    unique_dataset_names_badge <- reactive({
+      unique_dataset_names() %>%
+        gsub("(TCGA_)|(PCAWG_)", "", .) %>%
+        paste0("<span class='label label-default' style='margin-left: 10px; font-size: xx-small' >",., "</span>")
     })
     
-
-    # Sources  (For Subtext) -----------------------------------------------------------------
-    choiceLabels <- reactive({
-      isolate({possible_data = maf_data_pool_to_dataframe(maf_data_pool = maf_data_pool())})
-      choice_labels <- sapply(
-        seq_along(possible_data[["short_name"]]),
-        function(x)
-          possible_data[["name_of_data_source"]][[x]]
-      )
-      return(choice_labels)
+    
+    display_names <- reactive({ 
+      maf_data_pool_df()[["display_name"]] %>% 
+        gsub("_", " ", .) 
+    })
+    
+    data_sources <- reactive({
+      data_sources_vec <- maf_data_pool_df()[["name_of_data_source"]][match(unique_dataset_names(), maf_data_pool_df()[["unique_name"]])]
+      data_sources_vec <- paste0("<span class='label label-default' style='margin-left: 5px; font-size: xx-small' >",data_sources_vec, "</span>")
+      return(data_sources_vec)
     })
     
     
@@ -63,12 +66,16 @@ mod_select_dataset_from_maf_data_pool_pickerinput_server <- function(id, maf_dat
         inputId = ns("in_pickerinput_dataset"), 
         label = label, 
         multiple = multiple, 
-        choices = choiceValues(),
+        choices = unique_dataset_names(),
         selected = last_selected(),
         width = "100%", 
         options = custom_picker_options(max_selected_datasets = max_selected_datasets, multiple, style = style),
         choicesOpt = list(
-          subtext = choiceLabels()
+          content = paste0(
+            display_names(),
+            unique_dataset_names_badge(),
+            data_sources()
+          )
           )
         )
       })

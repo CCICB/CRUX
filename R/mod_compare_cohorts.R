@@ -29,8 +29,8 @@ mod_compare_cohorts_ui <- function(id){
           #mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_ui(ns("select_dataset1"), panel = FALSE),
           #mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_ui(ns("select_dataset2"), panel = FALSE),
           fluidRow(
-          col_6(mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_ui(ns("select_dataset1"), panel = FALSE)),
-          col_6(mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_ui(ns("select_dataset2"), panel = FALSE))
+          col_6(mod_select_maf_dataset_wrapper_ui(ns("select_dataset1"), panel = FALSE)),
+          col_6(mod_select_maf_dataset_wrapper_ui(ns("select_dataset2"), panel = FALSE))
           ),
           # ),
         
@@ -75,8 +75,8 @@ mod_compare_cohorts_server <- function(id, maf_data_pool){
     #maf1=mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_server(id = "select_dataset1",maf_data_pool = maf_data_pool, label = NULL)
     #maf2=mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_server(id = "select_dataset2",maf_data_pool = maf_data_pool, label = NULL)
     
-    maf_dataset_wrapper_1 = mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_server(id = "select_dataset1", maf_data_pool = maf_data_pool, label = "Cohort 1")
-    maf_dataset_wrapper_2 = mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_server(id = "select_dataset2", maf_data_pool = maf_data_pool, label = "Cohort 2")
+    maf_dataset_wrapper_1 = mod_select_maf_dataset_wrapper_server(id = "select_dataset1", maf_data_pool = maf_data_pool, label = "Cohort 1")
+    maf_dataset_wrapper_2 = mod_select_maf_dataset_wrapper_server(id = "select_dataset2", maf_data_pool = maf_data_pool, label = "Cohort 2")
     
     maf1 = reactive({ maf_dataset_wrapper_1()$loaded_data })
     maf2 = reactive({ maf_dataset_wrapper_2()$loaded_data })

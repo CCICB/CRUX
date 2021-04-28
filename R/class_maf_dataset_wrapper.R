@@ -139,10 +139,11 @@ assert_that_class_is_maf_dataset_wrapper <- function(object) {
 #' 
 #' @description
 #' This function allows user to pass a maf data pool and a unique name of the dataset of interest.
-#' I differs from maf_data_pool_load_data in that maf_data_pool_load_data will throw an error if the status of the loaded object is anything other than "not_loaded".
+#' It differs from maf_data_pool_load_data in that maf_data_pool_load_data will throw an error if the status of the loaded object is anything other than "not_loaded".
 #' This function will take any valid status and try to get the data loaded.
 #' It decides if the data actually needs loading, and if so, loads it.
-#' It is designed to run before you run maf_data_pool_unique_name_to_maf.
+#' 
+#' It is designed to run before you run maf_data_pool_unique_name_to_maf / maf_data_pool_get_data_wrapper_from_unique_name.
 #'
 #' @return maf_data_pool with the specified datawrapper loaded (maf_data_pool)
 #' @export

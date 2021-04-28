@@ -10,7 +10,7 @@
 mod_druggability_ui <- function(id){
   ns <- NS(id)
   tagList(
-    
+    # This module is a little wierd - the plotting wrapper actually does a bunch, mostly because it is the same function that gives you the plot AND the table    
 
     # Step 1: Warn for research purposes only! --------------------------------
     wellPanel(
@@ -23,7 +23,6 @@ mod_druggability_ui <- function(id){
           )
       )
     ),
-    #Maybe switch these to wellpanels to get HTML formatting in there
     
     # Step 2: Describe Druggable Categories --------------------------------
     mod_plot_druginteractions_ui(ns("mod_plot_druginteractions"))

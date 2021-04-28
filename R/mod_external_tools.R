@@ -20,12 +20,13 @@ mod_external_tools_ui <- function(id){
     # Step 1: Select Dataset --------------------------------------------------
     shinyWidgets::panel(
       heading = "Step 1: Select Dataset",
-      mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_ui(id = ns("mod_select_dataset"),panel = FALSE),
+      mod_select_maf_dataset_wrapper_ui(id = ns("mod_select_dataset"), panel = FALSE),
+      #mod_select_maf_dataset_wrapper_ui(id = ns("mod_select_dataset"),panel = FALSE),
     ),
     
 
     # Step 1.5: render name of dataset to make sure updates to selected maf are carried through to the download button ----------------------------------------------------------------
-    textOutput(ns("tmp")), 
+    #textOutput(ns("tmp")), 
     
     icon_down_arrow(), br(),
     
@@ -95,12 +96,14 @@ mod_external_tools_server <- function(id, maf_data_pool){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
+    maf_dataset_wrapper = mod_select_maf_dataset_wrapper_server("mod_select_dataset",maf_data_pool = maf_data_pool)
+    
     # Select Data -------------------------------------------------------------
-    maf_dataset_wrapper <- reactive({
-      validate(need(!is.null(maf_data_pool()), message = "Please wait while we load data"))
-      mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_server(id = "mod_select_dataset", maf_data_pool = maf_data_pool)() %>%
-        return()
-    })
+    # maf_dataset_wrapper <- reactive({
+    #   validate(need(!is.null(maf_data_pool()), message = "Please wait while we load data"))
+    #   mod_select_maf_dataset_wrapper_server(id = "mod_select_dataset", maf_data_pool = maf_data_pool)() %>%
+    #     return()
+    # })
     
     # Step 1.5: render name of dataset to make sure updates to selected maf are carried through to the download button ----------------------------------------------------------------
     output$temp <- renderText({maf_dataset_wrapper()$display_name})
@@ -120,7 +123,7 @@ mod_external_tools_server <- function(id, maf_data_pool){
     # Populate Gene List ------------------------------------------------------
     genes <- reactive({
       validate(need(!is.null(maf()), message = "Waiting for data to load"))
-      message("Fetching Genes")
+      #message("Fetching Genes")
       maftools::getGeneSummary(maf())[[1]]
       })
     

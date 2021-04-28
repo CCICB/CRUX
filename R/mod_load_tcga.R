@@ -30,17 +30,6 @@ moduleLoadTCGAServer <- function(id, optional_argument){
       
       output$out_dt_tcga_available <- DT::renderDataTable({ tcga_datasets_df }, options = list(scrollX = TRUE), class = "display nowrap", filter = 'top')
       
-      # tcga_maf_loaded_maf <- reactive({
-      #   validate(need(!is.null(input$in_multi_tcga), message = "Please choose TCGA cohorts"))
-      #   #browser()
-      #   tcga_maf <- TCGAmutations::tcga_load(input$in_multi_tcga)
-      #   
-      #   if (is.list(tcga_maf))
-      #     tcga_maf <- maftools::merge_mafs(tcga_maf)
-      #   
-      #   return(tcga_maf)
-      #   })
-      
       tcga_maf_loaded_maf <- eventReactive(eventExpr = input$in_bttn_load_selected_cohorts,{
         validate(need(!is.null(input$in_multi_tcga), message = "Please choose TCGA cohorts"))
         get_tcga_mafs(input$in_multi_tcga)

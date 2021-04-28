@@ -122,6 +122,9 @@ external_tools_get_property_by_tool_name <- function(tool_name, property_to_retr
 }
 
 
+# BBGlab ------------------------------------------------------------------
+
+
 #' Load tool metadata into global variable
 #' 
 #' Loads metadata for the OncodriveFML tool into a global variable \strong{GLOBAL_external_tools_dataframe}
@@ -261,6 +264,10 @@ external_tools_convert_maf_to_bbglab_return_dataframe <- function(maf){
 }
 
 
+
+# cBioPortal --------------------------------------------------------------
+
+
 #' MAF + Gene --> cBioPortal mutation_mapper_input
 #'
 #' Takes a MAF and converts variants hitting a particular gene to the form the cBioPortal Mutation Mapper uses as input.
@@ -315,11 +322,14 @@ external_tools_load_cbioportal_mutation_mapper <- function(external_tools_df = d
   )
 }
 
+
+# Signal 2 ----------------------------------------------------------------
+
 external_tools_convert_maf_to_signal2_return_dataframe <- function(maf){
   maf %>%
     maftools_get_all_data(include_silent_mutations = TRUE) %>% 
-    dplyr::filter(Start_Position==End_Position) %>% #Prob should filter for SNVs only
-    dplyr::filter(Tumor_Seq_Allele2 %in% c("A", "C", "T", "G")) %>%
+    dplyr::filter(Start_Position==End_Position) %>% #Filter for SNVs only
+    dplyr::filter(Tumor_Seq_Allele2 %in% c("A", "C", "T", "G")) %>% #No indels allowed
     dplyr::select(
       "Sample Name" = Tumor_Sample_Barcode, 
       "Chromosome" = Chromosome, 
@@ -377,6 +387,441 @@ external_tools_load_maf_to_signal2 <- function(external_tools_df = data.frame())
   )
 }
 
+
+# Mutalisk ----------------------------------------------------------------
+#' Maf to VCF
+#' 
+#' Convert a maf to a vanilla vcf (single sample)
+#'
+#' @param maf_df either a maf object or a dataframe created using maftools_get_all_data
+#'
+#' @return data.frame with VCF columns
+#' @export 
+external_tools_convert_maf_to_vanilla_vcf_return_dataframe <- function(maf_df){
+  if (maf_df %>% class() == "MAF") 
+    maf_df <- maftools_get_all_data(maf_df, include_silent_mutations = TRUE)
+  
+  maf_df %>%
+    dplyr::filter(Start_Position==End_Position) %>% #Filter for SNVs only
+    dplyr::filter(Tumor_Seq_Allele2 %in% c("A", "C", "T", "G")) %>% #No indels allowed
+    dplyr::mutate(ID= ".", QUAL=".", FILTER=".", INFO=".") %>%
+    dplyr::select(
+      "#CHROM" = Chromosome, 
+      "POS" = Start_Position, 
+      "ID" = ID,
+      "REF" = Reference_Allele, 
+      "ALT" = Tumor_Seq_Allele2,
+      "QUAL" = QUAL, 
+      "FILTER" = FILTER, 
+      "INFO" = INFO
+    ) 
+}
+
+external_tools_convert_maf_to_multiple_vanilla_vcfs <- function(maf, filepath){
+  tumor_sample_barcodes <- maf %>% 
+    maftools::getSampleSummary() %>% 
+    dplyr::pull(Tumor_Sample_Barcode) %>% 
+    unique()
+  
+  files =  paste0(tempdir(), "/mutalisk_input_", tumor_sample_barcodes, ".vcf")
+  
+  message("Saving files to ", (tempdir()))
+  
+  sapply(seq_along(tumor_sample_barcodes), function(index){
+    
+    write("##fileformat=VCFv4.2", files[index])
+    message(tumor_sample_barcodes[index])
+    
+    maf %>%
+      maftools_get_all_data() %>% 
+        dplyr::filter(Tumor_Sample_Barcode == tumor_sample_barcodes[index]) %>%
+      external_tools_convert_maf_to_vanilla_vcf_return_dataframe() %>%
+        write.table(file = files[index], sep="\t", quote = FALSE, col.names = TRUE, row.names = FALSE,append = TRUE) 
+  })
+  
+  zip(filepath, files, flags = "-j")
+    
+}
+
+external_tools_convert_maf_to_one_vanilla_vcf <- function(maf, filepath){
+  
+    write("##fileformat=VCFv4.2", filepath)
+    maf %>%
+      external_tools_convert_maf_to_vanilla_vcf_return_dataframe() %>%
+      write.table(file = filepath, sep="\t", quote = FALSE, col.names = TRUE, row.names = FALSE,append = TRUE)
+}
+
+external_tools_load_maf_to_mutalisk_sample_level <- function(external_tools_df = data.frame()){
+  external_tools_add_tool_to_dataframe(
+    external_tools_df = external_tools_df,
+    tool_name = "Mutalisk: Sample Level",
+    tool_id = "mutalisk-sample_level",
+    tool_group = "Mutational Signature Analysis",
+    tool_class = "Mutational Signature Analysis",
+    tool_description = "Identifies mutational signatures in each sample",
+    requires_gene_selection = FALSE,
+    website = "http://mutalisk.org/analyze.php",
+    doi = "https://doi.org/10.1093/nar/gky406",
+    instructions = as.character(
+      tags$ol(
+        tags$li("Unzip downloaded file"),
+        tags$li("Click 'Upload Files' and select all samples you want to run signature analysis on"),
+        tags$li("Select reference build (Human GRCh37 if using pre-packaged TCGA/PCAWG datasets)"),
+        tags$li("Select Disease Type and Signatures to include in analysis"),
+        tags$li("Run analysis")
+      )
+    ),
+    maf_conversion_function = external_tools_convert_maf_to_multiple_vanilla_vcfs,
+    extension = "zip"
+  )
+}
+
+
+# Mutalisk Cohort Level ---------------------------------------------------
+external_tools_load_maf_to_mutalisk_cohort_level <- function(external_tools_df = data.frame()){
+  external_tools_add_tool_to_dataframe(
+    external_tools_df = external_tools_df,
+    tool_name = "Mutalisk: Cohort Level",
+    tool_id = "mutalisk-cohort_level",
+    tool_group = "Mutational Signature Analysis",
+    tool_class = "Mutational Signature Analysis",
+    tool_description = "Identifies mutational signatures in a cohort",
+    requires_gene_selection = FALSE,
+    website = "http://mutalisk.org/analyze.php",
+    doi = "https://doi.org/10.1093/nar/gky406",
+    instructions = as.character(
+      tags$ol(
+        tags$li("Upload vcf"),
+        tags$li("Select reference build (Human GRCh37 if using pre-packaged TCGA/PCAWG datasets)"),
+        tags$li("Select Disease Type and Signatures to include in analysis"),
+        tags$li("Run analysis")
+      )
+    ),
+    maf_conversion_function = external_tools_convert_maf_to_one_vanilla_vcf,
+    extension = "vcf"
+  )
+}
+
+
+# MuSic -------------------------------------------------------------------
+#Third mutational signatures
+
+
+
+# OpenCRAVAT ------------------------------------------------------------------
+external_tools_convert_maf_to_cravat_return_dataframe <- function(maf){
+  maf_df = maf %>%
+    maftools_get_all_data() 
+  
+  if(! "Strand" %in% colnames(maf_df)){
+    message("[Export MAF to Cravat] No strand column found in MAF. Assuming all variants are described relative to the sense strand (+)")
+    maf_df <- dplyr::mutate(maf_df, Strand="+")
+  }
+  
+  maf_df %>%
+    dplyr::select(
+      Chromosome = Chromosome,
+      Position = Start_Position,
+      Strand = Strand,
+      "Reference Base" = Reference_Allele,
+      "Alternate Allele" = Tumor_Seq_Allele2,
+      Sample = Tumor_Sample_Barcode
+    )
+}
+
+external_tools_convert_maf_to_cravat <- function(maf, filepath){
+  external_tools_convert_maf_to_cravat_return_dataframe(maf) %>%
+    write.table(file = filepath, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
+}
+
+external_tools_load_maf_to_cravat <- function(external_tools_df = data.frame()){
+  external_tools_add_tool_to_dataframe(
+    external_tools_df = external_tools_df,
+    tool_name = "OpenCRAVAT",
+    tool_id = "open_cravat",
+    tool_group = "Variant Annotation",
+    tool_class = "Variant Annotation",
+    tool_description = "Highly customisable annotation of all variants in a cohort",
+    requires_gene_selection = FALSE,
+    website = "https://run.opencravat.org/submit/nocache/index.html",
+    doi = "https://ascopubs.org/doi/10.1200/CCI.19.00132",
+    instructions = as.character(
+      tags$ol(
+        tags$li("Upload file"),
+        tags$li("Select reference build (Human GRCh37 if using pre-packaged TCGA/PCAWG datasets)"),
+        tags$li("Select annotation modules of interest"),
+        tags$li("Run annotation")
+      )
+    ),
+    maf_conversion_function = external_tools_convert_maf_to_cravat,
+    extension = "tsv"
+  )
+}
+
+
+# Pecan Protein Paint (Simple) -----------------------------------------------------
+# external_tools_convert_maf_to_proteinpaint_simple_return_dataframe <- function(maf, gene){
+#   maf_df <- maf %>%
+#     maftools_get_all_data() %>%
+#     #dplyr::filter(Hugo_Symbol == gene) %>%
+#     dplyr::mutate(class = dplyr::case_when(
+#       Variant_Classification == "Missense_Mutation" ~ "M",
+#       Variant_Classification %in% c("Nonsense_Mutation", "Nonstop_Mutation") ~ "N", ## add rest stoploss, nonstop, and stopgain
+#       Variant_Classification %in% c("Frame_Shift_Del", "Frame_Shift_Ins", "Frameshift_INDEL") ~ "F",
+#       Variant_Classification == "Silent" ~ "S",
+#       Variant_Classification == "In_Frame_Del" ~ "D", #Calling inframe INDELs (i.e. MNPs) deletions for now for lack of a better option.
+#       Variant_Classification ==  "Inframe_INDEL" ~ "mnv",
+#       Variant_Classification == "In_Frame_Ins" ~ "I",
+#       Variant_Classification == "Splice_Site" ~ "L",
+#       Variant_Classification == "3'UTR" ~ "Utr3",
+#       Variant_Classification == "5'UTR" ~ "Utr5",
+#       Variant_Classification == "Intron" ~ "Intron",
+#       Variant_Classification %in% c("RNA", "IGR", "5'Flank", "3'Flank") ~"N",
+#       Variant_Classification == c("Translation_Start_Site") ~ "M", # Start-loss is currently classified as missense 
+#       Variant_Classification == "Unknown" ~ "X", 
+#       TRUE ~ "X"
+#     ))
+#   maf_colnames = colnames(maf_df)
+#   
+#   maf_df %>% 
+#     dplyr::mutate(
+#       position = paste0(sub(pattern = "^(chr)?", replacement = "chr", Chromosome,), ":", Start_Position),
+#       name = get_amino_acid_changes(maf_df),
+#       name = ifelse(is.na(name), position, name),
+#       genomepaint = paste(name, position, class, sep=";")
+#     ) %>%
+#     dplyr::pull(genomepaint)
+# }
+
+
+  
+
+# Pecan Protein Paint (Full) -----------------------------------------------------
+external_tools_convert_maf_to_proteinpaint_return_dataframe <- function(maf){
+  maf_df <- maf %>%
+    maftools_get_all_data() 
+  
+  maf_colnames <- colnames(maf_df)
+  
+  maf_df %>%
+    dplyr::mutate(class = dplyr::case_when(
+      Variant_Classification == "Missense_Mutation" ~ "missense",
+      Variant_Classification %in% c("Nonsense_Mutation", "Nonstop_Mutation", "Stop_Codon_Ins", "Stop_Codon_Del") ~ "nonsense", ## add rest stoploss, nonstop, and stopgain
+      Variant_Classification %in% c("Frame_Shift_Del", "Frame_Shift_Ins", "Frameshift_INDEL", "De_novo_Start_OutOfFrame") ~ "frameshift",
+      Variant_Classification == "Silent" ~ "silent",
+      Variant_Classification %in% c("In_Frame_Del", "Inframe_INDEL", "Start_Codon_Del") ~ "proteinDel", #Calling inframe INDELs (i.e. MNPs) deletions for now for lack of a better option.
+      Variant_Classification == "In_Frame_Ins" ~ "proteinIns",
+      Variant_Classification == "Splice_Site" ~ "splice",
+      Variant_Classification == "3'UTR" ~ "utr_3",
+      Variant_Classification == "5'UTR" ~ "utr_5",
+      Variant_Classification == "Intron" ~ "intron",
+      Variant_Classification %in% c("RNA", "IGR", "5'Flank", "3'Flank") ~"noncoding",
+      Variant_Classification == c("Translation_Start_Site") ~ "missense", # Start-loss is currently classified as missense 
+      Variant_Classification == "De_novo_Start_InFrame" & Variant_Type %in% c("SNP", "DNP", "MNP") ~ "missense",
+      Variant_Classification == "De_novo_Start_InFrame" & Variant_Type == "DEL" ~ "proteinDel",
+      Variant_Classification == "De_novo_Start_InFrame" & Variant_Type == "INS" ~ "proteinIns",
+      Variant_Classification == "Unknown" ~ "Unknown", 
+      TRUE ~ "Unclassified" #Unknown refers to  variants classified as unknown in MAF whereas Unclassified means the variant class has not been accounted for by this conversion script
+      )) %>%
+    dplyr::select(
+      gene = Hugo_Symbol,
+      chromosome = Chromosome,
+      start = Start_Position,
+      class = class,
+      sample = "Tumor_Sample_Barcode"
+    ) %>%
+    dplyr::mutate(
+      aachange = get_amino_acid_changes(maf_df = maf_df),
+      refseq = maftools_get_transcript_refseq(maf_df)
+      )
+}
+
+external_tools_convert_maf_to_proteinpaint <- function(maf, filepath){
+  external_tools_convert_maf_to_proteinpaint_return_dataframe(maf) %>%
+    write.table(file = filepath, sep = "\t", quote = FALSE, row.names = FALSE, col.names = TRUE)
+}
+
+
+longest_refseq_df = readRDS(system.file("extdata", "protein_domains.RDs", package = "maftools")) %>%
+  dplyr::select(HGNC, refseq.ID, aa.length) %>%
+  dplyr::group_by(HGNC, refseq.ID) %>%
+  dplyr::slice(which.max(aa.length), .preserve = FALSE)
+
+
+#' Get Longest Transcript Refseq ID
+#'
+#' Returns the transcript id from the 'Transcript_ID' column of a maf_df.
+#' If no Transcript_ID column is found, will return the longest refseq transcript for each gene name.
+#'
+#' @param maf_df (HGNC ID of gene)
+#'
+#' @return vector of the same length as maf_df containing transcript refseq ids (character)
+#' @export
+#'
+maftools_get_transcript_refseq <- function(maf_df){
+  maf_colnames = colnames(maf_df)
+  if("Transcript_ID" %in% maf_colnames) {
+    message("Found a 'Transcript_ID' column', pulling refseq id's from there")
+    return(maf_df[["Transcript_ID"]])
+  }
+  else {
+    message("No Transcript_ID column found, retrieving the longest transcript")
+    longest_refseq_df[match(maf_df$Hugo_Symbol, longest_refseq_df[["HGNC"]]),"refseq.ID"] %>% 
+    unlist() %>% 
+    return()
+  }
+}
+
+#Returns vector of amino acid changes OR NA if no valid column could be found
+get_amino_acid_changes = function(maf_df){
+  maf_colnames = colnames(maf_df)
+  if("HGVSp_Short" %in% maf_colnames) return(maf_df[["HGVSp_Short"]])
+  else if("HGVSp" %in% maf_colnames) return(maf_df[["HGVSp"]])
+  else return(NA)
+}
+
+#' Load tool metadata into global variable
+#' 
+#' Appends  metadata for the OncodriveCLUSTL tool onto external_tools_df
+#'
+#' @return external_tools_df with metadata of tool appeneded (data.frame)
+#' @export
+#'
+external_tools_load_proteinpaint <- function(external_tools_df = data.frame()){
+  external_tools_add_tool_to_dataframe(
+    external_tools_df = external_tools_df,
+    tool_name = "Protein Paint",
+    tool_id = "protein_paint",
+    tool_group = "St. Jude",
+    tool_class = "Lollipop",
+    tool_description = "A new method to identify clustering of somatic mutations in both coding and non-coding genomic regions to detect signals of positive selection.",
+    website = "https://proteinpaint.stjude.org/",
+    doi = "https://doi.org/10.1038/ng.3466",
+    requires_gene_selection = FALSE,
+    instructions =  as.character(
+      tags$ol(
+        tags$li("Select the appropriate reference genome build (hg19 if using pre-packaged TCGA/PCAWG datasets)"),
+        tags$li("Select 'Apps' => 'Load mutation from text files'"),
+        tags$li("Click Browse & navigate to downloaded file"),
+        tags$li("A pop-up box should appear. Click 'Genes', select a gene of interest by clicking its name"),
+        tags$li("You should see a lollipop plot appear. Try clicking 'Pediatric' / 'COSMIC' to compare mutational profile to PeCan cohorts")
+      )
+    ),
+    maf_conversion_function = external_tools_convert_maf_to_proteinpaint,
+    extension = "tsv"
+  ) 
+}
+
+
+# Xena Browser ------------------------------------------------------------
+external_tools_convert_maf_to_xena_return_dataframe <- function(maf){
+  maf %>%
+    maftools_get_all_data() %>% 
+    dplyr::select(sample=Tumor_Sample_Barcode, chr=Chromosome, start=Start_Position, end=End_Position, reference = Reference_Allele, alt = Tumor_Seq_Allele2, gene = Hugo_Symbol) %>% 
+    dplyr::filter(nchar(reference) < 1000)  # We filter out very large deletions (>1000bp) because Xena can't handle them
+}
+
+external_tools_convert_maf_to_xena <- function(maf, filepath){
+  temp_dir <- tempdir()
+  mutation_path <- paste0(temp_dir, "/mutations.txt")
+  metadata_path <- paste0(temp_dir, "/metadata.txt")
+  
+  
+  message("Writing temporary files to: \n", mutation_path, "\n AND \n",metadata_path)
+  
+  # Genomic Data
+  external_tools_convert_maf_to_xena_return_dataframe(maf) %>%
+    write.table(file = mutation_path, col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
+  
+  # Clinical Data
+  maf %>% 
+    maftools::getClinicalData() %>%
+    write.table(file = metadata_path, col.names = TRUE, row.names = FALSE, quote = TRUE, sep = "\t")
+  
+  
+  zip(filepath, c(mutation_path, metadata_path), flags = "-j")
+}
+
+external_tools_load_xena <- function(external_tools_df = data.frame()){
+  external_tools_add_tool_to_dataframe(
+    external_tools_df = external_tools_df,
+    tool_name = "Xena Browser",
+    tool_id = "xena",
+    tool_group = "UCSC",
+    tool_class = "Multiomics Visualisation",
+    tool_description = "Allows users to explore functional genomic data sets for correlations between genomic and/or phenotypic variables.",
+    website = "https://xenabrowser.net/",
+    doi = "https://doi.org/10.1038/s41587-020-0546-8",
+    requires_gene_selection = FALSE,
+    instructions =  as.character(
+      tags$ol(
+        tags$li("Click 'VIEW MY DATA'"),
+        tags$li("Follow prompts to install UCSC Xena"),
+        tags$li("Unzip downloaded files"),
+        tags$li("Import mutations.txt as 'positional data'"),
+        tags$li("Follow prompts to import data. Note reference genome is hg19/GRCh37 if using any of the pre-loaded datasets"),
+        tags$li("Import metadata.txt as phenotypic data")
+      )
+    ),
+    maf_conversion_function = external_tools_convert_maf_to_xena,
+    extension = "zip"
+  ) 
+}
+
+
+# UCSC (BED format) -------------------------------------------------------
+external_tools_convert_maf_to_bed_return_dataframe <- function(maf){
+  maf %>%
+    maftools_get_all_data(include_silent_mutations = TRUE) %>% 
+    dplyr::mutate(name = paste0(Tumor_Sample_Barcode, "_", Reference_Allele, ">", Tumor_Seq_Allele2)) %>% 
+    dplyr::select(chrom = Chromosome, chromStart = Start_Position, chromEnd = End_Position, name = name) %>%
+    dplyr::mutate(chromStart = chromStart-1)  #Make Start is 0 based #maybe sort
+}
+
+external_tools_convert_maf_to_bed <- function(maf, filepath){
+  maf %>%
+    external_tools_convert_maf_to_bed_return_dataframe() %>%
+    write.table(file = filepath, sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+}
+
+external_tools_convert_maf_to_ucsc <- function(maf, filepath){
+  
+  write('track name=ShinyMaftools description="Shinymaftools Track"', file = filepath)
+  
+  maf %>%
+    external_tools_convert_maf_to_bed_return_dataframe() %>%
+    write.table(file = filepath, sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE, append = TRUE)
+  
+}
+
+
+external_tools_load_ucsc <- function(external_tools_df = data.frame()){
+  external_tools_add_tool_to_dataframe(
+    external_tools_df = external_tools_df,
+    tool_name = "UCSC Browser",
+    tool_id = "ucsc",
+    tool_group = "UCSC",
+    tool_class = "Multiomics Visualisation",
+    tool_description = "Allows users to explore functional genomic data sets for correlations between genomic and/or phenotypic variables.",
+    website = "https://genome.ucsc.edu/cgi-bin/hgCustom?hgsid=1097698701_fTXkn1uTAlRTQ8UGVIH7Kc9vi5tI",
+    doi = "http://www.genome.org/cgi/doi/10.1101/gr.229102",
+    requires_gene_selection = FALSE,
+    instructions =  as.character(
+      tags$ol(
+        tags$li("Select the appropritate reference genome. This is is GRCh37/hg19 if using any of the pre-loaded datasets"),
+        tags$li("Click 'browse'"),
+        tags$li("Upload exported file"),
+        tags$li("Submit")
+      )
+    ),
+    maf_conversion_function = external_tools_convert_maf_to_ucsc,
+    extension = "bed"
+  ) 
+}
+
+
+
+# For all tools -----------------------------------------------------------
 #' Load tool metadata into global variable
 #' 
 #' Loads metadata for all tools, returning a dataframe.
@@ -393,8 +838,18 @@ external_tools_load_all_tools <- function(){
     external_tools_load_bbglab_cgi() %>%
     external_tools_load_cbioportal_mutation_mapper() %>% 
     external_tools_load_maf_to_signal2() %>%
+    external_tools_load_maf_to_mutalisk_sample_level() %>%
+    external_tools_load_maf_to_mutalisk_cohort_level() %>%
+    external_tools_load_maf_to_cravat() %>%
+    external_tools_load_proteinpaint() %>%
+    external_tools_load_xena() %>%
+    external_tools_load_ucsc() %>%
     return()
 }
+
+
+
+
 
 #' Update builtin external_tools dataset
 #'

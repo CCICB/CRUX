@@ -12,7 +12,7 @@ mod_survival_analysis_ui <- function(id){
   tagList(
 
     # Step 1: Select dataaset-------------------------------------------------------------------
-    mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_ui(ns("mod_select_dataset_wrapper"), panel = TRUE),
+    mod_select_maf_dataset_wrapper_ui(ns("mod_select_dataset_wrapper"), panel = TRUE),
     
     icon_down_arrow(),br(),
     
@@ -76,7 +76,7 @@ mod_survival_analysis_server <- function(id, maf_data_pool){
     ns <- session$ns
 
     # Step 1: Select Dataset --------------------------------------------------
-    maf_dataset_wrapper <- mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_server(id = "mod_select_dataset_wrapper", maf_data_pool = maf_data_pool, label =  "Step 1: Select Dataset")
+    maf_dataset_wrapper <- mod_select_maf_dataset_wrapper_server(id = "mod_select_dataset_wrapper", maf_data_pool = maf_data_pool, label =  "Step 1: Select Dataset")
     maf <- reactive({maf_dataset_wrapper()$loaded_data })
     clinical_data <- reactive({ maf() %>% maftools::getClinicalData()})
     

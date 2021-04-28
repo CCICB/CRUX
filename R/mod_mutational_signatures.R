@@ -14,7 +14,7 @@ mod_mutational_signatures_ui <- function(id){ #THIS IS THE ONLY MODULE THAT USES
   tagList(
 
     # Step 1: Select Dataset --------------------------------------------------
-    mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_ui(id = ns("mod_select_dataset_wrapper"), panel = TRUE),
+    mod_select_maf_dataset_wrapper_ui(id = ns("mod_select_dataset_wrapper"), panel = TRUE),
     icon_down_arrow(),br(),
     
     
@@ -79,7 +79,7 @@ mod_mutational_signatures_ui <- function(id){ #THIS IS THE ONLY MODULE THAT USES
 mod_mutational_signatures_server <- function(id, maf_data_pool){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-    maf_data_wrapper <- mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_dataset_wrapper_server("mod_select_dataset_wrapper", maf_data_pool = maf_data_pool, label = "Step 1: Select Dataset")
+    maf_data_wrapper <- mod_select_maf_dataset_wrapper_server("mod_select_dataset_wrapper", maf_data_pool = maf_data_pool, label = "Step 1: Select Dataset")
     maf <- reactive({maf_data_wrapper()$loaded_data})
     reset <- reactiveVal()
     
