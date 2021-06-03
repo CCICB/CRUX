@@ -301,7 +301,8 @@ moduleSubsetMafsServer <- function(id, maf_data_pool){
               function_to_load_data = function(x) {NULL},
               local_path_to_data = "NONE", datatype_of_stored_object = "NA",
               derived_from = NA # Should be maf_dataset_wrapper
-            )
+            ) %>%
+              maf_data_wrapper_add_rnaseq(rnaseq_path = maf_dataset_wrapper()$rnaseq_filepath) #Copy over RNA from previous maf_data_wrapper
 
             new_maf_data_pool = maf_data_pool_add_dataset(maf_data_pool = maf_data_pool(), maf_dataset_wrapper = new_maf_dataset_wrapper)
 

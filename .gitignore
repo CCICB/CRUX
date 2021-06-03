@@ -41,5 +41,11 @@ vignettes/*.pdf
 #ZCC data
 inst/example_data/*zcc*
 
-#Becker GBM data
+# Becker GBM data
 inst/example_data/Becker_GBM_Exomes*
+inst/example_data/becker*
+***/.DS_Store
+
+# Large BRCA files
+inst/example_data/*BRCA*
+inst/example_data/*brca*

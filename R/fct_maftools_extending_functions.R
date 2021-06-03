@@ -54,13 +54,10 @@ maftools_plot_rainfall <- function(maf, tsb, detectChangePoints = TRUE, ref.buil
 #'
 #' @inheritParams maftools_clinical_data_visually_summarise
 #'
-#' @param maf 
-#' @param clinical_feature 
 #'
 #' @return Number of distinct levels of a clinical feature 
 #' @export
 #'
-#' @examples
 maftools_clinical_data_get_levels <- function(maf, clinical_feature){
   utilitybelt::assert_non_empty_string(clinical_feature)
   clindata <- maftools::getClinicalData(maf)
@@ -162,7 +159,6 @@ maftools_gistic = function(gistic){
 #' @return a MAF object with chr23/chr24 converted to "X" & "Y"
 #' @export
 #'
-#' @examples
 maftools_chrom_23_and_24_to_X_and_Y <- function(maf){
   maf@data <- maf@data %>% 
     dplyr::mutate(Chromosome  =dplyr::case_when(
@@ -189,57 +185,5 @@ maftools_chrom_23_and_24_to_X_and_Y <- function(maf){
 
 
 
-# RNAseq functionality ----------------------------------------------------
 
-#' Read RNAseq file
-#'
-#' @param rnaseq_file (string)
-#'
-#' @return Dataframe containing at least three columns, named "Tumor_Sample_Barcode", "Hugo_Symbol" and "TPM". May optionally include columns named "Fold_Change" and "Transcript" (dataframe)
-#' @export
-#'
-read_rnaseq_file <- function(rnaseq_file){
-  
-  assertthat::assert_that(assertthat::is.string(rnaseq_file), msg = "[read_rnaseq_file] expected rnaseq_file to be a string")
-  
-  #Assert file exists
-  assertthat::assert_that(file.exists(rnaseq_file), msg = paste0("Could not find file: ", rnaseq_file))
-  
-  #Read Data
-  rnaseq_df <- data.table::fread(rnaseq_file)
-  
-  #Assert number of columns is correct
-  assertthat::assert_that(ncol(rnaseq_df) >= 3, msg = paste0("RNAseq files requires at between 3 and 5 columns, not [", ncol(rnaseq_df) ,"]. Please include a header line with the following terms: 'Tumor_Sample_Barcode', 'Hugo_Symbol', 'TPM'. Optionally, include 'RefSeq_Transcript' and 'Fold_Change' columns"))
-  
-  #Assert file has header
-  rnaseq_colnames <- colnames(rnaseq_df)
-  assertthat::assert_that(! "V1" %in% rnaseq_colnames, msg = "File should have a header containing: 'Tumor_Sample_Barcode', 'Hugo_Symbol', 'TPM', [Optional] 'Transcript', [Optional] 'Fold_Change'")
-  
-  #Assert names of columns is correct
-  valid_colnames <- c("Tumor_Sample_Barcode", "Hugo_Symbol", "TPM", "Transcript", "Fold_Change")
-  expected_colnames <- c("Tumor_Sample_Barcode", "Hugo_Symbol", "TPM") 
-  
-  expected_colnames_in_file <- expected_colnames[expected_colnames %in% rnaseq_colnames]
-  expected_colnames_missing_in_file <- expected_colnames[! expected_colnames %in% rnaseq_colnames]
-  
-  message("Found columns: ", paste0(expected_colnames_in_file, collapse = ", "))
-  
-  #Assert that all are column names in file are valid
-  assertthat::assert_that(all(rnaseq_colnames %in% valid_colnames), msg = paste0("Unexpected columns found: ", paste0(rnaseq_colnames[!rnaseq_colnames %in% valid_colnames], collapse = ",")))
-  
-  #Assert expected Column names are all in the file
-  assertthat::assert_that(all(expected_colnames %in% rnaseq_colnames), msg = paste0("File missing the following columns: ", paste0(expected_colnames_missing_in_file, collapse = ",")))
-  
-  #Assert there are no duplicate column names:
-  assertthat::assert_that(!any(duplicated(rnaseq_colnames)), msg = paste0("Duplicated column names are not allowed. Duplicated columns found: ", paste0(rnaseq_colnames[duplicated(rnaseq_colnames)], collapse = ",")))
-  
-  #Assert that type of each column is appropriate:
-  assertthat::assert_that(class(rnaseq_df[["Hugo_Symbol"]]) == "character", msg = paste0("Hugo_Symbol column should contain characters. Your supplied values were of the class: ", class(rnaseq_df[["Hugo_Symbol"]])))
-  assertthat::assert_that(class(rnaseq_df[["TPM"]]) %in% c("numeric", "integer", "double"), msg = paste0("TPM column should only contain numbers. Your supplied values were of the class: ", class(rnaseq_df[["TPM"]])))
-  
-  if("Fold_Change" %in% rnaseq_colnames)
-    assertthat::assert_that(class(rnaseq_df[["Fold_Change"]]) %in% c("numeric", "integer", "double"), paste0(msg = "Fold_Change column should only contain characters. Your supplied values were of the class: ", class(rnaseq_df[["Fold_Change"]])))
-  
-  #Ok, we can be pretty confident the data looks good
-  return(rnaseq_df)
-}
+

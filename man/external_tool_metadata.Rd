@@ -18,7 +18,6 @@ A data frame with 3 rows and 10 variables:
 \item{doi}{publicatoin doi (string)}
 \item{requires_maf_export}{does the tool require a maf to be exported in some other form (flag)}
 \item{maf_conversion_function}{only relevent if requires_maf_export == true. A function that takes a MAF object (first argument), and a filepath (second argument) and writes a file to that filepath. The idea is that said file can then be used as input to the specified tool.}
-...
 }
 }
 \source{

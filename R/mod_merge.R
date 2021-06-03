@@ -16,6 +16,9 @@ mod_merge_ui <- function(id){
       # Select Datasets ---------------------------------------------------------
       mod_select_datasets_from_maf_data_pool_and_return_maf_dataset_wrapper_ui(id=ns("mod_select_datasets_return_list_of_maf_dataset_wrappers"), label = "Merge", panel_heading = "Step 1: Select Datasets"),
       
+      shinyWidgets::panel(
+        html_alert("Please note merging of datasets will not merge their rnaseq data, the new maf_data_wrapper will have no attached RNAseq data (feature will be added soon)", status = "info")
+        ),
   
       # Get Dataset Info ----------------------------------------------------------------
       shinyWidgets::panel(

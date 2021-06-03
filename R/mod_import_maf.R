@@ -1,5 +1,5 @@
 
-#' Title
+#' Read MAF UI function
 #'
 #' @param id links ui and server components of module
 #' @param panel_name "panel name (required)"
@@ -12,7 +12,6 @@
 #' @return
 #' @export
 #'
-#' @examples
 moduleReadMafUI <- function(id, panel_name, cohort_name, label_cohort_name = "name", label_maf="maf", label_clinical_data="clinical features") {
   ns <- NS(id)
   
@@ -43,14 +42,13 @@ moduleReadMafUI <- function(id, panel_name, cohort_name, label_cohort_name = "na
 
 
 
-#' Title
+#' Read MAF server function
 #'
 #' @param id 
 #'
 #' @return named list containing 'maf' (type maf), 'cohortName' (type string), 'clinicalData' (type df), 'clinicalDataSupplied' (bool),
 #' @export
 #'
-#' @examples
 moduleReadMafServer <- function(id) {
   moduleServer(
     id = id,

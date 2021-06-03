@@ -91,7 +91,6 @@ mod_single_cohort_summary_plots_server <- function(id, maf, cohortName) {
 #' @return
 #' @export
 #'
-#' @examples
 mod_single_cohort_summary_tables_and_plots_ui <- function(id, print_instructions=FALSE){
   ns <- NS(id)
   uielement=ifelse(print_instructions, yes=tagList(shinyWidgets::panel(heading = "Instructions",
@@ -124,7 +123,6 @@ mod_single_cohort_summary_tables_and_plots_ui <- function(id, print_instructions
 #' @return
 #' @export
 #'
-#' @examples
 mod_single_cohort_summary_tables_and_plots_server <- function(id, maf, cohortName){
   
   moduleServer(id,

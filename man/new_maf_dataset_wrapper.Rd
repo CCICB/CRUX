@@ -20,7 +20,8 @@ new_maf_dataset_wrapper(
   clinical_data = NA,
   datatype_of_stored_object = "",
   derived_from = NA,
-  loaded_data = NA
+  loaded_data = NA,
+  rnaseq_filepath = NA
 )
 }
 \arguments{
@@ -77,6 +78,7 @@ maf_dataset_wrapper objects store the details of each dataset including the func
 \item datatype_of_stored_object
 \item loaded_data
 \item derived_from
+\item rnaseq_filepath
 }
 }
 

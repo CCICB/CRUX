@@ -13,7 +13,7 @@ mod_data_import_maf_path_to_maf_ui <- function(id){
     shinyWidgets::panel(
       heading = "Preview",
         htmlOutput(outputId = ns("out_text_error_message")),
-        DT::dataTableOutput(outputId = ns("out_dt_maf_summary")),
+        DT::dataTableOutput(outputId = ns("out_dt_maf_summary")) %>% shinycssloaders::withSpinner(),
         br()
         
     )

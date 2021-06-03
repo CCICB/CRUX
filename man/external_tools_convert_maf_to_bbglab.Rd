@@ -4,12 +4,12 @@
 \alias{external_tools_convert_maf_to_bbglab}
 \title{Conversion Function: MAF to BBGLab Cancer Genome Interpreter Input}
 \usage{
-external_tools_convert_maf_to_bbglab(maf, filepath)
+external_tools_convert_maf_to_bbglab(maf_dataset_wrapper, filepath)
 }
 \arguments{
-\item{maf}{(MAF)}
-
 \item{filepath}{(string)}
+
+\item{maf}{(MAF)}
 }
 \value{
 

@@ -41,8 +41,12 @@ mod_select_dataset_from_maf_data_pool_pickerinput_server <- function(id, maf_dat
       maf_data_pool_df()[["unique_name"]]
     } )
     
+    short_dataset_names <- reactive({ 
+      maf_data_pool_df()[["short_name"]]
+    } )
+    
     unique_dataset_names_badge <- reactive({
-      unique_dataset_names() %>%
+      short_dataset_names() %>%
         gsub("(TCGA_)|(PCAWG_)", "", .) %>%
         paste0("<span class='label label-default' style='margin-left: 10px; font-size: xx-small' >",., "</span>")
     })
@@ -93,7 +97,7 @@ custom_picker_options <- function(max_selected_datasets, multiple, style){
     liveSearchNormalize = TRUE,
     actionsBox=multiple,
     maxOptions = max_selected_datasets,
-    style = style
+    style = style, 
   )
 }
 ## To be copied in the UI

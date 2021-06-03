@@ -23,10 +23,15 @@ mod_external_tools_ui <- function(id){
       mod_select_maf_dataset_wrapper_ui(id = ns("mod_select_dataset"), panel = FALSE),
       #mod_select_maf_dataset_wrapper_ui(id = ns("mod_select_dataset"),panel = FALSE),
     ),
-    
 
     # Step 1.5: render name of dataset to make sure updates to selected maf are carried through to the download button ----------------------------------------------------------------
-    #textOutput(ns("tmp")), 
+    icon_down_arrow(), br(),
+    
+    shinyWidgets::panel(
+      heading = "Step 1.5: Ensure Dataset is Ready for Export", 
+      textOutput(ns("out_txt_data_ready")) %>% shinycssloaders::withSpinner(proxy.height = "80px")
+    ),
+    
     
     icon_down_arrow(), br(),
     
@@ -107,17 +112,12 @@ mod_external_tools_server <- function(id, maf_data_pool){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
+    # Step 1: Select Data -------------------------------------------------------------
     maf_dataset_wrapper = mod_select_maf_dataset_wrapper_server("mod_select_dataset",maf_data_pool = maf_data_pool)
     
-    # Select Data -------------------------------------------------------------
-    # maf_dataset_wrapper <- reactive({
-    #   validate(need(!is.null(maf_data_pool()), message = "Please wait while we load data"))
-    #   mod_select_maf_dataset_wrapper_server(id = "mod_select_dataset", maf_data_pool = maf_data_pool)() %>%
-    #     return()
-    # })
     
     # Step 1.5: render name of dataset to make sure updates to selected maf are carried through to the download button ----------------------------------------------------------------
-    output$temp <- renderText({maf_dataset_wrapper()$display_name})
+    output$out_txt_data_ready <- renderText({ paste0(maf_dataset_wrapper()$display_name, " dataset is ready for export")})
     
     #Get MAF
     maf <- reactive({
@@ -205,11 +205,12 @@ mod_external_tools_server <- function(id, maf_data_pool){
       requires_gene_name = external_tools_get_property_by_tool_name(tool_name = tool_name(), property_to_retrieve = "requires_gene_selection")
       
       if(requires_gene_name){
-        conversion_function(maf(), file, input$in_select_gene)
+        conversion_function(maf_dataset_wrapper(), file, input$in_select_gene)
       }
       else
       {
-        conversion_function(maf(), file)
+        #browser()
+        conversion_function(maf_dataset_wrapper(), file)
       }
       
     })

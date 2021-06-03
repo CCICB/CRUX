@@ -38,11 +38,12 @@
 #' \item datatype_of_stored_object
 #' \item loaded_data
 #' \item derived_from
+#' \item rnaseq_filepath
 #' }
 #' 
 #' @export
 #'
-new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, unique_name, start_status, data_description, is_dataset_downloadable, function_to_download_data = function() {return(NA)}, is_dataset_loadable = TRUE,function_to_load_data, name_of_data_source="unknown", local_path_to_data="", clinical_data=NA, datatype_of_stored_object="", derived_from = NA, loaded_data=NA) {
+new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, unique_name, start_status, data_description, is_dataset_downloadable, function_to_download_data = function() {return(NA)}, is_dataset_loadable = TRUE,function_to_load_data, name_of_data_source="unknown", local_path_to_data="", clinical_data=NA, datatype_of_stored_object="", derived_from = NA, loaded_data=NA, rnaseq_filepath = NA) {
   #Dev options
   classname = "maf_dataset_wrapper"
   status_options <- c("not_downloaded","not_loaded", "ready")
@@ -60,7 +61,7 @@ new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, uni
   utilitybelt::assert_non_empty_string(start_status)
   utilitybelt::assert_that(assertthat::is.flag(is_dataset_downloadable))
   utilitybelt::assert_that(assertthat::is.flag(is_dataset_loadable))
-  utilitybelt::assert_that(start_status %in% status_options, msg = utilitybelt::fmterror("new_maf_dataset_wrapper(): start_status [", start_status,"] must be one of [", paste0(status_options, collapse = ", "), "]"))
+  utilitybelt::assert_that(start_status %in% status_options, msg = utilitybelt::fmterror("new_maf_dataset_wrapper: start_status [", start_status,"] must be one of [", paste0(status_options, collapse = ", "), "]"))
   utilitybelt::assert_non_empty_string(data_description)
   utilitybelt::assert_that(is.function(function_to_download_data))
   utilitybelt::assert_that(is.function(function_to_load_data))
@@ -69,6 +70,7 @@ new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, uni
   utilitybelt::assert_that(is.na(derived_from) | class_is_maf_dataset_wrapper(derived_from)) 
   utilitybelt::assert_that(is.na(clinical_data) || is.data.frame(clinical_data), msg= utilitybelt::fmterror("new_maf_dataset_wrapper: Clinical_data must be a dataframe or NULL. It cannot be a: ", class(clinical_data)))
   utilitybelt::assert_that(identical(loaded_data, NA) || utilitybelt::class_is(loaded_data, "MAF"))
+  utilitybelt::assert_that(is.na(rnaseq_filepath) | (assertthat::is.string(rnaseq_filepath) && file.exists(rnaseq_filepath)), msg = utilitybelt::fmterror("new_maf_dataset_wrapper: rnaseq_filepath must be either NA, or a string leading to a valid filepath"))
   
   #Make unique_name actually unique
   actually_unique_name <- maf_data_pool_make_name_unique(maf_data_pool = maf_data_pool, unique_name)
@@ -88,7 +90,8 @@ new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, uni
     loaded_data=loaded_data,
     derived_from=derived_from,
     is_dataset_downloadable=is_dataset_downloadable,
-    is_dataset_loadable=is_dataset_loadable
+    is_dataset_loadable=is_dataset_loadable,
+    rnaseq_filepath=rnaseq_filepath
   )
   
   #Add Class attribute

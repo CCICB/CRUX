@@ -6,13 +6,20 @@
 #' @noRd
 #' @export
 app_server <- function( input, output, session ) {
+  
+  
   starting_maf_data_pool <- new_maf_data_pool()
+  
+  # prepare TCGA data
   starting_maf_data_pool <- tcga_datasets_to_data_pool(starting_maf_data_pool, source = "Firehose")
-  #starting_maf_data_pool <- pcawg_datasets_to_data_pool(starting_maf_data_pool)
-  #starting_maf_data_pool <- tcga_datasets_to_data_pool(starting_maf_data_pool, source = "MC3")
   
+  # prepare ZCC
+  starting_maf_data_pool <- zero_datasets_to_data_pool(starting_maf_data_pool)
   
-  #starting_maf_data_pool <- pcawg_datasets_to_data_pool(starting_maf_data_pool)
+  # prepare PCAWG datasets
+  starting_maf_data_pool <- pcawg_datasets_to_data_pool(starting_maf_data_pool)
+    
+  ### Working on package
   #browser()
   maf_data_pool <- reactiveVal(starting_maf_data_pool)
   
@@ -25,6 +32,8 @@ app_server <- function( input, output, session ) {
   moduleEnrichmentAnalysisServer(id = "mod_enrichment_analyis", maf_data_pool)
   mod_survival_analysis_server(id = "mod_survival_analysis", maf_data_pool)
   mod_mutational_signatures_server(id = "mod_mutational_signatures", maf_data_pool)
+  mod_expression_import_server(id = "mod_expression_import", maf_data_pool)
+  mod_expression_analysis_server(id = "mod_expression_analysis", maf_data_pool)
   
   #moduleUtilitiesServer(id = "mod_utilities", maf_data_pool)
   mod_merge_server(id = "mod_merge", maf_data_pool = maf_data_pool)

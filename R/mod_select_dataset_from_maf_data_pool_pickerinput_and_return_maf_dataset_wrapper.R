@@ -10,7 +10,7 @@
 mod_select_maf_dataset_wrapper_ui <- function(id, panel=TRUE){
   ns <- NS(id)
   tagList(
-    mod_select_dataset_from_maf_data_pool_pickerinput_ui(ns("in_picker_dataset"), panel=panel),
+    mod_select_dataset_from_maf_data_pool_pickerinput_ui(ns("in_picker_dataset"), panel=panel) %>% shinycssloaders::withSpinner(proxy.height = "80px"),
   )
 }
 

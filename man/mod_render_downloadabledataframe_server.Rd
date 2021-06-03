@@ -10,7 +10,8 @@ mod_render_downloadabledataframe_server(
   basename,
   rownames = FALSE,
   colnames = TRUE,
-  filter = "top"
+  filter = "top",
+  message_if_tabular_data_is_null = "Loading data ..."
 )
 }
 \arguments{

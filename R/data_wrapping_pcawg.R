@@ -12,7 +12,7 @@
 #' @examples
 #' pcawg_dataset_to_maf_dataset_wrapper("Bone-Cart")
 pcawg_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, pcawg_study_abbreviation){
-  pcawg_available_df <- pcawg_available()
+  pcawg_available_df <- PCAWGmutations::pcawg_available()
   utilitybelt::assert_non_empty_string(pcawg_study_abbreviation)
   utilitybelt::assert_that(pcawg_study_abbreviation %in% pcawg_available_df[[1]], msg = utilitybelt::fmterror("Failed to find pcawg_study_abbreviation [", pcawg_study_abbreviation, "] in pcawgmutations database. Check pcawg_available() for a list of valid abbreviations"))
   
@@ -26,8 +26,8 @@ pcawg_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, pcawg_study_abbr
     start_status = "not_loaded", 
     data_description = paste0("PCAWG dataset: ", full_study_name), 
     is_dataset_downloadable = FALSE,
-    function_to_load_data  = function(filepath) { pcawg_load(pcawg_study_abbreviation) }, 
-    name_of_data_source = "PCAWG", local_path_to_data = system.file("extdata/pcawg_no_intergenic_by_project_code_rds", paste0(pcawg_study_abbreviation, ".RDs"), package = "shinymaftools"), datatype_of_stored_object = ".RDs"
+    function_to_load_data  = function(filepath) { PCAWGmutations::pcawg_load(pcawg_study_abbreviation) }, 
+    name_of_data_source = "PCAWG", datatype_of_stored_object = ".RDs"
   )
 }
 
@@ -65,7 +65,7 @@ pcawg_dataset_to_data_pool <- function(maf_data_pool, pcawg_study_abbreviation){
 pcawg_datasets_to_data_pool <- function(maf_data_pool){
   assert_that_class_is_maf_data_pool(maf_data_pool)
   
-  for (dataset_name in pcawg_available()[[1]]){
+  for (dataset_name in PCAWGmutations::pcawg_available()[[1]]){
     maf_data_pool <- pcawg_dataset_to_data_pool(maf_data_pool, dataset_name)
   }
   

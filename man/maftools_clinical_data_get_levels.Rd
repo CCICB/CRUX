@@ -7,9 +7,9 @@
 maftools_clinical_data_get_levels(maf, clinical_feature)
 }
 \arguments{
-\item{maf}{}
+\item{maf}{MAF object (MAF)}
 
-\item{clinical_feature}{}
+\item{clinical_feature}{Name of a clinical feature (string)}
 }
 \value{
 Number of distinct levels of a clinical feature

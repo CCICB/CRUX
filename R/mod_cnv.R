@@ -16,7 +16,7 @@ mod_cnv_ui <- function(id){
     # Step 1: Import Data -----------------------------------------------------
     shinyWidgets::panel(
       heading = "Step 1: Select Dataset",
-      mod_select_maf_dataset_wrapper_ui(id = ns("mod_select_dataset_wrapper"), panel = FALSE) %>% shinycssloaders::withSpinner(proxy.height = "200px")
+      mod_select_maf_dataset_wrapper_ui(id = ns("mod_select_dataset_wrapper"), panel = FALSE)
     ),
     icon_down_arrow(),br(),
     

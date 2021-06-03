@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod_import_maf.R
 \name{moduleReadMafUI}
 \alias{moduleReadMafUI}
-\title{Title}
+\title{Read MAF UI function}
 \usage{
 moduleReadMafUI(
   id,
@@ -32,5 +32,5 @@ moduleReadMafUI(
 
 }
 \description{
-Title
+Read MAF UI function
 }

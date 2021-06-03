@@ -2,16 +2,16 @@
 % Please edit documentation in R/fct_maftools_extending_functions.R
 \name{maftools_chrom_23_and_24_to_X_and_Y}
 \alias{maftools_chrom_23_and_24_to_X_and_Y}
-\title{Change chrom 23 and 24 to x and y in maf object. This will convert}
+\title{Convert chromosomes 23 and 24 to x and y in maf object. This will convert}
 \usage{
 maftools_chrom_23_and_24_to_X_and_Y(maf)
 }
 \arguments{
-\item{maf}{}
+\item{maf}{A MAF object (MAF)}
 }
 \value{
-
+a MAF object with chr23/chr24 converted to "X" & "Y"
 }
 \description{
-Change chrom 23 and 24 to x and y in maf object. This will convert
+Takes a maf object and returns that same object but converts and chromosomes named 23 or 24  (or chr23 / chr24) to X and Y.
 }

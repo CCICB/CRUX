@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod_import_maf.R
 \name{moduleReadMafServer}
 \alias{moduleReadMafServer}
-\title{Title}
+\title{Read MAF server function}
 \usage{
 moduleReadMafServer(id)
 }
@@ -13,5 +13,5 @@ moduleReadMafServer(id)
 named list containing 'maf' (type maf), 'cohortName' (type string), 'clinicalData' (type df), 'clinicalDataSupplied' (bool),
 }
 \description{
-Title
+Read MAF server function
 }

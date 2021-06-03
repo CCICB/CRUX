@@ -12,6 +12,7 @@ external_tools_add_tool_to_dataframe(
   tool_class,
   tool_description,
   instructions = "No instructions available yet. You're on your own buddy",
+  platform = "Web App",
   website,
   doi,
   requires_maf_export = TRUE,
@@ -35,6 +36,8 @@ external_tools_add_tool_to_dataframe(
 
 \item{instructions}{brief description of how to use the tool. Any HTML tags in the string will be correctly resolved. (string)}
 
+\item{platform}{what platform do we access the tool from. Examples include web, desktop app, cli  (string)}
+
 \item{website}{url of tool (string)}
 
 \item{doi}{publicatoin doi (string)}
@@ -43,9 +46,9 @@ external_tools_add_tool_to_dataframe(
 
 \item{requires_gene_selection}{does user need to select a specific gene for export to work? (bool)}
 
-\item{maf_conversion_function}{only relevent if requires_maf_export == true. A function that takes a MAF object (first argument), a filepath (second argument) and, if requires_gene_selection == TRUE, a gene name (third argument)  writes a file to that filepath. The idea is that said file can then be used as input to the specified tool.}
+\item{maf_conversion_function}{only relevent if requires_maf_export == true. A function that takes a maf_dataset_wrapper object (first argument), a filepath (second argument) and, if requires_gene_selection == TRUE, a gene name (third argument)  writes a file to that filepath. The idea is that said file can then be used as input to the specified tool.}
 
-\item{extension}{what type of file is written by maf_conversion_function. defualt is 'tsv'. Used to appropriately name downloaded file  (string)}
+\item{extension}{what type of file is written by maf_conversion_function. default is 'tsv'. Used to appropriately name downloaded file  (string)}
 }
 \value{
 dataframe containing external_tool_metadata

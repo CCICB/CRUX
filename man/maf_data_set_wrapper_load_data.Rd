@@ -15,6 +15,9 @@ a copy of the original wrapper with status and loaded data updated. (maf_dataset
 \description{
 Uses the functions in maf_dataset_wrapper to load data into the loaded_data element and update status.
 }
+\details{
+It is only the maf object that is loaded. RNA data stays sitting in a file until it is retrieved via maf_dataset_wrapper_get_rnaseq
+}
 \examples{
 #Generate wrapper
 my_data <- tcga_dataset_to_maf_dataset_wrapper(tcga_study_abbreviation = "ACC")

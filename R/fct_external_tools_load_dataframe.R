@@ -1,11 +1,15 @@
 ## To add a new tool
 
+
+# Instructions for adding tools -------------------------------------------
 # [1] Write a 'maf conversion function'. see ?external_tools_add_tool_to_dataframe for details on the format
 # [2] Write a function for adding the tool to an existing dataframe: see `external_tools_load_bbglab_oncodrive_fml` for an example
 # [3] Add the function from [2] to external_tools_load_all_tools
-# [4] run `devtools::load_all()` in console, then runexternal_tools_update_builtin_dataset to update the dataframe that our external tool module pulls from
+# [4] run `devtools::load_all()` in console, then run external_tools_update_builtin_dataset() to update the dataframe that our external tool module pulls from
 
 
+
+# Core functionality ------------------------------------------------------
 #' external_tools_add_tool_to_dataframe
 #'
 #' Appends tool metadata on the end of a dataframe
@@ -21,10 +25,9 @@
 #' @param website url of tool (string)
 #' @param doi publicatoin doi (string)
 #' @param requires_maf_export does the tool require a maf to be exported in some other form (flag)
-#' @param maf_conversion_function only relevent if requires_maf_export == true. A function that takes a MAF object (first argument), a filepath (second argument) and, if requires_gene_selection == TRUE, a gene name (third argument)  writes a file to that filepath. The idea is that said file can then be used as input to the specified tool.
-#' @param extension what type of file is written by maf_conversion_function. defualt is 'tsv'. Used to appropriately name downloaded file  (string)
+#' @param maf_conversion_function only relevent if requires_maf_export == true. A function that takes a maf_dataset_wrapper object (first argument), a filepath (second argument) and, if requires_gene_selection == TRUE, a gene name (third argument)  writes a file to that filepath. The idea is that said file can then be used as input to the specified tool.
+#' @param extension what type of file is written by maf_conversion_function. default is 'tsv'. Used to appropriately name downloaded file  (string)
 #' @param requires_gene_selection does user need to select a specific gene for export to work? (bool)
-#' 
 #' @return dataframe containing external_tool_metadata
 #' @export
 external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibble(), tool_name, tool_id, tool_group, tool_class, tool_description, instructions = "No instructions available yet. You're on your own buddy", platform = "Web App", website, doi, requires_maf_export = TRUE, requires_gene_selection = FALSE, maf_conversion_function = NA, extension="tsv") {
@@ -45,7 +48,7 @@ external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibb
   if(requires_maf_export) { 
     assertthat::assert_that(is.function(maf_conversion_function), msg = "Must supply a maf_conversion_function to external_tools_add_tool_to_dataframe. 'maf_conversion_function' cannot be NA if 'requires_maf_export' is TRUE")
     expected_number_of_args = ifelse(requires_gene_selection, yes=3, no=2) # should maf export function take 2 or 3 arguments. If we need to specify a gene we need a third argument
-    assertthat::assert_that(utilitybelt::fun_count_arguments(maf_conversion_function) == expected_number_of_args, msg = "maf_conversion_function must have 2 or 3 arguments. The first should take a maf object, the second a filepath. The third is only used if `requires_gene_selection` is TRUE and should take the name of a gene (Hugo SYmbol). See ?external_tools_add_tool_to_dataframe for details")
+    assertthat::assert_that(utilitybelt::fun_count_arguments(maf_conversion_function) == expected_number_of_args, msg = "maf_conversion_function must have 2 or 3 arguments. The first should take a maf_dataset_wrapper object, the second a filepath. The third is only used if `requires_gene_selection` is TRUE and should take the name of a gene (Hugo Symbol). See ?external_tools_add_tool_to_dataframe for details")
   }
   
   new_df <- data.frame(
@@ -240,8 +243,9 @@ external_tools_load_bbglab_cgi <- function(external_tools_df = data.frame()){
 #' @return
 #' @export
 #'
-external_tools_convert_maf_to_bbglab <- function(maf, filepath){
+external_tools_convert_maf_to_bbglab <- function(maf_dataset_wrapper, filepath){
   #browser()
+  maf <- maf_dataset_wrapper$loaded_data
   maf %>% 
     external_tools_convert_maf_to_bbglab_return_dataframe() %>% 
     data.table::fwrite(file = filepath, sep="\t", col.names = TRUE)
@@ -296,7 +300,8 @@ external_tools_convert_maf_to_cbioportal_mutation_mapper_return_dataframe <- fun
       )
 }
 
-external_tools_convert_maf_to_cbioportal_mutation_mapper <- function(maf, filepath, gene_hugo_symbol){
+external_tools_convert_maf_to_cbioportal_mutation_mapper <- function(maf_dataset_wrapper, filepath, gene_hugo_symbol){
+  maf <- maf_dataset_wrapper$loaded_data
   external_tools_convert_maf_to_cbioportal_mutation_mapper_return_dataframe(maf, gene_hugo_symbol = gene_hugo_symbol) %>%
     data.table::fwrite(file = filepath, sep = "\t", col.names = TRUE)
 }
@@ -320,7 +325,7 @@ external_tools_load_cbioportal_mutation_mapper <- function(external_tools_df = d
       )
     ),
     maf_conversion_function = external_tools_convert_maf_to_cbioportal_mutation_mapper,
-    extension = "tsv"
+    extension = "txt"
   )
 }
 
@@ -341,7 +346,8 @@ external_tools_convert_maf_to_signal2_return_dataframe <- function(maf){
       ) 
 }
 
-external_tools_convert_maf_to_signal2 <- function(maf, filepath){
+external_tools_convert_maf_to_signal2 <- function(maf_dataset_wrapper, filepath){
+  maf <- maf_dataset_wrapper$loaded_data
   df = external_tools_convert_maf_to_signal2_return_dataframe(maf) 
   sample_names = unique(df[["Sample Name"]])
   
@@ -356,7 +362,7 @@ external_tools_convert_maf_to_signal2 <- function(maf, filepath){
     samplenames_in_chunk = chunked_names[[i]]
     df %>%
       dplyr::filter(`Sample Name` %in% samplenames_in_chunk) %>%
-      write.table(file = files[i], col.names = FALSE, sep = "\t", quote = FALSE, row.names = FALSE)
+      data.table::fwrite(file = files[i], col.names = FALSE, sep = "\t", quote = FALSE, row.names = FALSE)
   }
   
   zip(filepath, files, flags = "-j")
@@ -419,7 +425,8 @@ external_tools_convert_maf_to_vanilla_vcf_return_dataframe <- function(maf_df){
     ) 
 }
 
-external_tools_convert_maf_to_multiple_vanilla_vcfs <- function(maf, filepath){
+external_tools_convert_maf_to_multiple_vanilla_vcfs <- function(maf_dataset_wrapper, filepath){
+  maf <- maf_dataset_wrapper$loaded_data
   tumor_sample_barcodes <- maf %>% 
     maftools::getSampleSummary() %>% 
     dplyr::pull(Tumor_Sample_Barcode) %>% 
@@ -438,19 +445,19 @@ external_tools_convert_maf_to_multiple_vanilla_vcfs <- function(maf, filepath){
       maftools_get_all_data() %>% 
         dplyr::filter(Tumor_Sample_Barcode == tumor_sample_barcodes[index]) %>%
       external_tools_convert_maf_to_vanilla_vcf_return_dataframe() %>%
-        write.table(file = files[index], sep="\t", quote = FALSE, col.names = TRUE, row.names = FALSE,append = TRUE) 
+        data.table::fwrite(file = files[index], sep="\t", quote = FALSE, col.names = TRUE, row.names = FALSE,append = TRUE) 
   })
   
   zip(filepath, files, flags = "-j")
     
 }
 
-external_tools_convert_maf_to_one_vanilla_vcf <- function(maf, filepath){
-  
+external_tools_convert_maf_to_one_vanilla_vcf <- function(maf_dataset_wrapper, filepath){
+  maf <- maf_dataset_wrapper$loaded_data
     write("##fileformat=VCFv4.2", filepath)
     maf %>%
       external_tools_convert_maf_to_vanilla_vcf_return_dataframe() %>%
-      write.table(file = filepath, sep="\t", quote = FALSE, col.names = TRUE, row.names = FALSE,append = TRUE)
+      data.table::fwrite(file = filepath, sep="\t", quote = FALSE, col.names = TRUE, row.names = FALSE,append = TRUE)
 }
 
 external_tools_load_maf_to_mutalisk_sample_level <- function(external_tools_df = data.frame()){
@@ -531,9 +538,10 @@ external_tools_convert_maf_to_cravat_return_dataframe <- function(maf){
     )
 }
 
-external_tools_convert_maf_to_cravat <- function(maf, filepath){
+external_tools_convert_maf_to_cravat <- function(maf_dataset_wrapper, filepath){
+  maf <- maf_dataset_wrapper$loaded_data
   external_tools_convert_maf_to_cravat_return_dataframe(maf) %>%
-    write.table(file = filepath, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
+    data.table::fwrite(file = filepath, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
 }
 
 external_tools_load_maf_to_cravat <- function(external_tools_df = data.frame()){
@@ -638,9 +646,10 @@ external_tools_convert_maf_to_proteinpaint_return_dataframe <- function(maf){
       )
 }
 
-external_tools_convert_maf_to_proteinpaint <- function(maf, filepath){
+external_tools_convert_maf_to_proteinpaint <- function(maf_dataset_wrapper, filepath){
+  maf <- maf_dataset_wrapper$loaded_data
   external_tools_convert_maf_to_proteinpaint_return_dataframe(maf) %>%
-    write.table(file = filepath, sep = "\t", quote = FALSE, row.names = FALSE, col.names = TRUE)
+    data.table::fwrite(file = filepath, sep = "\t", quote = FALSE, row.names = FALSE, col.names = TRUE)
 }
 
 
@@ -723,9 +732,17 @@ external_tools_convert_maf_to_xena_return_dataframe <- function(maf){
     dplyr::filter(nchar(reference) < 1000)  # We filter out very large deletions (>1000bp) because Xena can't handle them
 }
 
-external_tools_convert_maf_to_xena <- function(maf, filepath){
+external_tools_convert_expression_df_to_xena_expression <- function(expression_df){
+  expression_df %>% 
+    dplyr::select(Sample=Hugo_Symbol, TPM, Tumor_Sample_Barcode) %>%
+    tidyr::pivot_wider(names_from = Tumor_Sample_Barcode, values_from = TPM) 
+}
+
+external_tools_convert_maf_to_xena <- function(maf_dataset_wrapper, filepath){
+  maf <- maf_dataset_wrapper$loaded_data
   temp_dir <- tempdir()
   mutation_path <- paste0(temp_dir, "/mutations.txt")
+  expression_path <- paste0(temp_dir, "/expression.txt")
   metadata_path <- paste0(temp_dir, "/metadata.txt")
   
   
@@ -733,15 +750,21 @@ external_tools_convert_maf_to_xena <- function(maf, filepath){
   
   # Genomic Data
   external_tools_convert_maf_to_xena_return_dataframe(maf) %>%
-    write.table(file = mutation_path, col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
+    data.table::fwrite(file = mutation_path, col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
+  
+  # Expression Data
+  if(maf_data_wrapper_has_rnaseq_data(maf_dataset_wrapper)){
+    maf_data_wrapper_get_rnaseq_df(maf_dataset_wrapper) %>%
+      external_tools_convert_expression_df_to_xena_expression() %>%
+      data.table::fwrite(file = expression_path, col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
+    }
   
   # Clinical Data
   maf %>% 
     maftools::getClinicalData() %>%
-    write.table(file = metadata_path, col.names = TRUE, row.names = FALSE, quote = TRUE, sep = "\t")
+    data.table::fwrite(file = metadata_path, col.names = TRUE, row.names = FALSE, quote = TRUE, sep = "\t")
   
-  
-  zip(filepath, c(mutation_path, metadata_path), flags = "-j")
+  zip(filepath, c(mutation_path, metadata_path, expression_path), flags = "-j")
 }
 
 external_tools_load_xena <- function(external_tools_df = data.frame()){
@@ -780,19 +803,20 @@ external_tools_convert_maf_to_bed_return_dataframe <- function(maf){
     dplyr::mutate(chromStart = chromStart-1)  #Make Start is 0 based #maybe sort
 }
 
-external_tools_convert_maf_to_bed <- function(maf, filepath){
+external_tools_convert_maf_to_bed <- function(maf_dataset_wrapper, filepath){
+  maf <- maf_dataset_wrapper$loaded_data
   maf %>%
     external_tools_convert_maf_to_bed_return_dataframe() %>%
-    write.table(file = filepath, sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+    data.table::fwrite(file = filepath, sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 }
 
-external_tools_convert_maf_to_ucsc <- function(maf, filepath){
-  
+external_tools_convert_maf_to_ucsc <- function(maf_dataset_wrapper, filepath){
+  maf <- maf_dataset_wrapper$loaded_data
   write('track name=ShinyMaftools description="Shinymaftools Track"', file = filepath)
   
   maf %>%
     external_tools_convert_maf_to_bed_return_dataframe() %>%
-    write.table(file = filepath, sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE, append = TRUE)
+    data.table::fwrite(file = filepath, sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE, append = TRUE)
   
 }
 
@@ -823,62 +847,109 @@ external_tools_load_ucsc <- function(external_tools_df = data.frame()){
 
 
 # UCSC TumorMap -----------------------------------------------------------
-
-external_tools_convert_maf_to_tumormap_return_dataframe <- function(maf, topn = 20){
-  topn_altered_genes <- maf %>% 
-    maftools::getGeneSummary() %>%
-    dplyr::arrange(desc(MutatedSamples)) %>%
-    dplyr::pull(Hugo_Symbol) %>%
-    head(n=topn)
-    
-  tsbs = maf %>% 
-    maftools_get_all_data() %>%
-    dplyr::pull(Tumor_Sample_Barcode)
-  
-  genes <- maf %>% 
-    maftools_get_all_data() %>% 
-    dplyr::pull(Hugo_Symbol)
-  
-  combos_in_mafs = paste(tsbs, genes)
-  
-  crossed_df <- tidyr::crossing(topn_altered_genes, tsbs) 
-  
-  crossed_df["Gene_Mutated"] <- (paste(crossed_df[["tsbs"]], crossed_df[["topn_altered_genes"]]) %in% combos_in_mafs) %>%
-    as.numeric()
-  
-  
-  genes_mutated_df <- crossed_df %>% tidyr::pivot_wider(names_from = "tsbs", values_from = Gene_Mutated)
-  return(genes_mutated_df)
-  # tsb_crossed_df = tidyr::crossing(sample1=tsbs, sample2=tsbs)
-  # #return(tsb_crossed_df)
-  # 
-  # #browser()
-  # app(1:nrow(tsb_crossed_df), function(n) { jaccard(genes_mutated_df, as.character(tsb_crossed_df[[1]][n]) , as.character(tsb_crossed_df[[2]][n])) } ) %>%
-  #   return()
-  # 
-  # topn_altered_genes %in% maf_df[maf_df$Tumor_Sample_Barcode == tsb, "Hugo_Symbol"]
-  # 
-  # #maf_df[match(topn_altered_genes, maf_df[["Hugo_Symbol"]]), c("Hugo_Symbol","Tumor_Sample_Barcode")]
-  # purrr::map_dfc(tsbs, function(tsb){
-  #   topn_altered_genes %in% maf_df[maf_df$Tumor_Sample_Barcode == tsb, "Hugo_Symbol"]
-  #   }) %>%
-  #   `colnames<-`(tsbs)
-  # 
-  
-    #dplyr::filter(Hugo_Symbol %in% topn_altered_genes)
+external_tools_convert_expression_df_to_tumormap_return_dataframe <- function(expression_df){
+  expression_df %>% 
+    dplyr::select(Sample=Hugo_Symbol, TPM, Tumor_Sample_Barcode) %>%
+    tidyr::pivot_wider(names_from = Tumor_Sample_Barcode, values_from = TPM) 
 }
 
 
-jaccard <- function(df, vec1, vec2) {
-  sums = rowSums(df[,c(vec1, vec2)])
+external_tools_convert_maf_to_return_tumormap_attributes_dataframe <- function(maf){
+  maf %>%
+    maftools::getClinicalData() %>% 
+    dplyr::rename(sample = Tumor_Sample_Barcode) #%>%
+    # dplyr::select(sample, where(function(vec) { 
+    #   if(dplyr::n_distinct(vec) < 20 && is.character(vec))
+    #     return(TRUE)
+    #   else if(is.numeric(vec))
+    #     return(TRUE)
+    #   }))
+  }
+# external_tools_convert_maf_to_tumormap_return_dataframe <- function(maf, topn = 20){
+#   topn_altered_genes <- maf %>% 
+#     maftools::getGeneSummary() %>%
+#     dplyr::arrange(desc(MutatedSamples)) %>%
+#     dplyr::pull(Hugo_Symbol) %>%
+#     head(n=topn)
+#     
+#   tsbs = maf %>% 
+#     maftools_get_all_data() %>%
+#     dplyr::pull(Tumor_Sample_Barcode)
+#   
+#   genes <- maf %>% 
+#     maftools_get_all_data() %>% 
+#     dplyr::pull(Hugo_Symbol)
+#   
+#   combos_in_mafs = paste(tsbs, genes)
+#   
+#   crossed_df <- tidyr::crossing(topn_altered_genes, tsbs) 
+#   
+#   crossed_df["Gene_Mutated"] <- (paste(crossed_df[["tsbs"]], crossed_df[["topn_altered_genes"]]) %in% combos_in_mafs) %>%
+#     as.numeric()
+#   
+#   
+#   genes_mutated_df <- crossed_df %>% tidyr::pivot_wider(names_from = "tsbs", values_from = Gene_Mutated)
+#   return(genes_mutated_df)
+# }
+
+external_tools_convert_maf_to_tumormap <- function(maf_dataset_wrapper, filepath){
+  browser()
+  maf <- maf_dataset_wrapper$loaded_data
+  temp_dir <- tempdir()
+  expression_path <- paste0(temp_dir, "/expression.txt")
+  metadata_path <- paste0(temp_dir, "/metadata.txt")
   
-  similarity = length(sums[sums==2])
-  total = length(sums[sums==1]) + similarity
+  #Expression Data
+  if(maf_data_wrapper_has_rnaseq_data(maf_dataset_wrapper)){
+    maf_data_wrapper_get_rnaseq_df(maf_dataset_wrapper) %>%
+      external_tools_convert_expression_df_to_tumormap_return_dataframe() %>%
+      data.table::fwrite(file = expression_path, col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
+  }
   
-  similarity/total
+  #Clinical Data
+  external_tools_convert_maf_to_return_tumormap_attributes_dataframe(maf) %>%
+    data.table::fwrite(file = metadata_path, col.names = TRUE, row.names = FALSE, quote = TRUE, sep = "\t")
+  
+  zip(filepath, c(metadata_path, expression_path), flags = "-j")
 }
+
+
+
+external_tools_load_tumormap <- function(external_tools_df = data.frame()){
+    external_tools_add_tool_to_dataframe(
+      external_tools_df = external_tools_df,
+      tool_name = "UCSC TumorMap",
+      tool_id = "ucsc_tumormap",
+      tool_group = "UCSC",
+      tool_class = "Expression",
+      tool_description = "an interactive browser that allows biologists, who may not have computational expertise, to richly explore the results of high-throughput cancer genomics experiments",
+      website = "https://tumormap.ucsc.edu/",
+      doi = "https://doi.org/10.1158/0008-5472.CAN-17-0580",
+      requires_gene_selection = FALSE,
+      instructions =  as.character(
+        tags$ol(
+          tags$li("Unzip exported data"),
+          tags$li("Navigate to TumorMap website"),
+          tags$li("Click 'Create Map' button"),
+          tags$li("Import expression.txt as 'Layout' and metadata.txt as 'Color Attributes'")
+        )
+      ),
+      maf_conversion_function = external_tools_convert_maf_to_tumormap,
+      extension = "zip"
+    ) 
+}
+
+# jaccard <- function(df, vec1, vec2) {
+#   sums = rowSums(df[,c(vec1, vec2)])
+#   
+#   similarity = length(sums[sums==2])
+#   total = length(sums[sums==1]) + similarity
+#   
+#   similarity/total
+# }
+
 #dist = TCGAmutations::tcga_load("ACC") %>% external_tools_convert_maf_to_tumormap_return_dataframe() %>% dplyr::select(-1) %>% t() %>% dist(method = "binary")
-#(dist) %>% as.matrix() %>% as.data.frame() %>% tibble::rownames_to_column("Sample") %>% write.table(file = "~/Downloads/ACC.test.tsv", sep = "\t", quote = FALSE, row.names = TRUE, col.names = TRUE
+#(dist) %>% as.matrix() %>% as.data.frame() %>% tibble::rownames_to_column("Sample") %>% data.table::fwrite(file = "~/Downloads/ACC.test.tsv", sep = "\t", quote = FALSE, row.names = TRUE, col.names = TRUE
 
 # For all tools -----------------------------------------------------------
 #' Load tool metadata into global variable
@@ -903,6 +974,7 @@ external_tools_load_all_tools <- function(){
     external_tools_load_proteinpaint() %>%
     external_tools_load_xena() %>%
     external_tools_load_ucsc() %>%
+    external_tools_load_tumormap() %>%
     return()
 }
 
@@ -917,6 +989,6 @@ external_tools_load_all_tools <- function(){
 #'
 external_tools_update_builtin_dataset <- function(){
   external_tool_metadata = external_tools_load_all_tools()
- usethis::use_data(external_tool_metadata, overwrite = TRUE) 
+  usethis::use_data(external_tool_metadata, overwrite = TRUE) 
 }
 

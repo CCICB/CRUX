@@ -76,7 +76,6 @@ moduleDownloadPlotUI <- function(id, circle = FALSE, label = "Download", style =
 #' @return
 #' @export
 #'
-#' @examples
 moduleDownloadPlotServer <- function(id, session_parent, plotOutputId, plotting_function, default_filename = "download"){
   moduleServer(id,
     function(input, output, session){
