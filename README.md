@@ -1,4 +1,4 @@
-#shinymaftools
+# shinymaftools
 
 ## Description
 A package that provides a GUI interface for cohort-level tertiary cancer analysis. 
