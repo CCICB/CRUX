@@ -683,12 +683,20 @@ maftools_get_transcript_refseq <- function(maf_df){
   }
 }
 
-#Returns vector of amino acid changes OR NA if no valid column could be found
-get_amino_acid_changes = function(maf_df){
+#Returns vector of amino acid changes. if no valid aachange column is found, will return a 
+# chrom:pos ref>alt format string, or NA if 'return_genomic_description_if_no_protein_column_found' is FALSE
+get_amino_acid_changes = function(maf_df, return_genomic_description_if_no_protein_column_found = TRUE){
   maf_colnames = colnames(maf_df)
-  if("HGVSp_Short" %in% maf_colnames) return(maf_df[["HGVSp_Short"]])
-  else if("HGVSp" %in% maf_colnames) return(maf_df[["HGVSp"]])
-  else return(NA)
+  
+  aachange = NA
+  if("HGVSp_Short" %in% maf_colnames) aachange <- maf_df[["HGVSp_Short"]]
+  else if("HGVSp" %in% maf_colnames) aachange <- maf_df[["HGVSp"]]
+  else if("Protein_Change" %in% maf_colnames) aachange <- maf_df[["Protein_Change"]]
+  else if(!return_genomic_description_if_no_protein_column_found) return(NA)
+  
+  genomic_change <- paste0(maf_df[["Chromosome"]],":", maf_df[["Start_Position"]], " ", maf_df[["Reference_Allele"]], ">", maf_df[["Tumor_Seq_Allele2"]])
+  
+  return(ifelse(aachange == "" || is.na(aachange), genomic_change, aachange))
 }
 
 #' Load tool metadata into global variable
@@ -712,9 +720,10 @@ external_tools_load_proteinpaint <- function(external_tools_df = data.frame()){
     instructions =  as.character(
       tags$ol(
         tags$li("Select the appropriate reference genome build (hg19 if using pre-packaged TCGA/PCAWG datasets)"),
-        tags$li("Select 'Apps' => 'Load mutation from text files'"),
-        tags$li("Click Browse & navigate to downloaded file"),
-        tags$li("A pop-up box should appear. Click 'Genes', select a gene of interest by clicking its name"),
+        tags$li("Select the Lollipop App"),
+        tags$li("Once example loads, click '+', then 'Upload text files'"),
+        tags$li("Browse & navigate to downloaded file"),
+        tags$li("A pop-up box should appear. Click 'Genes', then select a gene of interest by clicking its name"),
         tags$li("You should see a lollipop plot appear. Try clicking 'Pediatric' / 'COSMIC' to compare mutational profile to PeCan cohorts")
       )
     ),
