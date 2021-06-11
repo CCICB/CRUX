@@ -1,8 +1,8 @@
 # shinymaftools
 
 ## Description
-An R package that provides a GUI interface for cohort-level tertiary cancer analysis. 
-You can import your own data, or use public TCGA or PCAWG datasets. 
+An R package that provides a graphical interface for cohort-level tertiary cancer analysis. 
+You can import your own data, or use public TCGA or PCAWG datasets.
 
 
 ## Installation
