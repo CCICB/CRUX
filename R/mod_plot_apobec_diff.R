@@ -10,7 +10,7 @@
 mod_plot_apobec_diff_ui <- function(id){
   ns <- NS(id)
   tagList(
-    plotOutput(ns("out_plot")) %>% shinycssloaders::withSpinner(),
+    plotOutput(ns("out_plot"), height = "650px") %>% shinycssloaders::withSpinner(),
     
     shinyWidgets::panel(
       heading = "Options",

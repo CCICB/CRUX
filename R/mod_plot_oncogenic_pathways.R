@@ -5,7 +5,7 @@ mod_plot_oncogenic_pathways_ui <- function(id){
   ns <- NS(id)
   tagList(
     hr(),
-    plotOutput(outputId=ns("out_plot_oncogenic_pathways")) %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
+    plotOutput(outputId=ns("out_plot_oncogenic_pathways"), height = "650px") %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
     hr(),
     mod_render_downloadabledataframe_ui(id = ns("mod_downloadable_table_oncogenic_pathways")),
     

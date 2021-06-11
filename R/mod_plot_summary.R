@@ -5,7 +5,7 @@ mod_plot_maf_summary_ui <- function(id){
   ns <- NS(id)
   tagList(
     div(
-    plotOutput(outputId=ns("out_plot_summary"), height = "400px") %>% shinycssloaders::withSpinner(proxy.height = "200px"),
+    plotOutput(outputId=ns("out_plot_summary"), height = "650px") %>% shinycssloaders::withSpinner(proxy.height = "200px"),
     ),
     shinyWidgets::panel(
       heading = "Options",

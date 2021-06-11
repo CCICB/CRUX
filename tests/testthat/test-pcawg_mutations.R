@@ -1,38 +1,37 @@
 test_that("pcawg_available works", {
   expect_error(
-    pcawg_available(),
+    PCAWGmutations::pcawg_available(),
     NA)
   
   expect_s3_class(
-    pcawg_available(),
+    PCAWGmutations::pcawg_available(),
     "data.frame")
   
   expect_gte(
-    ncol(pcawg_available()),
+    ncol(PCAWGmutations::pcawg_available()),
     1)
   
   expect_true(
-    ("Lymph-BNHL" %in% pcawg_available()[[1]])
+    ("Lymph-BNHL" %in% PCAWGmutations::pcawg_available()[[1]])
     )
   
   expect_error(
-    pcawg_available("ASDKLJWDKLWDALW"),
-    "exist"
+    PCAWGmutations::pcawg_available("ASDKLJWDKLWDALW")
     )
 })
 
 
 test_that("pcawg_load works", {
   expect_error(
-    pcawg_load()
+    PCAWGmutations::pcawg_load()
     )
   
   expect_error(
-    pcawg_load("Bone-Cart"),
+    PCAWGmutations::pcawg_load("Bone-Cart"),
     NA)
   
   expect_s4_class(
-    pcawg_load("Bone-Cart"),
+    PCAWGmutations::pcawg_load("Bone-Cart"),
     "MAF")
   
 })

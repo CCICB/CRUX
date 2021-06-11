@@ -181,9 +181,3 @@ maftools_chrom_23_and_24_to_X_and_Y <- function(maf){
     )
   return(maf)
 }
-
-
-
-
-
-

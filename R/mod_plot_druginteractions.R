@@ -35,7 +35,7 @@ mod_plot_druginteractions_ui <- function(id){
     
     shinyWidgets::panel(
       heading = "Step 2: Examine Druggable Categories",
-      plotOutput(ns("out_plot")) %>% shinycssloaders::withSpinner(),
+      plotOutput(ns("out_plot"), height = "650px") %>% shinycssloaders::withSpinner(),
       hr(),
       shinyWidgets::panel(
         heading = "Options",

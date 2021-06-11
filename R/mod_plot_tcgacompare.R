@@ -4,7 +4,7 @@
 mod_plot_tmb_in_context_of_tcga_ui <- function(id){
   ns <- NS(id)
   tagList(
-    plotOutput(outputId = ns("out_plot_tcgacompare")) %>% shinycssloaders::withSpinner(proxy.height = "200px"),
+    plotOutput(outputId = ns("out_plot_tcgacompare"), height = "650px") %>% shinycssloaders::withSpinner(proxy.height = "200px"),
     br(),
     shinyWidgets::panel(heading = "Options",
           shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_known_capture_size"), label = "Known Capture Size", value = FALSE),

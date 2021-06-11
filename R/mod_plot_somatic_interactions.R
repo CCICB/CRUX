@@ -10,7 +10,7 @@
 mod_plot_somatic_interactions_ui <- function(id){
   ns <- NS(id)
   tagList(
-      plotOutput(outputId = ns("out_plot_somatic_interactions"), height = "550px")  %>% shinycssloaders::withSpinner(proxy.height = "200px"),
+      plotOutput(outputId = ns("out_plot_somatic_interactions"), height = "650px")  %>% shinycssloaders::withSpinner(proxy.height = "200px"),
       
       br(),
     conditionalPanel(

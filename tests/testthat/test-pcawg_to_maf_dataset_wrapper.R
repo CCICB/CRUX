@@ -61,7 +61,7 @@ test_that("pcawg_datasets_to_data_pool works", {
   
   expect_length(
     pcawg_datasets_to_data_pool(maf_data_pool = new_maf_data_pool()),
-    nrow(pcawg_available())
+    nrow(PCAWGmutations::pcawg_available())
   )
   
   expect_s3_class(
@@ -82,6 +82,6 @@ test_that("pcawg_datasets_to_data_pool works", {
   
   expect_length(
     pcawg_datasets_to_data_pool(maf_data_pool = my_data_pool),
-    4+nrow(pcawg_available())
+    4+nrow(PCAWGmutations::pcawg_available())
     )
 })

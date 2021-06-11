@@ -4,7 +4,7 @@
 mod_plot_oncoplot_ui <- function(id){
   ns <- NS(id)
   tagList(
-    plotOutput(outputId=ns("out_plot_oncoplot")) %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
+    plotOutput(outputId=ns("out_plot_oncoplot"), height = "650px") %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
     shinyWidgets::panel(heading = "Options",
                         
                         fluidRow(

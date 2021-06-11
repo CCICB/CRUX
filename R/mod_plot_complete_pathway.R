@@ -5,7 +5,7 @@ mod_plot_oncogenic_pathways_focused_ui <- function(id){
   ns <- NS(id)
   tagList(
     
-    plotOutput(outputId=ns("out_plot_complete_pathway")) %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
+    plotOutput(outputId=ns("out_plot_complete_pathway"), height = "650px") %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
     br(),
     html_alert(text = "Tumor suppressor genes are in red, and oncogenes are in blue font.",status = "info"),
     br(),
