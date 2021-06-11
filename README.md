@@ -13,7 +13,7 @@ install_github("CCICB/shinymaftools")
 
 ## Usage
 
-Run a single line of code to open the app and start exploring Cancer Data (Your)
+Run a single line of code to open the app and start exploring Cancer Data
 ```
 shinymaftools::run_app()
 ```
