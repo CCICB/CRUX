@@ -683,10 +683,12 @@ maftools_get_transcript_refseq <- function(maf_df){
   }
 }
 
-#Returns vector of amino acid changes. if no valid aachange column is found, will return a 
-# chrom:pos ref>alt format string, or NA if 'return_genomic_description_if_no_protein_column_found' is FALSE
+#Returns vector of amino acid changes. if no valid aachange column is found, will return
+#  chrom:pos ref>alt format strings, or NA if 'return_genomic_description_if_no_protein_column_found' is FALSE
+# 
+# If aachange column is found but some variants have empty aachange fields (e.g. if they are noncoding)
+#   these will be replaced with chrom:pos ref>alt format strings.
 get_amino_acid_changes = function(maf_df, return_genomic_description_if_no_protein_column_found = TRUE){
-<<<<<<< HEAD
   maf_colnames = colnames(maf_df)
   
   aachange = NA
@@ -698,16 +700,8 @@ get_amino_acid_changes = function(maf_df, return_genomic_description_if_no_prote
   genomic_change <- paste0(maf_df[["Chromosome"]],":", maf_df[["Start_Position"]], " ", maf_df[["Reference_Allele"]], ">", maf_df[["Tumor_Seq_Allele2"]])
   
   return(ifelse(aachange == "" || is.na(aachange), genomic_change, aachange))
-=======
-  browser()
-  maf_colnames = colnames(maf_df)
-  if("HGVSp_Short" %in% maf_colnames) return(maf_df[["HGVSp_Short"]])
-  else if("HGVSp" %in% maf_colnames) return(maf_df[["HGVSp"]])
-  else if("Protein_Change" %in% maf_colnames) return(maf_df[["Protein_Change"]])
-  else if(return_genomic_description_if_no_protein_column_found) return(paste0(maf_df[["Chromosome"]],":", maf_df[["Start_Position"]], " ", maf_df[["Reference_Allele"]], ">", maf_df[["Tumor_Seq_Allele2"]]))
-  else return(NA)
->>>>>>> 72b6baa3a3b0835b9ee434c29d003047a89f3c06
 }
+
 
 #' Load tool metadata into global variable
 #' 
