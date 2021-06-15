@@ -34,12 +34,12 @@ app_ui <- function(request) {
                                    shinydashboard::menuSubItem(text = "Available Data", tabName = "DataPool", icon = icon("database")),
                                    shinydashboard::menuSubItem(text = "Import Data", tabName = "DataImport", icon = icon("file-upload"))
                                    ),
-          shinydashboard::menuItem("Pan Cohort Statistics", tabName = "PanCohortStatistics", icon = icon("chart-bar")),
-          shinydashboard::menuItem("Compare Cohorts", tabName = "CompareCohorts", icon = icon("balance-scale-left")),
+          shinydashboard::menuItem("Single Cohort Statistics", tabName = "PanCohortStatistics", icon = icon("chart-bar")),
           shinydashboard::menuItem("Enrichment", tabName = "Enrichment", icon = icon("dna")),
           shinydashboard::menuItem("Survival Analysis", tabName = "Survival", icon = icon("heartbeat")),
           shinydashboard::menuItem("Mutational Signatures", tabName = "MutSig", icon = icon("signature")),
           shinydashboard::menuItem("Copy Number Analysis", tabName = "CopyNumberAnalysis", icon = icon("stream")), #align-center
+          shinydashboard::menuItem("Compare Cohorts", tabName = "CompareCohorts", icon = icon("balance-scale-left")),
           shinydashboard::menuItem("Sample Level Analysis", tabName = "SampleLevelAnalysis", icon = icon("microscope")), # maybe th icon?
           shinydashboard::menuItem("Expression", tabName = "Expression", icon = icon("th"), #badgeLabel = "Coming Soon", badgeColor = "maroon", 
                                    shinydashboard::menuSubItem(text = "Import", tabName = "ExpressionImport", icon = icon("file-upload")),

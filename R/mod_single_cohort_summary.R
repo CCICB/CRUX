@@ -47,7 +47,7 @@ mod_single_cohort_summary_plots_ui <- function(id){
   ns <- NS(id)
   tagList(
     
-    shinyWidgets::panel(heading = "Pan Cohort Analysis",
+    shinyWidgets::panel(heading = "Visualisations",
       tabsetPanel(type = "tabs",
                   tabPanel(title = "Summary",mod_plot_maf_summary_ui(id = ns("mod_plot_summary"))),
                   tabPanel(title = "TiTv", mod_plot_titv_graphs_ui(id = ns("mod_plot_titv"))),
