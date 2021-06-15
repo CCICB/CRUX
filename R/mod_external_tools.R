@@ -40,16 +40,16 @@ mod_external_tools_ui <- function(id){
       heading="Step 2: Select Tool",
       shinyWidgets::pickerInput(
         inputId = ns("in_pick_tool"), 
-        choices = shinymaftools::external_tool_metadata %>% dplyr::pull(tool_name), 
+        choices = CRUX::external_tool_metadata %>% dplyr::pull(tool_name), 
         choicesOpt = list(
           content=
           paste0(
-          shinymaftools::external_tool_metadata$tool_name,
-          shinymaftools::external_tool_metadata$tool_class %>%
+          CRUX::external_tool_metadata$tool_name,
+          CRUX::external_tool_metadata$tool_class %>%
             paste0("<span class='label label-primary' style='margin-left: 10px' >",., "</span>"),
-          shinymaftools::external_tool_metadata$tool_group %>%
+          CRUX::external_tool_metadata$tool_group %>%
             paste0("<span class='label label-warning' style='margin-left: 10px' >",., "</span>"),
-          shinymaftools::external_tool_metadata$platform %>%
+          CRUX::external_tool_metadata$platform %>%
             paste0("<span class='label label-danger' style='margin-left: 10px' >",., "</span>")
           #subtext=
           )),

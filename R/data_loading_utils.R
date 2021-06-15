@@ -105,7 +105,7 @@ maf_data_pool_unload_data <- function(maf_data_pool, unique_name){
 #' @export
 #'
 #' @examples
-#' read_rnaseq_file(system.file("example_data/blca_rnaseq.tsv", package = "shinymaftools"))
+#' read_rnaseq_file(system.file("example_data/blca_rnaseq.tsv", package = "CRUX"))
 read_rnaseq_file <- function(rnaseq_file){
   
   assertthat::assert_that(assertthat::is.string(rnaseq_file), msg = "[read_rnaseq_file] expected rnaseq_file to be a string")
@@ -223,7 +223,7 @@ maf_data_wrapper_get_rnaseq_df <- function(maf_dataset_wrapper){
 #' 
 #' @examples
 #' # Prepare Data
-#' rna_path = system.file("example_data/blca_rnaseq.tsv", package = "shinymaftools")
+#' rna_path = system.file("example_data/blca_rnaseq.tsv", package = "CRUX")
 #' maf_data_wrapper = tcga_dataset_to_maf_dataset_wrapper(new_maf_data_pool(), "BLCA")
 #' 
 #' # Add RNA data

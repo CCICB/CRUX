@@ -16,12 +16,15 @@ mod_sample_level_analysis_ui <- function(id){
       mod_select_maf_dataset_wrapper_ui(id = ns("mod_select_dataset"), panel = FALSE)
     ),
     
+    icon_down_arrow(), br(),
+    
     shinyWidgets::panel(
       heading="Step 2: Select Sample",
       mod_select_tumor_sample_barcode_from_maf_ui(id = ns("mod_mod_select_tumor_sample_barcode"))
       #mod_select_tumor_sample_from_maf_datapool()
     ),
     
+    icon_down_arrow(), br(),
     
     shinyWidgets::panel(
       heading = "Step 3: Choose Analysis",

@@ -96,7 +96,7 @@ external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibb
 #' 
 #' @examples 
 #' external_tools_get_property_by_tool_name(tool_name = "OncodriveFML", "website")
-external_tools_get_property_by_tool_name <- function(tool_name, property_to_retrieve, external_tools_df=shinymaftools::external_tool_metadata){
+external_tools_get_property_by_tool_name <- function(tool_name, property_to_retrieve, external_tools_df=CRUX::external_tool_metadata){
   #browser()
   assertthat::assert_that(assertthat::is.string(property_to_retrieve))
   assertthat::assert_that(
@@ -825,7 +825,7 @@ external_tools_convert_maf_to_bed <- function(maf_dataset_wrapper, filepath){
 
 external_tools_convert_maf_to_ucsc <- function(maf_dataset_wrapper, filepath){
   maf <- maf_dataset_wrapper$loaded_data
-  write('track name=ShinyMaftools description="Shinymaftools Track"', file = filepath)
+  write('track name=CRUX description="CRUX Track"', file = filepath)
   
   maf %>%
     external_tools_convert_maf_to_bed_return_dataframe() %>%
@@ -997,7 +997,7 @@ external_tools_load_all_tools <- function(){
 
 #' Update builtin external_tools dataset
 #'
-#' @description Takes the output of external_tools_load_all_tools and saves it to shinymaftools/data as the dataset: \strong{external_tool_metadata}.
+#' @description Takes the output of external_tools_load_all_tools and saves it to CRUX/data as the dataset: \strong{external_tool_metadata}.
 #' This saved dataset is what is used by the app. If you make change to any external_tools_load_... function, you must rerun this function.
 #'
 external_tools_update_builtin_dataset <- function(){

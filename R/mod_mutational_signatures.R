@@ -96,7 +96,7 @@ mod_mutational_signatures_server <- function(id, maf_data_pool){
       updateActionButton(session = session, inputId = "in_bttn_download_genome", label = "Installing package ...")
       shinyjs::disable("in_bttn_download_genome")
       
-      shinyWidgets::sendSweetAlert(session = session, title = "Download starting", text = "Reference genome download has commenced. While the genome is downloading no other shinymaftools functionality will work", showCloseButton = FALSE, closeOnClickOutside = FALSE, type = "info")
+      shinyWidgets::sendSweetAlert(session = session, title = "Download starting", text = "Reference genome download has commenced. While the genome is downloading no other CRUX functionality will work", showCloseButton = FALSE, closeOnClickOutside = FALSE, type = "info")
       BiocManager::install(input$in_pick_genome, update = FALSE, ask = FALSE)
       shinyWidgets::sendSweetAlert(session = session, title = "Download Complete", text = "Reference genome has been installed", showCloseButton = FALSE, closeOnClickOutside = FALSE, type = "success")
       reset(input$in_pick_genome)

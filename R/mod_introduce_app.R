@@ -4,7 +4,7 @@ moduleIntroduceAppUI <- function(id){
     shinyWidgets::panel(
       #h3("Introduction"),
       shinyWidgets::panel(heading = "Introduction",
-          p("Welcome to", tags$b(" ShinyMaftools"), ", a user interface for the ", tags$b("maftools"), " package"),
+          p("Welcome to", tags$b(" CRUX"), ", a user interface for the ", tags$b("maftools"), " package"),
           p("This tool requires two files as input:"),
           
           tags$ol(

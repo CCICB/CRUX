@@ -14,7 +14,7 @@ mod_home_ui <- function(id){
      #                   p("Welcome to " tags$strong(shinyMaftoos)")
     #),
     
-    shinyWidgets::panel(heading = "Using shinyMaftools", style = "height: 700px",
+    shinyWidgets::panel(heading = "Using CRUX", style = "height: 700px",
       img(src="img/workflows.png", style = "width: auto; height: 600px; display: block; margin: auto", align = "center")
     )
   )

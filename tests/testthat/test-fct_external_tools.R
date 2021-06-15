@@ -1,5 +1,5 @@
 test_that("external_tools_convert_maf_to_bbglab", {
-  maf = maftools::read.maf(system.file(package = "shinymaftools","/test_data/external_data_conversion_input.maf.gz"), verbose = FALSE)
+  maf = maftools::read.maf(system.file(package = "CRUX","/test_data/external_data_conversion_input.maf.gz"), verbose = FALSE)
   cgi_output.path = tempfile()
   external_tools_convert_maf_to_bbglab(maf = maf, filepath = cgi_output.path)
   expect_equivalent(
@@ -13,5 +13,5 @@ test_that("external_tools_convert_maf_to_bbglab", {
 
 test_that("external_tool_metadata dataset is up to date", {
   #if this fails try running external_tools_update_builtin_dataset()
-  expect_equal(external_tools_load_all_tools(), shinymaftools::external_tool_metadata)
+  expect_equal(external_tools_load_all_tools(), CRUX::external_tool_metadata)
 })

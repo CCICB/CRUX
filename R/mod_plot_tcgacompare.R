@@ -27,9 +27,9 @@ mod_plot_tmb_in_context_of_tcga_server <- function(id, maf, cohortName){
       utilitybeltshiny::assert_reactive(cohortName)
       
       tcga_cohorts <- reactive({ validate(need(expr = { 
-        file.exists(system.file("extdata/files_required_for_tmb_comparison/TCGA_primary_site", package="shinymaftools")) & file.exists(system.file("extdata/files_required_for_tmb_comparison/TCGA_cohorts", package="shinymaftools")) }, 
+        file.exists(system.file("extdata/files_required_for_tmb_comparison/TCGA_primary_site", package="CRUX")) & file.exists(system.file("extdata/files_required_for_tmb_comparison/TCGA_cohorts", package="CRUX")) }, 
         message = "extdata/files_required_for_tmb_comparison/TCGA_primary_site OR extdata/files_required_for_tmb_comparison/TCGA_cohorts files do not exist."))
-        if(input$in_checkbox_primary_site) return(readLines(system.file("extdata/files_required_for_tmb_comparison/TCGA_primary_site", package="shinymaftools"))) else return(readLines(system.file("extdata/files_required_for_tmb_comparison/TCGA_cohorts", package="shinymaftools"))) })
+        if(input$in_checkbox_primary_site) return(readLines(system.file("extdata/files_required_for_tmb_comparison/TCGA_primary_site", package="CRUX"))) else return(readLines(system.file("extdata/files_required_for_tmb_comparison/TCGA_cohorts", package="CRUX"))) })
       
       
       plot_tga <- reactive({ function(){ maftools::tcgaCompare(maf = maf(), cohortName = cohortName(), capture_size = capturesize(), tcga_capture_size = input$in_num_tcgacapturesize, primarySite = input$in_checkbox_primary_site, tcga_cohorts = input$in_pick_tcga_cohorts)} })

@@ -133,7 +133,7 @@ moduleSubsetMafsServer <- function(id, maf_data_pool){
         else{
           validate(need(!is.null(input$in_pick_clinquery_values), message = "Please Select a Value of Clinical Feature to Subset on"))
            individual_queries.vec <- vapply(X = input$in_pick_clinquery_values, FUN = function(value){
-             paste0(input$in_pick_clinquery_field, " == '", value, "'") %>%
+             paste0(input$in_pick_clinquery_field, " == '", maftools_escape_special_characters(value), "'") %>%
                return()
            }, FUN.VALUE = "character")
            concatenated_queries <- paste(individual_queries.vec, collapse=" | ")

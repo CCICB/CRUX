@@ -1,4 +1,4 @@
 library(testthat)
-library(shinymaftools)
+library(CRUX)
 
-test_check("shinymaftools")
+test_check("CRUX")

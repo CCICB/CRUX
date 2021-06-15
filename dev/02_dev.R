@@ -44,7 +44,7 @@ usethis::use_test( "app" )
 # Documentation
 
 ## Vignette ----
-usethis::use_vignette("shinymaftools")
+usethis::use_vignette("CRUX")
 devtools::build_vignettes()
 
 ## Code coverage ----

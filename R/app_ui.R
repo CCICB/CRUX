@@ -26,7 +26,7 @@ app_ui <- function(request) {
     
     # List the first level UI elements here 
     shinydashboard::dashboardPage(
-      header = shinydashboard::dashboardHeader(title = HTML(paste0("shiny",tags$strong("maftools"))), shinydashboard::dropdownMenu(type = "notifications", headerText = "DNA")), 
+      header = shinydashboard::dashboardHeader(title = HTML(as.character(tags$strong("CRUX"))), shinydashboard::dropdownMenu(type = "notifications", headerText = "DNA")), 
       sidebar = shinydashboard::dashboardSidebar(
         shinydashboard::sidebarMenu(
           shinydashboard::menuItem("Home", tabName = "Home", icon = icon("home"), selected = TRUE),
@@ -108,7 +108,7 @@ golem_add_external_resources <- function(){
     favicon(),
     bundle_resources(
       path = app_sys('app/www'),
-      app_title = 'shinymaftools'
+      app_title = 'CRUX'
     )
     # Add here other external resources
     # for example, you can add shinyalert::useShinyalert() 
