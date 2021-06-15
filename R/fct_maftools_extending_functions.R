@@ -181,3 +181,18 @@ maftools_chrom_23_and_24_to_X_and_Y <- function(maf){
     )
   return(maf)
 }
+
+maftools_escape_special_characters <- function(string){
+  assertthat::assert_that(assertthat::is.string(string))
+  
+  special_characters = c("\\'", '\\"')  
+  
+  cleaned_string = string
+  
+  for (i in seq_along(special_characters)) {
+    cleaned_string = gsub(pattern = special_characters[i], replacement = paste0("\\", special_characters[i]), x=cleaned_string)
+  }
+  
+  return(cleaned_string)
+  
+}
