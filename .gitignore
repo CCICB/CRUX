@@ -49,3 +49,6 @@ inst/example_data/becker*
 # Large BRCA files
 inst/example_data/*BRCA*
 inst/example_data/*brca*
+
+# Ignore CNV gistic output
+inst/example_data/gdac.*

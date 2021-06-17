@@ -37,6 +37,7 @@ mod_plot_survival_server <- function(id, maf, geneset, time, status, or, is_tcga
     stopifnot(is.reactive(time))
     stopifnot(is.reactive(status))
     stopifnot(is.reactive(or))
+    stopifnot(is.reactive(is_tcga))
     
     plotting_function <- reactive({
       function(){
