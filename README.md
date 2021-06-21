@@ -9,8 +9,8 @@ You can import your own data, or use public TCGA or PCAWG datasets.
 
 ```
 # Install required libraries
-install.packages(devtools)
-install.packages(BiocManager)
+install.packages(devtools, ask=FALSE)
+install.packages(BiocManager, ask=FALSE)
 
 # Load Libraries
 library(devtools)
