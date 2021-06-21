@@ -51,7 +51,7 @@ mod_data_import_maf_path_to_maf_server <- function(id, maf_path, clinicalData){
       try_result <- tryCatch(
         expr = {
           maf_ <- maftools::read.maf(maf_path(), clinicalData = clinical_data_path())
-          message(utilitybelt::fmtsuccess("Maf File Read Succesfully"))
+          message(fmtsuccess("Maf File Read Succesfully"))
           return(maf_)
         },
         error = function(err){

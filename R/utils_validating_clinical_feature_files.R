@@ -13,10 +13,10 @@
 #' 
 #' If clinical feature file has duplicated Tumor_Sample_Barcodes, only the first entry is considered and the file is still 'valid'.
 #' 
-#' @export
+#'
 is_valid_clinicalfeaturefile <- function(clinicalData, maf){
-  utilitybelt::assert_that(!shiny::is.reactive(clinicalData))
-  utilitybelt::assert_that(!shiny::is.reactive(maf))
+  assertthat::assert_that(!shiny::is.reactive(clinicalData))
+  assertthat::assert_that(!shiny::is.reactive(maf))
   #browser()
   clinicalfeaturefile_is_valid <- tryCatch(
     expr = { 
@@ -33,7 +33,7 @@ is_valid_clinicalfeaturefile <- function(clinicalData, maf){
     }
   )
   
-  utilitybelt::assert_that(assertthat::is.flag(clinicalfeaturefile_is_valid))
+  assertthat::assert_that(assertthat::is.flag(clinicalfeaturefile_is_valid))
   return(clinicalfeaturefile_is_valid)
 }
 
@@ -54,10 +54,10 @@ is_valid_clinicalfeaturefile <- function(clinicalData, maf){
 #' 
 #' If clinical feature file has duplicated Tumor_Sample_Barcodes, only the first entry is considered and the file is still 'valid'.
 #' 
-#' @export
+#'
 is_valid_clinicalfeaturefile_return_error <- function(clinicalData, maf){
-  utilitybelt::assert_that(!shiny::is.reactive(clinicalData))
-  utilitybelt::assert_that(!shiny::is.reactive(maf))
+  assertthat::assert_that(!shiny::is.reactive(clinicalData))
+  assertthat::assert_that(!shiny::is.reactive(maf))
   #browser()
   warning_or_error_messages <- tryCatch(
     expr = { 

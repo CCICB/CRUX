@@ -20,7 +20,7 @@ mod_render_clinical_data_table_ui <- function(id){
 #' @param maf maf object (reactive)
 #'
 #' @return Nothing. Run for its side effects
-#' @export
+#'
 #'
 mod_render_clinical_data_table_server <- function(id, maf){
   moduleServer( id, function(input, output, session){

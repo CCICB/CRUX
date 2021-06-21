@@ -8,14 +8,14 @@
 #' @inheritParams tcga_datasets_to_data_pool
 #' @param zero_study_abbreviation a ZER cohort abbreviation (see ZEROmutations::zero_available()) (string)
 #' @return functions and values associated with specified ZERO cohort (maf_dataset_wrapper)
-#' @export
+#'
 #' @family DataToWrapper
 zero_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, zero_study_abbreviation){
   
   zero_available_df <- ZEROmutationsCCI::zero_available()
   utilitybelt::assert_non_empty_string(zero_study_abbreviation, msg = "zero_study_abbreviation must be a string and >0 characters long")
   
-  utilitybelt::assert_that(zero_study_abbreviation %in% zero_available_df[[1]], msg = utilitybelt::fmterror("Failed to find zero_study_abbreviation [", zero_study_abbreviation, "] in ZEROmutations database. Check ZEROmutations::zero_available() for a list of valid abbreviations"))
+  assertthat::assert_that(zero_study_abbreviation %in% zero_available_df[[1]], msg = utilitybelt::fmterror("Failed to find zero_study_abbreviation [", zero_study_abbreviation, "] in ZEROmutations database. Check ZEROmutations::zero_available() for a list of valid abbreviations"))
   
   row_of_interest <- which(zero_available_df[[1]] %in% zero_study_abbreviation)
   full_study_name <- zero_available_df[[2]][row_of_interest]
@@ -46,7 +46,7 @@ zero_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, zero_study_abbrev
 #' @inheritParams maf_data_pool_add_dataset
 #'
 #' @return returns a data pool object with extra dataset added (maf_data_pool)
-#' @export
+#'
 #' @family DataToWrapper
 zero_dataset_to_data_pool <- function(zero_study_abbreviation, maf_data_pool){
   dataset_wrapper <- zero_dataset_to_maf_dataset_wrapper(maf_data_pool = maf_data_pool, zero_study_abbreviation=zero_study_abbreviation)   
@@ -61,7 +61,7 @@ zero_dataset_to_data_pool <- function(zero_study_abbreviation, maf_data_pool){
 #' @inheritParams zero_dataset_to_maf_dataset_wrapper
 #' @inheritParams maf_data_pool_add_dataset
 #' @return returns a data pool object with extra dataset added (maf_data_pool)
-#' @export 
+#' 
 #' @family DataToWrapper
 #' @examples
 #' zero_datasets_to_data_pool(new_maf_data_pool())

@@ -6,7 +6,7 @@
 #' @param fontsize a valid css fontsize, e.g. 60px (string)
 #'
 #' @return centered down arrow fluidrow()
-#' @export
+#'
 #'
 #' @family arrows
 icon_down_arrow <- function(fontsize="40px", alignment = "center"){
@@ -25,7 +25,7 @@ icon_down_arrow <- function(fontsize="40px", alignment = "center"){
 #' @param status Boostrap status. One of primary,secondary,success,danger,warning,info,light,dark (string)
 #'
 #' @return html-flagged text (string")
-#' @export
+#'
 html_alert <- function(text, status="warning"){
   HTML(text = paste0(p(text, class=paste0("alert alert-", status)))) %>%
     return()

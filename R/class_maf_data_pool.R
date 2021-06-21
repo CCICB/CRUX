@@ -8,7 +8,7 @@
 #' The maf_data_pool class is simply a list of maf_dataset_wrapper objects.
 #'
 #' @return object of class maf_data_pool (maf_data_pool)
-#' @export
+#'
 #'
 #' @examples
 #' maf_data_pool <- new_maf_data_pool()
@@ -35,7 +35,7 @@ new_maf_data_pool <- function() {
 #' @param object some object whose class you want to check 
 #'
 #' @return TRUE if class of object is maf_data_pool, FALSE if not. (logical)
-#' @export
+#'
 #'
 #' @examples
 #' class_is_maf_data_pool("Hi")
@@ -52,13 +52,13 @@ class_is_maf_data_pool <- function(object){
 #' @param object some object whose class you want to assert (anything)
 #'
 #' @return (invisible) TRUE if assertion succeeds, Throws an error if it doesn't
-#' @export
+#'
 #' @family class_assertions
 #' @examples
 #' assert_that_class_is_maf_data_pool(new_maf_data_pool())
 assert_that_class_is_maf_data_pool <- function(object) {
   
-  utilitybelt::assert_that(
+  assertthat::assert_that(
     utilitybelt::class_is(object, tested_class = "maf_data_pool"),
     msg = utilitybelt::fmterror("Object is not a maf_data_pool. Its a: [", class(object),"]")
     )
@@ -74,13 +74,13 @@ assert_that_class_is_maf_data_pool <- function(object) {
 #' @param maf_data_pool the data pool to add the dataset wrapper to (maf_data_pool)
 #'
 #' @return a new maf_data_pool object with the additional objects appended (maf_data_pool)
-#' @export
+#'
 #'
 maf_data_pool_add_dataset <- function(maf_dataset_wrapper, maf_data_pool) {
   assert_that_class_is_maf_dataset_wrapper(maf_dataset_wrapper)
   assert_that_class_is_maf_data_pool(maf_data_pool)
   #browser()
-  utilitybelt::assert_that(maf_data_pool_unique_name_is_available(maf_data_pool = maf_data_pool, unique_name = maf_dataset_wrapper$unique_name), msg = utilitybelt::fmterror("'unique_name' of maf_dataset_wrapper, [", maf_dataset_wrapper$unique_name, "] is already present in maf_data_pool"))
+  assertthat::assert_that(maf_data_pool_unique_name_is_available(maf_data_pool = maf_data_pool, unique_name = maf_dataset_wrapper$unique_name), msg = utilitybelt::fmterror("'unique_name' of maf_dataset_wrapper, [", maf_dataset_wrapper$unique_name, "] is already present in maf_data_pool"))
   maf_data_pool[[length(maf_data_pool)+1]] <- maf_dataset_wrapper
   return(maf_data_pool)
 }
@@ -92,7 +92,7 @@ maf_data_pool_add_dataset <- function(maf_dataset_wrapper, maf_data_pool) {
 #' @param maf_data_pool the data pool to convert to a dataframe (maf_data_pool)
 #'
 #' @return a data.frame containing all properties of maf_data_pool except for those containing functions (data.frame)
-#' @export 
+#' 
 maf_data_pool_to_dataframe <- function(maf_data_pool){
   #browser()
   assert_that_class_is_maf_data_pool(maf_data_pool)
@@ -155,10 +155,10 @@ maf_data_pool_to_simple_dataframe <- function(maf_data_pool){
     "Filepath"
   )
   
-  utilitybelt::assert_that(length(columns_to_include) == length(new_column_names))
+  assertthat::assert_that(length(columns_to_include) == length(new_column_names))
   
   columns_not_in_full_data_pool_df.v<- columns_to_include[!columns_to_include %in% names(full_data_pool_df)]
-  utilitybelt::assert_that(length(columns_not_in_full_data_pool_df.v) == 0, msg = utilitybelt::fmterror("maf_data_pool_to_simple_dataframe: columns [", paste0(columns_not_in_full_data_pool_df.v, collapse = ", "), "] were not found in full_data_pool_df"))
+  assertthat::assert_that(length(columns_not_in_full_data_pool_df.v) == 0, msg = utilitybelt::fmterror("maf_data_pool_to_simple_dataframe: columns [", paste0(columns_not_in_full_data_pool_df.v, collapse = ", "), "] were not found in full_data_pool_df"))
   
   simplified_data_pool_df <- full_data_pool_df[columns_to_include]
   
@@ -177,18 +177,18 @@ maf_data_pool_to_simple_dataframe <- function(maf_data_pool){
 #' @param maf_data_pool data pool of interest (maf_data_pool)
 #'
 #' @return a vector of list_within_list 'properties' that are not functions (character)
-#' @export
+#'
 maf_data_pool_get_all_nonfunction_property_names <- function(maf_data_pool){
   #Assertions
   assert_that_class_is_maf_data_pool(maf_data_pool)
-  utilitybelt::assert_that(length(maf_data_pool) > 0, msg = utilitybelt::fmterror("maf_data_pool_get_all_nonfunction_property_names: cannot identify nonfunctional columns if maf_data_pool is empty!"))
+  assertthat::assert_that(length(maf_data_pool) > 0, msg = utilitybelt::fmterror("maf_data_pool_get_all_nonfunction_property_names: cannot identify nonfunctional columns if maf_data_pool is empty!"))
   
   #Main
   are_functions = purrr::map_lgl(maf_data_pool[[1]], is.function)
   nonfunctional_parameters = names(are_functions)[!are_functions]
   
   #More Assertions
-  utilitybelt::assert_that(length(nonfunctional_parameters) > 0, msg = utilitybelt::fmterror("maf_data_pool_get_all_nonfunction_property_names: could not find any properties that weren't functions"))
+  assertthat::assert_that(length(nonfunctional_parameters) > 0, msg = utilitybelt::fmterror("maf_data_pool_get_all_nonfunction_property_names: could not find any properties that weren't functions"))
   
   #Return
   return(nonfunctional_parameters)
@@ -205,7 +205,7 @@ maf_data_pool_get_all_nonfunction_property_names <- function(maf_data_pool){
 #' @param maf_data_pool A data pool to mine unique_names from (maf_data_pool) 
 #' @family maf_data_pool_utils
 #' @return a vector listing the 'unique_name' of each maf_dataset_wrapper in the data pool (character)
-#' @export
+#'
 #'
 maf_data_pool_get_unique_names <- function(maf_data_pool) {
   assert_that_class_is_maf_data_pool(maf_data_pool)
@@ -218,7 +218,7 @@ maf_data_pool_get_unique_names <- function(maf_data_pool) {
       function_for_sublist_assertion = class_is_maf_dataset_wrapper
     )
   
-  utilitybelt::assert_that(length(unique_names) == length(maf_data_pool), msg= "Output of ")
+  assertthat::assert_that(length(unique_names) == length(maf_data_pool), msg= "Output of ")
   return(unique_names)
 }
 # 
@@ -248,7 +248,7 @@ maf_data_pool_get_unique_names <- function(maf_data_pool) {
 #' @param unique_name some string you want to check is not currently used as the 'unique_name' of any object in the datapool (string). 
 #'
 #' @return TRUE/FALSE depending on whether the unique_name is available (logical)
-#' @export
+#'
 #'
 maf_data_pool_unique_name_is_available <- function(maf_data_pool, unique_name){
   assert_that_class_is_maf_data_pool(maf_data_pool)
@@ -270,7 +270,7 @@ maf_data_pool_unique_name_is_available <- function(maf_data_pool, unique_name){
 #' @param max_number_of_attempts max number of attempts (whole number) 
 #' 
 #' @return a unique name (string)
-#' @export
+#'
 maf_data_pool_make_name_unique <- function(maf_data_pool, name, max_number_of_attempts=50){
   assert_that_class_is_maf_data_pool(maf_data_pool)
   utilitybelt::assert_non_empty_string(name)
@@ -302,12 +302,12 @@ maf_data_pool_make_name_unique <- function(maf_data_pool, name, max_number_of_at
 #' @param unique_name unique_name of the maf_dataset_wrapper you're interested in(string). 
 #'
 #' @return index of the specified maf_dataset_wrapper within the maf_data_pool
-#' @export 
+#' 
 maf_data_pool_get_index_from_unique_name <- function(maf_data_pool, unique_name){
   assert_that_class_is_maf_data_pool(maf_data_pool)
   utilitybelt::assert_non_empty_string(unique_name)
   index_of_matching_entry = which(maf_data_pool_get_unique_names(maf_data_pool = maf_data_pool) == unique_name)
-  utilitybelt::assert_that(length(index_of_matching_entry) != 0, msg = utilitybelt::fmterror("maf_data_pool_get_data_wrapper_from_unique_name: Searching [", substitute(maf_data_pool), "] for elements with the unique_name: ['", unique_name, "'], yielded no results"))
+  assertthat::assert_that(length(index_of_matching_entry) != 0, msg = utilitybelt::fmterror("maf_data_pool_get_data_wrapper_from_unique_name: Searching [", substitute(maf_data_pool), "] for elements with the unique_name: ['", unique_name, "'], yielded no results"))
   return(index_of_matching_entry)
 }
 
@@ -319,12 +319,12 @@ maf_data_pool_get_index_from_unique_name <- function(maf_data_pool, unique_name)
 #' @param unique_name unique_name of the maf_dataset_wrapper fetch (string). 
 #'
 #' @return specified maf_dataset_wrapper
-#' @export 
+#' 
 maf_data_pool_get_data_wrapper_from_unique_name <- function(maf_data_pool, unique_name){
   assert_that_class_is_maf_data_pool(maf_data_pool)
   utilitybelt::assert_non_empty_string(unique_name)
   index_of_matching_entry = which(maf_data_pool_get_unique_names(maf_data_pool = maf_data_pool) == unique_name)
-  utilitybelt::assert_that(length(index_of_matching_entry) != 0, msg = utilitybelt::fmterror("maf_data_pool_get_data_wrapper_from_unique_name: Searching [", substitute(maf_data_pool), "] for elements with the unique_name: ['", unique_name, "'], yielded no results"))
+  assertthat::assert_that(length(index_of_matching_entry) != 0, msg = utilitybelt::fmterror("maf_data_pool_get_data_wrapper_from_unique_name: Searching [", substitute(maf_data_pool), "] for elements with the unique_name: ['", unique_name, "'], yielded no results"))
   return(maf_data_pool[[index_of_matching_entry]])
 }
 

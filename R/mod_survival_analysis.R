@@ -10,9 +10,12 @@
 mod_survival_analysis_ui <- function(id){
   ns <- NS(id)
   tagList(
-
+    
     # Step 1: Select dataaset-------------------------------------------------------------------
-    mod_select_maf_dataset_wrapper_ui(ns("mod_select_dataset_wrapper"), panel = TRUE),
+    shinyWidgets::panel(
+      heading="Step 1: Select Dataset",
+      mod_select_maf_dataset_wrapper_ui(ns("mod_select_dataset_wrapper"), panel = FALSE)
+      ),
     
     icon_down_arrow(),br(),
     

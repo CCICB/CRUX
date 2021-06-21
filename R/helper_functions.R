@@ -7,7 +7,7 @@
 #' @param dpi "dpi used to convert pixels to inches"
 #'
 #' @return "Width/Height in pixels/inches"
-#' @export
+#'
 #'
 get_rendered_plot_width <- function(output_id, session, return_inches = F, dpi=70){
   index <- paste0("output_", session$ns(output_id), "_width")
@@ -25,7 +25,7 @@ get_rendered_plot_width <- function(output_id, session, return_inches = F, dpi=7
 #' @param dpi "dpi used to convert pixels to inches"
 #'
 #' @return "Width/Height in pixels/inches"
-#' @export
+#'
 #'
 get_rendered_plot_height <- function(output_id, session, return_inches = F, dpi=70){
   index <- paste0("output_", session$ns(output_id), "_height")
@@ -41,7 +41,7 @@ get_rendered_plot_height <- function(output_id, session, return_inches = F, dpi=
 prot_db <- readRDS(file = system.file('extdata', 'protein_domains.RDs', package = 'maftools'))
 
 gene_name_to_refseq_ids <- function(gene_name, return_protein_ids=FALSE){
-  utilitybelt::assert_that(gene_name %in% prot_db$HGNC, msg = "gene not found in protein domains.RDs")
+  assertthat::assert_that(gene_name %in% prot_db$HGNC, msg = "gene not found in protein domains.RDs")
   refseq.ids <- prot_db$refseq.ID[prot_db$HGNC==gene_name] %>% unique()
   protein.ids <- prot_db$protein.ID[prot_db$HGNC==gene_name] %>% unique()
   
@@ -50,7 +50,7 @@ gene_name_to_refseq_ids <- function(gene_name, return_protein_ids=FALSE){
 }
 
 gene_name_to_transcript_table <- function(gene_name, longest_first = T){
-  utilitybelt::assert_that(gene_name %in% prot_db$HGNC, msg = "gene not found in protein domains.RDs")
+  assertthat::assert_that(gene_name %in% prot_db$HGNC, msg = "gene not found in protein domains.RDs")
   dt <- prot_db %>% 
     dplyr::filter(HGNC == gene_name) %>% 
     dplyr::group_by(refseq.ID) %>% 

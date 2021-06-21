@@ -5,7 +5,7 @@
 #' @inheritParams tcga_datasets_to_data_pool
 #' @param tcga_study_abbreviation a TCGA cohort abbreviation (see TCGAmutations::tcga_available()) (string)
 #' @return functions and values associated with specified TCGA cohort (maf_dataset_wrapper)
-#' @export
+#'
 #' @family DataToWrapper
 #' @examples
 #' ACC_maf_dataset_wrapper <- tcga_dataset_to_maf_dataset_wrapper("ACC")
@@ -14,7 +14,7 @@ tcga_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, tcga_study_abbrev
   tcga_available_df <- TCGAmutations::tcga_available()
   utilitybelt::assert_non_empty_string(tcga_study_abbreviation, msg = "tcga_study_abbreviation must be a string >0 characters long")
   #browser()
-  utilitybelt::assert_that(tcga_study_abbreviation %in% tcga_available_df[["Study_Abbreviation"]], msg = utilitybelt::fmterror("Failed to find tcga_study_abbreviation [", tcga_study_abbreviation, "] in TCGAmutations database. Check TCGAmutations::tcga_available() for a list of valid abbreviations"))
+  assertthat::assert_that(tcga_study_abbreviation %in% tcga_available_df[["Study_Abbreviation"]], msg = utilitybelt::fmterror("Failed to find tcga_study_abbreviation [", tcga_study_abbreviation, "] in TCGAmutations database. Check TCGAmutations::tcga_available() for a list of valid abbreviations"))
   #browser()
   row_of_interest <- which(tcga_available_df[["Study_Abbreviation"]] %in% tcga_study_abbreviation)
   full_study_name <- tcga_available_df[["Study_Name"]][row_of_interest]
@@ -41,7 +41,7 @@ tcga_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, tcga_study_abbrev
 #' @inheritParams tcga_datasets_to_data_pool
 #'
 #' @return returns a data pool object with extra dataset added (maf_data_pool)
-#' @export
+#'
 #' @family DataToWrapper
 #' @examples
 #' tcga_dataset_to_data_pool("ACC", new_maf_data_pool())
@@ -61,7 +61,7 @@ tcga_dataset_to_data_pool <- function(tcga_study_abbreviation, maf_data_pool, so
 #' @inheritParams maf_data_pool_add_dataset
 #' @param source 'MC3' or 'Firehose'. Source of TCGA data to use. See ?TCGAmutations::tcga_load for details (string)
 #' @return returns a data pool object with extra dataset added (maf_data_pool)
-#' @export 
+#' 
 #' @family DataToWrapper
 #' @examples
 #' tcga_datasets_to_data_pool(new_maf_data_pool())

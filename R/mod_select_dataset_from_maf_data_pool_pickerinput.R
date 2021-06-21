@@ -13,12 +13,12 @@ mod_select_dataset_from_maf_data_pool_pickerinput_ui <- function(id, panel=TRUE)
     utilitybeltshiny::conditionalUI(expression = panel==TRUE, 
       shinyWidgets::panel(
         heading = "Select Dataset",
-        shiny::uiOutput(outputId = ns("out_ui_pick_dataset"))
+        shiny::uiOutput(outputId = ns("out_ui_pick_dataset")) %>% shinycssloaders::withSpinner(proxy.height = "80px")
       )
     ),
     
     utilitybeltshiny::conditionalUI(expression = panel==FALSE, 
-        shiny::uiOutput(outputId = ns("out_ui_pick_dataset"))
+        shiny::uiOutput(outputId = ns("out_ui_pick_dataset")) %>% shinycssloaders::withSpinner(proxy.height = "80px")
     )
     
   )
@@ -33,7 +33,6 @@ mod_select_dataset_from_maf_data_pool_pickerinput_server <- function(id, maf_dat
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-    
     
     maf_data_pool_df <- reactive({ maf_data_pool_to_dataframe(maf_data_pool()) })
     

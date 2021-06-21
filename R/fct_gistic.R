@@ -7,7 +7,7 @@
 #' @param path_to_amp_or_del_genes_file path to either del_genes.conf_XX.txt OR amp_genes.conf_90.txt. These files can be produced using gistic (string)
 #'
 #' @return a dataframe containing cytobands, q values, peak locations and which genes are in each peak
-#' @export
+#'
 #'
 gistic_tabulate_amp_or_del_genes_file <- function(path_to_amp_or_del_genes_file) {
   assertthat::assert_that(file.exists(path_to_amp_or_del_genes_file), msg = paste0("could not find file:\n", path_to_amp_or_del_genes_file))

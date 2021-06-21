@@ -8,7 +8,7 @@
 #' @param trigger What action should cause the tooltip to appear? (hover, focus, click, or manual). Defaults to "hover". 
 #' @inheritParams shinyFiles::shinyFilesButton
 #'
-#' @export
+#'
 #' @importFrom shiny NS tagList 
 mod_shinyfile_import_ui <- function(id, title, label, multiple=FALSE, buttonType = "dark", style = NULL, viewtype = "detail", tooltip_text="", tooltip_placement = "right", trigger = "hover"){
   ns <- NS(id)
@@ -26,7 +26,7 @@ mod_shinyfile_import_ui <- function(id, title, label, multiple=FALSE, buttonType
 #'
 #' @return chosen filepath (string) (reactive). If multiple = TRUE, it returns a character vector instead of a string. When no file is selected, returns character(0)
 #' 
-#' @export
+#'
 mod_shinyfile_import_server <- function(id){
   #browser()
   moduleServer(id, function(input, output, session){
@@ -55,7 +55,7 @@ mod_shinyfile_import_server <- function(id){
 #' @param trigger What action should cause the tooltip to appear? (hover, focus, click, or manual). Defaults to "hover". 
 #' @inheritParams shinyFiles::shinyFilesButton
 #'
-#' @export
+#'
 #' @importFrom shiny NS tagList 
 mod_shinydir_import_ui <- function(id, title, label, multiple=FALSE, buttonType = "dark", style = NULL, viewtype = "detail", tooltip_text="", tooltip_placement = "right", trigger = "hover"){
   ns <- NS(id)
@@ -74,7 +74,7 @@ mod_shinydir_import_ui <- function(id, title, label, multiple=FALSE, buttonType 
 #'
 #' @return chosen filepath (string) (reactive). If multiple = TRUE, it returns a character vector instead of a string. When no file is selected, returns character(0)
 #' 
-#' @export
+#'
 mod_shinydir_import_server <- function(id){
   #browser()
   moduleServer(id, function(input, output, session){

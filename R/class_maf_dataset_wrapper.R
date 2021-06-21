@@ -41,7 +41,7 @@
 #' \item rnaseq_filepath
 #' }
 #' 
-#' @export
+#'
 #'
 new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, unique_name, start_status, data_description, is_dataset_downloadable, function_to_download_data = function() {return(NA)}, is_dataset_loadable = TRUE,function_to_load_data, name_of_data_source="unknown", local_path_to_data="", clinical_data=NA, datatype_of_stored_object="", derived_from = NA, loaded_data=NA, rnaseq_filepath = NA) {
   #Dev options
@@ -59,18 +59,18 @@ new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, uni
   utilitybelt::assert_non_empty_string(unique_name)
   utilitybelt::assert_non_empty_string(short_name)
   utilitybelt::assert_non_empty_string(start_status)
-  utilitybelt::assert_that(assertthat::is.flag(is_dataset_downloadable))
-  utilitybelt::assert_that(assertthat::is.flag(is_dataset_loadable))
-  utilitybelt::assert_that(start_status %in% status_options, msg = utilitybelt::fmterror("new_maf_dataset_wrapper: start_status [", start_status,"] must be one of [", paste0(status_options, collapse = ", "), "]"))
+  assertthat::assert_that(assertthat::is.flag(is_dataset_downloadable))
+  assertthat::assert_that(assertthat::is.flag(is_dataset_loadable))
+  assertthat::assert_that(start_status %in% status_options, msg = utilitybelt::fmterror("new_maf_dataset_wrapper: start_status [", start_status,"] must be one of [", paste0(status_options, collapse = ", "), "]"))
   utilitybelt::assert_non_empty_string(data_description)
-  utilitybelt::assert_that(is.function(function_to_download_data))
-  utilitybelt::assert_that(is.function(function_to_load_data))
-  utilitybelt::assert_that(utilitybelt::fun_count_arguments(function_to_load_data) == 1, msg = utilitybelt::fmterror("new_maf_dataset_wrapper: function_to_load_data must take exactly 1 argument (so when running it we can use the filepath of the local file. You do NOT HAVE to use the argument, just make a spot for it :)"))
+  assertthat::assert_that(is.function(function_to_download_data))
+  assertthat::assert_that(is.function(function_to_load_data))
+  assertthat::assert_that(utilitybelt::fun_count_arguments(function_to_load_data) == 1, msg = utilitybelt::fmterror("new_maf_dataset_wrapper: function_to_load_data must take exactly 1 argument (so when running it we can use the filepath of the local file. You do NOT HAVE to use the argument, just make a spot for it :)"))
   utilitybelt::assert_non_empty_string(name_of_data_source)
-  utilitybelt::assert_that(is.na(derived_from) | class_is_maf_dataset_wrapper(derived_from)) 
-  utilitybelt::assert_that(is.na(clinical_data) || is.data.frame(clinical_data), msg= utilitybelt::fmterror("new_maf_dataset_wrapper: Clinical_data must be a dataframe or NULL. It cannot be a: ", class(clinical_data)))
-  utilitybelt::assert_that(identical(loaded_data, NA) || utilitybelt::class_is(loaded_data, "MAF"))
-  utilitybelt::assert_that(is.na(rnaseq_filepath) | (assertthat::is.string(rnaseq_filepath) && file.exists(rnaseq_filepath)), msg = utilitybelt::fmterror("new_maf_dataset_wrapper: rnaseq_filepath must be either NA, or a string leading to a valid filepath"))
+  assertthat::assert_that(is.na(derived_from) | class_is_maf_dataset_wrapper(derived_from)) 
+  assertthat::assert_that(is.na(clinical_data) || is.data.frame(clinical_data), msg= utilitybelt::fmterror("new_maf_dataset_wrapper: Clinical_data must be a dataframe or NULL. It cannot be a: ", class(clinical_data)))
+  assertthat::assert_that(identical(loaded_data, NA) || utilitybelt::class_is(loaded_data, "MAF"))
+  assertthat::assert_that(is.na(rnaseq_filepath) | (assertthat::is.string(rnaseq_filepath) && file.exists(rnaseq_filepath)), msg = utilitybelt::fmterror("new_maf_dataset_wrapper: rnaseq_filepath must be either NA, or a string leading to a valid filepath"))
   
   #Make unique_name actually unique
   actually_unique_name <- maf_data_pool_make_name_unique(maf_data_pool = maf_data_pool, unique_name)
@@ -110,7 +110,7 @@ new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, uni
 #' @param object some object whose class you want to check 
 #'
 #' @return TRUE if class of object is maf_dataset_wrapper, FALSE if not. (logical)
-#' @export
+#'
 #'
 #' @examples
 #' class_is_maf_dataset_wrapper("Hi")
@@ -125,12 +125,12 @@ class_is_maf_dataset_wrapper <- function(object){
 #' @param object some object whose class you want to assert (anything)
 #'
 #' @return (invisible) TRUE if assertion succeeds, Throws an error if it doesn't
-#' @export
+#'
 #' @family class_assertions
 #' @examples
 #' assert_that_class_is_maf_data_pool(new_maf_data_pool())
 assert_that_class_is_maf_dataset_wrapper <- function(object) {
-  utilitybelt::assert_that(
+  assertthat::assert_that(
     class_is_maf_dataset_wrapper(object),
     msg = utilitybelt::fmterror("Object is not a maf_dataset_wrapper Its a: [", class(object),"]")
   )
@@ -149,7 +149,7 @@ assert_that_class_is_maf_dataset_wrapper <- function(object) {
 #' It is designed to run before you run maf_data_pool_unique_name_to_maf / maf_data_pool_get_data_wrapper_from_unique_name.
 #'
 #' @return maf_data_pool with the specified datawrapper loaded (maf_data_pool)
-#' @export
+#'
 maf_data_pool_robust_load <- function(maf_data_pool, unique_name){
   #browser()
   assert_that_class_is_maf_data_pool(maf_data_pool)
@@ -189,7 +189,7 @@ maf_data_pool_robust_load_apply_changes_to_reactval <- function(maf_data_pool, u
 #' @inheritParams maf_data_pool_get_data_wrapper_from_unique_name
 #' @param maf_data_pool the reactiveVal we want will search for our dataset of interest, and is also the object we apply any changes to. (reactiveVal)
 #' @return maf object (maf)
-#' @export
+#'
 #'
 maf_data_pool_unique_name_to_maf_reactive <- function(maf_data_pool, unique_name){
   maf_data_pool_nonreactive <- isolate(maf_data_pool())
@@ -213,7 +213,7 @@ maf_data_pool_unique_name_to_maf_reactive <- function(maf_data_pool, unique_name
 #' @param unique_name 
 #'
 #' @return
-#' @export
+#'
 #'
 maf_data_pool_unique_name_to_maf_nonreactive <- function(maf_data_pool, unique_name){
   

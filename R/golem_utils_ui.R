@@ -306,7 +306,7 @@ col_1 <- function(...){
 #' #' Load rendered RMarkdown from a file and turn into HTML.
 #' #' 
 #' #' @rdname includeRMarkdown
-#' #' @export
+#' #'
 #' #' 
 #' #' @importFrom rmarkdown render
 #' #' @importFrom markdown markdownToHTML

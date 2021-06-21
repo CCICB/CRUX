@@ -8,8 +8,8 @@
 #'
 #' @importFrom shiny NS tagList 
 mod_select_datasets_from_maf_data_pool_ui <- function(id, label="select", panel_heading = "Select Dataset"){
-  utilitybelt::assert_that(assertthat::is.string(label) | is.null(label))
-  utilitybelt::assert_that(assertthat::is.string(panel_heading) | is.null(panel_heading))
+  assertthat::assert_that(assertthat::is.string(label) | is.null(label))
+  assertthat::assert_that(assertthat::is.string(panel_heading) | is.null(panel_heading))
   
   ns <- NS(id)
   

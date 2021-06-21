@@ -4,7 +4,7 @@
 #'     DO NOT REMOVE.
 #' @import shiny
 #' @noRd
-#' @export
+#'
 app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources

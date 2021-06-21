@@ -12,7 +12,7 @@
 #' @inheritParams shinyWidgets::tooltipOptions 
 #' @inheritParams shinyWidgets::dropdownButton
 #' @return Nothing. Function run for its side effects
-#' @export
+#'
 moduleDownloadPlotUI <- function(id, circle = FALSE, label = "Download", style = "unite", color = "default", size="default", status = "default", icon = NULL, tooltip_placement = "right", tooltip_text = "", right = FALSE, up=FALSE, width="200px", margin="10px", inline = FALSE, ...){
   ns <- NS(id)
   tagList(
@@ -74,7 +74,7 @@ moduleDownloadPlotUI <- function(id, circle = FALSE, label = "Download", style =
 #' @param default_filename defualt basename of downloaded file (string; non-reactive)
 #'
 #' @return
-#' @export
+#'
 #'
 moduleDownloadPlotServer <- function(id, session_parent, plotOutputId, plotting_function, default_filename = "download"){
   moduleServer(id,

@@ -7,7 +7,7 @@
 #' @param file the path to save maf to 
 #'
 #' @return NOTHING. Run for its side effects
-#' @export
+#'
 #'
 #' @examples
 #' download_maf(TCGAmutations::tcga_load("GBM"), "tcga_gbm.maf")

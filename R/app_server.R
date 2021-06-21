@@ -4,7 +4,7 @@
 #'     DO NOT REMOVE.
 #' @import shiny
 #' @noRd
-#' @export
+#'
 app_server <- function( input, output, session ) {
   
   
@@ -31,7 +31,6 @@ app_server <- function( input, output, session ) {
   mod_compare_cohorts_server(id = "mod_compare_cohorts", maf_data_pool = maf_data_pool)
   moduleEnrichmentAnalysisServer(id = "mod_enrichment_analyis", maf_data_pool)
   mod_survival_analysis_server(id = "mod_survival_analysis", maf_data_pool)
-  mod_mutational_signatures_server(id = "mod_mutational_signatures", maf_data_pool)
   mod_expression_import_server(id = "mod_expression_import", maf_data_pool)
   mod_expression_analysis_server(id = "mod_expression_analysis", maf_data_pool)
   

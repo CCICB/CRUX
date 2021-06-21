@@ -48,7 +48,7 @@ moduleLoadTCGAServer <- function(id, optional_argument){
 #' @param study_name Abbreviation of TCGA dataset to install. To see options, run TCGAmutations::tcga_available()
 #'
 #' @return A single MAF object. 
-#' @export
+#'
 #'
 get_tcga_mafs <- function(study_name){
   tcga_maf <- TCGAmutations::tcga_load(input$in_multi_tcga, source = "Firehose") #Could add option to swti

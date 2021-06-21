@@ -7,7 +7,7 @@
 #' @inheritParams TCGAmutations::tcga_load
 #'
 #' @return MAF object with correctly typed clinical.data dataframe (MAF)
-#' @export
+#'
 #'
 #' @examples
 #' TCGAmutations_load_with_typed_metadata(study = "GBM")

@@ -62,7 +62,7 @@ mod_utilities_create_clinical_data_spreadsheet_server <- function(id, maf){
       latest_saved_df = reactiveVal(NULL)
       
       # Assertions --------------------------------------------------------------
-      utilitybelt::assert_that(is.reactive(maf), msg = utilitybelt::fmterror("mod_data_import_step3_server: maf should be reactive. Check you didn't accidentally add parenthesis when passing argument"))
+      assertthat::assert_that(is.reactive(maf), msg = utilitybelt::fmterror("mod_data_import_step3_server: maf should be reactive. Check you didn't accidentally add parenthesis when passing argument"))
       
       # REACTIVES --------------------------------------------------------
       maf_file_associated_df <- reactive({
@@ -139,7 +139,7 @@ mod_utilities_create_clinical_data_spreadsheet_server <- function(id, maf){
 
 # Helper Functions ---------------------------------------------------------------
 is_potential_feature_name_valid <- function(feature_name, dataframe){
-  utilitybelt::assert_that(is.data.frame(dataframe), msg = utilitybelt::fmterror("is_potential_feature_name_valid: dataframe must be data.frame NOT a ", class(dataframe)))
+  assertthat::assert_that(is.data.frame(dataframe), msg = utilitybelt::fmterror("is_potential_feature_name_valid: dataframe must be data.frame NOT a ", class(dataframe)))
   
   is_nonzero_string = nzchar(feature_name)
   is_already_in_dataframe = feature_name %in% colnames(dataframe)

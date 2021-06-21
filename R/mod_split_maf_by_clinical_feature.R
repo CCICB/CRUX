@@ -18,7 +18,7 @@ moduleSubsetByClinicalFeaturesUI <- function(id, panel_title="Define Cohorts"){
 #' @param maf 
 #'
 #' @return named list: 'maf1' (type maf), 'maf2' (type string), 
-#' @export
+#'
 #'
 moduleSubsetByClinicalFeaturesServer <- function(id, maf, clinicalData){
   utilitybeltshiny::assert_reactive(maf)

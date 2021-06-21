@@ -29,7 +29,7 @@
 #' @param extension what type of file is written by maf_conversion_function. default is 'tsv'. Used to appropriately name downloaded file  (string)
 #' @param requires_gene_selection does user need to select a specific gene for export to work? (bool)
 #' @return dataframe containing external_tool_metadata
-#' @export
+#'
 external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibble(), tool_name, tool_id, tool_group, tool_class, tool_description, instructions = "No instructions available yet. You're on your own buddy", platform = "Web App", website, doi, requires_maf_export = TRUE, requires_gene_selection = FALSE, maf_conversion_function = NA, extension="tsv") {
   assertthat::assert_that(is.data.frame(external_tools_df))
   utilitybelt::assert_non_empty_string(tool_name)
@@ -69,7 +69,7 @@ external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibb
 #' @param property_to_retrieve which property to retrieve. see details for options. (string)
 #'
 #' @return
-#' @export
+#'
 #'
 #' @details 
 #' 
@@ -135,7 +135,7 @@ external_tools_get_property_by_tool_name <- function(tool_name, property_to_retr
 #' Loads metadata for the OncodriveFML tool into a global variable \strong{GLOBAL_external_tools_dataframe}
 #'
 #' @return external_tools_df with metadata of tool appeneded (data.frame)
-#' @export
+#'
 #'
 #' @examples
 #' external_tools_load_bbglab_cgi()
@@ -168,7 +168,7 @@ external_tools_load_bbglab_oncodrive_fml <- function(external_tools_df = data.fr
 #' Appends  metadata for the OncodriveCLUSTL tool onto external_tools_df
 #'
 #' @return external_tools_df with metadata of tool appeneded (data.frame)
-#' @export
+#'
 #'
 #' @examples
 #' external_tools_load_bbglab_cgi()
@@ -194,7 +194,7 @@ external_tools_load_bbglab_oncodrive_clustl <- function(external_tools_df = data
 #' @param maf (MAF)
 #'
 #' @return
-#' @export
+#'
 #'
 external_tools_convert_maf_to_oncodrive_return_dataframe <- function(maf){
   maf %>% 
@@ -212,7 +212,7 @@ external_tools_convert_maf_to_oncodrive_return_dataframe <- function(maf){
 #' Appends  metadata for the "Cancer Genome Interpreter (cgi) tool onto external_tools_df
 #'
 #' @return external_tools_df with metadata of tool appeneded (data.frame)
-#' @export
+#'
 #'
 #' @examples
 #' external_tools_load_bbglab_cgi()
@@ -241,7 +241,7 @@ external_tools_load_bbglab_cgi <- function(external_tools_df = data.frame()){
 #' @param filepath (string)
 #'
 #' @return
-#' @export
+#'
 #'
 external_tools_convert_maf_to_bbglab <- function(maf_dataset_wrapper, filepath){
   #browser()
@@ -258,7 +258,7 @@ external_tools_convert_maf_to_bbglab <- function(maf_dataset_wrapper, filepath){
 #' @param maf (MAF)
 #'
 #' @return
-#' @export
+#'
 #'
 external_tools_convert_maf_to_bbglab_return_dataframe <- function(maf){
   maf %>% 
@@ -284,7 +284,6 @@ external_tools_convert_maf_to_bbglab_return_dataframe <- function(maf){
 #' @param gene_hugo_symbol hugo symbol representing the gene to export (string)
 #'
 #' @return dataframe in a form usable as input at https://www.cbioportal.org/mutation_mapper (data.frame)
-#' @export
 #'
 external_tools_convert_maf_to_cbioportal_mutation_mapper_return_dataframe <- function(maf, gene_hugo_symbol){
   maf %>% 
@@ -404,7 +403,7 @@ external_tools_load_maf_to_signal2 <- function(external_tools_df = data.frame())
 #' @param maf_df either a maf object or a dataframe created using maftools_get_all_data
 #'
 #' @return data.frame with VCF columns
-#' @export 
+#' 
 external_tools_convert_maf_to_vanilla_vcf_return_dataframe <- function(maf_df){
   if (maf_df %>% class() == "MAF") 
     maf_df <- maftools_get_all_data(maf_df, include_silent_mutations = TRUE)
@@ -667,7 +666,7 @@ longest_refseq_df = readRDS(system.file("extdata", "protein_domains.RDs", packag
 #' @param maf_df (HGNC ID of gene)
 #'
 #' @return vector of the same length as maf_df containing transcript refseq ids (character)
-#' @export
+#'
 #'
 maftools_get_transcript_refseq <- function(maf_df){
   maf_colnames = colnames(maf_df)
@@ -708,7 +707,7 @@ get_amino_acid_changes = function(maf_df, return_genomic_description_if_no_prote
 #' Appends  metadata for the OncodriveCLUSTL tool onto external_tools_df
 #'
 #' @return external_tools_df with metadata of tool appeneded (data.frame)
-#' @export
+#'
 #'
 external_tools_load_proteinpaint <- function(external_tools_df = data.frame()){
   external_tools_add_tool_to_dataframe(
@@ -971,7 +970,7 @@ external_tools_load_tumormap <- function(external_tools_df = data.frame()){
 #' If any of the constitutent functions are changed, run \code{external_tools_update_builtin_dataset}
 #'
 #' @return external_tools_df with metadata of tool appeneded (data.frame). see \code{?external_tools_add_tool_to_dataframe} for more info on the columnss in this data.frame
-#' @export
+#'
 #'
 #' @examples
 #' external_tools_load_all_tools()

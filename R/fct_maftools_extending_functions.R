@@ -6,7 +6,7 @@
 #' @param include_silent_mutations 
 #'
 #' @return a data.frame in MAF form where each variant has a separate row (data.frame)
-#' @export
+#'
 #'
 #' @examples
 #' maftools_get_all_data(TCGAmutations::tcga_load("GBM"))
@@ -28,10 +28,10 @@ maftools_get_all_data <- function(maf, include_silent_mutations=T) {
 #' @param tsb specify sample names (Tumor_Sample_Barcodes) (string)
 #'
 #' @return predicted kataegis sites (dataframe)
-#' @export
+#'
 #' 
 maftools_plot_rainfall <- function(maf, tsb, detectChangePoints = TRUE, ref.build = "hg19", pointSize = 0.4, fontSize = 1.2){
-  utilitybelt::assert_that(!is.null(tsb) | detectChangePoints == FALSE, msg = "[maftool_rainfall_kaetagis_table] this wrapper function ONLY allows tsb to be null IF detectChangePoints == FALSE. Otherwise it can't find the output file which is named after the tsv")
+  assertthat::assert_that(!is.null(tsb) | detectChangePoints == FALSE, msg = "[maftool_rainfall_kaetagis_table] this wrapper function ONLY allows tsb to be null IF detectChangePoints == FALSE. Otherwise it can't find the output file which is named after the tsv")
   #message("ref.build: ", ref.build)
   
   closeAllConnections()
@@ -56,7 +56,7 @@ maftools_plot_rainfall <- function(maf, tsb, detectChangePoints = TRUE, ref.buil
 #'
 #'
 #' @return Number of distinct levels of a clinical feature 
-#' @export
+#'
 #'
 maftools_clinical_data_get_levels <- function(maf, clinical_feature){
   utilitybelt::assert_non_empty_string(clinical_feature)
@@ -81,7 +81,7 @@ maftools_clinical_data_lowest_number_of_samples_per_level <- function(maf, clini
 #' @param clinical_feature Name of a clinical feature (string)
 #'
 #' @return ggplot / grob
-#' @export
+#'
 #'
 maftools_clinical_data_visually_summarise <- function(maf, clinical_feature = "Tumor_Sample_Barcode", threshold=NULL, selected_items=NULL, distance_from_bar=2){
   feature.v = maf %>% 
@@ -157,7 +157,7 @@ maftools_gistic = function(gistic){
 #' @param maf A MAF object (MAF)
 #'
 #' @return a MAF object with chr23/chr24 converted to "X" & "Y"
-#' @export
+#'
 #'
 maftools_chrom_23_and_24_to_X_and_Y <- function(maf){
   maf@data <- maf@data %>% 

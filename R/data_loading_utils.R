@@ -9,7 +9,7 @@
 #' @param maf_dataset_wrapper the wrapper of the dataset you want to load into memory (maf_dataset_wrapper)
 #'
 #' @return a copy of the original wrapper with status and loaded data updated. (maf_dataset_wrapper)
-#' @export
+#'
 #' 
 #' @examples
 #' #Generate wrapper
@@ -28,9 +28,9 @@ maf_data_set_wrapper_load_data <- function(maf_dataset_wrapper){
   #assert_that_class_is_maf_data_pool(maf_data_pool)
   assert_that_class_is_maf_dataset_wrapper(maf_dataset_wrapper)
   updated_maf_dataset_wrapper <- maf_dataset_wrapper
-  utilitybelt::assert_that(maf_dataset_wrapper$status=="not_loaded", msg = utilitybelt::fmterror("Can only load data if status is: not_loaded. Status is currently: ", maf_dataset_wrapper$status))
+  assertthat::assert_that(maf_dataset_wrapper$status=="not_loaded", msg = utilitybelt::fmterror("Can only load data if status is: not_loaded. Status is currently: ", maf_dataset_wrapper$status))
   updated_maf_dataset_wrapper$loaded_data <- maf_dataset_wrapper$load_data(maf_dataset_wrapper$local_path_to_data)
-  utilitybelt::assert_that(utilitybelt::class_is(updated_maf_dataset_wrapper$loaded_data, tested_class = "MAF"), msg = utilitybelt::fmterror("maf_data_set_wrapper_load_data: load function did not load an MAF object"))
+  assertthat::assert_that(utilitybelt::class_is(updated_maf_dataset_wrapper$loaded_data, tested_class = "MAF"), msg = utilitybelt::fmterror("maf_data_set_wrapper_load_data: load function did not load an MAF object"))
   updated_maf_dataset_wrapper$status <- "ready"
   return(updated_maf_dataset_wrapper)
 }
@@ -43,7 +43,7 @@ maf_data_set_wrapper_load_data <- function(maf_dataset_wrapper){
 #' @param maf_dataset_wrapper the wrapper of the dataset you want to unload into memory (maf_dataset_wrapper)
 #'
 #' @return a copy of the original wrapper with status and loaded data elements updated. Status is changed from "ready" => "not_loaded". loaded_data is changed from maf_object to NA. (maf_dataset_wrapper)
-#' @export
+#'
 #' 
 #' @inherit maf_data_set_wrapper_load_data examples
 #' 
@@ -51,7 +51,7 @@ maf_data_set_wrapper_load_data <- function(maf_dataset_wrapper){
 maf_data_set_wrapper_unload_data <- function(maf_dataset_wrapper){
   assert_that_class_is_maf_dataset_wrapper(maf_dataset_wrapper)
   updated_maf_dataset_wrapper <- maf_dataset_wrapper
-  utilitybelt::assert_that(maf_dataset_wrapper$status=="ready", msg = utilitybelt::fmterror("Can only unload data unless its already loaded (status == 'ready'). Status is currently:", maf_dataset_wrapper$status))
+  assertthat::assert_that(maf_dataset_wrapper$status=="ready", msg = utilitybelt::fmterror("Can only unload data unless its already loaded (status == 'ready'). Status is currently:", maf_dataset_wrapper$status))
   updated_maf_dataset_wrapper$loaded_data <- NA
   updated_maf_dataset_wrapper$status <- "not_loaded"
   return(updated_maf_dataset_wrapper)
@@ -88,7 +88,7 @@ maf_data_pool_load_data <- function(maf_data_pool, unique_name){
 #' @param unique_name unique_name of the maf_dataset_wrapper you want to unload (string). 
 #'
 #' @return maf_data_pool object with the wrapped dataset now unloaded (maf_data_pool)
-#' @export 
+#' 
 maf_data_pool_unload_data <- function(maf_data_pool, unique_name){
   index <- maf_data_pool_get_index_from_unique_name(maf_data_pool = maf_data_pool, unique_name = unique_name)
   maf_data_pool[[index]] <-  maf_data_set_wrapper_unload_data(maf_dataset_wrapper = maf_data_pool[[index]])
@@ -102,7 +102,7 @@ maf_data_pool_unload_data <- function(maf_data_pool, unique_name){
 #' @param rnaseq_file (string)
 #'
 #' @return Dataframe containing at least three columns, named "Tumor_Sample_Barcode", "Hugo_Symbol" and "TPM". May optionally include columns named "Fold_Change" and "Transcript" (dataframe)
-#' @export
+#'
 #'
 #' @examples
 #' read_rnaseq_file(system.file("example_data/blca_rnaseq.tsv", package = "CRUX"))
@@ -132,7 +132,7 @@ read_rnaseq_file <- function(rnaseq_file){
 #' @param rnaseq_df Dataframe containing at least three columns, named "Tumor_Sample_Barcode", "Hugo_Symbol" and "TPM". May optionally include columns named "Fold_Change" and "Transcript" (dataframe)
 #'
 #' @return Nothing, run for its side effects
-#' @export 
+#' 
 assert_rnaseq_df_is_formatted_correctly <- function(rnaseq_df){
   #Assert number of columns is correct
   assertthat::assert_that(ncol(rnaseq_df) >= 3, msg = paste0("RNAseq files requires at between 3 and 5 columns, not [", ncol(rnaseq_df) ,"]. Please include a header line with the following terms: 'Tumor_Sample_Barcode', 'Hugo_Symbol', 'TPM'. Optionally, include 'RefSeq_Transcript' and 'Fold_Change' columns"))
@@ -178,7 +178,7 @@ assert_rnaseq_df_is_formatted_correctly <- function(rnaseq_df){
 #' @param maf_dataset_wrapper any maf object (maf_dataset_wrapper)
 #' @param rnaseq_df Dataframe containing at least three columns, named "Tumor_Sample_Barcode", "Hugo_Symbol" and "TPM". May optionally include columns named "Fold_Change" and "Transcript". See ?read_rnaseq_file (dataframe) 
 #' @return the input maf_dataset_wrapper with rnaseq_path in rnaseq_filepath slot
-#' @export
+#'
 #'
 maf_data_wrapper_add_rnaseq <- function(maf_dataset_wrapper, rnaseq_path){
   #Assertions
@@ -201,7 +201,7 @@ maf_data_wrapper_add_rnaseq <- function(maf_dataset_wrapper, rnaseq_path){
 #' @param maf_dataset_wrapper a maf_dataset wrapper. See ?new_maf_dataset_wrapper for details.
 #'
 #' @return RNAseq data if present or NULL if no RNA data has been associated with it yet (dataframe)
-#' @export
+#'
 #'
 maf_data_wrapper_get_rnaseq_df <- function(maf_dataset_wrapper){
   if(!maf_data_wrapper_has_rnaseq_data(maf_dataset_wrapper)){
@@ -219,7 +219,7 @@ maf_data_wrapper_get_rnaseq_df <- function(maf_dataset_wrapper){
 #' @inheritParams maf_data_wrapper_get_rnaseq_df 
 #'
 #' @return RNAseq data if present or NULL if no RNA data has been associated with it yet. Will only return expression data for samples that have corresponding mutation data (dataframe)
-#' @export
+#'
 #' 
 #' @examples
 #' # Prepare Data
@@ -259,7 +259,7 @@ maf_data_wrapper_get_rnaseq_data_for_samples_with_mutation_data <- function(maf_
 #' @param maf_dataset_wrapper a maf dataset wrapper. See ?new_maf_dataset_wrapper
 #'
 #' @return TRUE if RNAseq data is present, False if not (Boolean)
-#' @export
+#'
 maf_data_wrapper_has_rnaseq_data <- function(maf_dataset_wrapper){
   if(!is.na(maf_dataset_wrapper$rnaseq_filepath) && file.exists(maf_dataset_wrapper$rnaseq_filepath))
     return(TRUE)
@@ -296,7 +296,7 @@ my_tsne <- function(rnaseq_df){
 #' @param rnaseq_path Path to rnaseq file (string)
 #'
 #' @return maf_data_pool with updated maf_data_pool_add_rnaseq
-#' @export
+#'
 maf_data_pool_add_rnaseq <- function(maf_data_pool, unique_name, rnaseq_path){
   maf_data_wrapper_index <- maf_data_pool_get_index_from_unique_name(maf_data_pool, unique_name)
   maf_data_pool[[maf_data_wrapper_index]] <- maf_data_wrapper_add_rnaseq(maf_data_pool[[maf_data_wrapper_index]], rnaseq_path)

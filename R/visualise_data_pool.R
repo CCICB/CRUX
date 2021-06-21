@@ -6,21 +6,21 @@
 #' #' @param maf_data_pool data pool to visualise (maf_data_pool)
 #' #'
 #' #' @return sigmaJS htmlwidget 
-#' #' @export
+#' #'
 #' #'
 #' #' @examples
 #' #' maf_data_pool_too_network_map(pcawg_datasets_to_data_pool(maf_data_pool = new_maf_data_pool()))
 #' maf_data_pool_too_network_map <- function(maf_data_pool, size_of_sources = 10, size_of_datasets = 7){
 #'   assert_that_class_is_maf_data_pool(maf_data_pool)
-#'   utilitybelt::assert_that(is.numeric(size_of_sources))
-#'   utilitybelt::assert_that(is.numeric(size_of_datasets))
+#'   assertthat::assert_that(is.numeric(size_of_sources))
+#'   assertthat::assert_that(is.numeric(size_of_datasets))
 #'   
 #'   maf_data_pool_df <- maf_data_pool_to_dataframe(maf_data_pool)
 #'   
-#'   utilitybelt::assert_that("name_of_data_source" %in% colnames(maf_data_pool_df), msg = utilitybelt::fmterror("maf_data_pool_too_network_map: assumes maf_data_pool_df contains the column [name_of_data_source]. No such column was found."))
-#'   utilitybelt::assert_that("unique_name" %in% colnames(maf_data_pool_df), msg = utilitybelt::fmterror("maf_data_pool_too_network_map: assumes maf_data_pool_df contains the column [unique_name]. No such column was found."))
-#'   utilitybelt::assert_that("short_name" %in% colnames(maf_data_pool_df), msg = utilitybelt::fmterror("maf_data_pool_too_network_map: assumes maf_data_pool_df contains the column [short_name]. No such column was found."))
-#'   utilitybelt::assert_that("derived_from" %in% colnames(maf_data_pool_df), msg = utilitybelt::fmterror("maf_data_pool_too_network_map: assumes maf_data_pool_df contains the column [derived_from]. No such column was found."))
+#'   assertthat::assert_that("name_of_data_source" %in% colnames(maf_data_pool_df), msg = utilitybelt::fmterror("maf_data_pool_too_network_map: assumes maf_data_pool_df contains the column [name_of_data_source]. No such column was found."))
+#'   assertthat::assert_that("unique_name" %in% colnames(maf_data_pool_df), msg = utilitybelt::fmterror("maf_data_pool_too_network_map: assumes maf_data_pool_df contains the column [unique_name]. No such column was found."))
+#'   assertthat::assert_that("short_name" %in% colnames(maf_data_pool_df), msg = utilitybelt::fmterror("maf_data_pool_too_network_map: assumes maf_data_pool_df contains the column [short_name]. No such column was found."))
+#'   assertthat::assert_that("derived_from" %in% colnames(maf_data_pool_df), msg = utilitybelt::fmterror("maf_data_pool_too_network_map: assumes maf_data_pool_df contains the column [derived_from]. No such column was found."))
 #'   
 #'   data_sources.v <- unique(maf_data_pool_df[["name_of_data_source"]])
 #'   

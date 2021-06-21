@@ -7,14 +7,14 @@
 #' @param pcawg_study_abbreviation Name of PCAWG study. Use pcawg_available to see options (string)
 #'
 #' @return maf_dataset_wrapper object
-#' @export
+#'
 #'
 #' @examples
 #' pcawg_dataset_to_maf_dataset_wrapper("Bone-Cart")
 pcawg_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, pcawg_study_abbreviation){
   pcawg_available_df <- PCAWGmutations::pcawg_available()
   utilitybelt::assert_non_empty_string(pcawg_study_abbreviation)
-  utilitybelt::assert_that(pcawg_study_abbreviation %in% pcawg_available_df[[1]], msg = utilitybelt::fmterror("Failed to find pcawg_study_abbreviation [", pcawg_study_abbreviation, "] in pcawgmutations database. Check pcawg_available() for a list of valid abbreviations"))
+  assertthat::assert_that(pcawg_study_abbreviation %in% pcawg_available_df[[1]], msg = utilitybelt::fmterror("Failed to find pcawg_study_abbreviation [", pcawg_study_abbreviation, "] in pcawgmutations database. Check pcawg_available() for a list of valid abbreviations"))
   
   full_study_name = pcawg_study_abbreviation # Change later
   
@@ -39,7 +39,7 @@ pcawg_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, pcawg_study_abbr
 #' @inheritParams pcawg_dataset_to_maf_dataset_wrapper
 #'
 #' @return returns the data pool with the specified dataset added (maf_data_pool)
-#' @export
+#'
 #'
 #' @examples
 #' pcawg_dataset_to_data_pool(new_maf_data_pool(), "Bone-Cart")
@@ -57,7 +57,7 @@ pcawg_dataset_to_data_pool <- function(maf_data_pool, pcawg_study_abbreviation){
 #' @inheritParams pcawg_dataset_to_data_pool
 #'
 #' @return data pool with all pcawg datasets added as maf_dataset_wrappers (maf_data_pool)
-#' @export
+#'
 #'
 #' @examples
 #' pcawg_dataset_to_data_pool(new_maf_data_pool)

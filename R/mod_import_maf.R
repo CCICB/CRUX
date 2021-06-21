@@ -10,7 +10,7 @@
 #' @param label_clinical_data label of clinicalData input field ["clinical data"]
 #'
 #' @return
-#' @export
+#'
 #'
 moduleReadMafUI <- function(id, panel_name, cohort_name, label_cohort_name = "name", label_maf="maf", label_clinical_data="clinical features") {
   ns <- NS(id)
@@ -47,7 +47,7 @@ moduleReadMafUI <- function(id, panel_name, cohort_name, label_cohort_name = "na
 #' @param id 
 #'
 #' @return named list containing 'maf' (type maf), 'cohortName' (type string), 'clinicalData' (type df), 'clinicalDataSupplied' (bool),
-#' @export
+#'
 #'
 moduleReadMafServer <- function(id) {
   moduleServer(
