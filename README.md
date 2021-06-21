@@ -6,14 +6,24 @@ You can import your own data, or use public TCGA or PCAWG datasets.
 
 
 ## Installation
+
 ```
+# Install required libraries
+install.packages(devtools)
+install.packages(BiocManager)
+
+# Load Libraries
 library(devtools)
+library(BiocManager)
+
+# Install tool
+install("PoisonAlien/TCGAmutations")
 install_github("CCICB/CRUX")
 ```
 
 ## Usage
 
-Run a single line of code to open the app and start exploring Cancer Data
+Run a single line of code to open the app and start exploring somatic cancer datasets
 ```
 CRUX::run_app()
 ```
