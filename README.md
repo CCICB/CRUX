@@ -9,8 +9,8 @@ You can import your own data, or use public TCGA or PCAWG datasets.
 
 ```
 # Install required libraries
-install.packages(remotes, ask=FALSE)
-install.packages(BiocManager, ask=FALSE)
+install.packages("remotes", ask=FALSE)
+install.packages("BiocManager", ask=FALSE)
 
 # Load Libraries
 library(remotes)
