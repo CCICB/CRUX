@@ -19,7 +19,7 @@ Similar tomaf_data_wrapper_get_rnaseq_df but only returns expression data for sa
 }
 \examples{
 # Prepare Data
-rna_path = system.file("example_data/blca_rnaseq.tsv", package = "shinymaftools")
+rna_path = system.file("example_data/blca_rnaseq.tsv", package = "CRUX")
 maf_data_wrapper = tcga_dataset_to_maf_dataset_wrapper(new_maf_data_pool(), "BLCA")
 
 # Add RNA data

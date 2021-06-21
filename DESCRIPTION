@@ -44,7 +44,8 @@ Imports:
     NMF,
     BiocManager,
     ZEROmutationsCCI (>= 0.0.0.9000),
-    PCAWGmutations (>= 0.0.0.9000)
+    PCAWGmutations (>= 0.0.0.9000),
+    somaticflags (>= 0.0.0.9000)
 Remotes:  
     selkamand/utilitybelt,
     selkamand/utilitybeltshiny,
@@ -52,7 +53,8 @@ Remotes:
     Thinkr-open/golem,
     ebailey78/shinyBS,
     CCICB/ZEROmutationsCCI,
-    CCICB/PCAWGmutations
+    CCICB/PCAWGmutations,
+    CCICB/somaticflags
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1

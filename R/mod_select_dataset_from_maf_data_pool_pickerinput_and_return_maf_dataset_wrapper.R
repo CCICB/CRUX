@@ -11,6 +11,7 @@ mod_select_maf_dataset_wrapper_ui <- function(id, panel=TRUE){
   ns <- NS(id)
   tagList(
     mod_select_dataset_from_maf_data_pool_pickerinput_ui(ns("in_picker_dataset"), panel=panel) %>% shinycssloaders::withSpinner(proxy.height = "80px"),
+    shinyWidgets::awesomeCheckbox(inputId = ns("in_check_filter_dubious_genes"), label = "Filter Dubious Genes", value = FALSE)
   )
 }
 
@@ -69,11 +70,23 @@ mod_select_maf_dataset_wrapper_server <- function(id, maf_data_pool, label = "Da
 
         #Step 2: Grab Data Wrapper
         maf_dataset_wrapper_ = maf_data_pool_get_data_wrapper_from_unique_name(maf_data_pool = isolate(maf_data_pool()), unique_name = selected_dataset_unique_name())
+        
         return(maf_dataset_wrapper_)
       })
     })
 
-    return(maf_dataset_wrapper)
+    # Remove dubious genes from maf if option is selected
+    maf_dataset_wrapper_final <- reactive({
+      if(input$in_check_filter_dubious_genes){
+        bla <- maf_data_set_wrapper_remove_dubious_genes(maf_dataset_wrapper())
+        return(bla)
+      }
+      else
+        return(maf_dataset_wrapper())
+      })
+      
+    
+    return(maf_dataset_wrapper_final)
 
   })
 }

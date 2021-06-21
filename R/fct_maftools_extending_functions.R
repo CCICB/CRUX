@@ -194,5 +194,36 @@ maftools_escape_special_characters <- function(string){
   }
   
   return(cleaned_string)
-  
 }
+
+#' Filter dubious genes from MAF
+#' 
+#' Filter out genes likely to appear in many analyses from your MAF (e.g. TTN & Olfactory receptors )
+#' 
+#' @param maf a MAF object
+#' @param genelist a character vector containing HUGO Symbols to remove from MAF
+#'
+#' @return MAF object
+#'
+#' @examples
+#' maftools_remove_dubious_genes(TCGAmutations::tcga_load("gbm"), "TTN")
+maftools_remove_dubious_genes <- function(maf, genelist = somaticflags::somaticflags){
+  assertthat::assert_that(is.character(genelist))
+  filtered_maf <- maftools::filterMaf(maf = maf, genes = genelist)
+  return(filtered_maf)
+}
+
+maf_data_set_wrapper_remove_dubious_genes <- function(maf_dataset_wrapper, genelist){
+  if(is.na(maf_dataset_wrapper$loaded_data)){
+    message("maf_data_set_wrapper_remove_dubious_genes: MAF not loaded ... returning original maf_dataset_wrapper")
+    return(maf_dataset_wrapper)
+  }
+  else if(class(maf_dataset_wrapper$loaded_data) == "MAF"){
+    message("Filtering dubious genes from maf_dataset_wrapper")
+    maf_dataset_wrapper$loaded_data <-  maftools_remove_dubious_genes(maf_dataset_wrapper$loaded_data)
+    return(maf_dataset_wrapper)
+  }
+  else
+    stop("maf_data_set_wrapper_remove_dubious_genes: maf_dataset_wrapper$loaded_data is neither NA, nor a MAF")
+}
+

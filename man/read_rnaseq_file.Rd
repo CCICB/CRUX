@@ -16,5 +16,5 @@ Dataframe containing at least three columns, named "Tumor_Sample_Barcode", "Hugo
 Read RNAseq file
 }
 \examples{
-read_rnaseq_file(system.file("example_data/blca_rnaseq.tsv", package = "shinymaftools"))
+read_rnaseq_file(system.file("example_data/blca_rnaseq.tsv", package = "CRUX"))
 }

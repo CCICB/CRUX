@@ -7,7 +7,7 @@
 external_tools_get_property_by_tool_name(
   tool_name,
   property_to_retrieve,
-  external_tools_df = shinymaftools::external_tool_metadata
+  external_tools_df = CRUX::external_tool_metadata
 )
 }
 \arguments{

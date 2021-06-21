@@ -21,7 +21,7 @@ A data frame with 3 rows and 10 variables:
 }
 }
 \source{
-shinymaftools::external_tools_load_all_tools()
+CRUX::external_tools_load_all_tools()
 }
 \usage{
 external_tool_metadata
