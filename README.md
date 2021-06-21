@@ -17,8 +17,8 @@ library(remotes)
 library(BiocManager)
 
 # Install tool
-install("PoisonAlien/TCGAmutations", ask=FALSE)
-install_github("CCICB/CRUX", ask=FALSE)
+install("PoisonAlien/TCGAmutations", ask=FALSE, upgrade=FALSE)
+install_github("CCICB/CRUX", ask=FALSE, upgrade=FALSE)
 ```
 
 ## Usage
