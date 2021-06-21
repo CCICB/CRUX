@@ -37,7 +37,6 @@ app_ui <- function(request) {
           shinydashboard::menuItem("Single Cohort Statistics", tabName = "PanCohortStatistics", icon = icon("chart-bar")),
           shinydashboard::menuItem("Enrichment", tabName = "Enrichment", icon = icon("dna")),
           shinydashboard::menuItem("Survival Analysis", tabName = "Survival", icon = icon("heartbeat")),
-          shinydashboard::menuItem("Mutational Signatures", tabName = "MutSig", icon = icon("signature")),
           shinydashboard::menuItem("Copy Number Analysis", tabName = "CopyNumberAnalysis", icon = icon("stream")), #align-center
           shinydashboard::menuItem("Compare Cohorts", tabName = "CompareCohorts", icon = icon("balance-scale-left")),
           shinydashboard::menuItem("Sample Level Analysis", tabName = "SampleLevelAnalysis", icon = icon("microscope")), # maybe th icon?
@@ -67,7 +66,6 @@ app_ui <- function(request) {
           shinydashboard::tabItem(tabName = "CompareCohorts", mod_compare_cohorts_ui(id = "mod_compare_cohorts")),
           shinydashboard::tabItem(tabName = "Enrichment", moduleEnrichmentAnalysisUI(id = "mod_enrichment_analyis")),
           shinydashboard::tabItem(tabName = "Survival", mod_survival_analysis_ui(id = "mod_survival_analysis")),
-          shinydashboard::tabItem(tabName = "MutSig", mod_mutational_signatures_ui(id = "mod_mutational_signatures")),
           shinydashboard::tabItem(tabName = "CopyNumberAnalysis", mod_cnv_ui(id = "mod_cnv_level_analysis")),
           shinydashboard::tabItem(tabName = "SampleLevelAnalysis", mod_sample_level_analysis_ui(id = "mod_sample_level_analysis")),
           shinydashboard::tabItem(tabName = "ExpressionImport", mod_expression_import_ui(id = "mod_expression_import")),

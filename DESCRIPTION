@@ -38,11 +38,8 @@ Imports:
     colourpicker (>= 1.1.0),
     UpSetR (>= 1.4.0),
     ggVennDiagram (>= 0.3),
-    mclust (>= 5.4.7),
     R.utils,
     shinydashboard,
-    NMF,
-    BiocManager,
     ZEROmutationsCCI (>= 0.0.0.9000),
     PCAWGmutations (>= 0.0.0.9000),
     somaticflags (>= 0.0.0.9000)
@@ -58,7 +55,7 @@ Remotes:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
-URL: https://github.com/selkamand/shinymaftools.git
-BugReports: https://github.com/selkamand/shinymaftools.git/issues
+URL: https://github.com/selkamand/CRUX.git
+BugReports: https://github.com/selkamand/CRUX.git/issues
 Depends: 
     R (>= 2.10)
