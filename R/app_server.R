@@ -19,7 +19,7 @@ app_server <- function( input, output, session ) {
   starting_maf_data_pool <- pcawg_datasets_to_data_pool(starting_maf_data_pool)
     
   ### Working on package
-  #browser()
+  
   maf_data_pool <- reactiveVal(starting_maf_data_pool)
   
   #mod_data_page_server(id = "mod_data_page", maf_data_pool)

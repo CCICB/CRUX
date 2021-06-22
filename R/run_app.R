@@ -9,10 +9,11 @@
 run_app <- function(
   ...
 ) {
-  with_golem_options(
-    app = shinyApp(
+  golem::with_golem_options(
+    app = shiny::shinyApp(
       ui = app_ui, 
-      server = app_server
+      server = app_server,
+      options = list(port=5678, launch.browser = TRUE) #Hardcoding important options. Passing via `...` seems to be failing for some reason
     ), 
     golem_opts = list(...)
   )
