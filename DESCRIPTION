@@ -40,7 +40,8 @@ Imports:
     BiocManager,
     ZEROmutationsCCI (>= 0.0.0.9000),
     PCAWGmutations (>= 0.0.0.9000),
-    somaticflags (>= 0.0.0.9000)
+    somaticflags (>= 0.0.0.9000),
+    pkgload
 Remotes:
     selkamand/utilitybelt,
     selkamand/utilitybeltshiny,

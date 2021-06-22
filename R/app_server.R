@@ -7,7 +7,6 @@
 #'
 app_server <- function( input, output, session ) {
   
-  
   starting_maf_data_pool <- new_maf_data_pool()
   
   # prepare TCGA data
