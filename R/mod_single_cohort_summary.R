@@ -5,11 +5,11 @@ mod_single_cohort_summary_tables_ui <- function(id, panel_heading = "Tabular Sum
   tagList(
     shinyWidgets::panel(heading = panel_heading,
           tabsetPanel(type = "tabs", id = ns("tabset_active_panel"),
-                tabPanel(title = "All data", value = "all_data", mod_tabulate_maf_ui(id = ns("mod_tabulate_maf_all"))),
                 tabPanel(title = "Summary", value = "summary", mod_render_downloadabledataframe_ui(id = ns("out_dt_maf_summary"))),
                 tabPanel(title = "Gene level summary", value = "gene_summary", mod_render_downloadabledataframe_ui(id = ns("out_dt_maf_gene_summary"))),
                 tabPanel(title = "Sample level summary", value = "sample_summary", mod_render_downloadabledataframe_ui(id = ns("out_dt_maf_sample_summary"))),
                 tabPanel(title = "Clinical data summary", value = "clinical_data_summary", mod_render_downloadabledataframe_ui(id = ns("out_dt_maf_clinical_data_summary"))),
+                tabPanel(title = "All data", value = "all_data", mod_tabulate_maf_ui(id = ns("mod_tabulate_maf_all"))),
                 br())
   ))
 }

@@ -10,7 +10,7 @@ moduleEnrichmentAnalysisUI <- function(id){
                ),
                icon_down_arrow(),br(),
                
-               shinyWidgets::panel(heading = "Step 2: Configure Analysis Data",
+               shinyWidgets::panel(heading = "Step 2: Configure Analysis",
                                    uiOutput(outputId = ns("out_pick_clinical_feature")),
                                    numericInput(inputId = ns("in_num_minmut"), label = "Minimum Number of Mutations", value = 5, min = 0, step = 1)
                ),

@@ -34,7 +34,7 @@ modulePlotRainforestUI <- function(id){
       #Core UI
       fluidRow(
       
-        col_1(shinyWidgets::radioGroupButtons(inputId = ns("in_radio_group_pval_vs_fdr"), label = "Significance", choices = c("P-value", "FDR"))),
+        col_1(shinyWidgets::radioGroupButtons(inputId = ns("in_radio_group_pval_vs_fdr"), label = "Significance", choices = c("P-value", "FDR"), selected = "FDR")),
       col_2(
         conditionalPanel(condition = "input.in_radio_group_pval_vs_fdr == 'P-value'", ns = ns, numericInput(inputId = ns("in_numeric_pvalue"), label = "p-value threshold", value = 0.05, min = 0, max = 1, step = 0.01)),
         conditionalPanel(condition = "input.in_radio_group_pval_vs_fdr == 'FDR'", ns = ns, numericInput(inputId = ns("in_numeric_fdr"), label = "fdr threshold", value = 0.05, min = 0, max = 1, step = 0.01))
