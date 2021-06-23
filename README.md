@@ -4,26 +4,32 @@
 An R package that provides a graphical interface for cohort-level tertiary cancer analysis. 
 You can import your own data, or use public TCGA or PCAWG datasets.
 
-
 ## Installation
 
+#### Windows / MAC
+Download the [**latest release**](https://github.com/CCICB/CRUX/releases) and follow the instructions for your operating system.
+
+There are **no** dependencies other than having a browser (Chrome, Firefox, Edge, Safari)
+
+## Manual
+A manual detailing the use of CRUX can be found [here](https://crux-docs.readthedocs.io/en/latest/index.html)
+
+
+
+## Other:
+#### Installing on linux
+Requires R > 3.5.0 is installed
 ```
 # Install required libraries
 install.packages("remotes", ask=FALSE)
 install.packages("BiocManager", ask=FALSE)
 
-# Load Libraries
-library(remotes)
-library(BiocManager)
-
 # Install tool
-install("PoisonAlien/TCGAmutations", ask=FALSE, upgrade=FALSE)
-install_github("CCICB/CRUX", ask=FALSE, upgrade=FALSE)
+BiocManager::install("PoisonAlien/TCGAmutations", ask=FALSE, upgrade=FALSE)
+remotes::install_github("CCICB/CRUX", ask=FALSE, upgrade=FALSE)
 ```
 
-## Usage
-
-Run a single line of code to open the app and start exploring somatic cancer datasets
+To start the app, run:
 ```
 CRUX::run_app()
 ```
