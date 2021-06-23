@@ -13,7 +13,7 @@ run_app <- function(
     app = shiny::shinyApp(
       ui = app_ui, 
       server = app_server,
-      options = list(port=5678, launch.browser = TRUE) #Hardcoding important options. Passing via `...` seems to be failing for some reason
+      options = list(launch.browser = TRUE) #Hardcoding important options. Passing via `...` seems to be failing for some reason
     ), 
     golem_opts = list(...)
   )

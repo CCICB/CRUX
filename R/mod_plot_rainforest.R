@@ -28,7 +28,7 @@ plotforest <- function(mafCompareRes, pVal = 0.05, fdr = 0.05, threshold_on_fdr,
 modulePlotRainforestUI <- function(id){
   ns <- NS(id)
   tagList(
-    plotOutput(outputId=ns("out_plot_rainforest"), height = "600px") %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
+    plotOutput(outputId=ns("out_plot_rainforest"), height = "650px") %>% shinycssloaders::withSpinner(proxy.height = "200px"), 
     shinyWidgets::panel(
       
       #Core UI

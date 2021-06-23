@@ -44,6 +44,7 @@ app_server <- function( input, output, session ) {
   
   #Stop Program when browser is closed
   session$onSessionEnded(function() {
+    message("Closing App")
     stopApp()
   })
   

@@ -15,7 +15,7 @@ mod_home_ui <- function(id){
     #),
     
     shinyWidgets::panel(heading = "Using CRUX", style = "height: 700px",
-      img(src="img/workflows.png", style = "width: auto; height: 600px; display: block; margin: auto", align = "center")
+      img(src="img/workflows.png", style = "width: auto; height: 650px; display: block; margin: auto", align = "center")
     )
   )
 }
