@@ -4,6 +4,7 @@
 mod_plot_tmb_in_context_of_tcga_ui <- function(id){
   ns <- NS(id)
   tagList(
+    wellPanel("Tumor Mutational Burdens are from TCGA WES datasets. Use caution when comparing TMBs of these cancer-types to WGS datasets"),
     plotOutput(outputId = ns("out_plot_tcgacompare"), height = "650px") %>% shinycssloaders::withSpinner(proxy.height = "200px"),
     br(),
     shinyWidgets::panel(heading = "Options",
