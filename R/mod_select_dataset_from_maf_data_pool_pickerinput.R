@@ -98,7 +98,7 @@ mod_select_dataset_from_maf_data_pool_pickerinput_server <- function(id, maf_dat
       return(number_of_samples_formatted)
       })
     
-    last_selected = reactiveVal(NULL)
+    
     output$out_ui_pick_dataset <- renderUI({
       redraw_pickerinput()
       isolate({
@@ -107,7 +107,6 @@ mod_select_dataset_from_maf_data_pool_pickerinput_server <- function(id, maf_dat
           label = label, 
           multiple = multiple, 
           choices = unique_dataset_names(),
-          selected = last_selected(),
           width = "100%", 
           options = custom_picker_options(max_selected_datasets = max_selected_datasets, multiple, style = style),
           choicesOpt = list(
@@ -116,15 +115,13 @@ mod_select_dataset_from_maf_data_pool_pickerinput_server <- function(id, maf_dat
               " ",
               sample_numbers(),
               unique_dataset_names_badge(),
-              data_sources()#,
-              #sample_numbers()
+              data_sources(),
             )
             )
           )
         })
       })
-    selected_datasets <- reactive({ last_selected(input$in_pickerinput_dataset); input$in_pickerinput_dataset})
-    #dataset_wrapper <- reactive({ maf_data_pool_get_data_wrapper_from_unique_name(maf_data_pool = maf_data_pool(), unique_name = selected_datasets()) })
+    selected_datasets <- reactive({ input$in_pickerinput_dataset})
     
     return(selected_datasets)
   })
