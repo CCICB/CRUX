@@ -35,7 +35,7 @@ app_server <- function( input, output, session ) {
   
   #moduleUtilitiesServer(id = "mod_utilities", maf_data_pool)
   mod_merge_server(id = "mod_merge", maf_data_pool = maf_data_pool)
-  moduleSubsetMafsServer(id = "mod_subset", maf_data_pool)
+  mod_utility_subset_server(id = "mod_subset", maf_data_pool)
   mod_external_tools_server(id= "mod_external_tools", maf_data_pool)
   mod_sample_level_analysis_server(id = "mod_sample_level_analysis", maf_data_pool)
   mod_cnv_server(id = "mod_cnv_level_analysis", maf_data_pool)

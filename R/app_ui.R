@@ -72,7 +72,7 @@ app_ui <- function(request) {
           shinydashboard::tabItem(tabName = "ExpressionAnalysis", mod_expression_analysis_ui(id = "mod_expression_analysis")),
           shinydashboard::tabItem(tabName = "ExternalTools", mod_external_tools_ui(id= "mod_external_tools")),
           #shinydashboard::tabItem(tabName = "Utilities", moduleUtilitiesUI(id = "mod_utilities")),
-          shinydashboard::tabItem(tabName = "Subset", moduleSubsetMafsUI(id = "mod_subset")),
+          shinydashboard::tabItem(tabName = "Subset", mod_utility_subset_ui(id = "mod_subset")),
           shinydashboard::tabItem(tabName = "Merge", mod_merge_ui(id = "mod_merge")),
           shinydashboard::tabItem(tabName = "Manual")
         )

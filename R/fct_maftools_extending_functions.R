@@ -238,7 +238,6 @@ maftools_fix_tcga_survival_curve_metadata <- function(maf){
     return(maf)
 }
 
-
 maftools_dubious_genes_present_in_maf <- function(maf){
     genes= maf %>%
       maftools_get_all_data() %>% 
@@ -249,3 +248,27 @@ maftools_dubious_genes_present_in_maf <- function(maf){
       paste0("Genes removed: ", .) %>%
       return()
 }
+
+maftools_samples_with_mutated_gene <- function(maf, gene, include_silent_mutations=TRUE, invert = FALSE){
+  if(invert==FALSE){
+    maf %>%
+      maftools_get_all_data(include_silent_mutations = TRUE) %>%
+      dplyr::filter(Hugo_Symbol %in% gene) %>% 
+      dplyr::pull(Tumor_Sample_Barcode) %>% 
+      unique() %>%
+      as.character() %>%
+      return()
+  }else{
+    maf %>%
+      maftools_get_all_data(maf, include_silent_mutations = TRUE) %>%
+      dplyr::filter(!(Hugo_Symbol %in% gene)) %>% 
+      dplyr::pull(Tumor_Sample_Barcode) %>% 
+      unique() %>%
+      as.character() %>%
+      return()
+  }
+}
+
+
+
+

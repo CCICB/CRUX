@@ -2,7 +2,7 @@
 # UI ----------------------------------------------------------------------
 
 
-moduleSubsetMafsUI <- function(id){
+mod_utility_subset_ui <- function(id){
   ns <- NS(id)
   
   tagList(
@@ -83,7 +83,7 @@ moduleSubsetMafsUI <- function(id){
 
 
 # SERVER ------------------------------------------------------------------
-moduleSubsetMafsServer <- function(id, maf_data_pool){
+mod_utility_subset_server <- function(id, maf_data_pool){
   moduleServer(id,
     function(input, output, session){
 
@@ -108,7 +108,7 @@ moduleSubsetMafsServer <- function(id, maf_data_pool){
       gene_list <- reactive({ maf()@data$Hugo_Symbol %>% sort %>% unique %>% return() })
       output$out_ui_genelist <- renderUI({ shinyWidgets::pickerInput( inputId = session$ns("in_pick_genes"), label = "Gene", choices = gene_list() %>% sort %>% unique(), options = shinyWidgets::pickerOptions(liveSearch = T, actionsBox = T), multiple = T)  })
       genes <- reactive({ if(input$in_checkbox_subset_by_gene) return(input$in_pick_genes) else return(NULL) })
-
+      samples_with_mutations_in_selected_genes <- reactive({ maftools_samples_with_mutated_gene(maf = maf(), genes()) })
 
       # Subset by Clinical Feature ----------------------------------------------
       clinical_feature_names_list <-reactive({  colnames(maftools::getClinicalData(maf())) %>% sort %>% unique %>% return() })
@@ -225,7 +225,8 @@ moduleSubsetMafsServer <- function(id, maf_data_pool){
         subset_maf_ <- 
           tryCatch(
             expr = { 
-              maftools::subsetMaf(maf = maf(), tsb = tsb(), genes = genes(), clinQuery = clinquery(), query = query()) %>%
+              maftools::subsetMaf(maf = maf(), tsb = unique(c(samples_with_mutations_in_selected_genes(), tsb())), clinQuery = clinquery(), query = query()) %>%
+                
                 maftools_fix_clinical_data_types()
               },
             error = function(err){
