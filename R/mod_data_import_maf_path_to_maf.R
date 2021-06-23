@@ -51,7 +51,7 @@ mod_data_import_maf_path_to_maf_server <- function(id, maf_path, clinicalData){
       try_result <- tryCatch(
         expr = {
           maf_ <- maftools::read.maf(maf_path(), clinicalData = clinical_data_path())
-          message(fmtsuccess("Maf File Read Succesfully"))
+          message(utilitybelt::fmtsuccess("Maf File Read Succesfully"))
           return(maf_)
         },
         error = function(err){
@@ -85,7 +85,7 @@ mod_data_import_maf_path_to_maf_server <- function(id, maf_path, clinicalData){
           msg <- paste0(tags$strong(clinical_data_path()), " is not a valid clinical feature file. See help page for details on how this file should be structured")
         }
         else
-          msg <- paste0(tags$strong(maf_path()), " is not a valid clinical maf file. See help page for details on how this file should be structured")
+          msg <- paste0(tags$strong(maf_path()), " is not a valid MAF file. See the manual for details on how this file should be structured")
       }
       else
         return(NULL)

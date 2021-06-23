@@ -16,6 +16,13 @@ user_data_filepath_to_class_maf_dataset_wrapper <- function(filepath, clinicalDa
   
   assertthat::assert_that(file.exists(filepath))
   
+  
+  if(!is.na(loaded_data) & class(loaded_data) == "MAF"){
+   sample_number = loaded_data@summary$summary[3] %>% as.numeric()
+  }
+  else
+    sample_number = NA %>% as.numeric()
+  
   #Assume filepath is pointing to a maf file
   new_maf_dataset_wrapper(
     maf_data_pool = maf_data_pool,
@@ -30,7 +37,8 @@ user_data_filepath_to_class_maf_dataset_wrapper <- function(filepath, clinicalDa
     local_path_to_data = filepath, 
     clinical_data = clinicalData,
     datatype_of_stored_object = ".mafs",
-    loaded_data = loaded_data
+    loaded_data = loaded_data,
+    number_of_samples = sample_number
   )
   #browser()
 }

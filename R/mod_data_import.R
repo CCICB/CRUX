@@ -182,8 +182,9 @@ mod_data_import_server <- function(id, maf_data_pool){
     
     output$out_download_template <- downloadHandler(filename = "clinical_features_template.tsv", function(file){
       message("DOWNLOADNNG")
-      #maftools::getClinicalData(maf()) %>%
-      data.table::fwrite(x=mtcars,file=file, sep="\t")
+      maftools::getClinicalData(maf()) %>%
+        dplyr::mutate(FirstMetadataColumn=character(nrow(.)), AnotherPieceOfMetadata=character(nrow(.)), YetAnotherMetadataColumnThatCanBeNamedWhateverYouLike=character(nrow(.))) %>%
+        data.table::fwrite(file=file, sep="\t")
       })
   })
 }
