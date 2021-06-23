@@ -11,7 +11,9 @@ mod_select_maf_dataset_wrapper_ui <- function(id, panel=TRUE){
   ns <- NS(id)
   tagList(
     mod_select_dataset_from_maf_data_pool_pickerinput_ui(ns("in_picker_dataset"), panel=panel),
-      shinyWidgets::awesomeCheckbox(inputId = ns("in_check_filter_dubious_genes"), label = "Filter Dubious Genes", value = FALSE)
+      shinyWidgets::awesomeCheckbox(inputId = ns("in_check_filter_dubious_genes"), label = "Filter Dubious Genes", value = FALSE),
+    
+    textOutput(outputId = ns("out_text_dubious_genes_found"))
   )
 }
 
@@ -78,13 +80,22 @@ mod_select_maf_dataset_wrapper_server <- function(id, maf_data_pool, label = "Da
     # Remove dubious genes from maf if option is selected
     maf_dataset_wrapper_final <- reactive({
       if(input$in_check_filter_dubious_genes){
-        bla <- maf_data_set_wrapper_remove_dubious_genes(maf_dataset_wrapper())
-        return(bla)
+        maf_dataset_wrapper_final_ <- maf_data_set_wrapper_remove_dubious_genes(maf_dataset_wrapper())
+        return(maf_dataset_wrapper_final_)
       }
       else
         return(maf_dataset_wrapper())
       })
-      
+    
+    # If dubious genes have been removed, 
+    output$out_text_dubious_genes_found <- renderText({ 
+      if(input$in_check_filter_dubious_genes){
+        return(maftools_dubious_genes_present_in_maf(maf_dataset_wrapper()$loaded_data))
+      }
+      else
+        return(NULL)
+      })
+    
     
     return(maf_dataset_wrapper_final)
 

@@ -229,11 +229,22 @@ maf_data_set_wrapper_remove_dubious_genes <- function(maf_dataset_wrapper, genel
 
 
 maftools_fix_tcga_survival_curve_metadata <- function(maf){
-  #browser()
   if (all(c("days_to_last_followup", "vital_status", "days_to_death") %in% colnames(maf@clinical.data))){
     maf@clinical.data$days_to_last_followup <- ifelse(is.na(maf@clinical.data$days_to_last_followup) & maf@clinical.data$vital_status==1, yes = maf@clinical.data$days_to_death, no = maf@clinical.data$days_to_last_followup)
     return(maf)
   }
   else
     return(maf)
+}
+
+
+maftools_dubious_genes_present_in_maf <- function(maf){
+    genes= maf %>%
+      maftools_get_all_data() %>% 
+      dplyr::pull(Hugo_Symbol) %>% 
+      unique()
+    
+    paste0(genes[genes %in% somaticflags::somaticflags], collapse = ", ") %>%
+      paste0("Genes removed: ", .) %>%
+      return()
 }
