@@ -36,11 +36,35 @@ mod_select_dataset_from_maf_data_pool_pickerinput_server <- function(id, maf_dat
     
     maf_data_pool_df <- reactive({ maf_data_pool_to_dataframe(maf_data_pool()) })
     
+    
     unique_dataset_names <- reactive({ 
+      #browser()
       maf_data_pool_df()[["unique_name"]]
     } )
     
+    
+    ## Below code increments 'redraw_pickerinput' everytime the data pool is updated with more datasets. 
+    #This affords us better control of when UI is redrawn. E.g. we do NOT want to redraw UI everytime maf_data_pool_df() changes since when we 'load' a dataset, it will change (status properties)
+    old_unique_names <- reactiveVal(NULL)
+    redraw_pickerinput <- reactiveVal(1)
+    observeEvent(maf_data_pool_df(), isolate({
+      new_unique_names = maf_data_pool_df()[["unique_name"]]
+      if(identical(old_unique_names(),new_unique_names)){
+        message("maf_data_pool_df updated BUT no new dataset added. Avoiding redraw")
+      }
+      else if(is.null(new_unique_names)){
+        message("new_unique_names are NULL. Assuming somethings about to load to trigger repopulation of the data. Avoiding redraw")
+      }
+      else if(!identical(new_unique_names, old_unique_names)){
+        message("maf_data_pool_df updated AND there are changes in datasets. Redrawing pickerinput and updading old_unique_names")
+        old_unique_names(new_unique_names)
+        redraw_pickerinput(redraw_pickerinput()+1)
+      }
+      else message("Should never end up here")
+    }))
+    
     short_dataset_names <- reactive({ 
+      print(head(maf_data_pool_df()[["short_name"]]))
       maf_data_pool_df()[["short_name"]]
     } )
     
@@ -74,28 +98,30 @@ mod_select_dataset_from_maf_data_pool_pickerinput_server <- function(id, maf_dat
       return(number_of_samples_formatted)
       })
     
-    
     last_selected = reactiveVal(NULL)
     output$out_ui_pick_dataset <- renderUI({
-      shinyWidgets::pickerInput(
-        inputId = ns("in_pickerinput_dataset"), 
-        label = label, 
-        multiple = multiple, 
-        choices = unique_dataset_names(),
-        selected = last_selected(),
-        width = "100%", 
-        options = custom_picker_options(max_selected_datasets = max_selected_datasets, multiple, style = style),
-        choicesOpt = list(
-          content = paste0(
-            display_names(),
-            " ",
-            sample_numbers(),
-            unique_dataset_names_badge(),
-            data_sources()#,
-            #sample_numbers()
+      redraw_pickerinput()
+      isolate({
+        shinyWidgets::pickerInput(
+          inputId = ns("in_pickerinput_dataset"), 
+          label = label, 
+          multiple = multiple, 
+          choices = unique_dataset_names(),
+          selected = last_selected(),
+          width = "100%", 
+          options = custom_picker_options(max_selected_datasets = max_selected_datasets, multiple, style = style),
+          choicesOpt = list(
+            content = paste0(
+              display_names(),
+              " ",
+              sample_numbers(),
+              unique_dataset_names_badge(),
+              data_sources()#,
+              #sample_numbers()
+            )
+            )
           )
-          )
-        )
+        })
       })
     selected_datasets <- reactive({ last_selected(input$in_pickerinput_dataset); input$in_pickerinput_dataset})
     #dataset_wrapper <- reactive({ maf_data_pool_get_data_wrapper_from_unique_name(maf_data_pool = maf_data_pool(), unique_name = selected_datasets()) })

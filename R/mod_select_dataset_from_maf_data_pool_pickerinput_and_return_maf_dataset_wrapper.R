@@ -13,7 +13,9 @@ mod_select_maf_dataset_wrapper_ui <- function(id, panel=TRUE){
     mod_select_dataset_from_maf_data_pool_pickerinput_ui(ns("in_picker_dataset"), panel=panel),
       shinyWidgets::awesomeCheckbox(inputId = ns("in_check_filter_dubious_genes"), label = "Filter Dubious Genes", value = FALSE),
     
-    textOutput(outputId = ns("out_text_dubious_genes_found"))
+    textOutput(outputId = ns("out_text_dubious_genes_found")),
+    
+    actionButton(ns("in_bttn_browser"), label = "Browser")
   )
 }
 
@@ -54,10 +56,15 @@ mod_select_maf_dataset_wrapper_server <- function(id, maf_data_pool, label = "Da
 
   moduleServer( id, function(input, output, session){
     #browser()
-    ns <- session$ns
-    selected_dataset_unique_name <- reactive({
-      mod_select_dataset_from_maf_data_pool_pickerinput_server(id = "in_picker_dataset", maf_data_pool = maf_data_pool, label=label)()
+    observeEvent( input$in_bttn_browser , {
+      browser()
     })
+    
+      
+    ns <- session$ns
+    selected_dataset_unique_name <- #reactive({
+      mod_select_dataset_from_maf_data_pool_pickerinput_server(id = "in_picker_dataset", maf_data_pool = maf_data_pool, label=label)
+    #})
 
     #outputOptions(output, "in_picker_dataset", suspendWhenHidden = FALSE)
 
