@@ -10,13 +10,16 @@
 mod_expression_analysis_ui <- function(id){
   ns <- NS(id)
   tagList(
-    
-
+  
+    shinyWidgets::panel("Expression data is of limited use in this version of CRUX. Currently, you can't do much more than export the data for use in the Xena Browser. Features will be added in future versions."),
     # Step 1: Select Dataset --------------------------------------------------
     mod_select_maf_dataset_wrapper_ui(ns("mod_select_dataset")),
     
     # Step 2: Visualise Data --------------------------------------------------
-    mod_render_downloadabledataframe_ui(ns("mod_dt_expression")),
+    shinyWidgets::panel(
+      heading = "Tabular Form",
+      mod_render_downloadabledataframe_ui(ns("mod_dt_expression")),
+    )
     
     #mod_render_downloadabledataframe_ui(ns("mod_dt_mut")),
     

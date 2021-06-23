@@ -26,7 +26,7 @@
 #' @param doi publicatoin doi (string)
 #' @param requires_maf_export does the tool require a maf to be exported in some other form (flag)
 #' @param maf_conversion_function only relevent if requires_maf_export == true. A function that takes a maf_dataset_wrapper object (first argument), a filepath (second argument) and, if requires_gene_selection == TRUE, a gene name (third argument)  writes a file to that filepath. The idea is that said file can then be used as input to the specified tool.
-#' @param extension what type of file is written by maf_conversion_function. default is 'tsv'. Used to appropriately name downloaded file  (string)
+#' @param extension what type of file is written by maf_conversion_function. default is 'tsv'. Used to appropriately name exported file  (string)
 #' @param requires_gene_selection does user need to select a specific gene for export to work? (bool)
 #' @return dataframe containing external_tool_metadata
 #'
@@ -149,7 +149,7 @@ external_tools_load_bbglab_oncodrive_fml <- function(external_tools_df = data.fr
     instructions = as.character(
       tags$ol(
         tags$li("Make a free BBGLab OncodriveFML account by clicking 'Log In ==> Sign Up'"),
-        tags$li("Import downloaded file into 'Mutations file' slot and select the type of sequencing used to generate your dataset"),
+        tags$li("Import the file exported by CRUX into the 'Mutations file' slot and select the type of sequencing used to generate your dataset"),
         tags$li("Configure as required and run")
       )
     ),
@@ -219,13 +219,18 @@ external_tools_convert_maf_to_oncodrive_return_dataframe <- function(maf){
 external_tools_load_bbglab_cgi <- function(external_tools_df = data.frame()){
   external_tools_add_tool_to_dataframe(
     external_tools_df = external_tools_df,
-    tool_name = "Cancer Genome Interpreter",
+    tool_name = "Cancer Genome Interpreter (CGI)",
     tool_id = "bbglab_oncodrive_cgi",
     tool_group = "BBGLab",
     tool_class = "Variant Interpretation",
     tool_description = "Platform to facilitate the interpretation of alterations in a patient’s tumor.",
     website = "https://www.cancergenomeinterpreter.org/analysis",
     doi = "https://genomemedicine.biomedcentral.com/articles/10.1186/s13073-018-0531-8",
+    instructions = as.character(
+      tags$ol(
+        tags$li("Click 'Add file +' and upload exported file"),
+        tags$li("Click 'Run'")
+      )),
     maf_conversion_function = external_tools_convert_maf_to_bbglab,
     extension = "tsv"
   )
@@ -381,7 +386,7 @@ external_tools_load_maf_to_signal2 <- function(external_tools_df = data.frame())
     instructions = as.character(
       tags$ol(
         tags$li("Click 'Upload Files'"),
-        tags$li("Unzip downloaded file. Upload one of the 'signal_input' file (cannot do all at once since Signal can't handle the stress)."),
+        tags$li("Unzip exported file. Upload one of the 'signal_input' file (cannot do all at once since Signal can't handle the stress)."),
         tags$li("Set 'Format' to [Variants] TSV/TXT."),
         tags$li("Select reference build (Human GRCh37 if using pre-packaged TCGA/PCAWG datasets)"),
         tags$li("Set organ [Optional but HIGHLY RECCOMENDED unless you want to scan for manually-selected signatures]"),
@@ -462,9 +467,9 @@ external_tools_convert_maf_to_one_vanilla_vcf <- function(maf_dataset_wrapper, f
 external_tools_load_maf_to_mutalisk_sample_level <- function(external_tools_df = data.frame()){
   external_tools_add_tool_to_dataframe(
     external_tools_df = external_tools_df,
-    tool_name = "Mutalisk: Sample Level",
-    tool_id = "mutalisk-sample_level",
-    tool_group = "Mutational Signature Analysis",
+    tool_name = "Mutalisk",
+    tool_id = "mutalisk",
+    tool_group = "Lee et al.",
     tool_class = "Mutational Signature Analysis",
     tool_description = "Identifies mutational signatures in each sample",
     requires_gene_selection = FALSE,
@@ -472,7 +477,7 @@ external_tools_load_maf_to_mutalisk_sample_level <- function(external_tools_df =
     doi = "https://doi.org/10.1093/nar/gky406",
     instructions = as.character(
       tags$ol(
-        tags$li("Unzip downloaded file"),
+        tags$li("Unzip exported file"),
         tags$li("Click 'Upload Files' and select all samples you want to run signature analysis on"),
         tags$li("Select reference build (Human GRCh37 if using pre-packaged TCGA/PCAWG datasets)"),
         tags$li("Select Disease Type and Signatures to include in analysis"),
@@ -552,10 +557,12 @@ external_tools_load_maf_to_cravat <- function(external_tools_df = data.frame()){
     tool_class = "Variant Annotation",
     tool_description = "Highly customisable annotation of all variants in a cohort",
     requires_gene_selection = FALSE,
-    website = "https://run.opencravat.org/submit/nocache/index.html",
+    website = "https://opencravat.org/",
     doi = "https://ascopubs.org/doi/10.1200/CCI.19.00132",
     instructions = as.character(
       tags$ol(
+        tags$li("Click 'Get Started'"),
+        tags$li("Log in as guest or create an account"),
         tags$li("Upload file"),
         tags$li("Select reference build (Human GRCh37 if using pre-packaged TCGA/PCAWG datasets)"),
         tags$li("Select annotation modules of interest"),
@@ -725,7 +732,7 @@ external_tools_load_proteinpaint <- function(external_tools_df = data.frame()){
         tags$li("Select the appropriate reference genome build (hg19 if using pre-packaged TCGA/PCAWG datasets)"),
         tags$li("Select the Lollipop App"),
         tags$li("Once example loads, click '+', then 'Upload text files'"),
-        tags$li("Browse & navigate to downloaded file"),
+        tags$li("Browse & navigate to exported file"),
         tags$li("A pop-up box should appear. Click 'Genes', then select a gene of interest by clicking its name"),
         tags$li("You should see a lollipop plot appear. Try clicking 'Pediatric' / 'COSMIC' to compare mutational profile to PeCan cohorts")
       )
@@ -794,7 +801,7 @@ external_tools_load_xena <- function(external_tools_df = data.frame()){
       tags$ol(
         tags$li("Click 'VIEW MY DATA'"),
         tags$li("Follow prompts to install UCSC Xena"),
-        tags$li("Unzip downloaded files"),
+        tags$li("Unzip exported files"),
         tags$li("Import mutations.txt as 'positional data'"),
         tags$li("Follow prompts to import data. Note reference genome is hg19/GRCh37 if using any of the pre-loaded datasets"),
         tags$li("Import metadata.txt as phenotypic data")
@@ -980,12 +987,11 @@ external_tools_load_all_tools <- function(){
     external_tools_load_cbioportal_mutation_mapper() %>% 
     external_tools_load_maf_to_signal2() %>%
     external_tools_load_maf_to_mutalisk_sample_level() %>%
-    external_tools_load_maf_to_mutalisk_cohort_level() %>%
     external_tools_load_maf_to_cravat() %>%
     external_tools_load_proteinpaint() %>%
     external_tools_load_xena() %>%
     external_tools_load_ucsc() %>%
-    external_tools_load_tumormap() %>%
+    #external_tools_load_tumormap() %>%
     return()
 }
 

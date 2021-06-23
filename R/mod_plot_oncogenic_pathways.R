@@ -10,7 +10,7 @@ mod_plot_oncogenic_pathways_ui <- function(id){
     mod_render_downloadabledataframe_ui(id = ns("mod_downloadable_table_oncogenic_pathways")),
     
     shinyWidgets::panel(heading = "Options",
-                        numericInput(ns("in_num_font"), label = "Font size", value = 1, min = 0 , step = 0.2),
+                        numericInput(ns("in_num_font"), label = "Font size", value = 2.4, min = 0 , step = 0.2),
         #conditionalPanel(condition = "input.in_checkbox_use_custom_genes", ns=ns, uiOutput(outputId = ns("out_ui_genelist"
         moduleDownloadPlotUI(ns("mod_download"))
     )

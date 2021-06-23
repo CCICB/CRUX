@@ -48,7 +48,7 @@ external_tools_add_tool_to_dataframe(
 
 \item{maf_conversion_function}{only relevent if requires_maf_export == true. A function that takes a maf_dataset_wrapper object (first argument), a filepath (second argument) and, if requires_gene_selection == TRUE, a gene name (third argument)  writes a file to that filepath. The idea is that said file can then be used as input to the specified tool.}
 
-\item{extension}{what type of file is written by maf_conversion_function. default is 'tsv'. Used to appropriately name downloaded file  (string)}
+\item{extension}{what type of file is written by maf_conversion_function. default is 'tsv'. Used to appropriately name exported file  (string)}
 }
 \value{
 dataframe containing external_tool_metadata

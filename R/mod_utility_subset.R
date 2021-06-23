@@ -25,7 +25,7 @@ mod_utility_subset_ui <- function(id){
         
         #Subset by Gene -------------------------------------------------------------------------
         shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_subset_by_gene"), label = "Subset by gene"),
-        conditionalPanel(condition = "input.in_checkbox_subset_by_gene", ns = ns, uiOutput(outputId = ns("out_ui_genelist"))),
+        conditionalPanel(condition = "input.in_checkbox_subset_by_gene", ns = ns, wellPanel("Only keep samples which have mutations in at least one of the selected genes"), uiOutput(outputId = ns("out_ui_genelist"))),
         
         #Subset by Clinical Feature-------------------------------------------------------------------------
         shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_subset_by_clinical_feature"), label = "Subset by clinical feature"),

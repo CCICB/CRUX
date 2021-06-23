@@ -17,7 +17,7 @@ mod_select_genes_ui <- function(id, label = "Select Genes", multiple = TRUE, act
 #' select_genes Server Functions
 #'
 #' @noRd 
-mod_select_genes_server <- function(id, maf){
+mod_select_genes_server <- function(id, maf, include_silent = TRUE){
   assertthat::assert_that(is.reactive(maf))
   
   moduleServer( id, function(input, output, session){
@@ -25,10 +25,9 @@ mod_select_genes_server <- function(id, maf){
     
     genelist <- reactive({
       validate(need(!is.null(maf()), message = "Please select a valid dataset"))
-      maf() %>% maftools_get_all_data() %>% 
+      maf() %>% maftools_get_all_data(include_silent_mutations = include_silent) %>% 
         dplyr::pull(Hugo_Symbol) %>%
         unique() %>%
-        sort() %>%
         return()
       })
     

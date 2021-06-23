@@ -2,6 +2,9 @@
 .Rhistory
 .Rapp.history
 
+# MAC-specific files
+.DS_Store
+
 # Session Data files
 .RData
 
@@ -44,7 +47,7 @@ inst/example_data/*zcc*
 # Becker GBM data
 inst/example_data/Becker_GBM_Exomes*
 inst/example_data/becker*
-***/.DS_Store
+
 
 # Large BRCA files
 inst/example_data/*BRCA*

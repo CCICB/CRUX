@@ -34,12 +34,15 @@ app_ui <- function(request) {
                                    shinydashboard::menuSubItem(text = "Available Data", tabName = "DataPool", icon = icon("database")),
                                    shinydashboard::menuSubItem(text = "Import Data", tabName = "DataImport", icon = icon("file-upload"))
                                    ),
-          shinydashboard::menuItem("Single Cohort Statistics", tabName = "PanCohortStatistics", icon = icon("chart-bar")),
-          shinydashboard::menuItem("Enrichment", tabName = "Enrichment", icon = icon("dna")),
-          shinydashboard::menuItem("Survival Analysis", tabName = "Survival", icon = icon("heartbeat")),
-          shinydashboard::menuItem("Copy Number Analysis", tabName = "CopyNumberAnalysis", icon = icon("stream")), #align-center
+          shinydashboard::menuItem("Single Cohort Genomics", tabName = "Home", icon = icon("dna"),
+                                   shinydashboard::menuSubItem("Cohort Summary", tabName = "PanCohortStatistics", icon = icon("chart-bar")),
+          shinydashboard::menuSubItem("Enrichment", tabName = "Enrichment", icon = icon("dna")),
+          shinydashboard::menuSubItem("Survival Analysis", tabName = "Survival", icon = icon("heartbeat")),
+          shinydashboard::menuSubItem("Copy Number Analysis", tabName = "CopyNumberAnalysis", icon = icon("stream")) #align-center
+                                   ),
+          #shinydashboard::menuItem("Single Cohort Statistics", tabName = "PanCohortStatistics", icon = icon("chart-bar")),
           shinydashboard::menuItem("Compare Cohorts", tabName = "CompareCohorts", icon = icon("balance-scale-left")),
-          shinydashboard::menuItem("Sample Level Analysis", tabName = "SampleLevelAnalysis", icon = icon("microscope")), # maybe th icon?
+          shinydashboard::menuItem("Single Sample Analysis", tabName = "SampleLevelAnalysis", icon = icon("microscope")), # maybe th icon?
           shinydashboard::menuItem("Expression", tabName = "Expression", icon = icon("th"), #badgeLabel = "Coming Soon", badgeColor = "maroon", 
                                    shinydashboard::menuSubItem(text = "Import", tabName = "ExpressionImport", icon = icon("file-upload")),
                                    shinydashboard::menuSubItem(text = "Visualise", tabName = "ExpressionAnalysis", icon = icon("th"))
@@ -49,7 +52,7 @@ app_ui <- function(request) {
                                    shinydashboard::menuSubItem(text = "Merge", tabName = "Merge", icon = icon("layer-group"))
                                    ),
           shinydashboard::menuItem("External Tools", tabName = "ExternalTools", icon = icon("sign-out-alt")),
-          shinydashboard::menuItem("Manual", tabName = "Manual", icon = icon("book"), badgeLabel = "Coming Soon", badgeColor = "maroon")
+          shinydashboard::menuItem("Manual", tabName = "Manual", icon = icon("book"))
         )
         ),
       
@@ -74,7 +77,7 @@ app_ui <- function(request) {
           #shinydashboard::tabItem(tabName = "Utilities", moduleUtilitiesUI(id = "mod_utilities")),
           shinydashboard::tabItem(tabName = "Subset", mod_utility_subset_ui(id = "mod_subset")),
           shinydashboard::tabItem(tabName = "Merge", mod_merge_ui(id = "mod_merge")),
-          shinydashboard::tabItem(tabName = "Manual")
+          shinydashboard::tabItem(tabName = "Manual", mod_manual_ui(id="mod_manual"))
         )
       )
     )

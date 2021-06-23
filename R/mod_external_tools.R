@@ -67,7 +67,7 @@ mod_external_tools_ui <- function(id){
     conditionalPanel(condition = 'output.requires_gene_selection', ns = ns,
       shinyWidgets::panel(
         heading="Step 3: Select Gene",
-         selectizeInput(inputId = ns("in_select_gene"), label = "Select Gene", choices = NULL, multiple = FALSE)
+        mod_select_genes_ui(ns("mod_select_gene"), multiple = FALSE)
       ),
       
       icon_down_arrow(), br()
@@ -75,8 +75,8 @@ mod_external_tools_ui <- function(id){
     
     # Step 3: Download Data --------------------------------------------------
     shinyWidgets::panel(
-      heading="Step 3: Download Data",
-      downloadButton(outputId = ns("out_downloadbttn_exported_data"), label = "Download Formatted Data")
+      heading="Step 3: Export Data",
+      downloadButton(outputId = ns("out_downloadbttn_exported_data"), label = "Export Data")
     ), #%>% div(style = "display: flex; justify-content: center") ,
     
     icon_down_arrow(), br(),
@@ -132,16 +132,7 @@ mod_external_tools_server <- function(id, maf_data_pool){
     
     
     # Populate Gene List ------------------------------------------------------
-    genes <- reactive({
-      validate(need(!is.null(maf()), message = "Waiting for data to load"))
-      #message("Fetching Genes")
-      maftools::getGeneSummary(maf())[[1]]
-      })
-    
-    #Update Input
-    observeEvent(genes(), {
-      updateSelectizeInput(session = session, inputId = "in_select_gene", choices = genes(), server = TRUE)
-    })
+    selected_gene <- mod_select_genes_server("mod_select_gene", maf)
 
     
     # Get tool name
@@ -205,7 +196,7 @@ mod_external_tools_server <- function(id, maf_data_pool){
       requires_gene_name = external_tools_get_property_by_tool_name(tool_name = tool_name(), property_to_retrieve = "requires_gene_selection")
       
       if(requires_gene_name){
-        conversion_function(maf_dataset_wrapper(), file, input$in_select_gene)
+        conversion_function(maf_dataset_wrapper(), file, selected_gene())
       }
       else
       {
