@@ -905,7 +905,6 @@ external_tools_convert_maf_to_return_tumormap_attributes_dataframe <- function(m
 # }
 
 external_tools_convert_maf_to_tumormap <- function(maf_dataset_wrapper, filepath){
-  browser()
   maf <- maf_dataset_wrapper$loaded_data
   temp_dir <- tempdir()
   expression_path <- paste0(temp_dir, "/expression.txt")

@@ -76,6 +76,7 @@ mod_select_maf_clinical_data_column_server <- function(id, maf, forced_to_pick_a
     
     maf_columns.v <- reactive({
       validate(need(!is.null(maf()),message = "Loading ..." ));
+      message("Picking Columns") 
       maf() %>% maftools::getClinicalData() %>% 
         colnames()
     })

@@ -210,6 +210,7 @@ maftools_escape_special_characters <- function(string){
 maftools_remove_dubious_genes <- function(maf, genelist = somaticflags::somaticflags){
   assertthat::assert_that(is.character(genelist))
   filtered_maf <- maftools::filterMaf(maf = maf, genes = genelist)
+  filtered_maf <- maftools_fix_clinical_data_types(filtered_maf)
   return(filtered_maf)
 }
 
