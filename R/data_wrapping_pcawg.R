@@ -17,6 +17,11 @@ pcawg_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, pcawg_study_abbr
   assertthat::assert_that(pcawg_study_abbreviation %in% pcawg_available_df[[1]], msg = utilitybelt::fmterror("Failed to find pcawg_study_abbreviation [", pcawg_study_abbreviation, "] in pcawgmutations database. Check pcawg_available() for a list of valid abbreviations"))
   
   full_study_name = pcawg_study_abbreviation # Change later
+  sample_number = pcawg_available_df %>% 
+    dplyr::filter(Abbreviation == pcawg_study_abbreviation) %>%
+    dplyr::pull(Samples) %>%
+    head(n=1) %>% 
+    as.numeric()
   
   new_maf_dataset_wrapper(
     maf_data_pool = maf_data_pool,
@@ -27,7 +32,8 @@ pcawg_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, pcawg_study_abbr
     data_description = paste0("PCAWG dataset: ", full_study_name), 
     is_dataset_downloadable = FALSE,
     function_to_load_data  = function(filepath) { PCAWGmutations::pcawg_load(pcawg_study_abbreviation) }, 
-    name_of_data_source = "PCAWG", datatype_of_stored_object = ".RDs"
+    name_of_data_source = "PCAWG", datatype_of_stored_object = ".RDs", 
+    number_of_samples = sample_number
   )
 }
 

@@ -62,6 +62,18 @@ mod_select_dataset_from_maf_data_pool_pickerinput_server <- function(id, maf_dat
       return(data_sources_vec)
     })
     
+    sample_numbers <- reactive({
+      number_of_samples <- maf_data_pool_df()[["number_of_samples"]] %>%
+        as.character() %>%
+        ifelse(is.na(.), yes = "unknown", no = .) %>%
+        paste0("N = ", .) %>%
+        paste0("(", ., ")")
+      
+      number_of_samples_formatted <- number_of_samples
+      #number_of_samples_formatted <- paste0("<span class='label label-info' style='margin-left: 5px; font-size: xx-small' >",number_of_samples, "</span>")
+      return(number_of_samples_formatted)
+      })
+    
     
     last_selected = reactiveVal(NULL)
     output$out_ui_pick_dataset <- renderUI({
@@ -76,8 +88,11 @@ mod_select_dataset_from_maf_data_pool_pickerinput_server <- function(id, maf_dat
         choicesOpt = list(
           content = paste0(
             display_names(),
+            " ",
+            sample_numbers(),
             unique_dataset_names_badge(),
-            data_sources()
+            data_sources()#,
+            #sample_numbers()
           )
           )
         )

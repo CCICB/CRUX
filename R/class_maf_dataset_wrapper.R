@@ -21,6 +21,7 @@
 #' @param datatype_of_stored_object type of stored data object. Not used for anything right now, just interesting metadata. examples are \*.Rds or \*.mafs (string)
 #' @param derived_from the maf_dataset_wrapper_object from which the new object was derived. If the dataset was obtained directly from an online source, leave as NA (maf_dataset_wrapper or NA)
 #' @param loaded_data the loaded R object (MAF or NA)
+#' @param number_of_samples the number of samples in the cohort (integer)
 #' @return an object of type maf_dataset_wrapper (maf_dataset_wrapper)
 #' 
 #' @section All Properties:
@@ -39,11 +40,12 @@
 #' \item loaded_data
 #' \item derived_from
 #' \item rnaseq_filepath
+#' \item number_of_samples
 #' }
 #' 
 #'
 #'
-new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, unique_name, start_status, data_description, is_dataset_downloadable, function_to_download_data = function() {return(NA)}, is_dataset_loadable = TRUE,function_to_load_data, name_of_data_source="unknown", local_path_to_data="", clinical_data=NA, datatype_of_stored_object="", derived_from = NA, loaded_data=NA, rnaseq_filepath = NA) {
+new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, unique_name, start_status, data_description, is_dataset_downloadable, function_to_download_data = function() {return(NA)}, is_dataset_loadable = TRUE,function_to_load_data, name_of_data_source="unknown", local_path_to_data="", clinical_data=NA, datatype_of_stored_object="", derived_from = NA, loaded_data=NA, rnaseq_filepath = NA, number_of_samples = NA) {
   #Dev options
   classname = "maf_dataset_wrapper"
   status_options <- c("not_downloaded","not_loaded", "ready")
@@ -53,7 +55,6 @@ new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, uni
     #browser() 
   }
   
-  #browser()
   assert_that_class_is_maf_data_pool(maf_data_pool)
   utilitybelt::assert_non_empty_string(display_name)
   utilitybelt::assert_non_empty_string(unique_name)
@@ -71,6 +72,7 @@ new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, uni
   assertthat::assert_that(is.na(clinical_data) || is.data.frame(clinical_data), msg= utilitybelt::fmterror("new_maf_dataset_wrapper: Clinical_data must be a dataframe or NULL. It cannot be a: ", class(clinical_data)))
   assertthat::assert_that(identical(loaded_data, NA) || utilitybelt::class_is(loaded_data, "MAF"))
   assertthat::assert_that(is.na(rnaseq_filepath) | (assertthat::is.string(rnaseq_filepath) && file.exists(rnaseq_filepath)), msg = utilitybelt::fmterror("new_maf_dataset_wrapper: rnaseq_filepath must be either NA, or a string leading to a valid filepath"))
+  assertthat::assert_that(is.na(number_of_samples) | assertthat::is.number(number_of_samples), msg = paste0("new_maf_dataset_wrapper: number_of_samples must be either NA or a number, not a: ", class(number_of_samples)))
   
   #Make unique_name actually unique
   actually_unique_name <- maf_data_pool_make_name_unique(maf_data_pool = maf_data_pool, unique_name)
@@ -91,7 +93,8 @@ new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, uni
     derived_from=derived_from,
     is_dataset_downloadable=is_dataset_downloadable,
     is_dataset_loadable=is_dataset_loadable,
-    rnaseq_filepath=rnaseq_filepath
+    rnaseq_filepath=rnaseq_filepath,
+    number_of_samples=number_of_samples
   )
   
   #Add Class attribute

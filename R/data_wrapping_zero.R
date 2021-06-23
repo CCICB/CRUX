@@ -20,6 +20,10 @@ zero_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, zero_study_abbrev
   row_of_interest <- which(zero_available_df[[1]] %in% zero_study_abbreviation)
   full_study_name <- zero_available_df[[2]][row_of_interest]
   
+  sample_number = zero_available_df[[3]][row_of_interest] %>%
+    head(n=1) %>% 
+    as.numeric()
+  
   new_maf_dataset_wrapper(
     maf_data_pool = maf_data_pool,
     display_name = full_study_name, 
@@ -34,7 +38,8 @@ zero_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, zero_study_abbrev
       
       ZEROmutationsCCI::zero_load(zero_study_abbreviation) %>% maftools_chrom_23_and_24_to_X_and_Y() %>% maftools_fix_clinical_data_types()
       },
-    name_of_data_source = "ZERO", datatype_of_stored_object = ".RDs"
+    name_of_data_source = "ZERO", datatype_of_stored_object = ".RDs",
+    number_of_samples = sample_number
   )
 }
 

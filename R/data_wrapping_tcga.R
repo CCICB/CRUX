@@ -12,12 +12,20 @@
 tcga_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, tcga_study_abbreviation, source = "Firehose"){
   #browser()
   tcga_available_df <- TCGAmutations::tcga_available()
+  
   utilitybelt::assert_non_empty_string(tcga_study_abbreviation, msg = "tcga_study_abbreviation must be a string >0 characters long")
   #browser()
   assertthat::assert_that(tcga_study_abbreviation %in% tcga_available_df[["Study_Abbreviation"]], msg = utilitybelt::fmterror("Failed to find tcga_study_abbreviation [", tcga_study_abbreviation, "] in TCGAmutations database. Check TCGAmutations::tcga_available() for a list of valid abbreviations"))
   #browser()
+  
+  
   row_of_interest <- which(tcga_available_df[["Study_Abbreviation"]] %in% tcga_study_abbreviation)
   full_study_name <- tcga_available_df[["Study_Name"]][row_of_interest]
+  number_of_samples <- tcga_available_df[[source]][row_of_interest] %>% 
+    sub(pattern = "([[:digit:]]+).*",replacement = "\\1", x = .) %>%
+    as.numeric()
+  
+  #message("SampleNum: ", number_of_samples)
   
   new_maf_dataset_wrapper(
     maf_data_pool = maf_data_pool,
@@ -28,7 +36,8 @@ tcga_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, tcga_study_abbrev
     data_description = paste0(source, " data from study: ", full_study_name), 
     is_dataset_downloadable = FALSE,
     function_to_load_data  = function(filepath) { TCGAmutations_load_with_typed_metadata(tcga_study_abbreviation, source) %>% maftools_chrom_23_and_24_to_X_and_Y() },
-    name_of_data_source = "TCGA", local_path_to_data = system.file(paste0("extdata/", source, "/", tcga_study_abbreviation, ".RDs"), package = "TCGAmutations"), datatype_of_stored_object = ".RDs"
+    name_of_data_source = "TCGA", local_path_to_data = system.file(paste0("extdata/", source, "/", tcga_study_abbreviation, ".RDs"), package = "TCGAmutations"), datatype_of_stored_object = ".RDs", 
+    number_of_samples = number_of_samples
   )
 }
 
