@@ -81,7 +81,7 @@ mod_survival_analysis_server <- function(id, maf_data_pool){
     # Step 1: Select Dataset --------------------------------------------------
     maf_dataset_wrapper <- mod_select_maf_dataset_wrapper_server(id = "mod_select_dataset_wrapper", maf_data_pool = maf_data_pool, label =  "Step 1: Select Dataset")
     maf <- reactive({ message("Loaded data changed"); maf_dataset_wrapper()$loaded_data })
-    clinical_data <- reactive({ maf() %>% maftools::getClinicalData()})
+    clinical_data <- reactive({ validate(need(!is.null(maf()), message = "maf not loaded")); maf() %>% maftools::getClinicalData()})
     
     # Step 2: Select metadata columns containing survival info ------------------------------------------------------------------
     column_time_to_event <- mod_select_maf_clinical_data_column_server(id = "in_pick_time_to_event", maf = maf, message_when_none_are_selected = "Please select column describing time to event")
@@ -97,7 +97,6 @@ mod_survival_analysis_server <- function(id, maf_data_pool){
       #browser()
       validate(need(time_column_passes_sanitychecks(column_time_to_event(), clinical_data()), message = "Please select valid time column"))
       validate(need(event_column_passes_sanitychecks(column_event_status(), clinical_data()), message = "Please select valid event column"))
-      #browser()
       
       tryCatch(
         expr = { 

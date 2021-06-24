@@ -18,7 +18,9 @@ mod_utility_subset_ui <- function(id){
       
       icon_down_arrow(),br(),
       
-      shinyWidgets::panel(heading = "Step 2: Configure Subsetting",
+      shinyWidgets::panel(
+        heading = "Step 2: Configure Subsetting",
+        wellPanel(htmlOutput(ns("out_text_maf_ready"))),
         #Subset by Sample-------------------------------------------------------------------------
         shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_subset_by_sample"), label = "Subset by sample"),
         conditionalPanel(condition = "input.in_checkbox_subset_by_sample", ns = ns, uiOutput(outputId = ns("out_ui_tsb"))),
@@ -97,6 +99,9 @@ mod_utility_subset_server <- function(id, maf_data_pool){
         return(maf_dataset_wrapper()$loaded_data)
       })
       
+
+      # Render Subset Instructions ----------------------------------------------
+      output$out_text_maf_ready <- renderText(paste0("Choose properties to subset ", tags$strong(gsub(pattern = "_", replacement = " ", x = maf_dataset_wrapper()$display_name))))
       
       # Subset By Sample ----------------------------------------------------------
       tumour_sample_list <- reactive({ maftools::getSampleSummary(maf()) %>% dplyr::pull(Tumor_Sample_Barcode) %>% unique() %>% as.character() %>% sort() %>% return()})

@@ -103,7 +103,7 @@ mod_cnv_server <- function(id, maf_data_pool){
     # Step 1: Import Data -----------------------------------------------------
     maf_dataset_wrapper <- mod_select_maf_dataset_wrapper_server(id = "mod_select_dataset_wrapper", maf_data_pool = maf_data_pool)
     maf_dataset_wrapper_validated <- reactive({ validate(need(!is.null(maf_dataset_wrapper()),message = "Loading ..." )); return(maf_dataset_wrapper()) })
-    observe({ maf_dataset_wrapper_validated() ; maf() })
+    #observe({ maf_dataset_wrapper_validated() ; maf() })
     maf <- reactive({ maf_dataset_wrapper_validated()$loaded_data })
     
     gistic_folder <- mod_shinydir_import_server(id = "mod_select_gistic_dir")
@@ -209,6 +209,7 @@ mod_cnv_server <- function(id, maf_data_pool){
     # Sample Name Overlap -----------------------------------------------------
 
     output$out_plot_sample_name_overlap <- renderPlot({
+      validate(need(!is.null(maf()), message = "Dataset failed to load"))
       maftools_maf_and_gistic_sample_name_overlap_venn(maf = maf(), gistic = gistic())
     })
     
