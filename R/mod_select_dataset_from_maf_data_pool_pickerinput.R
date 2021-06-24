@@ -115,7 +115,7 @@ mod_select_dataset_from_maf_data_pool_pickerinput_server <- function(id, maf_dat
               " ",
               sample_numbers(),
               unique_dataset_names_badge(),
-              data_sources(),
+              data_sources()
             )
             )
           )
