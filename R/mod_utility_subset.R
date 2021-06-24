@@ -301,7 +301,8 @@ mod_utility_subset_server <- function(id, maf_data_pool){
               function_to_download_data = function(x){NULL},
               function_to_load_data = function(x) {NULL},
               local_path_to_data = "NONE", datatype_of_stored_object = "NA",
-              derived_from = NA # Should be maf_dataset_wrapper
+              derived_from = NA, # Should be maf_dataset_wrapper
+              number_of_samples = maftools_number_of_samples(subset_maf())
             ) %>%
               maf_data_wrapper_add_rnaseq(rnaseq_path = maf_dataset_wrapper()$rnaseq_filepath) #Copy over RNA from previous maf_data_wrapper
 

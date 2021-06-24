@@ -269,6 +269,18 @@ maftools_samples_with_mutated_gene <- function(maf, gene, include_silent_mutatio
   }
 }
 
+#' Number of samples in a MAF
+#'
+#' @param maf @inherit maftools::read.maf
+#'
+#' @return int
+#'
+#' @examples
+#' maftools_number_of_samples(TCGAmutations::tcga_load("GBM"))
+maftools_number_of_samples <- function(maf){
+  return(bla@summary[["summary"]][3]) 
+}
+
 
 
 

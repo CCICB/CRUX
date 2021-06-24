@@ -21,7 +21,8 @@ new_maf_dataset_wrapper(
   datatype_of_stored_object = "",
   derived_from = NA,
   loaded_data = NA,
-  rnaseq_filepath = NA
+  rnaseq_filepath = NA,
+  number_of_samples = NA
 )
 }
 \arguments{
@@ -55,6 +56,8 @@ This function completely ignores the filepath argument but you NEED to include i
 \item{derived_from}{the maf_dataset_wrapper_object from which the new object was derived. If the dataset was obtained directly from an online source, leave as NA (maf_dataset_wrapper or NA)}
 
 \item{loaded_data}{the loaded R object (MAF or NA)}
+
+\item{number_of_samples}{the number of samples in the cohort (integer)}
 }
 \value{
 an object of type maf_dataset_wrapper (maf_dataset_wrapper)
@@ -79,6 +82,7 @@ maf_dataset_wrapper objects store the details of each dataset including the func
 \item loaded_data
 \item derived_from
 \item rnaseq_filepath
+\item number_of_samples
 }
 }
 

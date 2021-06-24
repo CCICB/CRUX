@@ -22,13 +22,12 @@ mod_single_cohort_summary_tables_server <- function(id, maf, cohortName){
       outputOptions(output, "maf_is_present", suspendWhenHidden = FALSE)
       
       
-      
       summary_df <- reactive({ validate(need(!is.null(maf()), "Please import dataset")); maf()@summary })
       gene_summary_df <- reactive({validate(need(!is.null(maf()), "Please import dataset")); maftools::mafSummary(maf())$gene.summary })
       sample_summary_df <- reactive({ validate(need(!is.null(maf()), "Please import dataset"));maftools::getSampleSummary(maf()) })
       clinical_data_df <- reactive({  validate(need(!is.null(maf()), "Please import dataset")); maftools::getClinicalData((maf())) })
       
-      #Problm
+      
       mod_tabulate_maf_server(id = "mod_tabulate_maf_all", maf = maf)
       mod_render_downloadabledataframe_server(id = "out_dt_maf_summary", tabular_data_object = summary_df, basename = "download", rownames = F, colnames = T) 
       mod_render_downloadabledataframe_server(id = "out_dt_maf_gene_summary", tabular_data_object = gene_summary_df, basename = "download", rownames = F, colnames = T) 
@@ -36,8 +35,7 @@ mod_single_cohort_summary_tables_server <- function(id, maf, cohortName){
       mod_render_downloadabledataframe_server(id = "out_dt_maf_clinical_data_summary", tabular_data_object = clinical_data_df, basename = "download", rownames = F, colnames = T) 
       
       active_summary_table <- reactive({ message(input$tabset_active_panel); input$tabset_active_panel })
-      
-      #observe({message("active_summary_table: ", active_summary_table())})
+    
     }
   )
 }
