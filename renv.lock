@@ -8,6 +8,9 @@
       }
     ]
   },
+  "Bioconductor": {
+    "Version": "3.12"
+  },
   "Packages": {
     "BH": {
       "Package": "BH",
@@ -15,6 +18,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "e4c04affc2cac20c8fec18385cd14691"
+    },
+    "BiocManager": {
+      "Package": "BiocManager",
+      "Version": "1.30.15",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "87a690190741d0791c9c10b390c933ff"
     },
     "DBI": {
       "Package": "DBI",
@@ -57,6 +67,18 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "d57ac35220b39c591388ab3a080f9cbe"
+    },
+    "PCAWGmutations": {
+      "Package": "PCAWGmutations",
+      "Version": "0.0.0.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "CCICB",
+      "RemoteRepo": "PCAWGmutations",
+      "RemoteRef": "main",
+      "RemoteSha": "56ea0e8c0108482249684ea2f7ddede191ccd5e8",
+      "Hash": "09f2faecb49803a0e3f55d7e9da8c968"
     },
     "R.methodsS3": {
       "Package": "R.methodsS3",
@@ -137,8 +159,8 @@
       "RemoteUsername": "PoisonAlien",
       "RemoteRepo": "TCGAmutations",
       "RemoteRef": "master",
-      "RemoteSha": "fd5a38941d57ee6eac31ae6a0dd912df5335b00c",
-      "Hash": "d76ca6987438ae3aaff4f65a55462e42"
+      "RemoteSha": "55e74d26fd2b8d030ec80211b675d2b11306b0d8",
+      "Hash": "fafbdc563c0b14c8cd78cf888b82b303"
     },
     "UpSetR": {
       "Package": "UpSetR",
@@ -160,6 +182,18 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "408d42d1359f2a84d377c1f7f0568624"
+    },
+    "ZEROmutationsCCI": {
+      "Package": "ZEROmutationsCCI",
+      "Version": "0.0.0.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "CCICB",
+      "RemoteRepo": "ZEROmutationsCCI",
+      "RemoteRef": "main",
+      "RemoteSha": "0d73f2738cbef86d7e5fc39810d9508730873612",
+      "Hash": "75202be97baf9f213e1b8f95c48a2a84"
     },
     "abind": {
       "Package": "abind",
@@ -422,10 +456,10 @@
     },
     "data.table": {
       "Package": "data.table",
-      "Version": "1.13.6",
+      "Version": "1.14.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "813fa8857aaa949b243e2e0b4abb8592"
+      "Hash": "d1b8b1a821ee564a3515fa6c6d5c52dc"
     },
     "desc": {
       "Package": "desc",
@@ -906,13 +940,6 @@
       "Repository": "CRAN",
       "Hash": "c318d148056e5bb8d7de79b0876f9ae6"
     },
-    "mclust": {
-      "Package": "mclust",
-      "Version": "5.4.7",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "94d378428bc227483a83ab1de21dce41"
-    },
     "memoise": {
       "Package": "memoise",
       "Version": "2.0.0",
@@ -1102,13 +1129,6 @@
       "Repository": "CRAN",
       "Hash": "a8730dcbdd19f9047774909f0ec214a4"
     },
-    "pryr": {
-      "Package": "pryr",
-      "Version": "0.1.4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "bdc2df7c4155553e5a97a56a6c9f0a0d"
-    },
     "ps": {
       "Package": "ps",
       "Version": "1.5.0",
@@ -1181,10 +1201,10 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "0.12.5",
+      "Version": "0.13.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "5c0cdb37f063c58cdab3c7e9fbb8bd2c"
+      "Hash": "079cb1f03ff972b30401ed05623cbe92"
     },
     "rex": {
       "Package": "rex",
@@ -1192,13 +1212,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "093584b944440c5cd07a696b3c8e0e4c"
-    },
-    "rhandsontable": {
-      "Package": "rhandsontable",
-      "Version": "0.3.7",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "bf38ba1df24ecb204ae64b81c4774b43"
     },
     "rio": {
       "Package": "rio",
@@ -1310,13 +1323,6 @@
       "RemoteSha": "c329f8ce43e44579cafbb16fc3109fb69d403e57",
       "Hash": "0ad29b8985a6454c6fdcbf7817420611"
     },
-    "shinyFeedback": {
-      "Package": "shinyFeedback",
-      "Version": "0.3.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "6659e386a388a84ee2749e0d15e6934b"
-    },
     "shinyFiles": {
       "Package": "shinyFiles",
       "Version": "0.9.0",
@@ -1351,6 +1357,18 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "9ddfc91d4280eaa34c2103951538976f"
+    },
+    "somaticflags": {
+      "Package": "somaticflags",
+      "Version": "0.0.0.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "CCICB",
+      "RemoteRepo": "somaticflags",
+      "RemoteRef": "main",
+      "RemoteSha": "596a1ce67c0a24cecfe79afe520e439a94fd174c",
+      "Hash": "a16748becc4f154ef832c3d910024688"
     },
     "sourcetools": {
       "Package": "sourcetools",

@@ -18,7 +18,7 @@ Imports:
     testthat (>= 3.0.0),
     purrr (>= 0.3.4),
     assertthat (>= 0.2.1),
-    TCGAmutations (>= 0.3.0),
+    TCGAmutations,
     maftools (>= 2.6.10),
     rlist (>= 0.4.6.1),
     shinyFiles (>= 0.9.0),
