@@ -18,7 +18,7 @@ returns a data pool object with extra dataset added (maf_data_pool)
 Takes a maf_data_poolobject and adds maf_dataset_wrappers for all tcga datasets available
 }
 \examples{
-tcga_datasets_to_data_pool(new_maf_data_pool())
+CRUX:::tcga_datasets_to_data_pool(CRUX:::new_maf_data_pool(), source = "Firehose")
 }
 \seealso{
 Other DataToWrapper: 

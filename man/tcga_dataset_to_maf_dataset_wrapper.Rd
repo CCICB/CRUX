@@ -24,7 +24,7 @@ functions and values associated with specified TCGA cohort (maf_dataset_wrapper)
 Takes a TCGA cohort abbreviation
 }
 \examples{
-ACC_maf_dataset_wrapper <- tcga_dataset_to_maf_dataset_wrapper("ACC")
+ACC_maf_dataset_wrapper <- CRUX:::tcga_dataset_to_maf_dataset_wrapper(CRUX:::new_maf_data_pool(), "ACC")
 }
 \seealso{
 Other DataToWrapper: 

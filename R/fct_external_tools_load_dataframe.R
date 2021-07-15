@@ -95,7 +95,7 @@ external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibb
 #' run \code{external_tool_metadata} to see the built in tool metadata dataframe
 #' 
 #' @examples 
-#' external_tools_get_property_by_tool_name(tool_name = "OncodriveFML", "website")
+#' CRUX:::external_tools_get_property_by_tool_name(tool_name = "OncodriveFML", "website")
 external_tools_get_property_by_tool_name <- function(tool_name, property_to_retrieve, external_tools_df=external_tool_metadata){
   #browser()
   assertthat::assert_that(assertthat::is.string(property_to_retrieve))
@@ -138,7 +138,7 @@ external_tools_get_property_by_tool_name <- function(tool_name, property_to_retr
 #'
 #'
 #' @examples
-#' external_tools_load_bbglab_cgi()
+#' CRUX:::external_tools_load_bbglab_cgi()
 external_tools_load_bbglab_oncodrive_fml <- function(external_tools_df = data.frame()){
   external_tools_add_tool_to_dataframe(
     external_tools_df = external_tools_df, 
@@ -171,7 +171,7 @@ external_tools_load_bbglab_oncodrive_fml <- function(external_tools_df = data.fr
 #'
 #'
 #' @examples
-#' external_tools_load_bbglab_cgi()
+#' CRUX:::external_tools_load_bbglab_cgi()
 external_tools_load_bbglab_oncodrive_clustl <- function(external_tools_df = data.frame()){
   external_tools_add_tool_to_dataframe(
     external_tools_df = external_tools_df,
@@ -215,7 +215,7 @@ external_tools_convert_maf_to_oncodrive_return_dataframe <- function(maf){
 #'
 #'
 #' @examples
-#' external_tools_load_bbglab_cgi()
+#' CRUX:::external_tools_load_bbglab_cgi()
 external_tools_load_bbglab_cgi <- function(external_tools_df = data.frame()){
   external_tools_add_tool_to_dataframe(
     external_tools_df = external_tools_df,
@@ -979,7 +979,7 @@ external_tools_load_tumormap <- function(external_tools_df = data.frame()){
 #'
 #'
 #' @examples
-#' external_tools_load_all_tools()
+#' CRUX:::external_tools_load_all_tools()
 external_tools_load_all_tools <- function(){
   external_tools_load_bbglab_oncodrive_fml() %>%
     external_tools_load_bbglab_oncodrive_clustl() %>%

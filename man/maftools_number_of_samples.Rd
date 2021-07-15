@@ -16,5 +16,5 @@ int
 Number of samples in a MAF
 }
 \examples{
-maftools_number_of_samples(TCGAmutations::tcga_load("GBM"))
+CRUX:::maftools_number_of_samples(TCGAmutations::tcga_load("GBM"))
 }

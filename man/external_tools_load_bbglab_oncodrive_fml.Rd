@@ -13,5 +13,5 @@ external_tools_df with metadata of tool appeneded (data.frame)
 Loads metadata for the OncodriveFML tool into a global variable \strong{GLOBAL_external_tools_dataframe}
 }
 \examples{
-external_tools_load_bbglab_cgi()
+CRUX:::external_tools_load_bbglab_cgi()
 }

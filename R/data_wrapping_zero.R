@@ -69,7 +69,7 @@ zero_dataset_to_data_pool <- function(zero_study_abbreviation, maf_data_pool){
 #' 
 #' @family DataToWrapper
 #' @examples
-#' zero_datasets_to_data_pool(new_maf_data_pool())
+#' CRUX:::zero_datasets_to_data_pool(CRUX:::new_maf_data_pool())
 zero_datasets_to_data_pool <- function(maf_data_pool){
   assert_that_class_is_maf_data_pool(maf_data_pool)
   valid_zero_abbreviations.v <- ZEROmutationsCCI::zero_available()[[1]]

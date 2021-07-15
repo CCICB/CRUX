@@ -18,6 +18,6 @@ returns the data pool with the specified dataset added (maf_data_pool)
 Add PCAWG dataset to a data pool
 }
 \examples{
-pcawg_dataset_to_data_pool(new_maf_data_pool(), "Bone-Cart")
+CRUX:::pcawg_dataset_to_data_pool(CRUX:::new_maf_data_pool(), "Bone-Cart")
 
 }

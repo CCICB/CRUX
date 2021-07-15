@@ -13,5 +13,5 @@ external_tools_df with metadata of tool appeneded (data.frame)
 Appends  metadata for the OncodriveCLUSTL tool onto external_tools_df
 }
 \examples{
-external_tools_load_bbglab_cgi()
+CRUX:::external_tools_load_bbglab_cgi()
 }

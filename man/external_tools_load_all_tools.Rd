@@ -14,5 +14,5 @@ Loads metadata for all tools, returning a dataframe.
 If any of the constitutent functions are changed, run \code{external_tools_update_builtin_dataset}
 }
 \examples{
-external_tools_load_all_tools()
+CRUX:::external_tools_load_all_tools()
 }

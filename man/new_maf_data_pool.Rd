@@ -13,5 +13,5 @@ object of class maf_data_pool (maf_data_pool)
 The maf_data_pool class is simply a list of maf_dataset_wrapper objects.
 }
 \examples{
-maf_data_pool <- new_maf_data_pool()
+maf_data_pool <- CRUX:::new_maf_data_pool()
 }

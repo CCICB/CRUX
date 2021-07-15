@@ -16,6 +16,6 @@ TRUE if class of object is maf_data_pool, FALSE if not. (logical)
 Check if class is a maf_data_pool object
 }
 \examples{
-class_is_maf_data_pool("Hi")
-class_is_maf_data_pool(new_maf_data_pool())
+CRUX:::class_is_maf_data_pool("Hi")
+CRUX:::class_is_maf_data_pool(CRUX:::new_maf_data_pool())
 }

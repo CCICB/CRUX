@@ -13,16 +13,17 @@
 #' 
 #' @examples
 #' #Generate wrapper
-#' my_data <- tcga_dataset_to_maf_dataset_wrapper(tcga_study_abbreviation = "ACC")
+#' my_data <- CRUX:::tcga_dataset_to_maf_dataset_wrapper(maf_data_pool = CRUX:::new_maf_data_pool(), tcga_study_abbreviation = "ACC")
 #' 
 #' #Load data
-#' my_data <- maf_data_set_wrapper_load_data(my_data)
+#' my_data <- CRUX:::maf_data_set_wrapper_load_data(my_data)
 #' 
 #' #Access loaded data
 #' print(my_data$loaded_data)
 #' 
 #' #Unload when finished
-#' my_data <- maf_data_set_wrapper_unload_data(my_data)
+#' my_data <- CRUX:::maf_data_set_wrapper_unload_data(my_data)
+#' 
 #' @family data_set_wrapper_loading
 maf_data_set_wrapper_load_data <- function(maf_dataset_wrapper){
   #assert_that_class_is_maf_data_pool(maf_data_pool)
@@ -105,7 +106,7 @@ maf_data_pool_unload_data <- function(maf_data_pool, unique_name){
 #'
 #'
 #' @examples
-#' read_rnaseq_file(system.file("example_data/blca_rnaseq.tsv", package = "CRUX"))
+#' CRUX:::read_rnaseq_file(system.file("example_data/blca_rnaseq.tsv", package = "CRUX"))
 read_rnaseq_file <- function(rnaseq_file){
   
   assertthat::assert_that(assertthat::is.string(rnaseq_file), msg = "[read_rnaseq_file] expected rnaseq_file to be a string")
@@ -224,13 +225,13 @@ maf_data_wrapper_get_rnaseq_df <- function(maf_dataset_wrapper){
 #' @examples
 #' # Prepare Data
 #' rna_path = system.file("example_data/blca_rnaseq.tsv", package = "CRUX")
-#' maf_data_wrapper = tcga_dataset_to_maf_dataset_wrapper(new_maf_data_pool(), "BLCA")
+#' maf_data_wrapper = CRUX:::tcga_dataset_to_maf_dataset_wrapper(CRUX:::new_maf_data_pool(), "BLCA")
 #' 
 #' # Add RNA data
-#' maf_data_wrapper_with_RNA = maf_data_wrapper_add_rnaseq(maf_data_wrapper, rnaseq_path = rna_path) 
+#' maf_data_wrapper_with_RNA = CRUX:::maf_data_wrapper_add_rnaseq(maf_data_wrapper, rnaseq_path = rna_path) 
 #' 
 #' # Retrieve RNA data for samples with mutation data
-#' maf_data_wrapper_get_rnaseq_data_for_samples_with_mutation_data(maf_data_wrapper_with_RNA)
+#' CRUX:::maf_data_wrapper_get_rnaseq_data_for_samples_with_mutation_data(maf_data_wrapper_with_RNA)
 #' 
 maf_data_wrapper_get_rnaseq_data_for_samples_with_mutation_data <- function(maf_dataset_wrapper){
   if (!maf_data_wrapper_has_rnaseq_data(maf_dataset_wrapper)) { message("Dataset has no associated expression data. Returning NULL"); return(NULL) }
@@ -267,13 +268,13 @@ maf_data_wrapper_has_rnaseq_data <- function(maf_dataset_wrapper){
     return(FALSE)
 }
 
-my_tsne <- function(rnaseq_df){
-  rnaseq_df %>% 
-    dplyr::select(Tumor_Sample_Barcode, Hugo_Symbol, TPM)  %>% 
-    tidyr::pivot_wider(names_from = Hugo_Symbol, values_from = TPM) %>% 
-    tibble::column_to_rownames(var = "Tumor_Sample_Barcode") %>% 
-    Rtsne::Rtsne(perplexity = 2)  
-}
+# my_tsne <- function(rnaseq_df){
+#   rnaseq_df %>% 
+#     dplyr::select(Tumor_Sample_Barcode, Hugo_Symbol, TPM)  %>% 
+#     tidyr::pivot_wider(names_from = Hugo_Symbol, values_from = TPM) %>% 
+#     tibble::column_to_rownames(var = "Tumor_Sample_Barcode") %>% 
+#     Rtsne::Rtsne(perplexity = 2)  
+# }
 
 #' Add RNAseq -- maf_data_pool version
 #' 

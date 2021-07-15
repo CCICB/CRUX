@@ -18,5 +18,5 @@ MAF object
 Filter out genes likely to appear in many analyses from your MAF (e.g. TTN & Olfactory receptors )
 }
 \examples{
-maftools_remove_dubious_genes(TCGAmutations::tcga_load("gbm"), "TTN")
+CRUX:::maftools_remove_dubious_genes(TCGAmutations::tcga_load("gbm"), "TTN")
 }

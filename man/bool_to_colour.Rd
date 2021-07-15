@@ -24,5 +24,5 @@ colour code (string)
 Hex codes
 }
 \examples{
-bool_to_colour(1==1)
+CRUX:::bool_to_colour(1==1)
 }

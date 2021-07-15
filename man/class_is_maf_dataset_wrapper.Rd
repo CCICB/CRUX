@@ -16,5 +16,5 @@ TRUE if class of object is maf_dataset_wrapper, FALSE if not. (logical)
 Check if class is a maf_dataset_wrapper object
 }
 \examples{
-class_is_maf_dataset_wrapper("Hi")
+CRUX:::class_is_maf_dataset_wrapper("Hi")
 }

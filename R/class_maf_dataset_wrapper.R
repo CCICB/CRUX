@@ -116,7 +116,7 @@ new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, uni
 #'
 #'
 #' @examples
-#' class_is_maf_dataset_wrapper("Hi")
+#' CRUX:::class_is_maf_dataset_wrapper("Hi")
 class_is_maf_dataset_wrapper <- function(object){
   utilitybeltassertions::class_is(object = object, tested_class = "maf_dataset_wrapper")
 }

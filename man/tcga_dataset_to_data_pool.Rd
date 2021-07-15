@@ -24,7 +24,7 @@ returns a data pool object with extra dataset added (maf_data_pool)
 Takes a TCGA study abbreviation, creates a tcga_dataset_to_maf_dataset_wrapper object for the relevant dataset and adds the wrapper to the maf_data_pool
 }
 \examples{
-tcga_dataset_to_data_pool("ACC", new_maf_data_pool())
+CRUX:::tcga_dataset_to_data_pool("ACC", CRUX:::new_maf_data_pool())
 }
 \seealso{
 Other DataToWrapper: 

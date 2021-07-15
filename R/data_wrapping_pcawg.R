@@ -10,7 +10,7 @@
 #'
 #'
 #' @examples
-#' pcawg_dataset_to_maf_dataset_wrapper("Bone-Cart")
+#' CRUX:::pcawg_dataset_to_maf_dataset_wrapper(CRUX:::new_maf_data_pool(), "Bone-Cart")
 pcawg_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, pcawg_study_abbreviation){
   pcawg_available_df <- PCAWGmutations::pcawg_available()
   utilitybeltassertions::assert_non_empty_string(pcawg_study_abbreviation)
@@ -48,7 +48,7 @@ pcawg_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, pcawg_study_abbr
 #'
 #'
 #' @examples
-#' pcawg_dataset_to_data_pool(new_maf_data_pool(), "Bone-Cart")
+#' CRUX:::pcawg_dataset_to_data_pool(CRUX:::new_maf_data_pool(), "Bone-Cart")
 #' 
 pcawg_dataset_to_data_pool <- function(maf_data_pool, pcawg_study_abbreviation){
   assert_that_class_is_maf_data_pool(maf_data_pool)
@@ -66,7 +66,7 @@ pcawg_dataset_to_data_pool <- function(maf_data_pool, pcawg_study_abbreviation){
 #'
 #'
 #' @examples
-#' pcawg_dataset_to_data_pool(new_maf_data_pool)
+#' CRUX:::pcawg_dataset_to_data_pool(CRUX:::new_maf_data_pool(), "Bone-Cart")
 #' 
 pcawg_datasets_to_data_pool <- function(maf_data_pool){
   assert_that_class_is_maf_data_pool(maf_data_pool)

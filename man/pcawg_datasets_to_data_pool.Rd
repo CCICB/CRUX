@@ -16,6 +16,6 @@ data pool with all pcawg datasets added as maf_dataset_wrappers (maf_data_pool)
 Add all PCAWG datasets to a data pool
 }
 \examples{
-pcawg_dataset_to_data_pool(new_maf_data_pool)
+CRUX:::pcawg_dataset_to_data_pool(CRUX:::new_maf_data_pool(), "Bone-Cart")
 
 }

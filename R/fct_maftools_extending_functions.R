@@ -9,7 +9,7 @@
 #'
 #'
 #' @examples
-#' maftools_get_all_data(TCGAmutations::tcga_load("GBM"))
+#' CRUX:::maftools_get_all_data(TCGAmutations::tcga_load("GBM"))
 maftools_get_all_data <- function(maf, include_silent_mutations=T) {
   if(include_silent_mutations)
     data.table::rbindlist(list(maf@data, maf@maf.silent), use.names = TRUE, fill = TRUE) %>% return()
@@ -96,9 +96,9 @@ maftools_clinical_data_visually_summarise <- function(maf, clinical_feature = "T
       ggplot2::xlab(clinical_feature) + 
       ggplot2::ylab("Count") + 
       ggthemes::theme_fivethirtyeight() +
-      utilitybeltassertions::theme_common_adjustments(no_background = TRUE) +
+      utilitybeltgg::theme_common_adjustments(no_background = TRUE) +
       ggplot2::scale_fill_manual(values="steelblue") +
-      utilitybeltassertions::theme_no_legend() 
+      utilitybeltgg::theme_no_legend() 
     if(!is.null(threshold) && is.numeric(threshold))
       p = p + ggplot2::geom_vline(xintercept = threshold, linetype = "dashed")
     return(p)
@@ -115,10 +115,10 @@ maftools_clinical_data_visually_summarise <- function(maf, clinical_feature = "T
       ggplot2::ylab("Count") +
       ggplot2::xlab(clinical_feature) +
       ggthemes::theme_fivethirtyeight() +
-      utilitybeltassertions::theme_common_adjustments(no_background = TRUE) +
+      utilitybeltgg::theme_common_adjustments(no_background = TRUE) +
       ggplot2::scale_fill_manual(values="steelblue") +
-      utilitybeltassertions::theme_no_legend() +
-      utilitybeltassertions::geom_barplot_counts(distance_from_bar = distance_from_bar, color = "mediumvioletred", alpha = 0.9) +
+      utilitybeltgg::theme_no_legend() +
+      utilitybeltgg::geom_barplot_counts(distance_from_bar = distance_from_bar, color = "mediumvioletred", alpha = 0.9) +
       ggplot2::ggtitle("Original Dataset")
     
     #browser()
@@ -127,10 +127,10 @@ maftools_clinical_data_visually_summarise <- function(maf, clinical_feature = "T
       #feature_filter_flag.v <- ifelse(feature_filter_flag.v, yes = "Passes Filter", no="Fails Filter")
       p2 <- ggplot2::qplot(x=feature.v %in% selected_items, fill="bla", alpha = 0.8) +
         ggthemes::theme_fivethirtyeight() +
-        utilitybeltassertions::theme_common_adjustments(no_background = TRUE) +
+        utilitybeltgg::theme_common_adjustments(no_background = TRUE) +
         ggplot2::scale_fill_manual(values="steelblue") +
-        utilitybeltassertions::theme_no_legend() +
-        utilitybeltassertions::geom_barplot_counts(distance_from_bar = distance_from_bar, color = "mediumvioletred", alpha = 0.9) +
+        utilitybeltgg::theme_no_legend() +
+        utilitybeltgg::geom_barplot_counts(distance_from_bar = distance_from_bar, color = "mediumvioletred", alpha = 0.9) +
         ggplot2::xlab("Passes Filter") + ggplot2::ggtitle("Effect of Filter")
       #return(p2)
       p <- cowplot::plot_grid(p, p2)
@@ -206,7 +206,7 @@ maftools_escape_special_characters <- function(string){
 #' @return MAF object
 #'
 #' @examples
-#' maftools_remove_dubious_genes(TCGAmutations::tcga_load("gbm"), "TTN")
+#' CRUX:::maftools_remove_dubious_genes(TCGAmutations::tcga_load("gbm"), "TTN")
 maftools_remove_dubious_genes <- function(maf, genelist = somaticflags::somaticflags){
   assertthat::assert_that(is.character(genelist))
   filtered_maf <- maftools::filterMaf(maf = maf, genes = genelist)
@@ -276,7 +276,7 @@ maftools_samples_with_mutated_gene <- function(maf, gene, include_silent_mutatio
 #' @return int
 #'
 #' @examples
-#' maftools_number_of_samples(TCGAmutations::tcga_load("GBM"))
+#' CRUX:::maftools_number_of_samples(TCGAmutations::tcga_load("GBM"))
 maftools_number_of_samples <- function(maf){
   return(as.numeric(maf@summary[["summary"]][3])) 
 }

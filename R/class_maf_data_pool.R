@@ -11,7 +11,7 @@
 #'
 #'
 #' @examples
-#' maf_data_pool <- new_maf_data_pool()
+#' maf_data_pool <- CRUX:::new_maf_data_pool()
 new_maf_data_pool <- function() {
   #Dev options
   classname="maf_data_pool"
@@ -38,8 +38,8 @@ new_maf_data_pool <- function() {
 #'
 #'
 #' @examples
-#' class_is_maf_data_pool("Hi")
-#' class_is_maf_data_pool(new_maf_data_pool())
+#' CRUX:::class_is_maf_data_pool("Hi")
+#' CRUX:::class_is_maf_data_pool(CRUX:::new_maf_data_pool())
 class_is_maf_data_pool <- function(object){
     utilitybeltassertions::class_is(object = object, tested_class = "maf_data_pool")
 }

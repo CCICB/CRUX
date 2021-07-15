@@ -16,5 +16,5 @@ maf_dataset_wrapper object
 Create dataset wrapper from pcawg dataset
 }
 \examples{
-pcawg_dataset_to_maf_dataset_wrapper("Bone-Cart")
+CRUX:::pcawg_dataset_to_maf_dataset_wrapper(CRUX:::new_maf_data_pool(), "Bone-Cart")
 }

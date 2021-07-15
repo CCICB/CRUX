@@ -46,5 +46,5 @@ See \code{?external_tools_add_tool_to_dataframe} for more info on these properti
 run \code{external_tool_metadata} to see the built in tool metadata dataframe
 }
 \examples{
-external_tools_get_property_by_tool_name(tool_name = "OncodriveFML", "website")
+CRUX:::external_tools_get_property_by_tool_name(tool_name = "OncodriveFML", "website")
 }

@@ -19,7 +19,7 @@ This function can be run on any MAF to resolve this issue.
 }
 \examples{
 maf = TCGAmutations::tcga_load(study = "GBM", source = "Firehose")
-maftools::getClinicalData(maf) \%>\% str()
-new_maf = maftools_fix_clinical_data_types(maf)
-maftools::getClinicalData(new_maf) \%>\% str()
+str(maftools::getClinicalData(maf)) 
+new_maf = CRUX:::maftools_fix_clinical_data_types(maf)
+str(maftools::getClinicalData(new_maf))
 }

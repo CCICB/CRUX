@@ -8,7 +8,7 @@
 #'
 #' @family DataToWrapper
 #' @examples
-#' ACC_maf_dataset_wrapper <- tcga_dataset_to_maf_dataset_wrapper("ACC")
+#' ACC_maf_dataset_wrapper <- CRUX:::tcga_dataset_to_maf_dataset_wrapper(CRUX:::new_maf_data_pool(), "ACC")
 tcga_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, tcga_study_abbreviation, source = "Firehose"){
   #browser()
   tcga_available_df <- TCGAmutations::tcga_available()
@@ -53,7 +53,7 @@ tcga_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, tcga_study_abbrev
 #'
 #' @family DataToWrapper
 #' @examples
-#' tcga_dataset_to_data_pool("ACC", new_maf_data_pool())
+#' CRUX:::tcga_dataset_to_data_pool("ACC", CRUX:::new_maf_data_pool())
 tcga_dataset_to_data_pool <- function(tcga_study_abbreviation, maf_data_pool, source = "Firehose"){
   dataset_wrapper <- tcga_dataset_to_maf_dataset_wrapper(maf_data_pool = maf_data_pool, tcga_study_abbreviation=tcga_study_abbreviation, source = source)   
   maf_data_pool_add_dataset(maf_dataset_wrapper = dataset_wrapper, maf_data_pool = maf_data_pool)
@@ -73,7 +73,7 @@ tcga_dataset_to_data_pool <- function(tcga_study_abbreviation, maf_data_pool, so
 #' 
 #' @family DataToWrapper
 #' @examples
-#' tcga_datasets_to_data_pool(new_maf_data_pool())
+#' CRUX:::tcga_datasets_to_data_pool(CRUX:::new_maf_data_pool(), source = "Firehose")
 tcga_datasets_to_data_pool <- function(maf_data_pool, source = "Firehose"){
   assert_that_class_is_maf_data_pool(maf_data_pool)
   utilitybeltassertions::assert_non_empty_string(source)
