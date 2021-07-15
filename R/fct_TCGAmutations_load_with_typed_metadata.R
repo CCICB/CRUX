@@ -9,8 +9,6 @@
 #' @return MAF object with correctly typed clinical.data dataframe (MAF)
 #'
 #'
-#' @examples
-#' TCGAmutations_load_with_typed_metadata(study = "GBM")
 TCGAmutations_load_with_typed_metadata <- function(study, source="Firehose"){
   utilitybelt::assert_non_empty_string(study)
   utilitybelt::assert_non_empty_string(source)

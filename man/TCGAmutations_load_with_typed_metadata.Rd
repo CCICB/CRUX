@@ -19,6 +19,3 @@ MAF object with correctly typed clinical.data dataframe (MAF)
 Load TCGA data with correctly typed clinical data. 
 By default, TCGAmutations::tcga_load makes all Firehose dataset clinical features character vectors
 }
-\examples{
-TCGAmutations_load_with_typed_metadata(study = "GBM")
-}

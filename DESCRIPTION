@@ -6,8 +6,22 @@ Description: Shiny app for exploring somatic variation in cancer. Powered by maf
 License: MIT + file LICENSE
 biocViews:
 Imports:
+    dplyr (>= 1.0.0),
     config (>= 0.3),
-    golem (>= 0.3.0),
+    golem,
+    data.table,
+    cowplot,
+    forcats,
+    ggplot2,
+    ggthemes,
+    readr,
+    rlang,
+    shinyWidgets,
+    shinyjs,
+    stringi,
+    stringr,
+    tibble,
+    tidyr,
     shiny (>= 1.5.0),
     processx (>= 3.4.4),
     attempt (>= 0.3.1),
@@ -19,12 +33,11 @@ Imports:
     purrr (>= 0.3.4),
     assertthat (>= 0.2.1),
     TCGAmutations,
-    maftools (>= 2.6.10),
+    maftools (>= 2.6.05),
     rlist (>= 0.4.6.1),
     shinyFiles (>= 0.9.0),
     fs (>= 1.5.0),
     excelR (>= 0.4.0),
-    dplyr (>= 1.0.2),
     grDevices (>= 4.0.3),
     bsplus (>= 0.1.2),
     shinyBS (>= 0.61),
@@ -45,11 +58,10 @@ Remotes:
     selkamand/utilitybelt,
     selkamand/utilitybeltshiny,
     PoisonAlien/TCGAmutations,
-    Thinkr-open/golem,
     ebailey78/shinyBS,
     CCICB/ZEROmutationsCCI,
     CCICB/PCAWGmutations,
-    https://ropensci.r-universe.dev
+    CCICB/somaticflags
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1

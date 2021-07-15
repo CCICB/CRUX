@@ -54,8 +54,6 @@ class_is_maf_data_pool <- function(object){
 #' @return (invisible) TRUE if assertion succeeds, Throws an error if it doesn't
 #'
 #' @family class_assertions
-#' @examples
-#' assert_that_class_is_maf_data_pool(new_maf_data_pool())
 assert_that_class_is_maf_data_pool <- function(object) {
   
   assertthat::assert_that(

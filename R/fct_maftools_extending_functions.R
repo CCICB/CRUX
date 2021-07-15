@@ -278,7 +278,7 @@ maftools_samples_with_mutated_gene <- function(maf, gene, include_silent_mutatio
 #' @examples
 #' maftools_number_of_samples(TCGAmutations::tcga_load("GBM"))
 maftools_number_of_samples <- function(maf){
-  return(bla@summary[["summary"]][3]) 
+  return(as.numeric(maf@summary[["summary"]][3])) 
 }
 
 
