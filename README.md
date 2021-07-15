@@ -28,5 +28,5 @@ remotes::install_github("CCICB/CRUX")
 
 To start the app, run:
 ```
-CRUX::run_app()
+run_app()
 ```

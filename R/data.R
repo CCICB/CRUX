@@ -16,5 +16,5 @@
 #' \item{requires_maf_export}{does the tool require a maf to be exported in some other form (flag)}
 #' \item{maf_conversion_function}{only relevent if requires_maf_export == true. A function that takes a MAF object (first argument), and a filepath (second argument) and writes a file to that filepath. The idea is that said file can then be used as input to the specified tool}
 #' }
-#' @source CRUX::external_tools_load_all_tools()
+#' @source external_tools_load_all_tools()
 "external_tool_metadata"

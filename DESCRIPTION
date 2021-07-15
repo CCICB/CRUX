@@ -37,7 +37,6 @@ Imports:
     rlist (>= 0.4.6.1),
     shinyFiles (>= 0.9.0),
     fs (>= 1.5.0),
-    excelR (>= 0.4.0),
     grDevices (>= 4.0.3),
     bsplus (>= 0.1.2),
     shinyBS (>= 0.61),
