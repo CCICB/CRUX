@@ -15,7 +15,7 @@
 #' new_maf = maftools_fix_clinical_data_types(maf)
 #' maftools::getClinicalData(new_maf) %>% str()
 maftools_fix_clinical_data_types <- function(maf){
-  assertthat::assert_that(utilitybelt::class_is(maf, "MAF"))
+  assertthat::assert_that(utilitybeltassertions::class_is(maf, "MAF"))
   maf@clinical.data <- type.convert(maf@clinical.data, as.is=TRUE)
   return(maf)
 }

@@ -23,12 +23,12 @@ is_valid_clinicalfeaturefile <- function(clinicalData, maf){
       new_maf <-  maftools::read.maf(maf = maf, clinicalData = clinicalData, verbose = FALSE); return(TRUE) 
     },
     error = function(err){
-      message(utilitybelt::fmtwarning("Clinical feature file is not valid. ERROR: ", err))
+      message(utilitybeltassertions::fmtwarning("Clinical feature file is not valid. ERROR: ", err))
       return(FALSE)
       
     },
     warning = function(warn){
-      message(utilitybelt::fmtwarning("Clinical feature file is not completeley valid. ERROR: ", warn))
+      message(utilitybeltassertions::fmtwarning("Clinical feature file is not completeley valid. ERROR: ", warn))
       return(FALSE)
     }
   )

@@ -32,15 +32,15 @@
 #'
 external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibble(), tool_name, tool_id, tool_group, tool_class, tool_description, instructions = "No instructions available yet. You're on your own buddy", platform = "Web App", website, doi, requires_maf_export = TRUE, requires_gene_selection = FALSE, maf_conversion_function = NA, extension="tsv") {
   assertthat::assert_that(is.data.frame(external_tools_df))
-  utilitybelt::assert_non_empty_string(tool_name)
-  utilitybelt::assert_non_empty_string(tool_id)
-  utilitybelt::assert_non_empty_string(tool_group)
-  utilitybelt::assert_non_empty_string(tool_class)
-  utilitybelt::assert_non_empty_string(tool_description)
+  utilitybeltassertions::assert_non_empty_string(tool_name)
+  utilitybeltassertions::assert_non_empty_string(tool_id)
+  utilitybeltassertions::assert_non_empty_string(tool_group)
+  utilitybeltassertions::assert_non_empty_string(tool_class)
+  utilitybeltassertions::assert_non_empty_string(tool_description)
   assertthat::assert_that(assertthat::is.string(instructions))
   assertthat::assert_that(assertthat::is.string(platform))
-  utilitybelt::assert_non_empty_string(website)
-  utilitybelt::assert_non_empty_string(doi)
+  utilitybeltassertions::assert_non_empty_string(website)
+  utilitybeltassertions::assert_non_empty_string(doi)
   assertthat::assert_that(assertthat::is.flag(requires_maf_export))
   assertthat::assert_that(assertthat::is.flag(requires_gene_selection))
   assertthat::assert_that(assertthat::is.string(extension))
@@ -48,7 +48,7 @@ external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibb
   if(requires_maf_export) { 
     assertthat::assert_that(is.function(maf_conversion_function), msg = "Must supply a maf_conversion_function to external_tools_add_tool_to_dataframe. 'maf_conversion_function' cannot be NA if 'requires_maf_export' is TRUE")
     expected_number_of_args = ifelse(requires_gene_selection, yes=3, no=2) # should maf export function take 2 or 3 arguments. If we need to specify a gene we need a third argument
-    assertthat::assert_that(utilitybelt::fun_count_arguments(maf_conversion_function) == expected_number_of_args, msg = "maf_conversion_function must have 2 or 3 arguments. The first should take a maf_dataset_wrapper object, the second a filepath. The third is only used if `requires_gene_selection` is TRUE and should take the name of a gene (Hugo Symbol). See ?external_tools_add_tool_to_dataframe for details")
+    assertthat::assert_that(utilitybeltassertions::fun_count_arguments(maf_conversion_function) == expected_number_of_args, msg = "maf_conversion_function must have 2 or 3 arguments. The first should take a maf_dataset_wrapper object, the second a filepath. The third is only used if `requires_gene_selection` is TRUE and should take the name of a gene (Hugo Symbol). See ?external_tools_add_tool_to_dataframe for details")
   }
   
   new_df <- data.frame(

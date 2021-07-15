@@ -59,18 +59,18 @@ maftools_plot_rainfall <- function(maf, tsb, detectChangePoints = TRUE, ref.buil
 #'
 #'
 maftools_clinical_data_get_levels <- function(maf, clinical_feature){
-  utilitybelt::assert_non_empty_string(clinical_feature)
+  utilitybeltassertions::assert_non_empty_string(clinical_feature)
   clindata <- maftools::getClinicalData(maf)
   
-  assertthat::assert_that(clinical_feature %in% colnames(clindata), msg = utilitybelt::fmterror("[maftools_clinical_data_get_levels] the clinical feature '", clinical_feature, "' was not found in clinical data"))
+  assertthat::assert_that(clinical_feature %in% colnames(clindata), msg = utilitybeltassertions::fmterror("[maftools_clinical_data_get_levels] the clinical feature '", clinical_feature, "' was not found in clinical data"))
   dplyr::n_distinct(clindata[[clinical_feature]]) %>%
     return()
 }
 
 maftools_clinical_data_lowest_number_of_samples_per_level <- function(maf, clinical_feature){
-  utilitybelt::assert_non_empty_string(clinical_feature)
+  utilitybeltassertions::assert_non_empty_string(clinical_feature)
   clindata <- maftools::getClinicalData(maf)
-  assertthat::assert_that(clinical_feature %in% colnames(clindata), msg = utilitybelt::fmterror("[maftools_clinical_data_get_levels] the clinical feature '", clinical_feature, "' was not found in clinical data"))
+  assertthat::assert_that(clinical_feature %in% colnames(clindata), msg = utilitybeltassertions::fmterror("[maftools_clinical_data_get_levels] the clinical feature '", clinical_feature, "' was not found in clinical data"))
   min(table(clindata[[clinical_feature]])) %>%
     return()
 }
@@ -96,9 +96,9 @@ maftools_clinical_data_visually_summarise <- function(maf, clinical_feature = "T
       ggplot2::xlab(clinical_feature) + 
       ggplot2::ylab("Count") + 
       ggthemes::theme_fivethirtyeight() +
-      utilitybelt::theme_common_adjustments(no_background = TRUE) +
+      utilitybeltassertions::theme_common_adjustments(no_background = TRUE) +
       ggplot2::scale_fill_manual(values="steelblue") +
-      utilitybelt::theme_no_legend() 
+      utilitybeltassertions::theme_no_legend() 
     if(!is.null(threshold) && is.numeric(threshold))
       p = p + ggplot2::geom_vline(xintercept = threshold, linetype = "dashed")
     return(p)
@@ -115,10 +115,10 @@ maftools_clinical_data_visually_summarise <- function(maf, clinical_feature = "T
       ggplot2::ylab("Count") +
       ggplot2::xlab(clinical_feature) +
       ggthemes::theme_fivethirtyeight() +
-      utilitybelt::theme_common_adjustments(no_background = TRUE) +
+      utilitybeltassertions::theme_common_adjustments(no_background = TRUE) +
       ggplot2::scale_fill_manual(values="steelblue") +
-      utilitybelt::theme_no_legend() +
-      utilitybelt::geom_barplot_counts(distance_from_bar = distance_from_bar, color = "mediumvioletred", alpha = 0.9) +
+      utilitybeltassertions::theme_no_legend() +
+      utilitybeltassertions::geom_barplot_counts(distance_from_bar = distance_from_bar, color = "mediumvioletred", alpha = 0.9) +
       ggplot2::ggtitle("Original Dataset")
     
     #browser()
@@ -127,10 +127,10 @@ maftools_clinical_data_visually_summarise <- function(maf, clinical_feature = "T
       #feature_filter_flag.v <- ifelse(feature_filter_flag.v, yes = "Passes Filter", no="Fails Filter")
       p2 <- ggplot2::qplot(x=feature.v %in% selected_items, fill="bla", alpha = 0.8) +
         ggthemes::theme_fivethirtyeight() +
-        utilitybelt::theme_common_adjustments(no_background = TRUE) +
+        utilitybeltassertions::theme_common_adjustments(no_background = TRUE) +
         ggplot2::scale_fill_manual(values="steelblue") +
-        utilitybelt::theme_no_legend() +
-        utilitybelt::geom_barplot_counts(distance_from_bar = distance_from_bar, color = "mediumvioletred", alpha = 0.9) +
+        utilitybeltassertions::theme_no_legend() +
+        utilitybeltassertions::geom_barplot_counts(distance_from_bar = distance_from_bar, color = "mediumvioletred", alpha = 0.9) +
         ggplot2::xlab("Passes Filter") + ggplot2::ggtitle("Effect of Filter")
       #return(p2)
       p <- cowplot::plot_grid(p, p2)

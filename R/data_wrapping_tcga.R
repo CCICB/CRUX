@@ -13,9 +13,9 @@ tcga_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, tcga_study_abbrev
   #browser()
   tcga_available_df <- TCGAmutations::tcga_available()
   
-  utilitybelt::assert_non_empty_string(tcga_study_abbreviation, msg = "tcga_study_abbreviation must be a string >0 characters long")
+  utilitybeltassertions::assert_non_empty_string(tcga_study_abbreviation, msg = "tcga_study_abbreviation must be a string >0 characters long")
   #browser()
-  assertthat::assert_that(tcga_study_abbreviation %in% tcga_available_df[["Study_Abbreviation"]], msg = utilitybelt::fmterror("Failed to find tcga_study_abbreviation [", tcga_study_abbreviation, "] in TCGAmutations database. Check TCGAmutations::tcga_available() for a list of valid abbreviations"))
+  assertthat::assert_that(tcga_study_abbreviation %in% tcga_available_df[["Study_Abbreviation"]], msg = utilitybeltassertions::fmterror("Failed to find tcga_study_abbreviation [", tcga_study_abbreviation, "] in TCGAmutations database. Check TCGAmutations::tcga_available() for a list of valid abbreviations"))
   #browser()
   
   
@@ -76,11 +76,11 @@ tcga_dataset_to_data_pool <- function(tcga_study_abbreviation, maf_data_pool, so
 #' tcga_datasets_to_data_pool(new_maf_data_pool())
 tcga_datasets_to_data_pool <- function(maf_data_pool, source = "Firehose"){
   assert_that_class_is_maf_data_pool(maf_data_pool)
-  utilitybelt::assert_non_empty_string(source)
-  assertthat::assert_that(source %in% c("Firehose", "MC3"), msg = utilitybelt::fmterror("[tcga_datasets_to_data_pool]: '", source, "' is not a valid TCGA source. Valid options are MC3 or Firehose"))
+  utilitybeltassertions::assert_non_empty_string(source)
+  assertthat::assert_that(source %in% c("Firehose", "MC3"), msg = utilitybeltassertions::fmterror("[tcga_datasets_to_data_pool]: '", source, "' is not a valid TCGA source. Valid options are MC3 or Firehose"))
   valid_tcga_abbreviations.v <- TCGAmutations::tcga_available()[ !is.na(TCGAmutations::tcga_available()[[source]]), "Study_Abbreviation"] %>% unlist()
   
-  assertthat::assert_that(length(valid_tcga_abbreviations.v) > 0, msg = utilitybelt::fmterror("No TCGA data was found from the source: [",source,"]. Options valid options are MC3 or Firehose"))
+  assertthat::assert_that(length(valid_tcga_abbreviations.v) > 0, msg = utilitybeltassertions::fmterror("No TCGA data was found from the source: [",source,"]. Options valid options are MC3 or Firehose"))
     
   for (tcga_abbreviation in valid_tcga_abbreviations.v) {
     maf_data_pool <- tcga_dataset_to_data_pool(tcga_study_abbreviation = tcga_abbreviation, maf_data_pool = maf_data_pool, source=source)

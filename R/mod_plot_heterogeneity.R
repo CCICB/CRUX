@@ -64,7 +64,7 @@ mod_plot_heterogeneity_server <- function(id, maf, tsb){
             return(NULL)
           }
           else{
-            utilitybelt::fmterror(err)
+            utilitybeltassertions::fmterror(err)
             return(NULL)
           }
         }

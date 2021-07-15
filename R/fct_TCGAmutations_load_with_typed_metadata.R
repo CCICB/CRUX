@@ -10,8 +10,8 @@
 #'
 #'
 TCGAmutations_load_with_typed_metadata <- function(study, source="Firehose"){
-  utilitybelt::assert_non_empty_string(study)
-  utilitybelt::assert_non_empty_string(source)
+  utilitybeltassertions::assert_non_empty_string(study)
+  utilitybeltassertions::assert_non_empty_string(source)
   
   maf = TCGAmutations::tcga_load(study = study, source = source)
   maftools_fix_clinical_data_types(maf) %>%

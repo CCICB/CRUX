@@ -287,7 +287,7 @@ gistic_bad_path <- function() {
 
 
 maftools_maf_and_gistic_sample_name_overlap_venn <- function(maf, gistic) {
-  assertthat::assert_that(utilitybelt::class_is(gistic, "GISTIC"))
+  assertthat::assert_that(utilitybeltassertions::class_is(gistic, "GISTIC"))
   
   maf_sample_names <- maf %>% 
     maftools::getSampleSummary() %>% 
@@ -302,7 +302,7 @@ maftools_maf_and_gistic_sample_name_overlap_venn <- function(maf, gistic) {
 }
 
 maftools_maf_and_gistic_random_sample_names <- function(maf, gistic) {
-  assertthat::assert_that(utilitybelt::class_is(gistic, "GISTIC"))
+  assertthat::assert_that(utilitybeltassertions::class_is(gistic, "GISTIC"))
   
   maf_sample_names <- maf %>% 
     maftools::getSampleSummary() %>% 

@@ -42,8 +42,9 @@ Imports:
     bsplus (>= 0.1.2),
     shinyBS (>= 0.61),
     shinycssloaders (>= 1.0.0),
-    utilitybelt (>= 0.0.0.9000),
-    utilitybeltshiny (>= 0.0.0.9000),
+    utilitybeltassertions,
+    utilitybeltshiny,
+    utilitybeltlists,
     dipsaus (>= 0.1.2),
     colourpicker (>= 1.1.0),
     UpSetR (>= 1.4.0),
@@ -55,8 +56,9 @@ Imports:
     PCAWGmutations (>= 0.0.0.9000),
     somaticflags (>= 0.0.0.9000)
 Remotes:
-    selkamand/utilitybelt,
+    selkamand/utilitybeltassertions,
     selkamand/utilitybeltshiny,
+    selkamand/utilitybeltlists,
     PoisonAlien/TCGAmutations,
     ebailey78/shinyBS,
     CCICB/ZEROmutationsCCI,

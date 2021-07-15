@@ -13,9 +13,9 @@
 zero_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, zero_study_abbreviation){
   
   zero_available_df <- ZEROmutationsCCI::zero_available()
-  utilitybelt::assert_non_empty_string(zero_study_abbreviation, msg = "zero_study_abbreviation must be a string and >0 characters long")
+  utilitybeltassertions::assert_non_empty_string(zero_study_abbreviation, msg = "zero_study_abbreviation must be a string and >0 characters long")
   
-  assertthat::assert_that(zero_study_abbreviation %in% zero_available_df[[1]], msg = utilitybelt::fmterror("Failed to find zero_study_abbreviation [", zero_study_abbreviation, "] in ZEROmutations database. Check ZEROmutations::zero_available() for a list of valid abbreviations"))
+  assertthat::assert_that(zero_study_abbreviation %in% zero_available_df[[1]], msg = utilitybeltassertions::fmterror("Failed to find zero_study_abbreviation [", zero_study_abbreviation, "] in ZEROmutations database. Check ZEROmutations::zero_available() for a list of valid abbreviations"))
   
   row_of_interest <- which(zero_available_df[[1]] %in% zero_study_abbreviation)
   full_study_name <- zero_available_df[[2]][row_of_interest]

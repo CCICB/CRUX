@@ -15,9 +15,6 @@ assert_that_class_is_maf_data_pool(object)
 \description{
 Assert that class is maf_data_pool object
 }
-\examples{
-assert_that_class_is_maf_data_pool(new_maf_data_pool())
-}
 \seealso{
 Other class_assertions: 
 \code{\link{assert_that_class_is_maf_dataset_wrapper}()}

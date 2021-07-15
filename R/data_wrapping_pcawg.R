@@ -13,8 +13,8 @@
 #' pcawg_dataset_to_maf_dataset_wrapper("Bone-Cart")
 pcawg_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, pcawg_study_abbreviation){
   pcawg_available_df <- PCAWGmutations::pcawg_available()
-  utilitybelt::assert_non_empty_string(pcawg_study_abbreviation)
-  assertthat::assert_that(pcawg_study_abbreviation %in% pcawg_available_df[[1]], msg = utilitybelt::fmterror("Failed to find pcawg_study_abbreviation [", pcawg_study_abbreviation, "] in pcawgmutations database. Check pcawg_available() for a list of valid abbreviations"))
+  utilitybeltassertions::assert_non_empty_string(pcawg_study_abbreviation)
+  assertthat::assert_that(pcawg_study_abbreviation %in% pcawg_available_df[[1]], msg = utilitybeltassertions::fmterror("Failed to find pcawg_study_abbreviation [", pcawg_study_abbreviation, "] in pcawgmutations database. Check pcawg_available() for a list of valid abbreviations"))
   
   full_study_name = pcawg_study_abbreviation # Change later
   sample_number = pcawg_available_df %>% 
@@ -52,7 +52,7 @@ pcawg_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, pcawg_study_abbr
 #' 
 pcawg_dataset_to_data_pool <- function(maf_data_pool, pcawg_study_abbreviation){
   assert_that_class_is_maf_data_pool(maf_data_pool)
-  utilitybelt::assert_non_empty_string(pcawg_study_abbreviation)
+  utilitybeltassertions::assert_non_empty_string(pcawg_study_abbreviation)
   dataset_wrapper <- pcawg_dataset_to_maf_dataset_wrapper(maf_data_pool = maf_data_pool, pcawg_study_abbreviation = pcawg_study_abbreviation)
   maf_data_pool <- maf_data_pool_add_dataset(maf_data_pool = maf_data_pool, maf_dataset_wrapper = dataset_wrapper)
   return(maf_data_pool)

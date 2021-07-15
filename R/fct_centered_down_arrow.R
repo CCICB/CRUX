@@ -10,8 +10,8 @@
 #'
 #' @family arrows
 icon_down_arrow <- function(fontsize="40px", alignment = "center"){
-  utilitybelt::assert_non_empty_string(fontsize)
-  utilitybelt::assert_non_empty_string(alignment)
+  utilitybeltassertions::assert_non_empty_string(fontsize)
+  utilitybeltassertions::assert_non_empty_string(alignment)
   
   style_ = paste0("font-size: ",fontsize,"; text-align: center;")
   fluidRow(style="display: grid",

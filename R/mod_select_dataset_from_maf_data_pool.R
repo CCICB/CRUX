@@ -41,7 +41,7 @@ mod_select_datasets_from_maf_data_pool_ui <- function(id, label="select", panel_
 #' @returns a character vector containing the unique_names of all datasets selected or NULL (NULL / character) 
 mod_select_datasets_from_maf_data_pool_server <- function(id, maf_data_pool, max_selected_datasets = -1){
   utilitybeltshiny::assert_reactive(maf_data_pool)
-  utilitybelt::assert_is_whole_number(max_selected_datasets)
+  utilitybeltassertions::assert_is_whole_number(max_selected_datasets)
     
   moduleServer( id, function(input, output, session){
     ns <- session$ns
