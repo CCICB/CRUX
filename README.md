@@ -14,13 +14,9 @@ Download the [**latest release**](https://github.com/CCICB/CRUX/releases) and fo
 
 There are **no** dependencies other than having a browser (Chrome, Firefox, Edge or Safari)
 
-#### Linux (from source code)
+#### Linux / Windows / MAC (from source code)
 Requires R > 3.5.0 is installed
 ```
-# Install required libraries
-install.packages("remotes", ask=FALSE)
-install.packages("BiocManager", ask=FALSE)
-
 # Install tool
 BiocManager::install("PoisonAlien/TCGAmutations")
 remotes::install_github("CCICB/CRUX")

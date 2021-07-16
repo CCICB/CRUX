@@ -28,7 +28,7 @@
 #' @param maf_conversion_function only relevent if requires_maf_export == true. A function that takes a maf_dataset_wrapper object (first argument), a filepath (second argument) and, if requires_gene_selection == TRUE, a gene name (third argument)  writes a file to that filepath. The idea is that said file can then be used as input to the specified tool.
 #' @param extension what type of file is written by maf_conversion_function. default is 'tsv'. Used to appropriately name exported file  (string)
 #' @param requires_gene_selection does user need to select a specific gene for export to work? (bool)
-#' @return dataframe containing external_tool_metadata
+#' @return dataframe containing CRUX::external_tool_metadata
 #'
 external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibble(), tool_name, tool_id, tool_group, tool_class, tool_description, instructions = "No instructions available yet. You're on your own buddy", platform = "Web App", website, doi, requires_maf_export = TRUE, requires_gene_selection = FALSE, maf_conversion_function = NA, extension="tsv") {
   assertthat::assert_that(is.data.frame(external_tools_df))
@@ -92,11 +92,11 @@ external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibb
 #' 
 #' See \code{?external_tools_add_tool_to_dataframe} for more info on these properties
 #' 
-#' run \code{external_tool_metadata} to see the built in tool metadata dataframe
+#' run \code{CRUX::external_tool_metadata} to see the built in tool metadata dataframe
 #' 
 #' @examples 
 #' CRUX:::external_tools_get_property_by_tool_name(tool_name = "OncodriveFML", "website")
-external_tools_get_property_by_tool_name <- function(tool_name, property_to_retrieve, external_tools_df=external_tool_metadata){
+external_tools_get_property_by_tool_name <- function(tool_name, property_to_retrieve, external_tools_df=CRUX::external_tool_metadata){
   #browser()
   assertthat::assert_that(assertthat::is.string(property_to_retrieve))
   assertthat::assert_that(
@@ -1001,7 +1001,7 @@ external_tools_load_all_tools <- function(){
 
 #' Update builtin external_tools dataset
 #'
-#' @description Takes the output of external_tools_load_all_tools and saves it to CRUX/data as the dataset: \strong{external_tool_metadata}.
+#' @description Takes the output of external_tools_load_all_tools and saves it to CRUX/data as the dataset: \strong{CRUX::external_tool_metadata}.
 #' This saved dataset is what is used by the app. If you make change to any external_tools_load_... function, you must rerun this function.
 #'
 external_tools_update_builtin_dataset <- function(){

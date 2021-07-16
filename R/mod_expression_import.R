@@ -160,7 +160,7 @@ mod_expression_import_server <- function(id, maf_data_pool){
       RNA = rnaseq_df() %>% dplyr::pull(Tumor_Sample_Barcode) %>% unique()
       DNA = maf() %>% maftools::getSampleSummary() %>% dplyr::pull(Tumor_Sample_Barcode) %>% unique()
       CLINICAL = maf() %>% maftools::getClinicalData() %>% dplyr::pull(Tumor_Sample_Barcode) %>% unique()
-      ggVennDiagram::ggVennDiagram(list(
+      ggvenn::ggvenn(list(
         RNA=RNA,
         DNA=DNA
         ))

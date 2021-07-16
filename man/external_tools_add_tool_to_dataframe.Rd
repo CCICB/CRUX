@@ -51,7 +51,7 @@ external_tools_add_tool_to_dataframe(
 \item{extension}{what type of file is written by maf_conversion_function. default is 'tsv'. Used to appropriately name exported file  (string)}
 }
 \value{
-dataframe containing external_tool_metadata
+dataframe containing CRUX::external_tool_metadata
 }
 \description{
 Appends tool metadata on the end of a dataframe

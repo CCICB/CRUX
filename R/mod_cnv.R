@@ -297,7 +297,7 @@ maftools_maf_and_gistic_sample_name_overlap_venn <- function(maf, gistic) {
     maftools::getSampleSummary() %>% 
     dplyr::pull(Tumor_Sample_Barcode) 
   
-  ggVennDiagram::ggVennDiagram(list( "SNV" = maf_sample_names, "CNV" = gistic_sample_names)) +
+  ggvenn::ggvenn(list( "SNV" = maf_sample_names, "CNV" = gistic_sample_names)) +
     ggplot2::ggtitle("Tumor Sample Barcode Overlap") + ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5, size = 18, face = "bold"))
 }
 

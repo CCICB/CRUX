@@ -95,8 +95,7 @@ maftools_clinical_data_visually_summarise <- function(maf, clinical_feature = "T
     p = feature.v %>% ggplot2::qplot(alpha = 0.8, fill = "bla") + 
       ggplot2::xlab(clinical_feature) + 
       ggplot2::ylab("Count") + 
-      ggthemes::theme_fivethirtyeight() +
-      utilitybeltgg::theme_common_adjustments(no_background = TRUE) +
+      utilitybeltgg::theme_fivethirtyeight_two() +
       ggplot2::scale_fill_manual(values="steelblue") +
       utilitybeltgg::theme_no_legend() 
     if(!is.null(threshold) && is.numeric(threshold))
@@ -114,8 +113,7 @@ maftools_clinical_data_visually_summarise <- function(maf, clinical_feature = "T
       ggplot2::coord_flip()  +
       ggplot2::ylab("Count") +
       ggplot2::xlab(clinical_feature) +
-      ggthemes::theme_fivethirtyeight() +
-      utilitybeltgg::theme_common_adjustments(no_background = TRUE) +
+      utilitybeltgg::theme_fivethirtyeight_two() +
       ggplot2::scale_fill_manual(values="steelblue") +
       utilitybeltgg::theme_no_legend() +
       utilitybeltgg::geom_barplot_counts(distance_from_bar = distance_from_bar, color = "mediumvioletred", alpha = 0.9) +
@@ -126,8 +124,7 @@ maftools_clinical_data_visually_summarise <- function(maf, clinical_feature = "T
       #feature_filter_flag.v <- 
       #feature_filter_flag.v <- ifelse(feature_filter_flag.v, yes = "Passes Filter", no="Fails Filter")
       p2 <- ggplot2::qplot(x=feature.v %in% selected_items, fill="bla", alpha = 0.8) +
-        ggthemes::theme_fivethirtyeight() +
-        utilitybeltgg::theme_common_adjustments(no_background = TRUE) +
+        utilitybeltgg::theme_fivethirtyeight_two() + 
         ggplot2::scale_fill_manual(values="steelblue") +
         utilitybeltgg::theme_no_legend() +
         utilitybeltgg::geom_barplot_counts(distance_from_bar = distance_from_bar, color = "mediumvioletred", alpha = 0.9) +

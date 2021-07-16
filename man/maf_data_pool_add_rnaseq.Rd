@@ -22,7 +22,7 @@ Add RNA data to a dataset_wrapper within a maf_data_pool.
 \details{
 How this works: We read in the file at rnaseq_path as data frame, check if it looks like we expect.
 If so, the \strong{filepath} is saved to the maf_dataset_wrapper (NOT THE DATAFRAME!).
-This is so we don't have to keep the RNA data in memory. When we go to export or visualise, we'll just reload it using \strong(maf_data_wrapper_get_rnaseq_df), which returns a dataframe (or NULL if none is found). 
+This is so we don't have to keep the RNA data in memory. When we go to export or visualise, we'll just reload it using \strong{maf_data_wrapper_get_rnaseq_df}, which returns a dataframe (or NULL if none is found). 
 
 
 Also note that no cohort subsetting will affect this RNA file, as all we have is the filepath. 

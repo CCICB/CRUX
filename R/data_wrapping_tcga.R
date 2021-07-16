@@ -87,7 +87,3 @@ tcga_datasets_to_data_pool <- function(maf_data_pool, source = "Firehose"){
   }
   return(maf_data_pool)
 }
-
-zcc_datasets_to_data_pool <- function(maf_data_pool){
-  
-}

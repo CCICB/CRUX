@@ -110,7 +110,7 @@ mod_merge_server <- function(id, maf_data_pool){
     output$out_plot_tsb_overlap <- renderPlot({ 
       #browser()
       if(length(list_of_tsbs()) <=4)
-        ggVennDiagram::ggVennDiagram(x = list_of_tsbs()) %>% return()
+        ggvenn::ggvenn(list_of_tsbs()) %>% return()
       else
         UpSetR::upset(UpSetR::fromList(list_of_tsbs()), order.by = "freq") %>% return()
       })
