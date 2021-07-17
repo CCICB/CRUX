@@ -56,7 +56,7 @@ mod_select_dataset_from_maf_data_pool_pickerinput_server <- function(id, maf_dat
         message("new_unique_names are NULL. Assuming somethings about to load to trigger repopulation of the data. Avoiding redraw")
       }
       else if(!identical(new_unique_names, old_unique_names)){
-        message("maf_data_pool_df updated AND there are changes in datasets. Redrawing pickerinput and updading old_unique_names")
+        #message("maf_data_pool_df updated AND there are changes in datasets. Redrawing pickerinput and updading old_unique_names")
         old_unique_names(new_unique_names)
         redraw_pickerinput(redraw_pickerinput()+1)
       }
