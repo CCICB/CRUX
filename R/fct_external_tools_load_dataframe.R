@@ -940,7 +940,7 @@ external_tools_load_tumormap <- function(external_tools_df = data.frame()){
       tool_id = "ucsc_tumormap",
       tool_group = "UCSC",
       tool_class = "Expression",
-      tool_description = "an interactive browser that allows biologists, who may not have computational expertise, to richly explore the results of high-throughput cancer genomics experiments",
+      tool_description = "An interactive browser that allows biologists, who may not have computational expertise, to richly explore the results of high-throughput cancer genomics experiments",
       website = "https://tumormap.ucsc.edu/",
       doi = "https://doi.org/10.1158/0008-5472.CAN-17-0580",
       requires_gene_selection = FALSE,
@@ -969,6 +969,50 @@ external_tools_load_tumormap <- function(external_tools_df = data.frame()){
 #dist = TCGAmutations::tcga_load("ACC") %>% external_tools_convert_maf_to_tumormap_return_dataframe() %>% dplyr::select(-1) %>% t() %>% dist(method = "binary")
 #(dist) %>% as.matrix() %>% as.data.frame() %>% tibble::rownames_to_column("Sample") %>% data.table::fwrite(file = "~/Downloads/ACC.test.tsv", sep = "\t", quote = FALSE, row.names = TRUE, col.names = TRUE
 
+
+# MSigDB ------------------------------------------------------------------
+
+external_tools_convert_maf_to_msigdb_genelist_return_vec <- function(maf){
+  topn=100
+  message("Returning a list of the ", topn, " genes mutated in the most samples")
+  maftools_extract_geneset_by_altered_samples(maf = maf, topn = topn)
+}
+
+external_tools_convert_maf_to_msigdb_genelist <- function(maf_data_set_wrapper, filepath){
+  #browser()
+  maf_data_set_wrapper$loaded_data %>%
+    external_tools_convert_maf_to_msigdb_genelist_return_vec() %>%
+    write(file = filepath, ncolumns = 1)
+    #data.table::fwrite(file = filepath, col.names = FALSE, row.names = FALSE)
+}
+
+external_tools_load_msigdb <- function(external_tools_df = data.frame()){
+  external_tools_add_tool_to_dataframe(
+    external_tools_df = external_tools_df,
+    tool_name = "MSigDB (DNA)",
+    tool_id = "msigdb",
+    tool_group = "Broad & UCSD",
+    tool_class = "Geneset Signatures",
+    tool_description = "A tool for identifying if genesets known to be involved in particular pathways / diseases are over-represented in your samples",
+    website = "https://www.gsea-msigdb.org/gsea/msigdb/annotate.jsp",
+    doi = "https://doi.org/10.1073/pnas.0506580102",
+    requires_gene_selection = FALSE,
+    instructions =  as.character(
+      tags$ol(
+        tags$li("Open the exported data file. This file contains a list of the 100 genes mutated in the most samples"),
+        tags$li("Copy all of the gene names (CTRL+A then CTRL+C on windows. CMD+A then CMD+C on mac)"),
+        tags$li("Navigate to the MSigDB 'Investigate Gene Sets' page"),
+        tags$li("Paste your genelist into 'Input Gene Identifiers' textbox"),
+        tags$li("Select which MSigDB collection to look for overlap with. I would reccomend using CP:KEGG, C6: oncogenic signature, or  CP:WIKIPATHWAYS gene sets to find signal from disease-associated pathways. BioCarta is great if looking for enrichment of metabolic/signalling pathways."),
+        tags$li("Click 'Compute Overlaps'")
+      )
+    ),
+    maf_conversion_function = external_tools_convert_maf_to_msigdb_genelist,
+    extension = "txt"
+  ) 
+}
+
+
 # For all tools -----------------------------------------------------------
 #' Load tool metadata into global variable
 #' 
@@ -984,6 +1028,7 @@ external_tools_load_all_tools <- function(){
   external_tools_load_bbglab_oncodrive_fml() %>%
     external_tools_load_bbglab_oncodrive_clustl() %>%
     external_tools_load_bbglab_cgi() %>%
+    external_tools_load_msigdb() %>%
     external_tools_load_cbioportal_mutation_mapper() %>% 
     external_tools_load_maf_to_signal2() %>%
     external_tools_load_maf_to_mutalisk_sample_level() %>%
@@ -994,7 +1039,6 @@ external_tools_load_all_tools <- function(){
     #external_tools_load_tumormap() %>%
     return()
 }
-
 
 
 

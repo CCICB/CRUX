@@ -280,4 +280,33 @@ maftools_number_of_samples <- function(maf){
 
 
 
-
+#' Extract geneset
+#' 
+#' Create a genelist containing the genes mutated in the most samples in a maf. 
+#' If topn > total number of mutated genes then all mutated genes are returned.
+#'
+#' @inheritParams maftools::read.maf
+#' @param topn How many genes to include in the gene-set. 
+#'
+#' @return  The names of genes mutated in the most samples (character vector). 
+#'
+#' @examples
+#' CRUX::maftools_extract_geneset_by_altered_samples(TCGAmutations::tcga_load("GBM"), topn=50)
+maftools_extract_geneset_by_altered_samples <- function(maf, topn = 100){
+  genes_by_number_of_altered_samples <- maf %>%
+    maftools::getGeneSummary() %>%
+    dplyr::select(Hugo_Symbol, AlteredSamples) %>%
+    dplyr::arrange(dplyr::desc(AlteredSamples)) %>%
+    dplyr::pull(Hugo_Symbol)
+  
+  if(topn <= length(genes_by_number_of_altered_samples)){
+    genes_by_number_of_altered_samples %>%
+      head(n=topn) %>%
+      return()
+  }
+  else{
+    total_genes=length(genes_by_number_of_altered_samples)
+    message("maftools_extract_geneset: cannot return ", topn, " genes since only ", total_genes, " were mutated. Returning all ", total_genes, " genes")
+    return(genes_by_number_of_altered_samples)
+  }
+}
