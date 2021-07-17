@@ -4,9 +4,15 @@
 \alias{run_app}
 \title{Run the Shiny Application}
 \usage{
-run_app(...)
+run_app(options = list(launch.browser = TRUE), ...)
 }
 \arguments{
+\item{options}{A list of  options to be passed to shinyApp. 
+Common options include launch.browser & port. 
+You must always set ALL options you care about in one go. 
+E.g. if you use options=list(port=3838) we cannot guarantee the launch.browser option will remain true. 
+If multiple options are important to you, force-set them all, e.g. \strong{options(list(launch.browser=TRUE, port = 3838))}}
+
 \item{...}{A series of options to be used inside the app.}
 }
 \description{
