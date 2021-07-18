@@ -17,8 +17,10 @@ mod_expression_analysis_ui <- function(id){
     
     # Step 2: Visualise Data --------------------------------------------------
     shinyWidgets::panel(
-      heading = "Tabular Form",
-      mod_render_downloadabledataframe_ui(ns("mod_dt_expression")),
+      tabsetPanel(
+        tabPanel(title = "Tabular Form", mod_render_downloadabledataframe_ui(ns("mod_dt_expression"))),
+        tabPanel(title = "tSNE", mod_plot_tsne_ui(ns("mod_plot_tsne")))
+      )
     )
     
     #mod_render_downloadabledataframe_ui(ns("mod_dt_mut")),
@@ -58,9 +60,8 @@ mod_expression_analysis_server <- function(id, maf_data_pool){
     
     
     # Step 2: Visualise Data --------------------------------------------------
-    
     mod_render_downloadabledataframe_server("mod_dt_expression", tabular_data_object = expression_df, basename = "expression_data", message_if_tabular_data_is_null = "No Expression Data Found")
-    
+    mod_plot_tsne_server("mod_plot_tsne", expression_df = expression_df, maf = maf)
     # mod_render_downloadabledataframe_server("mod_dt_mut", tabular_data_object = maf_df, basename = "hello")
   })
 }
