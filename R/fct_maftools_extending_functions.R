@@ -226,9 +226,27 @@ maf_data_set_wrapper_remove_dubious_genes <- function(maf_dataset_wrapper, genel
 }
 
 
+# maftools_fix_tcga_survival_curve_metadata <- function(maf){
+#   if (all(c("days_to_last_followup", "vital_status", "days_to_death") %in% colnames(maf@clinical.data))){
+#     maf@clinical.data$days_to_last_followup <- ifelse(
+#       is.na(maf@clinical.data$days_to_last_followup) & maf@clinical.data$vital_status==1, 
+#       yes = maf@clinical.data$days_to_death, 
+#       no = maf@clinical.data$days_to_last_followup)
+#     return(maf)
+#   }
+#   else
+#     return(maf)
+# }
+
+# Adds a column to clinical data called days_to_last_follow_up_complete which uses days_to_last_followup column + days_to_death if the former is not available and vital_status == 1.
+# Note that days_to_last_followup is relative to initial diagnosis. days_to_death can be relative to diagnosis, sample collection, genome sequencing or other timepoints.
 maftools_fix_tcga_survival_curve_metadata <- function(maf){
   if (all(c("days_to_last_followup", "vital_status", "days_to_death") %in% colnames(maf@clinical.data))){
-    maf@clinical.data$days_to_last_followup <- ifelse(is.na(maf@clinical.data$days_to_last_followup) & maf@clinical.data$vital_status==1, yes = maf@clinical.data$days_to_death, no = maf@clinical.data$days_to_last_followup)
+    maf@clinical.data <- maf@clinical.data %>% 
+      dplyr::mutate(days_to_last_followup = dplyr::case_when(
+        is.na(days_to_last_followup) & vital_status==1 & is.na(days_to_last_followup) ~ days_to_death,
+        TRUE ~ days_to_last_followup
+      ))
     return(maf)
   }
   else
