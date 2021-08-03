@@ -2,7 +2,7 @@
 % Please edit documentation in R/data_loading_utils.R
 \name{maf_data_wrapper_add_rnaseq}
 \alias{maf_data_wrapper_add_rnaseq}
-\title{Add RNAseq slot to maf}
+\title{Add RNAseq slot to maf_dataset_wrapper}
 \usage{
 maf_data_wrapper_add_rnaseq(maf_dataset_wrapper, rnaseq_path)
 }
@@ -15,5 +15,5 @@ maf_data_wrapper_add_rnaseq(maf_dataset_wrapper, rnaseq_path)
 the input maf_dataset_wrapper with rnaseq_path in rnaseq_filepath slot
 }
 \description{
-Add rnaseq data to maftools object
+Add rnaseq data to maf_dataset_wrapper object
 }

@@ -97,7 +97,6 @@ external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibb
 #' @examples 
 #' CRUX:::external_tools_get_property_by_tool_name(tool_name = "OncodriveFML", "website")
 external_tools_get_property_by_tool_name <- function(tool_name, property_to_retrieve, external_tools_df=CRUX::external_tool_metadata){
-  #browser()
   assertthat::assert_that(assertthat::is.string(property_to_retrieve))
   assertthat::assert_that(
     any(
@@ -115,8 +114,6 @@ external_tools_get_property_by_tool_name <- function(tool_name, property_to_retr
         "extension"
       )), msg = "[external_tools_get_property_by_tool_name] Invalid Choice of property_to_retrieve. Please see ?external_tools_get_property_by_tool_name for options"
   )
-  
-  #browser()
   retrieved_value <- external_tools_df[external_tools_df[["tool_name"]]==tool_name, property_to_retrieve] %>% unlist()
   assertthat::assert_that(length(retrieved_value) == 1, msg = paste0("[external_tools_get_property_by_tool_name] found '",length(retrieved_value),"' instead of '1' value using the query: tool_name == '", tool_name,"' AND property_to_retrieve == '",property_to_retrieve,"'"))
   
@@ -249,7 +246,6 @@ external_tools_load_bbglab_cgi <- function(external_tools_df = data.frame()){
 #'
 #'
 external_tools_convert_maf_to_bbglab <- function(maf_dataset_wrapper, filepath){
-  #browser()
   maf <- maf_dataset_wrapper$loaded_data
   maf %>% 
     external_tools_convert_maf_to_bbglab_return_dataframe() %>% 
@@ -434,12 +430,12 @@ external_tools_convert_maf_to_multiple_vanilla_vcfs <- function(maf_dataset_wrap
   tumor_sample_barcodes <- maf %>% 
     maftools::getSampleSummary() %>% 
     dplyr::pull(Tumor_Sample_Barcode) %>% 
-    unique()
+    unique() %>%
+    as.character()
   
   files =  paste0(tempdir(), "/mutalisk_input_", tumor_sample_barcodes, ".vcf")
   
   message("Saving files to ", (tempdir()))
-  
   sapply(seq_along(tumor_sample_barcodes), function(index){
     
     write("##fileformat=VCFv4.2", files[index])
@@ -448,7 +444,7 @@ external_tools_convert_maf_to_multiple_vanilla_vcfs <- function(maf_dataset_wrap
     maf %>%
       maftools_get_all_data() %>% 
         dplyr::filter(Tumor_Sample_Barcode == tumor_sample_barcodes[index]) %>%
-      external_tools_convert_maf_to_vanilla_vcf_return_dataframe() %>%
+        external_tools_convert_maf_to_vanilla_vcf_return_dataframe() %>%
         data.table::fwrite(file = files[index], sep="\t", quote = FALSE, col.names = TRUE, row.names = FALSE,append = TRUE) 
   })
   
@@ -480,7 +476,7 @@ external_tools_load_maf_to_mutalisk_sample_level <- function(external_tools_df =
         tags$li("Unzip exported file"),
         tags$li("Click 'Upload Files' and select all samples you want to run signature analysis on"),
         tags$li("Select reference build (Human GRCh37 if using pre-packaged TCGA/PCAWG datasets)"),
-        tags$li("Select Disease Type and Signatures to include in analysis"),
+        tags$li("Select the relevant Disease Type mutalisk will automatically choose relevant signatures to screen in sample. An alternate unbiased approach is to screen against all PCAWG (V3) signatures. To do this expand the PCAWG tab and 'select all' signatures. You do not need to specify a disease."),
         tags$li("Run analysis")
       )
     ),
@@ -979,7 +975,6 @@ external_tools_convert_maf_to_msigdb_genelist_return_vec <- function(maf){
 }
 
 external_tools_convert_maf_to_msigdb_genelist <- function(maf_data_set_wrapper, filepath){
-  #browser()
   maf_data_set_wrapper$loaded_data %>%
     external_tools_convert_maf_to_msigdb_genelist_return_vec() %>%
     write(file = filepath, ncolumns = 1)
