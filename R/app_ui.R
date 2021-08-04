@@ -34,11 +34,13 @@ app_ui <- function(request) {
                                    shinydashboard::menuSubItem(text = "Available Data", tabName = "DataPool", icon = icon("database")),
                                    shinydashboard::menuSubItem(text = "Import Data", tabName = "DataImport", icon = icon("file-upload"))
                                    ),
-          shinydashboard::menuItem("Single Cohort Genomics", tabName = "Home", icon = icon("dna"),
-                                   shinydashboard::menuSubItem("Cohort Summary", tabName = "PanCohortStatistics", icon = icon("chart-bar")),
-          shinydashboard::menuSubItem("Enrichment", tabName = "Enrichment", icon = icon("dna")),
-          shinydashboard::menuSubItem("Survival Analysis", tabName = "Survival", icon = icon("heartbeat")),
-          shinydashboard::menuSubItem("Copy Number Analysis", tabName = "CopyNumberAnalysis", icon = icon("stream")) #align-center
+          shinydashboard::menuItem(
+            "Single Cohort Genomics", tabName = "Home", icon = icon("dna"),
+            shinydashboard::menuSubItem("Cohort Summary", tabName = "PanCohortStatistics", icon = icon("chart-bar")),
+            shinydashboard::menuSubItem("Enrichment", tabName = "Enrichment", icon = icon("dna")),
+            shinydashboard::menuSubItem("Survival Analysis", tabName = "Survival", icon = icon("heartbeat")),
+            shinydashboard::menuSubItem("Mutational Signatures", tabName = "MutationalSignatures", icon = icon("signature")),
+            shinydashboard::menuSubItem("Copy Number Analysis", tabName = "CopyNumberAnalysis", icon = icon("stream")) #align-center
                                    ),
           #shinydashboard::menuItem("Single Cohort Statistics", tabName = "PanCohortStatistics", icon = icon("chart-bar")),
           shinydashboard::menuItem("Compare Cohorts", tabName = "CompareCohorts", icon = icon("balance-scale-left")),
@@ -69,6 +71,8 @@ app_ui <- function(request) {
           shinydashboard::tabItem(tabName = "CompareCohorts", mod_compare_cohorts_ui(id = "mod_compare_cohorts")),
           shinydashboard::tabItem(tabName = "Enrichment", moduleEnrichmentAnalysisUI(id = "mod_enrichment_analyis")),
           shinydashboard::tabItem(tabName = "Survival", mod_survival_analysis_ui(id = "mod_survival_analysis")),
+          shinydashboard::tabItem(tabName = "MutationalSignatures", mod_mutational_signatures_ui(id = "mod_mutational_signatures")),
+          
           shinydashboard::tabItem(tabName = "CopyNumberAnalysis", mod_cnv_ui(id = "mod_cnv_level_analysis")),
           shinydashboard::tabItem(tabName = "SampleLevelAnalysis", mod_sample_level_analysis_ui(id = "mod_sample_level_analysis")),
           shinydashboard::tabItem(tabName = "ExpressionImport", mod_expression_import_ui(id = "mod_expression_import")),
