@@ -28,6 +28,7 @@ app_server <- function( input, output, session ) {
   mod_data_import_server(id = "mod_data_import", maf_data_pool = maf_data_pool)
   mod_pan_cohort_statistics_server(id = "mod_pan_cohort_statistics", maf_data_pool)
   mod_compare_cohorts_server(id = "mod_compare_cohorts", maf_data_pool = maf_data_pool)
+  mod_mutational_signatures_server(id = "mod_mutational_signatures", maf_data_pool)
   moduleEnrichmentAnalysisServer(id = "mod_enrichment_analyis", maf_data_pool)
   mod_survival_analysis_server(id = "mod_survival_analysis", maf_data_pool)
   mod_expression_import_server(id = "mod_expression_import", maf_data_pool)

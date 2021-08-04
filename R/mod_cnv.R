@@ -218,7 +218,7 @@ mod_cnv_server <- function(id, maf_data_pool){
     cytoband_summary_df <- reactive({ validate(need(!is.null(gistic()), message = "Waiting for valid gistic")); maftools::getCytobandSummary(gistic()) })
     sample_summary_df <- reactive({ validate(need(!is.null(gistic()), message = "Waiting for valid gistic")); maftools::getSampleSummary(gistic()) })
     gene_summary_df <- reactive({ validate(need(!is.null(gistic()), message = "Waiting for valid gistic")); maftools::getGeneSummary(gistic()) })
-    oncoplot_data_df <- reactive({ validate(need(!is.null(gistic()), message = "Waiting for valid gistic")); gistic()@data %>% type.convert() })
+    oncoplot_data_df <- reactive({ validate(need(!is.null(gistic()), message = "Waiting for valid gistic")); gistic()@data %>% type.convert(as.is=TRUE) })
     
     # Analyses -----------------------------------------------------------------
     output$out_dt_cytoband_summary <- mod_render_downloadabledataframe_server(id = "mod_downloadable_df_cytoband_summary", tabular_data_object = cytoband_summary_df, basename = "GISTIC_Cytoband_Summary")
