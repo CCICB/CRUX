@@ -103,7 +103,7 @@ mod_plot_druginteractions_server <- function(id, maf){
           else 
             chosen_genes = input$in_pick_genes
           
-          maftools::drugInteractions(maf = maf(), top = input$in_num_topn_genes, genes = chosen_genes, drugs = TRUE) %>% type.convert()
+          maftools::drugInteractions(maf = maf(), top = input$in_num_topn_genes, genes = chosen_genes, drugs = TRUE) %>% type.convert(as.is=TRUE)
         },
         error = function(err){
           err_char = as.character(err)
