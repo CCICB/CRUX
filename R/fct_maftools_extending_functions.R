@@ -343,3 +343,135 @@ maftools_filter_dn_ds_output_for_significant_genes <- function(sel_cv, threshold
   signif_genes = sel_cv[sel_cv$qglobal_cv<0.1, c("gene_name","qglobal_cv")]
   return(signif_genes)
 }
+
+#' maftools_cluster_samples
+#' 
+#'  Identify and visualise clusters of cancer samples based on somatic mutation data (gene-level differences visualised, not variant-level)
+#'  
+#'  Approach involves:
+#'  \enumerate{
+#'  \item Selecting a geneset of interest (by default uses genes mutated in the most samples).
+#'  \item Calculating \strong{1-jaccard} distance between samples based on which genes of the genesets are mutated.
+#'  \item Running heirarchical clustering algorithm using \strong{pheatmap}.
+#'  \item Visualise resulting heatmap with user-selected annotations.
+#'  }
+#'   
+#' 
+#' @param maf maf object from maftools package (maf)
+#' @param custom_genelist_to_cluster_by names of genes to base clustering on. If unsure what genes to use. By default, the top 50 genes ranked by how manys samples they are mutated in will be used (character vector)
+#' @param number_of_genes number of genes to cluster based on. Chooses genes which are mutated in the most samples  (only matters if not supplying \strong{custom_genelist_to_cluster_by}) (integer)
+#' @param genes_to_annotate a custom list of genes to plot as a pseudo oncoplot (string)
+#' @param annotate_most_altered_genes automatically annotate with mutational status of genes mutated in the most samples (this is always based on coding/splice site mutation) (bool)
+#' @param topn_genes if annotate_most_altered_genes is true, how many genes to automatically visualise (integer)
+#' @param metadata_columns name of metadata columns to annotate heatmap based on (character)
+#' @param include_silent_mutations consider a gene mutated even if the only mutations present are silent (bool) 
+#' @param show_rownames show sample names on rows (bool)
+#' @param show_colnames show sample names on columns  (bool)
+#'
+#' @return pheatmap object
+#' @export
+#'
+#' @examples
+#' maf <- TCGAmutations::tcga_load("GBM", source = "Firehose") 
+#' maftools_cluster_samples(maf)
+maftools_cluster_samples <- function(maf, custom_genelist_to_cluster_by = NULL, number_of_genes = 50, genes_to_annotate=NULL, annotate_most_altered_genes=TRUE, topn_genes = 5, metadata_columns=NULL, include_silent_mutations = FALSE, show_rownames = FALSE, show_colnames=FALSE, annotation_legend=TRUE, fontsize=10){
+  
+  
+  genes_in_maf <- maf %>% 
+    maftools_get_all_data(include_silent_mutations = include_silent_mutations) %>% 
+    dplyr::pull(Hugo_Symbol) %>%
+    unique()
+  
+  
+  # Identify 'important_genes' to base clustering off
+  if(is.null(custom_genelist_to_cluster_by)){
+    message("Clustering based on ", number_of_genes, " genes mutated in the most samples")
+  important_genes <- maf %>% 
+    maftools::getGeneSummary() %>% 
+    head(number_of_genes) %>% 
+    dplyr::pull(Hugo_Symbol)
+  }
+  else{
+    message("Clustering based on a custom genelist. Ignoring `number_of_genes`")
+    assertthat::assert_that(is.character(custom_genelist_to_cluster_by), msg = paste0("Custom genelist should be a character vector. Not a ", class(custom_genelist_to_cluster_by)) )
+    important_genes <- unique(custom_genelist_to_cluster_by)
+    genes_not_found <- important_genes[!important_genes %in% genes_in_maf]
+    assertthat::assert_that(length(genes_not_found) == 0, msg = paste0("Some of the genes in the genelist supplied are not mutated in any samples: ", paste0(genes_not_found,collapse=", ")))
+  }
+  
+  
+  tumor_sample_barcodes <- maf %>% maftools::getSampleSummary() %>% dplyr::pull(Tumor_Sample_Barcode) %>% unique()
+  
+  # Construct Distance matrix
+  df <- maf %>%
+    maftools_get_all_data(include_silent_mutations = include_silent_mutations) %>%
+    dplyr::select(Hugo_Symbol, Tumor_Sample_Barcode) %>%
+    dplyr::filter(Hugo_Symbol %in% important_genes) %>%
+    dplyr::distinct() %>%
+    dplyr::mutate(Val = 1) %>%
+    tidyr::complete(Hugo_Symbol, Tumor_Sample_Barcode) %>%
+    tidyr::pivot_wider(names_from = Hugo_Symbol, values_from = Val) %>%
+    tibble::column_to_rownames("Tumor_Sample_Barcode") %>%
+    replace(is.na(.), 0)
+  
+  jaccard.dist <- dist(df, method = "binary") # Binary = 1-jaccard
+  
+  tsbs = rownames(as.matrix(jaccard.dist))
+  
+  
+  
+  # Reformat selected sample-level metadadata columns to annotate heatmap with
+  if (!is.null(metadata_columns)){
+    clindata=maftools::getClinicalData(maf)
+    assertthat::assert_that(all(metadata_columns %in% colnames(clindata)), msg = paste0("No column called: ", metadata_columns[!metadata_columns %in% colnames(clindata)], " in clinical data", collapse = " or "))
+    row_annotations_df <- clindata[match(tsbs, clindata$Tumor_Sample_Barcode), metadata_columns] %>% as.data.frame()
+    rownames(row_annotations_df) <- tsbs
+  }
+  else
+    row_annotations_df=NULL
+  
+  # Add genes altered in many samples to the list of those to annotate heatmap with 
+  if(annotate_most_altered_genes){
+    most_altered_genes = maf %>% 
+      maftools::getGeneSummary() %>% 
+      dplyr::pull(Hugo_Symbol) %>% 
+      head(n=topn_genes)
+    genes_to_annotate <- unique(c(genes_to_annotate, most_altered_genes))
+  }
+  
+  tsb_list=NULL
+  if(!is.null(genes_to_annotate)){
+    assertthat::assert_that(all(genes_to_annotate %in% genes_in_maf), msg = paste0("Could not find the following genes in maf: ", paste0(genes_to_annotate[!genes_to_annotate %in% genes_in_maf], collapse = ", ")))
+    tsb_list <- sapply(genes_to_annotate, function(gene){
+      maf %>% 
+        maftools::subsetMaf(genes = gene) %>% 
+        maftools::getSampleSummary() %>% 
+        dplyr::pull(Tumor_Sample_Barcode) %>%
+        unique()
+    })
+  }
+  
+  if(!is.null(tsb_list)){
+    anno_colors = sapply(genes_to_annotate, function(gene){ list(c("FALSE"="white", "TRUE"="black"))})
+    if (is.null(row_annotations_df))
+      row_annotations_df <- data.frame(row.names = tsbs)
+    for (gene in names(tsb_list)){
+      row_annotations_df[gene] <- as.character(tsbs %in% tsb_list[[gene]])
+    }
+  }
+  else
+    anno_colors = NULL
+  
+  pheatmap::pheatmap(
+    as.matrix(jaccard.dist),
+    annotation_col = row_annotations_df,
+    show_rownames = show_rownames, 
+    show_colnames = show_colnames, 
+    annotation_colors = anno_colors, 
+    annotation_legend = annotation_legend,
+    fontsize = fontsize
+  )
+  
+  #heatmap(as.matrix(df), distfun = function(x) {dist(x, method = "binary")}) # This clusters samples as above but is in sample x feature space 
+  
+}

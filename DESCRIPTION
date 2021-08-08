@@ -54,7 +54,8 @@ Imports:
     ZEROmutationsCCI (>= 0.0.0.9000),
     PCAWGmutations (>= 0.0.0.9000),
     somaticflags (>= 0.0.0.9000),
-    mutalisk (>= 0.0.0.9000)
+    mutalisk (>= 0.0.0.9000),
+    pheatmap
 Remotes: 
     selkamand/utilitybeltassertions,
     selkamand/utilitybeltshiny,
