@@ -53,8 +53,9 @@ Imports:
     BiocManager,
     ZEROmutationsCCI (>= 0.0.0.9000),
     PCAWGmutations (>= 0.0.0.9000),
-    somaticflags (>= 0.0.0.9000)
-Remotes:
+    somaticflags (>= 0.0.0.9000),
+    mutalisk (>= 0.0.0.9000)
+Remotes: 
     selkamand/utilitybeltassertions,
     selkamand/utilitybeltshiny,
     selkamand/utilitybeltlists,
@@ -63,7 +64,8 @@ Remotes:
     ebailey78/shinyBS,
     CCICB/ZEROmutationsCCI,
     CCICB/PCAWGmutations,
-    CCICB/somaticflags
+    CCICB/somaticflags,
+    selkamand/mutalisk
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
