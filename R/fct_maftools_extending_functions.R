@@ -462,6 +462,7 @@ maftools_cluster_samples <- function(maf, custom_genelist_to_cluster_by = NULL, 
   else
     anno_colors = NULL
   
+  # Run heirarhical clustering and build heatmap
   pheatmap::pheatmap(
     as.matrix(jaccard.dist),
     annotation_col = row_annotations_df,
@@ -474,4 +475,32 @@ maftools_cluster_samples <- function(maf, custom_genelist_to_cluster_by = NULL, 
   
   #heatmap(as.matrix(df), distfun = function(x) {dist(x, method = "binary")}) # This clusters samples as above but is in sample x feature space 
   
+}
+
+#' Add clindata to MAF
+#'
+#' Adds 'extra' clinical metadata to a maf object with existing metadata
+#' 
+#' @param maf an existing MAF object as produced by maftools::read.maf (MAF)
+#' @param clindata_path Eithera path to a csv/tsv that contains sample level metadata. Must include a 
+#'
+#' @return maf object with
+#' @export
+#'
+maftools_add_clinical_data <- function(maf, clindata_path){
+  #assertions
+  assertthat::assert_that(file.exists(clindata_path), msg = paste0("Failed to find file: ", clindata_path))
+  
+  clindata_df <- data.table::fread(clindata_path) %>%
+    type.convert(as.is = TRUE)
+  
+  # Check for Tumor_Sample_Barcode column
+  assertthat::assert_that("Tumor_Sample_Barcode" %in% names(clindata_df), msg = "Sample level metadata file needs to contain a 'Tumor_Sample_Barcode' column")
+  
+  #Ensure no TSBs are duplicated
+  dup_index <- anyDuplicated(clindata_df[["Tumor_Sample_Barcode"]])
+  assertthat::assert_that(dup_index == 0, msg = paste0("Duplicate TSBs found: ", paste0(dup_index, collapse = ", ")))
+  
+  maf@clinical.data <- dplyr::left_join(x = maf@clinical.data, y = clindata_df)
+  return(maf)
 }
