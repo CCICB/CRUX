@@ -132,13 +132,13 @@ mod_utility_subset_server <- function(id, maf_data_pool){
         else if (field_is_numeric()){
           validate(need(!is.null(input$in_pick_clinquery_field) && !is.null(input$in_pick_clinquery_operator) && !is.null(input$in_num_clinquery_theshold), message = "Please Select a Valid Field, Value/Threshold, and Operator"))
          return(
-           paste(input$in_pick_clinquery_field, input$in_pick_clinquery_operator, input$in_num_clinquery_theshold, sep = " ")
+           paste(paste0("`",input$in_pick_clinquery_field, "`"), input$in_pick_clinquery_operator, input$in_num_clinquery_theshold, sep = " ")
            )
         }
         else{
           validate(need(!is.null(input$in_pick_clinquery_values), message = "Please Select a Value of Clinical Feature to Subset on"))
            individual_queries.vec <- vapply(X = input$in_pick_clinquery_values, FUN = function(value){
-             paste0(input$in_pick_clinquery_field, " == '", maftools_escape_special_characters(value), "'") %>%
+             paste0(paste0("`",input$in_pick_clinquery_field, "`"), " == '", maftools_escape_special_characters(value), "'") %>%
                return()
            }, FUN.VALUE = "character")
            concatenated_queries <- paste(individual_queries.vec, collapse=" | ")
@@ -162,7 +162,7 @@ mod_utility_subset_server <- function(id, maf_data_pool){
       query <- reactive({
         if(input$in_checkbox_subset_by_other && !is.null(input$in_pick_field_values)) {
           individual_queries.vec <- vapply(X = input$in_pick_field_values, FUN = function(value){
-              paste0(input$in_pick_field, " == '", value, "'") %>%
+              paste0("`",input$in_pick_field, "`", " == '", value, "'") %>%
               return()
             }, FUN.VALUE = "character")
 
