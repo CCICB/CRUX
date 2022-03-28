@@ -33,3 +33,16 @@ run_app()
 This project was supported by grant 1165556 awarded through the 2018 Priority-driven Collaborative Cancer Research Scheme and co-funded by Cancer Australia and My Room. We would also like to acknowledge Luminesce Alliance – Innovation for Children’s Health for its contribution and support. Luminesce Alliance, is a not-for-profit cooperative joint venture between the Sydney Children’s Hospitals Network, the Children’s Medical Research Institute, and the Children’s Cancer Institute. It has been established with the support of the NSW Government to coordinate and integrate paediatric research. Luminesce Alliance is also affiliated with the University of Sydney and the University of New South Wales Sydney.
 
 ![Supporting Organisation Logos](inst/logos/support_organisations_extensive_wide.png)
+
+
+# Acknowledgements
+
+**Thanks to all the those who contribute to the development of CRUX**
+
+- Computational Biology & Bioinformatics teams at CCIA
+
+- Heena Sareen (extensive testing)
+
+**As well as those who build and maintain the tools which underpin CRUX functionality**
+
+- Anand Mayakonda (maftools, TCGAmutations)
