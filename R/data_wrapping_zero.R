@@ -35,8 +35,9 @@ zero_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, zero_study_abbrev
     function_to_load_data  = function(filepath) { 
       if(!ZEROmutationsCCI::is_data_available()) 
         return(validate("To access ZERO data, you must be connected to the Rdrive. Please connect and mount the Rdrive, then try again. If you are from the CCI and using Windows, try installing CRUX on your VDI located at `Rdsportal.ccia.org.au.` If the problem persists, email selkamand@ccia.org.au")); 
-      
-      ZEROmutationsCCI::zero_load(zero_study_abbreviation) %>% maftools_chrom_23_and_24_to_X_and_Y() %>% maftools_fix_clinical_data_types()
+      #path_to_drug_data="/Volumes/resdept/CB/Selkamand/CRUX/zero_hts_sample_metadata/ZCC_hts_data_08_08_2021.maftools_compatible.tsv"
+      #validate(need(file.exists(path_to_drug_data),message = ))
+      ZEROmutationsCCI::zero_load(zero_study_abbreviation) %>% maftools_chrom_23_and_24_to_X_and_Y() %>% maftools_fix_clinical_data_types()# %>% maftools_add_clinical_data(clindata_path = path_to_drug_data)
       },
     name_of_data_source = "ZERO", datatype_of_stored_object = ".RDs",
     number_of_samples = sample_number

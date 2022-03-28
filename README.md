@@ -1,11 +1,13 @@
 # CRUX
 
 ## Description
-An R package that provides a graphical interface for cohort-level tertiary cancer analysis. 
+An R package that provides a graphical interface for cohort-level tertiary cancer analysis.
 You can import your own data, or use public TCGA or PCAWG datasets.
 
 ## Manual
 A **manual** describing the installation and use of **CRUX** can be found [**here**](https://crux-docs.readthedocs.io/en/latest/index.html)
+
+https://readthedocs.org/projects/crux-docs/badge/?version=latest&style=plastic
 
 ## Installation
 
@@ -26,3 +28,8 @@ To start the app, run:
 ```
 run_app()
 ```
+
+# Funding
+This project was supported by grant 1165556 awarded through the 2018 Priority-driven Collaborative Cancer Research Scheme and co-funded by Cancer Australia and My Room. We would also like to acknowledge Luminesce Alliance – Innovation for Children’s Health for its contribution and support. Luminesce Alliance, is a not-for-profit cooperative joint venture between the Sydney Children’s Hospitals Network, the Children’s Medical Research Institute, and the Children’s Cancer Institute. It has been established with the support of the NSW Government to coordinate and integrate paediatric research. Luminesce Alliance is also affiliated with the University of Sydney and the University of New South Wales Sydney.
+
+![Supporting Organisation Logos](inst/logos/support_organisations_extensive_wide.png)

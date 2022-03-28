@@ -52,7 +52,7 @@ mod_single_cohort_summary_plots_ui <- function(id){
                   tabPanel(title = "TMB", mod_plot_tmb_in_context_of_tcga_ui(id = ns("id_plot_tcga"))),
                   tabPanel(title = "Oncoplot", mod_plot_oncoplot_ui(id = ns("mod_oncoplot"))),
                   tabPanel(title = "Drug-Gene Interactions", mod_druggability_ui(id = ns("mod_druggability"))),
-                  tabPanel(title = "Mutated Pathways", mod_plot_oncogenic_pathways_ui(id = ns("mod_oncopathways"))),
+                  #tabPanel(title = "Mutated Pathways", mod_plot_oncogenic_pathways_ui(id = ns("mod_oncopathways"))),
                   tabPanel(title = "Pathway Specific Plots", mod_plot_oncogenic_pathways_focused_ui(id = ns("mod_oncopathways_specific"))),
                   tabPanel(title = "Lollipop", mod_plot_lollipop_ui(id = ns("mod_plot_lollipop"))),
                   tabPanel(title = "Somatic Interactions", mod_plot_somatic_interactions_ui(id = ns("mod_somatic_interactions"))),
@@ -70,7 +70,7 @@ mod_single_cohort_summary_plots_server <- function(id, maf, cohortName) {
       mod_plot_titv_graphs_server(id = "mod_plot_titv", maf = maf)
       mod_plot_tmb_in_context_of_tcga_server(id = "id_plot_tcga", maf = maf, cohortName = cohortName)
       mod_plot_oncoplot_server(id="mod_oncoplot", maf)
-      mod_plot_oncogenic_pathways_server(id ="mod_oncopathways", maf = maf)
+      #mod_plot_oncogenic_pathways_server(id ="mod_oncopathways", maf = maf)
       mod_plot_oncogenic_pathways_focused_server(id = "mod_oncopathways_specific", maf = maf)
       mod_plot_lollipop_server(id = "mod_plot_lollipop", maf = maf, name_cohort = cohortName)
       mod_plot_somatic_interactions_server(id = "mod_somatic_interactions", maf = maf)
