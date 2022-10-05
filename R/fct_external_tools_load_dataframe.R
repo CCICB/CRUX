@@ -406,7 +406,7 @@ external_tools_load_maf_to_signal2 <- function(external_tools_df = data.frame())
 #' @return data.frame with VCF columns
 #' 
 external_tools_convert_maf_to_vanilla_vcf_return_dataframe <- function(maf_df){
-  if (maf_df %>% class() == "MAF") 
+  if ("MAF" %in% class(maf_df) ) 
     maf_df <- maftools_get_all_data(maf_df, include_silent_mutations = TRUE)
   
   maf_df %>%
