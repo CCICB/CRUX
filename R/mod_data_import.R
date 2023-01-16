@@ -86,7 +86,7 @@ mod_data_import_server <- function(id, maf_data_pool){
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-    
+      
     maf_path=mod_shinyfiles_get_maf_path_server(id = "mod_get_maf_path")
     metadata=mod_data_import_step2_server(id = "mod_data_import_step2")
     clinical_features_path=reactive({
@@ -94,7 +94,6 @@ mod_data_import_server <- function(id, maf_data_pool){
         return(NULL)
       }
       else{
-        #message("Hi")
         mod_shinyfiles_get_clinical_featurefile_path_server(id = "mod_get_clinical_featurefile_path")()
       }
     })
