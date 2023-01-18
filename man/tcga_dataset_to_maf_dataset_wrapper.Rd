@@ -13,9 +13,9 @@ tcga_dataset_to_maf_dataset_wrapper(
 \arguments{
 \item{maf_data_pool}{the data pool to add the dataset wrapper to (maf_data_pool)}
 
-\item{tcga_study_abbreviation}{a TCGA cohort abbreviation (see TCGAmutations::tcga_available()) (string)}
+\item{tcga_study_abbreviation}{a TCGA cohort abbreviation (see maftools::tcgaAvailable()) (string)}
 
-\item{source}{'MC3' or 'Firehose'. Source of TCGA data to use. See ?TCGAmutations::tcga_load for details (string)}
+\item{source}{'MC3' or 'Firehose'. Source of TCGA data to use. See ?maftools::tcgaLoad for details (string)}
 }
 \value{
 functions and values associated with specified TCGA cohort (maf_dataset_wrapper)

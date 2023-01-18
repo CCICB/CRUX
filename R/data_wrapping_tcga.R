@@ -3,7 +3,7 @@
 #' 
 #' Takes a TCGA cohort abbreviation
 #' @inheritParams tcga_datasets_to_data_pool
-#' @param tcga_study_abbreviation a TCGA cohort abbreviation (see TCGAmutations::tcga_available()) (string)
+#' @param tcga_study_abbreviation a TCGA cohort abbreviation (see maftools::tcgaAvailable()) (string)
 #' @return functions and values associated with specified TCGA cohort (maf_dataset_wrapper)
 #'
 #' @family DataToWrapper
@@ -11,11 +11,11 @@
 #' ACC_maf_dataset_wrapper <- CRUX:::tcga_dataset_to_maf_dataset_wrapper(CRUX:::new_maf_data_pool(), "ACC")
 tcga_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, tcga_study_abbreviation, source = "Firehose"){
   #browser()
-  tcga_available_df <- TCGAmutations::tcga_available()
+  tcga_available_df <- maftools::tcgaAvailable()
   
   utilitybeltassertions::assert_non_empty_string(tcga_study_abbreviation, msg = "tcga_study_abbreviation must be a string >0 characters long")
   #browser()
-  assertthat::assert_that(tcga_study_abbreviation %in% tcga_available_df[["Study_Abbreviation"]], msg = utilitybeltassertions::fmterror("Failed to find tcga_study_abbreviation [", tcga_study_abbreviation, "] in TCGAmutations database. Check TCGAmutations::tcga_available() for a list of valid abbreviations"))
+  assertthat::assert_that(tcga_study_abbreviation %in% tcga_available_df[["Study_Abbreviation"]], msg = utilitybeltassertions::fmterror("Failed to find tcga_study_abbreviation [", tcga_study_abbreviation, "] in TCGAmutations database. Check maftools::tcgaAvailable() for a list of valid abbreviations"))
   #browser()
   
   
@@ -68,7 +68,7 @@ tcga_dataset_to_data_pool <- function(tcga_study_abbreviation, maf_data_pool, so
 #'
 #' @inheritParams tcga_dataset_to_maf_dataset_wrapper
 #' @inheritParams maf_data_pool_add_dataset
-#' @param source 'MC3' or 'Firehose'. Source of TCGA data to use. See ?TCGAmutations::tcga_load for details (string)
+#' @param source 'MC3' or 'Firehose'. Source of TCGA data to use. See ?maftools::tcgaLoad for details (string)
 #' @return returns a data pool object with extra dataset added (maf_data_pool)
 #' 
 #' @family DataToWrapper
@@ -78,7 +78,7 @@ tcga_datasets_to_data_pool <- function(maf_data_pool, source = "Firehose"){
   assert_that_class_is_maf_data_pool(maf_data_pool)
   utilitybeltassertions::assert_non_empty_string(source)
   assertthat::assert_that(source %in% c("Firehose", "MC3"), msg = utilitybeltassertions::fmterror("[tcga_datasets_to_data_pool]: '", source, "' is not a valid TCGA source. Valid options are MC3 or Firehose"))
-  valid_tcga_abbreviations.v <- TCGAmutations::tcga_available()[ !is.na(TCGAmutations::tcga_available()[[source]]), "Study_Abbreviation"] %>% unlist()
+  valid_tcga_abbreviations.v <- maftools::tcgaAvailable()[ !is.na(maftools::tcgaAvailable()[[source]]), "Study_Abbreviation"] %>% unlist()
   
   assertthat::assert_that(length(valid_tcga_abbreviations.v) > 0, msg = utilitybeltassertions::fmterror("No TCGA data was found from the source: [",source,"]. Options valid options are MC3 or Firehose"))
     

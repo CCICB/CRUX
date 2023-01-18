@@ -9,7 +9,7 @@
 #'
 #'
 #' @examples
-#' CRUX:::maftools_get_all_data(TCGAmutations::tcga_load("GBM"))
+#' CRUX:::maftools_get_all_data(maftools::tcgaLoad("GBM"))
 maftools_get_all_data <- function(maf, include_silent_mutations=T) {
   if(include_silent_mutations)
     data.table::rbindlist(list(maf@data, maf@maf.silent), use.names = TRUE, fill = TRUE) %>% return()
@@ -203,7 +203,7 @@ maftools_escape_special_characters <- function(string){
 #' @return MAF object
 #'
 #' @examples
-#' CRUX:::maftools_remove_dubious_genes(TCGAmutations::tcga_load("gbm"), "TTN")
+#' CRUX:::maftools_remove_dubious_genes(maftools::tcgaLoad("gbm"), "TTN")
 maftools_remove_dubious_genes <- function(maf, genelist = somaticflags::somaticflags){
   assertthat::assert_that(is.character(genelist))
   filtered_maf <- maftools::filterMaf(maf = maf, genes = genelist)
@@ -291,7 +291,7 @@ maftools_samples_with_mutated_gene <- function(maf, gene, include_silent_mutatio
 #' @return int
 #'
 #' @examples
-#' CRUX:::maftools_number_of_samples(TCGAmutations::tcga_load("GBM"))
+#' CRUX:::maftools_number_of_samples(maftools::tcgaLoad("GBM"))
 maftools_number_of_samples <- function(maf){
   return(as.numeric(maf@summary[["summary"]][3])) 
 }
@@ -309,7 +309,7 @@ maftools_number_of_samples <- function(maf){
 #' @return  The names of genes mutated in the most samples (character vector). 
 #'
 #' @examples
-#' CRUX::maftools_extract_geneset_by_altered_samples(TCGAmutations::tcga_load("GBM"), topn=50)
+#' CRUX::maftools_extract_geneset_by_altered_samples(maftools::tcgaLoad("GBM"), topn=50)
 maftools_extract_geneset_by_altered_samples <- function(maf, topn = 100){
   genes_by_number_of_altered_samples <- maf %>%
     maftools::getGeneSummary() %>%
@@ -372,7 +372,7 @@ maftools_filter_dn_ds_output_for_significant_genes <- function(sel_cv, threshold
 #' @export
 #'
 #' @examples
-#' maf <- TCGAmutations::tcga_load("GBM", source = "Firehose") 
+#' maf <- maftools::tcgaLoad("GBM", source = "Firehose") 
 #' maftools_cluster_samples(maf)
 maftools_cluster_samples <- function(maf, custom_genelist_to_cluster_by = NULL, number_of_genes = 50, genes_to_annotate=NULL, annotate_most_altered_genes=TRUE, topn_genes = 5, metadata_columns=NULL, include_silent_mutations = FALSE, show_rownames = FALSE, show_colnames=FALSE, annotation_legend=TRUE, fontsize=10){
   

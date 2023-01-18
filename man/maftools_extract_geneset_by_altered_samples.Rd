@@ -19,5 +19,5 @@ Create a genelist containing the genes mutated in the most samples in a maf.
 If topn > total number of mutated genes then all mutated genes are returned.
 }
 \examples{
-CRUX::maftools_extract_geneset_by_altered_samples(TCGAmutations::tcga_load("GBM"), topn=50)
+CRUX::maftools_extract_geneset_by_altered_samples(maftools::tcgaLoad("GBM"), topn=50)
 }

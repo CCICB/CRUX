@@ -9,7 +9,7 @@ tcga_datasets_to_data_pool(maf_data_pool, source = "Firehose")
 \arguments{
 \item{maf_data_pool}{the data pool to add the dataset wrapper to (maf_data_pool)}
 
-\item{source}{'MC3' or 'Firehose'. Source of TCGA data to use. See ?TCGAmutations::tcga_load for details (string)}
+\item{source}{'MC3' or 'Firehose'. Source of TCGA data to use. See ?maftools::tcgaLoad for details (string)}
 }
 \value{
 returns a data pool object with extra dataset added (maf_data_pool)

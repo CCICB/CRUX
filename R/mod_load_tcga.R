@@ -1,4 +1,4 @@
-tcga_datasets_df = TCGAmutations::tcga_available() %>% dplyr::mutate(Imported = logical(nrow(.)))
+tcga_datasets_df = maftools::tcgaAvailable() %>% dplyr::mutate(Imported = logical(nrow(.)))
 tcga_datasets_df$Study_Name
 
 moduleLoadTCGAUI <- function(id){
@@ -45,13 +45,13 @@ moduleLoadTCGAServer <- function(id, optional_argument){
 
 #' @title Get TCGA MAFs
 #'
-#' @param study_name Abbreviation of TCGA dataset to install. To see options, run TCGAmutations::tcga_available()
+#' @param study_name Abbreviation of TCGA dataset to install. To see options, run maftools::tcgaAvailable()
 #'
 #' @return A single MAF object. 
 #'
 #'
 get_tcga_mafs <- function(study_name){
-  tcga_maf <- TCGAmutations::tcga_load(input$in_multi_tcga, source = "Firehose") #Could add option to swti
+  tcga_maf <- maftools::tcgaLoad(input$in_multi_tcga, source = "Firehose") #Could add option to swti
   
   if (is.list(tcga_maf))
     tcga_maf <- maftools::merge_mafs(tcga_maf)

@@ -18,5 +18,5 @@ NOTHING. Run for its side effects
 Downloads a MAF file (inc. silent mutations). Does NOT download clinical datafile.
 }
 \examples{
-CRUX:::download_maf(TCGAmutations::tcga_load("GBM"), "tcga_gbm.maf")
+CRUX:::download_maf(maftools::tcgaLoad("GBM"), "tcga_gbm.maf")
 }

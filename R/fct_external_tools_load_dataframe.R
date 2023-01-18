@@ -1027,7 +1027,7 @@ external_tools_load_tumormap <- function(external_tools_df = data.frame()){
 #   similarity/total
 # }
 
-#dist = TCGAmutations::tcga_load("ACC") %>% external_tools_convert_maf_to_tumormap_return_dataframe() %>% dplyr::select(-1) %>% t() %>% dist(method = "binary")
+#dist = maftools::tcgaLoad("ACC") %>% external_tools_convert_maf_to_tumormap_return_dataframe() %>% dplyr::select(-1) %>% t() %>% dist(method = "binary")
 #(dist) %>% as.matrix() %>% as.data.frame() %>% tibble::rownames_to_column("Sample") %>% data.table::fwrite(file = "~/Downloads/ACC.test.tsv", sep = "\t", quote = FALSE, row.names = TRUE, col.names = TRUE
 
 

@@ -10,7 +10,7 @@
 #'
 #'
 #' @examples
-#' maf = TCGAmutations::tcga_load(study = "GBM", source = "Firehose")
+#' maf = maftools::tcgaLoad(study = "GBM", source = "Firehose")
 #' str(maftools::getClinicalData(maf)) 
 #' new_maf = CRUX:::maftools_fix_clinical_data_types(maf)
 #' str(maftools::getClinicalData(new_maf))
