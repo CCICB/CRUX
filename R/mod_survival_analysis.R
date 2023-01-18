@@ -135,11 +135,7 @@ mod_survival_analysis_server <- function(id, maf_data_pool){
     
     # Step 6: Visualise Survival Curves ---------------------------------------
     mod_plot_survival_server(id = "mod_plot_survival", maf = maf, geneset = selected_geneset, status = column_event_status, time = column_time_to_event, or = or, is_tcga = is_tcga)
-    
-    
-    observeEvent( input$test , {
-      browser()
-    })
+
   })
 }
     
