@@ -7,8 +7,6 @@
 mod_render_clinical_data_table_server(id, maf)
 }
 \arguments{
-\item{id}{Internal parameters for {shiny}.}
-
 \item{maf}{maf object (reactive)}
 }
 \value{

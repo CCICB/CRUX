@@ -12,7 +12,7 @@ maf_data_pool_unique_name_to_maf_nonreactive(maf_data_pool, unique_name)
 \item{unique_name}{}
 }
 \value{
-
+return loaded data (maf object, nonreactive)
 }
 \description{
 Takes a unique name and returns the maf object associated with said entry in the maf_data_pool. 

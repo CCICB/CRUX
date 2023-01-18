@@ -18,7 +18,7 @@ external_tools_get_property_by_tool_name(
 \item{external_tools_df}{the dataframe to add tool metadata to. By default, will use global variable: GLOBAL_external_tools_dataframe}
 }
 \value{
-
+value of retrieved property (string)
 }
 \description{
 external_tools_get_property_by_tool_name

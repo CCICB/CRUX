@@ -213,7 +213,7 @@ maf_data_pool_unique_name_to_maf_reactive <- function(maf_data_pool, unique_name
 #' @param maf_data_pool 
 #' @param unique_name 
 #'
-#' @return
+#' @return return loaded data (maf object, nonreactive)
 #'
 #'
 maf_data_pool_unique_name_to_maf_nonreactive <- function(maf_data_pool, unique_name){

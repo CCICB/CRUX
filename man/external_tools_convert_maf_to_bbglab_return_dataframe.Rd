@@ -10,7 +10,7 @@ external_tools_convert_maf_to_bbglab_return_dataframe(maf)
 \item{maf}{(MAF)}
 }
 \value{
-
+bbglab compatible dataframe
 }
 \description{
 Convets MAF object to BBGLab Cancer Genome Interpreter Input (Genomic tabular format) (a tsv).

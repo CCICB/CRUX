@@ -12,7 +12,9 @@ new_maf_dataset_wrapper(
   start_status,
   data_description,
   is_dataset_downloadable,
-  function_to_download_data = function() {     return(NA) },
+  function_to_download_data = function() {
+     return(NA)
+ },
   is_dataset_loadable = TRUE,
   function_to_load_data,
   name_of_data_source = "unknown",

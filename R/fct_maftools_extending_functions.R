@@ -329,20 +329,20 @@ maftools_extract_geneset_by_altered_samples <- function(maf, topn = 100){
   }
 }
 
-maftools_calculate_dn_ds <- function(maf){
-  mutations_df <- maftools_get_all_data(maf, include_silent_mutations = TRUE) %>%
-    dplyr::select(sampleID = Tumor_Sample_Barcode, chr = Chromosome, pos=Start_Position, ref = Reference_Allele, mut = Tumor_Seq_Allele2) %>%
-    dplyr::mutate(chr = sub("24", "Y", sub("23", "X", chr)))
-  
-  dndsout = dndscv::dndscv(mutations_df)
-  sel_cv = dndsout$sel_cv
-  return(sel_cv)
-}
-
-maftools_filter_dn_ds_output_for_significant_genes <- function(sel_cv, threshold = 0.1){
-  signif_genes = sel_cv[sel_cv$qglobal_cv<0.1, c("gene_name","qglobal_cv")]
-  return(signif_genes)
-}
+# maftools_calculate_dn_ds <- function(maf){
+#   mutations_df <- maftools_get_all_data(maf, include_silent_mutations = TRUE) %>%
+#     dplyr::select(sampleID = Tumor_Sample_Barcode, chr = Chromosome, pos=Start_Position, ref = Reference_Allele, mut = Tumor_Seq_Allele2) %>%
+#     dplyr::mutate(chr = sub("24", "Y", sub("23", "X", chr)))
+#   
+#   dndsout = dndscv::dndscv(mutations_df)
+#   sel_cv = dndsout$sel_cv
+#   return(sel_cv)
+# }
+# 
+# maftools_filter_dn_ds_output_for_significant_genes <- function(sel_cv, threshold = 0.1){
+#   signif_genes = sel_cv[sel_cv$qglobal_cv<0.1, c("gene_name","qglobal_cv")]
+#   return(signif_genes)
+# }
 
 #' maftools_cluster_samples
 #' 

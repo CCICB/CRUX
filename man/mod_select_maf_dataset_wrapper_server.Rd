@@ -7,9 +7,6 @@
 \usage{
 mod_select_maf_dataset_wrapper_server(id, maf_data_pool, label = "Dataset")
 }
-\arguments{
-\item{id}{Internal parameters for {shiny}.}
-}
 \value{
 maf_dataset_wrapper.
 }

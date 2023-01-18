@@ -10,7 +10,7 @@ external_tools_convert_maf_to_oncodrive_return_dataframe(maf)
 \item{maf}{(MAF)}
 }
 \value{
-
+data.frame of appropriate format to supply to oncodrive
 }
 \description{
 Convets MAF object to BBGLab Oncodrive mutation format.

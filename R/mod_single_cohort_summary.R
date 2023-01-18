@@ -86,7 +86,6 @@ mod_single_cohort_summary_plots_server <- function(id, maf, cohortName) {
 #'
 #' @param id 
 #'
-#' @return
 #'
 #'
 mod_single_cohort_summary_tables_and_plots_ui <- function(id, print_instructions=FALSE){
@@ -118,7 +117,6 @@ mod_single_cohort_summary_tables_and_plots_ui <- function(id, print_instructions
 #' @param maf maf object (reactive)
 #' @param cohortName cohort Name (string, reactive)
 #'
-#' @return
 #'
 #'
 mod_single_cohort_summary_tables_and_plots_server <- function(id, maf, cohortName){
