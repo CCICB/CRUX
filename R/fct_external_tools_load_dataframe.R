@@ -365,7 +365,8 @@ external_tools_convert_maf_to_signal2 <- function(maf_dataset_wrapper, filepath)
       data.table::fwrite(file = files[i], col.names = FALSE, sep = "\t", quote = FALSE, row.names = FALSE)
   }
   
-  zip(filepath, files, flags = "-j")
+  utils::zip(filepath, files, flags = "-j")
+  unlink(files)
 }
 
 external_tools_load_maf_to_signal2 <- function(external_tools_df = data.frame()){
@@ -448,8 +449,8 @@ external_tools_convert_maf_to_multiple_vanilla_vcfs <- function(maf_dataset_wrap
         data.table::fwrite(file = files[index], sep="\t", quote = FALSE, col.names = TRUE, row.names = FALSE,append = TRUE) 
   })
   
-  zip(filepath, files, flags = "-j")
-    
+  utils::zip(filepath, files, flags = "-j")
+  unlink(files)
 }
 
 external_tools_convert_maf_to_one_vanilla_vcf <- function(maf_dataset_wrapper, filepath){
@@ -570,6 +571,65 @@ external_tools_load_maf_to_cravat <- function(external_tools_df = data.frame()){
   )
 }
 
+
+# Export Crux -------------------------------------------------------------
+
+external_tools_convert_maf_to_crux_maf <- function(maf_dataset_wrapper, filepath){
+  
+  maf <- maf_dataset_wrapper$loaded_data
+  maf_data <-  maf@data
+  clinical_data <- maftools::getClinicalData(maf)
+
+  dataset_name <- maf_dataset_wrapper$display_name
+  
+  tmpdir <- tempdir()
+  outfile_path_maf <- paste0(tmpdir,'/', dataset_name, ".maf")
+  outfile_path_clinical <- paste0(tmpdir, '/', dataset_name, ".clinical.tsv")
+  
+  data.table::fwrite(
+    maf_data,
+    file = outfile_path_maf, 
+    sep="\t", 
+    col.names = TRUE, 
+    row.names = FALSE,
+    append = FALSE
+  )
+
+  data.table::fwrite(
+    clinical_data,
+    file = outfile_path_clinical, 
+    sep="\t", 
+    col.names = TRUE, 
+    row.names = FALSE,
+    append = FALSE
+  )
+  
+  files <- c(outfile_path_maf, outfile_path_clinical)
+  utils::zip(filepath, files, flags = "-j")
+
+  # Delete files in tempdirectory
+  unlink(x = files)
+}
+
+external_tools_load_crux_export <- function(external_tools_df = data.frame()){
+  external_tools_add_tool_to_dataframe(
+    external_tools_df = external_tools_df, 
+    tool_name = "CRUX",
+    tool_id = "CRUX",
+    tool_group = "CRUX",
+    tool_class = "Utility",
+    instructions = as.character(
+      tags$ol(
+        tags$li("Next session, to re-use your dataset, unzip the folder and import maf and clinical data using the CRUX import data module"),
+      )
+    ),
+    tool_description = "Export MAF file and clinical data for use with CRUX and other tools",
+    website = "https://github.com/CCICB/CRUX",
+    doi = "https://github.com/CCICB/CRUX",
+    maf_conversion_function = external_tools_convert_maf_to_crux_maf,
+    extension = "zip"
+  )
+}
 
 # Pecan Protein Paint (Simple) -----------------------------------------------------
 # external_tools_convert_maf_to_proteinpaint_simple_return_dataframe <- function(maf, gene){
@@ -779,7 +839,10 @@ external_tools_convert_maf_to_xena <- function(maf_dataset_wrapper, filepath){
     maftools::getClinicalData() %>%
     data.table::fwrite(file = metadata_path, col.names = TRUE, row.names = FALSE, quote = TRUE, sep = "\t")
   
-  zip(filepath, c(mutation_path, metadata_path, expression_path), flags = "-j")
+  files <- c(mutation_path, metadata_path, expression_path)
+  utils::zip(filepath, files, flags = "-j")
+  
+  unlink(x = files)
 }
 
 external_tools_load_xena <- function(external_tools_df = data.frame()){
@@ -924,7 +987,9 @@ external_tools_convert_maf_to_tumormap <- function(maf_dataset_wrapper, filepath
   external_tools_convert_maf_to_return_tumormap_attributes_dataframe(maf) %>%
     data.table::fwrite(file = metadata_path, col.names = TRUE, row.names = FALSE, quote = TRUE, sep = "\t")
   
-  zip(filepath, c(metadata_path, expression_path), flags = "-j")
+  files <- c(metadata_path, expression_path)
+  utils::zip(filepath, files, flags = "-j")
+  unlink(files)
 }
 
 
@@ -1031,6 +1096,7 @@ external_tools_load_all_tools <- function(){
     external_tools_load_proteinpaint() %>%
     external_tools_load_xena() %>%
     external_tools_load_ucsc() %>%
+    external_tools_load_crux_export() %>% 
     #external_tools_load_tumormap() %>%
     return()
 }

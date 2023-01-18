@@ -5,7 +5,7 @@
 \alias{external_tool_metadata}
 \title{Prices of 50,000 round cut diamonds.}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 11 rows and 13 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 12 rows and 13 columns.
 }
 \source{
 external_tools_load_all_tools()
