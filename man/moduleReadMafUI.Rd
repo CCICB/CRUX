@@ -28,9 +28,6 @@ moduleReadMafUI(
 
 \item{label_name}{"label of the cohort name field"}
 }
-\value{
-
-}
 \description{
 Read MAF UI function
 }

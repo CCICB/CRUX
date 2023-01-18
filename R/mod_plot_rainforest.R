@@ -14,7 +14,6 @@
 #' @param lineWidth 
 #' @param titleSize 
 #'
-#' @return
 #'
 #'
 plotforest <- function(mafCompareRes, pVal = 0.05, fdr = 0.05, threshold_on_fdr, color=NULL, geneFontSize = 1.2, lineWidth = 2.2, titleSize = 1.2){

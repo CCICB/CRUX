@@ -14,7 +14,6 @@
 #' @param lineWidth 
 #' @param titleSize 
 #'
-#' @return
 #'
 #'
 #' @examples

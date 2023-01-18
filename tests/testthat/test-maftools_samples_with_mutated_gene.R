@@ -1,6 +1,6 @@
 test_that("maftools_samples_with_mutated_gene correctly lists tsbs", {
   
-  acc_maf=TCGAmutations::tcga_load("ACC", "Firehose")
+  acc_maf=maftools::tcgaLoad("ACC", "Firehose")
   
   MUC16_mutated_samples <- acc_maf %>%
     maftools::subsetMaf(genes = "MUC16") %>%

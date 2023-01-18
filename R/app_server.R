@@ -13,7 +13,7 @@ app_server <- function( input, output, session ) {
   starting_maf_data_pool <- tcga_datasets_to_data_pool(starting_maf_data_pool, source = "Firehose")
   
   # prepare ZCC
-  starting_maf_data_pool <- zero_datasets_to_data_pool(starting_maf_data_pool)
+  # starting_maf_data_pool <- zero_datasets_to_data_pool(starting_maf_data_pool)
   
   # prepare PCAWG datasets
   starting_maf_data_pool <- pcawg_datasets_to_data_pool(starting_maf_data_pool)

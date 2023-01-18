@@ -12,7 +12,7 @@ external_tools_convert_maf_to_bbglab(maf_dataset_wrapper, filepath)
 \item{maf}{(MAF)}
 }
 \value{
-
+Run for side effects (writes bbglab datamframe to file)
 }
 \description{
 Convets MAF object to BBGLab Cancer Genome Interpreter Input (Genomic tabular format) then writes to a file.

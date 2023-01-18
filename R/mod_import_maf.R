@@ -9,7 +9,6 @@
 #' @param label_maf label of maf input field ["maf"]
 #' @param label_clinical_data label of clinicalData input field ["clinical data"]
 #'
-#' @return
 #'
 #'
 moduleReadMafUI <- function(id, panel_name, cohort_name, label_cohort_name = "name", label_maf="maf", label_clinical_data="clinical features") {

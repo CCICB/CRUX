@@ -68,7 +68,7 @@ external_tools_add_tool_to_dataframe <- function(external_tools_df = dplyr::tibb
 #' @param tool_name name of tool
 #' @param property_to_retrieve which property to retrieve. see details for options. (string)
 #'
-#' @return
+#' @return value of retrieved property (string)
 #'
 #'
 #' @details 
@@ -190,7 +190,7 @@ external_tools_load_bbglab_oncodrive_clustl <- function(external_tools_df = data
 #'
 #' @param maf (MAF)
 #'
-#' @return
+#' @return data.frame of appropriate format to supply to oncodrive
 #'
 #'
 external_tools_convert_maf_to_oncodrive_return_dataframe <- function(maf){
@@ -242,7 +242,7 @@ external_tools_load_bbglab_cgi <- function(external_tools_df = data.frame()){
 #' @param maf (MAF)
 #' @param filepath (string)
 #'
-#' @return
+#' @return Run for side effects (writes bbglab datamframe to file)
 #'
 #'
 external_tools_convert_maf_to_bbglab <- function(maf_dataset_wrapper, filepath){
@@ -258,7 +258,7 @@ external_tools_convert_maf_to_bbglab <- function(maf_dataset_wrapper, filepath){
 #'
 #' @param maf (MAF)
 #'
-#' @return
+#' @return bbglab compatible dataframe 
 #'
 #'
 external_tools_convert_maf_to_bbglab_return_dataframe <- function(maf){
@@ -267,7 +267,7 @@ external_tools_convert_maf_to_bbglab_return_dataframe <- function(maf){
     dplyr::select(Chromosome, Start_Position, Reference_Allele, Tumor_Seq_Allele2, Tumor_Sample_Barcode) %>% 
     dplyr::arrange(readr::parse_number(as.character(Chromosome)), Chromosome, Start_Position) %>% 
     dplyr::rename(chr=Chromosome, pos=Start_Position, ref=Reference_Allele, alt=Tumor_Seq_Allele2, sample=Tumor_Sample_Barcode) %>%
-    return();
+    return()
 }
 
 
@@ -1027,7 +1027,7 @@ external_tools_load_tumormap <- function(external_tools_df = data.frame()){
 #   similarity/total
 # }
 
-#dist = TCGAmutations::tcga_load("ACC") %>% external_tools_convert_maf_to_tumormap_return_dataframe() %>% dplyr::select(-1) %>% t() %>% dist(method = "binary")
+#dist = maftools::tcgaLoad("ACC") %>% external_tools_convert_maf_to_tumormap_return_dataframe() %>% dplyr::select(-1) %>% t() %>% dist(method = "binary")
 #(dist) %>% as.matrix() %>% as.data.frame() %>% tibble::rownames_to_column("Sample") %>% data.table::fwrite(file = "~/Downloads/ACC.test.tsv", sep = "\t", quote = FALSE, row.names = TRUE, col.names = TRUE
 
 

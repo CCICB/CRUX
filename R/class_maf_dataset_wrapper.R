@@ -14,7 +14,7 @@
 #' @param function_to_download_data a function that when run will download the required data return the path to which it was downloaded if successful. Will return NA if it failed (function that returns string or NA). If is_dataset_downloadable is false, this is ignored (just use default) 
 #' @param function_to_load_data a function that takes 'local_path_to_data' as its argument and returns the loaded maf object when complete. 
 #' The function needs to take a single argument, but it doesn't actually have to use it. 
-#' For example, when loading tcga data using the TCGAmutations package, this function could be \strong{function(filepath){TCGAmutations::tcga_load()}}. 
+#' For example, when loading tcga data using the TCGAmutations package, this function could be \strong{function(filepath){maftools::tcgaLoad()}}. 
 #' This function completely ignores the filepath argument but you NEED to include it anyway (function)
 #' @param name_of_data_source name of the data source. For Example "USER" or "TCGA" or "PCAWG" (string)
 #' @param local_path_to_data a path to data which will be configured based on function_to_download_data. If this option is configured ahead of time (string)
@@ -213,7 +213,7 @@ maf_data_pool_unique_name_to_maf_reactive <- function(maf_data_pool, unique_name
 #' @param maf_data_pool 
 #' @param unique_name 
 #'
-#' @return
+#' @return return loaded data (maf object, nonreactive)
 #'
 #'
 maf_data_pool_unique_name_to_maf_nonreactive <- function(maf_data_pool, unique_name){

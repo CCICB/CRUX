@@ -30,9 +30,6 @@ plotforest(
 
 \item{titleSize}{}
 }
-\value{
-
-}
 \description{
 plotforest: Wraps around maftools::forestPlot to more explicitly handle pval VS fdr option and allow both to be passed while onl using the value set by bool 'threshold_on_fdr'
 }

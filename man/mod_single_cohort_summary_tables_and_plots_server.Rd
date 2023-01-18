@@ -13,9 +13,6 @@ mod_single_cohort_summary_tables_and_plots_server(id, maf, cohortName)
 
 \item{cohortName}{cohort Name (string, reactive)}
 }
-\value{
-
-}
 \description{
 wrapper for running multiple mod_single_cohort_summary_tables_server modules
 }

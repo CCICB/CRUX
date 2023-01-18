@@ -12,7 +12,9 @@ new_maf_dataset_wrapper(
   start_status,
   data_description,
   is_dataset_downloadable,
-  function_to_download_data = function() {     return(NA) },
+  function_to_download_data = function() {
+     return(NA)
+ },
   is_dataset_loadable = TRUE,
   function_to_load_data,
   name_of_data_source = "unknown",
@@ -44,7 +46,7 @@ new_maf_dataset_wrapper(
 
 \item{function_to_load_data}{a function that takes 'local_path_to_data' as its argument and returns the loaded maf object when complete. 
 The function needs to take a single argument, but it doesn't actually have to use it. 
-For example, when loading tcga data using the TCGAmutations package, this function could be \strong{function(filepath){TCGAmutations::tcga_load()}}. 
+For example, when loading tcga data using the TCGAmutations package, this function could be \strong{function(filepath){maftools::tcgaLoad()}}. 
 This function completely ignores the filepath argument but you NEED to include it anyway (function)}
 
 \item{name_of_data_source}{name of the data source. For Example "USER" or "TCGA" or "PCAWG" (string)}

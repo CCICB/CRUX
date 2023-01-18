@@ -7,7 +7,7 @@
 get_tcga_mafs(study_name)
 }
 \arguments{
-\item{study_name}{Abbreviation of TCGA dataset to install. To see options, run TCGAmutations::tcga_available()}
+\item{study_name}{Abbreviation of TCGA dataset to install. To see options, run maftools::tcgaAvailable()}
 }
 \value{
 A single MAF object.

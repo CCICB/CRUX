@@ -7,15 +7,14 @@
 TCGAmutations_load_with_typed_metadata(study, source = "Firehose")
 }
 \arguments{
-\item{study}{Study names to load. Use  \code{\link[TCGAmutations]{tcga_available}} to see available options.}
+\item{study}{Study names to load. Use  \code{\link[maftools]{tcgaAvailable}} to see available options.}
 
-\item{source}{Can be \code{MC3} or \code{Firehose}. Default \code{MC3}
-It will be usefull if you want to operate multiple \code{MAF}s.}
+\item{source}{Source for MAF files. Can be \code{MC3} or \code{Firehose}. Default \code{MC3}. Argument may be abbreviated (M or F)}
 }
 \value{
 MAF object with correctly typed clinical.data dataframe (MAF)
 }
 \description{
 Load TCGA data with correctly typed clinical data. 
-By default, TCGAmutations::tcga_load makes all Firehose dataset clinical features character vectors
+By default, maftools::tcgaLoad makes all Firehose dataset clinical features character vectors
 }

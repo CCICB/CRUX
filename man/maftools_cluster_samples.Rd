@@ -55,6 +55,6 @@ Identify and visualise clusters of cancer samples based on somatic mutation data
  }
 }
 \examples{
-maf <- TCGAmutations::tcga_load("GBM", source = "Firehose") 
+maf <- maftools::tcgaLoad("GBM", source = "Firehose") 
 maftools_cluster_samples(maf)
 }

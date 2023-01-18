@@ -71,9 +71,8 @@ moduleDownloadPlotUI <- function(id, circle = FALSE, label = "Download", style =
 #' @param parent Session object of the calling module (used to extract plot details)
 #' @param plotOutputId "ID of the rendered plot"
 #' @param plotting_function "function that when run with no arguments will create the plot. Can make by wrapping the plot call in its own function. e.g. for plot(mtcars) you could do:  plotting_function <- reactive ({ function() {plot(mtcars)} }) then pass 'plotting_function()'"
-#' @param default_filename defualt basename of downloaded file (string; non-reactive)
+#' @param default_filename default basename of downloaded file (string; non-reactive)
 #'
-#' @return
 #'
 #'
 moduleDownloadPlotServer <- function(id, session_parent, plotOutputId, plotting_function, default_filename = "download"){

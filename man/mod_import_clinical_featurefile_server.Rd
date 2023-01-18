@@ -7,8 +7,6 @@
 mod_import_clinical_featurefile_server(id, maf_path)
 }
 \arguments{
-\item{id}{Internal parameters for {shiny}.}
-
 \item{maf}{a reactive maf object which the supplied clinical feature file is associated with}
 }
 \value{

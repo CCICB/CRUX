@@ -9,9 +9,6 @@ mod_single_cohort_summary_tables_and_plots_ui(id, print_instructions = FALSE)
 \arguments{
 \item{id}{}
 }
-\value{
-
-}
 \description{
 wrapper for running multiple mod_single_cohort_summary_tables_ui modules
 }
