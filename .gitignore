@@ -40,21 +40,3 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
-
-#ZCC data
-inst/example_data/*zcc*
-
-# Becker GBM data
-inst/example_data/Becker_GBM_Exomes*
-inst/example_data/becker*
-
-
-# Large BRCA files
-inst/example_data/*BRCA*
-inst/example_data/*brca*
-
-# Ignore CNV gistic output
-inst/example_data/gdac.*
-
-# Ignore large RNAseq datasets 
-inst/example_data/GBM_GDC_DATA.tsv

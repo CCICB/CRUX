@@ -14,7 +14,8 @@ mod_shinyfile_import_ui <- function(id, title, label, multiple=FALSE, buttonType
   ns <- NS(id)
   
   tagList(
-    shinyFiles::shinyFilesButton(id = ns("id_shinyfiles_button"), title = title, multiple = multiple, label=label, buttonType = buttonType, style = style, viewtype = viewtype),
+    shiny::fileInput(inputId = ns("id_shinyfiles_button"), label = title, multiple = multiple, buttonLabel = label),
+    #shinyFiles::shinyFilesButton(id = ns("id_shinyfiles_button"), title = title, multiple = multiple, label=label, buttonType = buttonType, style = style, viewtype = viewtype),
     shinyBS::bsTooltip(id = ns("id_shinyfiles_button"), title = tooltip_text, placement = tooltip_placement, trigger = trigger)
   )
 }
@@ -28,16 +29,17 @@ mod_shinyfile_import_ui <- function(id, title, label, multiple=FALSE, buttonType
 #' 
 #'
 mod_shinyfile_import_server <- function(id){
-  #browser()
+ 
   moduleServer(id, function(input, output, session){
     ns <- session$ns
-    #browser()
-    volumes <- c(Home = fs::path_home(), wd = ".", shinyFiles::getVolumes()(), example_data = system.file(package="CRUX", "example_data"))
-    shinyFiles::shinyFileChoose(input, id = "id_shinyfiles_button", roots = volumes, session = session)
     
+    #volumes <- c(Home = fs::path_home(), wd = ".", shinyFiles::getVolumes()(), example_data = system.file(package="CRUX", "example_data"))
+    #shinyFiles::shinyFileChoose(input, id = "id_shinyfiles_button", roots = volumes, session = session)
+    
+
     chosenfilepath <- reactive({
       validate(need(length(input$id_shinyfiles_button), message = "Please import maf file"))
-      shinyFiles::parseFilePaths(volumes, selection = input$id_shinyfiles_button)$datapath %>% return()
+      return(input$id_shinyfiles_button$datapath)
     })
     
     return(chosenfilepath)

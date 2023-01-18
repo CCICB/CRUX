@@ -46,7 +46,9 @@ Imports:
     somaticflags (>= 0.0.0.9000),
     mutalisk (>= 0.0.0.9000),
     utilitybeltrna,
-    pheatmap
+    PCAWGmutations,
+    pheatmap,
+    pkgload
 Remotes: 
     selkamand/utilitybeltassertions,
     selkamand/utilitybeltshiny,
@@ -55,6 +57,7 @@ Remotes:
     selkamand/utilitybeltrna,
     ebailey78/shinyBS,
     CCICB/somaticflags,
+    CCICB/PCAWGmutations
     selkamand/mutalisk
 Encoding: UTF-8
 LazyData: true
