@@ -1,0 +1,73 @@
+cytoband	7p11.2	12q14.1	4q12	1q32.1	12q15	3q26.33	12p13.32	7q31.2	17p13.2	2p24.3	1p36.21	1q44	7q21.2	4p16.3	7q11.21	17q25.1	19q12	11p13	19p13.3	14q32.33	8q24.21	13q34	21q21.1	13q34	
+q value	0	7.0361e-151	2.0195e-106	2.2156e-76	3.9138e-75	9.2758e-21	3.7501e-11	4.6872e-08	1.0929e-07	1.4577e-07	1.4051e-06	2.7008e-07	7.3248e-08	0.00036786	1.7202e-11	0.0035457	0.0085352	0.022877	0.026797	0.060522	0.099317	0.012908	0.1626	0.0090725	
+residual q value	0	3.9271e-124	2.0195e-106	3.2087e-76	6.8113e-32	9.2758e-21	3.7501e-11	8.5669e-08	1.0929e-07	1.4577e-07	1.4051e-06	1.4334e-06	2.4689e-06	0.00036786	0.001898	0.0035457	0.0085352	0.022877	0.026797	0.060522	0.099317	0.1626	0.1626	0.3959	
+wide peak boundaries	chr7:54964317-54973195	chr12:58135797-58152580	chr4:55139083-55159166	chr1:204443069-204529807	chr12:69178021-69260755	chr3:181256574-181508514	chr12:4325317-4436676	chr7:116318088-116493406	chr17:5120021-5142747	chr2:16015911-16440790	chr1:13862648-14377937	chr1:243042268-244858016	chr7:92179103-92530348	chr4:1778797-1816689	chr7:57925000-63128930	chr17:73242158-73641051	chr19:30183172-30321189	chr11:31372873-32350255	chr19:1-1025361	chr14:104982904-105333748	chr8:127927022-131800277	chr13:103076946-114304134	chr21:17519797-17649826	chr13:113916990-114583289	
+genes in wide peak	[SNORA73|ENSG00000252054.1]	CDK4	PDGFRA	MDM4	SLC35E3	SOX2	C12orf5	CAPZA2	SCIMP	SNORA40|ENSG00000251704.1	SCARNA11|ENSG00000253085.1	RN7SL148P	CDK6	FGFR3	RN7SL855P	MYO15B	C19orf12	U3|ENSG00000212551.1	ARID3A	LINC00638	SNORA12|ENSG00000212342.1	DCUN1D2	LINC00478	LINC00454	
+		TSPAN31	FIP1L1	PIK3C2B	CPM		CCND2	MET		RN7SL104P	RNA5SP41	MIR4677	FAM133B	LETM1	ZNF733P	GRB2	CCNE1	DNAJC24	CFD	ZBTB42	SNORA25|ENSG00000200075.1	LINC00403		GRK1	
+		MARCH9			MDM2					MYCNOS	PRDM2	ADSS				LLGL2		PAX6	MIR4745	AKT1	CCDC26	LINC00404		DCUN1D2	
+		AGAP2								snoU13|ENSG00000238371.1	PDPN	CEP170				RECQL5		RCN1	RNA5SP462	SIVA1	RN7SKP206	SNORD44		ATP4B	
+										MYCN		AKT3				KIAA0195		ELP4	OR4F17	INF2	LINC00977	LINC00354		GAS6	
+												ZBTB18				GGA3		IMMP1L	FAM138F	ADSSL1	RN7SKP226	LINC00346		LAMP1	
+												SDCCAG8				MRPS7		DCDC1	WASH5P	CEP170B	TMEM75	LINC00567		TFDP1	
+												DESI2				MIF4GD			AZU1	TMEM179	POU5F1B	snoU13|ENSG00000238629.1		CUL4A	
+												C1orf100				CASKIN2			HCN2	C14orf180	CASC8	RN7SL783P		TMCO3	
+												C1orf101				SLC25A19			BSG	MIR4710	CCAT1	RN7SKP10		GRTP1	
+																TSEN54			CDC34		PCAT2	LINC00676		ADPRHL1	
+																SMIM5			ELANE		PCAT1	RNA5SP39		TMEM255B	
+																MIR3678			GZMM		ADCY8	MIR1267			
+																			PALM		MYC	SNORD31			
+																			POLRMT		ASAP1	LINC00443			
+																			PRTN3		FAM49B	LINC00551			
+																			PTBP1		GSDMC	ARGLU1			
+																			MADCAM1		MIR1205	LINC00460			
+																			PPAP2C		MIR1207	RNA5SP38			
+																			MED16		PVT1	SNORA25|ENSG00000252550.1			
+																			FSTL3		MIR1208	LINC00344			
+																			SHC2		MIR3686	LINC00343			
+																			FGF22		MIR5194	METTL21EP			
+																			THEG			RNY5P8			
+																			MIER2			LINC00283			
+																			RNF126			CCDC168			
+																			WDR18			snoU13|ENSG00000238869.1			
+																			LPPR3			LINC00555			
+																			KISS1R			ATP4B			
+																			R3HDM4			COL4A1			
+																			TMEM259			COL4A2			
+																			TPGS1			EFNB2			
+																			GRIN3B			ERCC5			
+																			MISP			F7			
+																			C2CD4C			F10			
+																			ODF3L2			ING1			
+																			PRSS57			LAMP1			
+																			MIR3187			LIG4			
+																						SLC10A2			
+																						SOX1			
+																						TFDP1			
+																						TPP2			
+																						CUL4A			
+																						IRS2			
+																						PROZ			
+																						ARHGEF7			
+																						TUBGCP3			
+																						TNFSF13B			
+																						MYO16			
+																						ATP11A			
+																						MCF2L			
+																						BIVM			
+																						TMCO3			
+																						ANKRD10			
+																						RAB20			
+																						CARKD			
+																						PCID2			
+																						KDELC1			
+																						CARS2			
+																						GRTP1			
+																						ABHD13			
+																						TEX30			
+																						ADPRHL1			
+																						TEX29			
+																						SPACA7			
+																						METTL21C			
+																						DAOA			
+																						C13orf35			
+																						FAM155A			
