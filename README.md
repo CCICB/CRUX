@@ -1,8 +1,14 @@
 # CRUX
 
+
 ## Description
-An R package that provides a graphical interface for cohort-level tertiary cancer analysis.
+
+A shiny app that simplifies cohort-level, tertiary cancer analysis.
 You can import your own data, or use public TCGA or PCAWG datasets.
+
+> **Success**
+> CRUX is now live at https://ccicb.shinyapps.io/crux/
+
 
 ## Manual
 A **manual** describing the installation and use of **CRUX** can be found [**here**](https://crux-docs.readthedocs.io/en/latest/index.html)
