@@ -6,7 +6,7 @@
 A shiny app that simplifies cohort-level, tertiary cancer analysis.
 You can import your own data, or use public TCGA or PCAWG datasets.
 
-> **Info**
+> **Note**
 > CRUX is now live at https://ccicb.shinyapps.io/crux/
 
 
