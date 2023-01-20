@@ -10,6 +10,7 @@
 mod_data_import_ui <- function(id){
   ns <- NS(id)
   
+  # Step 1
   tagList(
     shinyWidgets::panel(
       heading = tags$span(tags$strong("Step 1: "), "Import Genomic Data (MAF)"),
@@ -24,6 +25,7 @@ mod_data_import_ui <- function(id){
       ),
     ), icon_down_arrow(break_after=TRUE),
     
+    # Step 2
     shinyWidgets::panel(
       heading = tags$span(tags$strong("Step 2: "), "Import Clinical Annotations"),
       fluidRow(
@@ -37,6 +39,7 @@ mod_data_import_ui <- function(id){
       ),
     ),icon_down_arrow(break_after=TRUE),
     
+    # Step 3
     shinyWidgets::panel(
       heading = tags$span(tags$strong("Step 3: "), "Add Cohort Level Metadata"),
       shiny::fluidRow(
@@ -47,8 +50,9 @@ mod_data_import_ui <- function(id){
       )
     ),icon_down_arrow(break_after=TRUE),
     
+    # Step 4
     shinyWidgets::panel(
-      heading = "Step 4: Add to Data Pool",
+      heading = "Step 4: Import Data!",
       shiny::actionButton(
         inputId = ns("in_bttn_import"), 
         label = "Import", 
