@@ -19,7 +19,7 @@ mod_plot_gistic_oncoplot_ui <- function(id){
       #numericInput(ns("in_num_top_n"), label = "Number of Cytobands to Show", value = 5, min = , max = , step = )
       fluidRow(
         mod_select_maf_clinical_data_column_ui(id = ns("mod_select_clinical_feature"), multiple = TRUE, label = "Select Clinical Feature") %>% col_3(),
-        shinyWidgets::awesomeCheckbox(inputId = ns("in_check_show_tsb"), label = "Toggle Tumor Sample Barcodes", value = TRUE) %>% col_3(style = "margin-top: 30px"),
+        shinyWidgets::awesomeCheckbox(inputId = ns("in_check_show_tsb"), label = "Toggle Tumor Sample Barcodes", value = FALSE) %>% col_3(style = "margin-top: 30px"),
         shinyWidgets::awesomeCheckbox(inputId = ns("in_check_sort_by_annotation"), label = "Sort by annotation", value = FALSE) %>% col_3(style = "margin-top: 30px"),
         shinyWidgets::awesomeCheckbox(inputId = ns("in_check_remove_nonaltered_samples"), label = "Remove NonAltered Samples", value = TRUE) %>% col_3(style = "margin-top: 30px")
       ),

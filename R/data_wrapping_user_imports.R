@@ -17,7 +17,7 @@ user_data_filepath_to_class_maf_dataset_wrapper <- function(filepath, clinicalDa
   assertthat::assert_that(file.exists(filepath))
   
   
-  if(!is.na(loaded_data) & class(loaded_data) == "MAF"){
+  if(inherits(loaded_data, what = "MAF")){
    sample_number = loaded_data@summary$summary[3] %>% as.numeric()
   }
   else
