@@ -9,14 +9,20 @@
 #'
 #'
 #' @family arrows
-icon_down_arrow <- function(fontsize="40px", alignment = "center"){
+icon_down_arrow <- function(fontsize="40px", alignment = "center", break_after = FALSE){
   utilitybeltassertions::assert_non_empty_string(fontsize)
   utilitybeltassertions::assert_non_empty_string(alignment)
   
   style_ = paste0("font-size: ",fontsize,"; text-align: center;")
-  fluidRow(style="display: grid",
+  f <- fluidRow(style="display: grid",
            tags$i(class = "glyphicon glyphicon-arrow-down", style = style_)
   )
+  
+  if(break_after){
+   return(tagList(f, br())) 
+  }
+  else
+    return(f)
 }
 
 #' HTML_alert

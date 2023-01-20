@@ -11,73 +11,55 @@ mod_data_import_ui <- function(id){
   ns <- NS(id)
   
   tagList(
-    div(id=ns("import_wizard_wrapper"),
-      tabsetPanel(
-        id=ns("import_wizard"),
-        type = "hidden",
-        
-        tabPanel(
-          title = "page_1_import_maf",
-          shinyWidgets::panel(
-             heading="Step 1: Import MAF",
-             mod_shinyfiles_get_maf_path_ui(id = ns("mod_get_maf_path")),
-             br(),
-             mod_data_import_maf_path_to_maf_ui(id=ns("mod_data_import_maf_path_to_maf"))
-           ),
-          fluidRow(
-            column(11),
-            col_1(dipsaus::actionButtonStyled(inputId = ns("page_1_to_2"), label = "Continue", type = "danger", disabled = TRUE, width = "100%"), style='padding-left:0px;')
-          )
-        ),
-        
-        tabPanel(
-          title = "page_2_add_cohortlevel_metadata",
-          shinyWidgets::panel(
-           heading="Step 2: Cohort Level Metadata",
-           mod_data_import_step2_ui(id=ns("mod_data_import_step2"))
-          ),
-          fluidRow(
-            col_10(),
-            back_button(ns("in_bttn_restart1")),
-            col_1(dipsaus::actionButtonStyled(inputId = ns("page_2_to_3"), label = "Continue", type = "danger", disabled = TRUE, width = "100%"), style='padding-left:0px;')
-          )
-        ),
-        
-        tabPanel(
-          title = "page_3_add_tumor_level_metadata",
-          shinyWidgets::panel(
-           heading="Step 3: Tumor Level Metadata",
-           mod_shinyfiles_get_clinical_featurefile_path_ui(id = ns("mod_get_clinical_featurefile_path")),
-           downloadButton(ns("out_download_template"), label = "Download Template"),
-           hr(),
-           mod_render_clinical_data_table_ui(ns("mod_render_clinical_data_table")) %>%
-             shinycssloaders::withSpinner(proxy.height = 300)
-          ),
-          fluidRow(
-            col_10(),
-            back_button(ns("in_bttn_restart2")),
-            col_1(dipsaus::actionButtonStyled(inputId = ns("page_3_to_4"), label = "Continue", type = "danger", disabled = TRUE, width = "100%"), style='padding-left:0px;')
-          )
-        ),
-        
-        tabPanel(
-          title = "page_4_review_and_confirm",
-          shinyWidgets::panel(heading = "Step 4: Review and Confirm",
-            #mod_single_cohort_summary_tables_and_plots_ui(id = ns("mod_single_cohort_summary_tables_and_plots"))
-            mod_single_cohort_summary_tables_ui(id = ns("mod_single_cohort_summary_tables"))
-          ),
-          fluidRow(
-            column(9),
-            back_button(ns("in_bttn_restart3")),
-            col_2(dipsaus::actionButtonStyled(inputId = ns("in_bttn_send_to_data_pool"), label = "Add to data pool", type = "success", width = "100%"), style='padding-left:0px;')
-          )
-        )
+    shinyWidgets::panel(
+      heading = tags$span(tags$strong("Step 1: "), "Import Genomic Data (MAF)"),
+      fluidRow(
+        shiny::fileInput(inputId = ns("in_file_maf"), label = "Select MAF file") %>% col_3(),
+        shinydashboard::box(
+          title = "Mutation Annotation Format (MAF) Files",width = "100%",
+          "
+          MAF files are tabular files that storing a list of mutations. 
+          To learn more about how to get your data in MAF format: see here.
+          ") %>% column(width = 9)
       ),
-      br()
+    ), icon_down_arrow(break_after=TRUE),
+    
+    shinyWidgets::panel(
+      heading = tags$span(tags$strong("Step 2: "), "Import Clinical Annotations"),
+      fluidRow(
+        shiny::fileInput(inputId = ns("in_file_clindata"), label = "Select Clinical Annotations File") %>% col_3(),
+        shinydashboard::box(
+          title = "Clinical Annotation Files", width = "100%",
+          "
+          Clinical data associated with each sample/Tumor_Sample_Barcode in MAF. Could be a csv/tsv file.
+          To learn more about how to prepare your clinical annotations file: see here.
+          ") %>% column(width = 9)
+      ),
+    ),icon_down_arrow(break_after=TRUE),
+    
+    shinyWidgets::panel(
+      heading = tags$span(tags$strong("Step 3: "), "Add Cohort Level Metadata"),
+      shiny::fluidRow(
+        shiny::textInput(inputId = ns("in_text_displayname"), label = "Display Name", placeholder = "High Grade Glioma" ,width = "100%") %>% col_4(),
+        shiny::textInput(inputId = ns("in_text_shortname"), label = "Short Name", placeholder = "HGG", width = "100%") %>% col_4(),
+        shiny::textInput(inputId = ns("in_text_data_source"), label = "Source", placeholder = "ZERO Program", width = "100%") %>% col_4(),
+        shiny::textInput(inputId = ns("in_text_description"), label = "Descripton", placeholder = "High Grade Glioma from a paediatric cohort with survival <30%", width = "100%") %>% col_12()
+      )
+    ),icon_down_arrow(break_after=TRUE),
+    
+    shinyWidgets::panel(
+      heading = "Step 4: Add to Data Pool",
+      shiny::actionButton(
+        inputId = ns("in_bttn_import"), 
+        label = "Import", 
+        width = "100%",
+        icon = icon("file-import"),
+        class = "btn btn-primary"
+      )
     )
   )
 }
-    
+
 #' data_import2 Server Functions
 #'
 #' @noRd 
@@ -85,122 +67,85 @@ mod_data_import_server <- function(id, maf_data_pool){
   utilitybeltshiny::assert_reactive(maf_data_pool)
   
   moduleServer( id, function(input, output, session){
+    
     ns <- session$ns
+    
+    # Define some basic reactive values
+    cohort_metdata_filled <- reactive({
+      nchar(input$in_text_displayname) > 0 & 
+      nchar(input$in_text_shortname) > 0 &
+      nchar(input$in_text_data_source) > 0 &
+      nchar(input$in_text_description) > 0 
+      })
+    
+    
+    # When clicking the button 'add to data pool'
+    observeEvent(input$in_bttn_import, isolate({
       
-    maf_path=mod_shinyfiles_get_maf_path_server(id = "mod_get_maf_path")
-    metadata=mod_data_import_step2_server(id = "mod_data_import_step2")
-    clinical_features_path=reactive({
-      if(input$import_wizard == "page_1_import_maf") {
+      
+      # Check a maf file has been supplied
+      if(is.null(input[["in_file_maf"]]$datapath)){
+        shinyWidgets::sendSweetAlert(
+          session = session,
+          title = "Missing MAF",
+          text = "Please select a MAF file",
+          type = "warning"
+        )
         return(NULL)
       }
-      else{
-        mod_shinyfiles_get_clinical_featurefile_path_server(id = "mod_get_clinical_featurefile_path")()
+      
+      # Check all metadata has been supplied
+      if(!cohort_metdata_filled()){
+        shinyWidgets::sendSweetAlert(
+          session = session,
+          title = "Missing metadata",
+          text = "Fill out all cohort level metadata fields",
+          type = "warning"
+        )
+        return(NULL)
       }
-    })
-    maf=mod_data_import_maf_path_to_maf_server(id = "mod_data_import_maf_path_to_maf", maf_path = maf_path, clinicalData = clinical_features_path)
-    mod_render_clinical_data_table_server(id = "mod_render_clinical_data_table", maf = maf)
-
-    # Wizard Manager ----------------------------------------------------------
-    switch_page <- function(page_to_change_to) { #needs to be in server as it uses session argument
-      updateTabsetPanel(session,  inputId = "import_wizard", selected = page_to_change_to)
-    }
-    
-    #Change page conditionals
-    valid_maf_loaded <- reactive({ !is.null(maf()) }) #Maf will only be valid if MAF file is valid AND clinical data file is either NULL or valid
-    cohort_level_metadata_valid <- reactive({ metadata()[["all_valid"]] })
-    
-    
-    observeEvent(input$page_1_to_2, { message("clickitied"); if(isolate(valid_maf_loaded())) switch_page("page_2_add_cohortlevel_metadata")} )
-    observeEvent(input$page_2_to_3, { message("clickitied"); if(isolate(cohort_level_metadata_valid())) switch_page("page_3_add_tumor_level_metadata")} )
-    observeEvent(input$page_3_to_4, { message("clickitied"); if(isolate(valid_maf_loaded())) switch_page("page_4_review_and_confirm")} )
-    
-    cohortName = reactive({ metadata()["display_name"] })
-    
-    #Modules
-    mod_single_cohort_summary_tables_server(id = "mod_single_cohort_summary_tables", maf = maf, cohortName = cohortName)
-    
-    #Make buttons clickable when conditions are met:
-    observeEvent( valid_maf_loaded() , {
-      if(isolate(valid_maf_loaded()) == TRUE){
-        dipsaus::updateActionButtonStyled(session = session, inputId = "page_1_to_2", type = "success",label = "Continue")
+      
+      
+      # Try and read maf file
+      # If it fails, save error message to maf variable instead
+      maf <- tryCatch({
+        maftools::read.maf(maf = input[["in_file_maf"]]$datapath, clinicalData = input[["in_file_clindata"]]$datapath)
+        }, error = function(err) return(as.character(err)), warning = function(warn) {return(as.character(warn))} )
+      
+      # If MAF read failed, inform user of error
+      if(is.character(maf)){
+        message <- if(!is.null(input[["in_file_clindata"]])) "and clinical metadata " else " "
+        shinyWidgets::sendSweetAlert(
+          session = session,
+          title = "Failed to Read MAF",
+          text = tags$div(
+            "Please ensure MAF file ", message,"is formatted correctly.", tags$br(), tags$br(), tags$code(maf)),
+          html = TRUE,
+          type = "warning"
+        )
+        return(NULL)
       }
-      else
-        dipsaus::updateActionButtonStyled(session = session, inputId = "page_1_to_2", label = "Continue", type = "danger", disabled = TRUE)
-    })
-    
-    observeEvent( cohort_level_metadata_valid() , {
-      if(isolate(cohort_level_metadata_valid()) == TRUE){
-        dipsaus::updateActionButtonStyled(session = session, inputId = "page_2_to_3", type = "success",label = "Continue")
-      }
-      else
-        dipsaus::updateActionButtonStyled(session = session, inputId = "page_2_to_3", label = "Continue", type = "danger", disabled = TRUE)
-    })
-    
-    observeEvent( valid_maf_loaded() , {
-      if(isolate(valid_maf_loaded()) == TRUE){
-        dipsaus::updateActionButtonStyled(session = session, inputId = "page_3_to_4", type = "success",label = "Continue")
-      }
-      else
-        dipsaus::updateActionButtonStyled(session = session, inputId = "page_3_to_4", label = "Continue", type = "danger", disabled = TRUE)
-    })
-    
-    
-    
-    # Send to data pool -------------------------------------------------------
-    observeEvent(input$in_bttn_send_to_data_pool, {
-      message("Button Clicked")
+      
+      # Add to data pool
       updated_maf_data_pool <- user_to_dataset_to_data_pool(
         maf_data_pool = maf_data_pool(), 
-        filepath = maf_path(), 
-        clinicalData = maftools::getClinicalData(maf()), #TODO remove. Simply ask user to specify a file to store their data, write to inst config file.
-        display_name = metadata()[["display_name"]], 
-        short_name = metadata()[["short_name"]], 
-        description = metadata()[["description"]], 
-        data_source = metadata()[["data_source"]],
-        loaded_data = maf()
+        filepath = input[["in_file_maf"]]$datapath,
+        display_name = input[["in_text_displayname"]], 
+        short_name = input[["in_text_shortname"]], 
+        description = input[["in_text_description"]],
+        data_source = input[["in_text_data_source"]],
+        loaded_data = maf
       )
-      
       maf_data_pool(updated_maf_data_pool)
-      shinyWidgets::sendSweetAlert(session = session, title = "Success !!", text = "Dataset has been successfully imported! ", type = "success")
-      reset_data_import_wizard()
-    })
+      
+      # Send success message
+      shinyWidgets::sendSweetAlert(
+        session = session,
+        title = "Dataset Succesfully Added",
+        text = "Go to 'Single Cohort Genomics' module and select your new dataset to start deriving insights!",
+        type = "success"
+      )
+      }))
     
-    
-    any_back_button_clicked <- reactive({ (input$in_bttn_restart1 + input$in_bttn_restart2 + input$in_bttn_restart3) > 0 })
-    observeEvent( any_back_button_clicked() , {
-      #message("Resetting")
-      reset_data_import_wizard()
-    })
-    
-    reset_data_import_wizard <- function(){
-      shinyjs::reset(id = "import_wizard_wrapper")
-      switch_page(page_to_change_to = "page_1_import_maf")
-      #TODO find a way to reset shinyfile inputs
-    }
-    # output$out_dt_placeholder <- DT::renderDataTable({ clinical_data() }, options = list(scrollX = TRUE), class = "display nowrap")
-    
-    output$out_download_template <- downloadHandler(filename = "clinical_features_template.tsv", function(file){
-      message("DOWNLOADNNG")
-      maftools::getClinicalData(maf()) %>%
-        dplyr::mutate(FirstMetadataColumn=character(nrow(.)), AnotherPieceOfMetadata=character(nrow(.)), YetAnotherMetadataColumnThatCanBeNamedWhateverYouLike=character(nrow(.))) %>%
-        data.table::fwrite(file=file, sep="\t")
-      })
   })
 }
-
-
-back_button <- function(id){
-  return(tagList(
-  col_1(
-    style='padding-right: 2px;', 
-    align = "right",
-    dipsaus::actionButtonStyled(style = "padding: 6px 6px",inputId = id, label = tags$i(class = "fas fa-arrow-alt-circle-left", style="font-size: 14px; text-align: left; text-align: middle;"), type = "info", width = "30%"),
-    shinyBS::bsTooltip(id = id, title = "Reset", placement = "top")
-    )
-  ))
-}
-## To be copied in the UI
-# mod_data_import_ui("data_import2_ui_1")
-    
-## To be copied in the server
-# mod_data_import_server("data_import2_ui_1")
