@@ -24,7 +24,7 @@ mod_cnv_ui <- function(id){
     
     # Step 2: Select GISTIC directory -----------------------------------------
     shinyWidgets::panel(
-      heading = "Step 2: Are you using inbuild GISTIC data or importing your own?",
+      heading = "Step 2: Are you using inbuilt GISTIC data or importing your own?",
       shinyWidgets::radioGroupButtons(
       inputId = ns("in_bttn_preloaded_or_user"),
       label = "Label",
@@ -167,7 +167,9 @@ mod_cnv_server <- function(id, maf_data_pool){
         
         gistic_ <- tryCatch(
          expr = { 
-           readRDS(file = input[["in_file_gistic"]]$datapath)
+           g <- readRDS(file = input[["in_file_gistic"]]$datapath)
+           if(!inherits(g, "GISTIC")) 
+             shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = tags$span(tags$code("RDS file does not encode a GISTIC object.")))
          },
          error = function(err){
            shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = tags$span(tags$code(as.character(err))))
