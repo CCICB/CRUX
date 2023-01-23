@@ -30,7 +30,7 @@ mod_plot_gistic_oncoplot_ui <- function(id){
         numericInput(ns("in_num_fontsize_annotations"), label = "Fontsize: Annotations", value = 1.2, min = 0.01, step = 0.1) %>% col_3()
       ),
       fluidRow(
-        numericInput(ns("in_num_mar_gene"), label = "Margin: Genes", value = 5, min = 0.01, step = 1) %>% col_3(),
+        numericInput(ns("in_num_mar_gene"), label = "Margin: Genes", value = 6, min = 0.01, step = 1) %>% col_3(),
         numericInput(ns("in_num_mar_barcodes"), label = "Margin: Barcodes", value = 5, min = 0.01, step = 1) %>% col_3(),
         numericInput(ns("in_num_sepwd_genes"), label = "Sepwd: Genes", value = 0.5, min = 0.01, step = 1) %>% col_3(),
         numericInput(ns("in_num_sepwd_samples"), label = "Sepwd: Samples", value = 0.25, min = 0.01, step = 1) %>% col_3()
