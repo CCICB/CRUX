@@ -1,3 +1,5 @@
+df_tcga_gistic <- TCGAgistic::tcga_gistic_available()
+num_gistic_choices <- seq_len(nrow(df_tcga_gistic)) 
 #' cnv UI Function
 #'
 #' @description A shiny Module.
@@ -22,44 +24,50 @@ mod_cnv_ui <- function(id){
     
     # Step 2: Select GISTIC directory -----------------------------------------
     shinyWidgets::panel(
-      heading = HTML(paste0("Step 2: Select GISTIC files", as.character(select_gistic_help_icon()), sep = " ")),
-      fileInput(inputId = ns("in_file_lesions"), label = "All Lesions", multiple = FALSE, accept = ".txt", width = "100%") %>% col_3(),
-      fileInput(inputId = ns("in_file_amp"), label = "Amplified Genes", multiple = FALSE, accept = ".txt", width = "100%") %>% col_3(),
-      fileInput(inputId = ns("in_file_del"), label = "Deleted Genes", multiple = FALSE, accept = ".txt", width = "100%") %>% col_3(),
-      fileInput(inputId = ns("in_file_scores"), label = "Scores", multiple = FALSE, width = "100%") %>% col_3()
-    ),
-    icon_down_arrow(break_after = TRUE),
+      heading = "Step 2: Are you using inbuild GISTIC data or importing your own?",
+      shinyWidgets::radioGroupButtons(
+      inputId = ns("in_bttn_preloaded_or_user"),
+      label = "Label",
+      choices = c("Inbuilt", "Custom"),
+      justified = TRUE)
+    ), icon_down_arrow(break_after = TRUE),
     
-    # # Step 3: Check automatic identification of GISTIC files ------------------
-    # shinyWidgets::panel(
-    #   heading = HTML(paste0("Step 3: Check automatic identification of required gistic files is correct", "      ", gistic_help_icon())),
-    #   fluidRow(
-    #     shinyWidgets::pickerInput(inputId = ns("in_file_lesions"), label = "All Lesions", choices = NULL) %>% col_3(),
-    #     shinyWidgets::pickerInput(inputId = ns("in_file_amp"), label = "Amplified Genes", choices = NULL) %>% col_3(),
-    #     shinyWidgets::pickerInput(inputId = ns("in_file_del"), label = "Deleted Genes", choices = NULL) %>% col_3(),
-    #     shinyWidgets::pickerInput(inputId = ns("in_file_scores"), label = "Scores", choices = NULL) %>% col_3()
-    #     
-    #   )
-    # ),
-    # icon_down_arrow(break_after = TRUE),
-    
-    # Step 4: Configure Analysis ----------------------------------------------
     shinyWidgets::panel(
-      heading = "Step 4: Configure Analysis",
-      fluidRow(
-        shinyWidgets::awesomeCheckbox(inputId = ns("in_check_is_tcga"), label = "Data is from TCGA", value = FALSE) %>% 
-          bsplus::bs_embed_tooltip(title = "Is the GISTIC data from a TCGA project? If so, we truncate the Tumor_Sample_Barcodes to patient level rather than sequencing_run level",placement = "top") %>%
-          col_2(),
-        shinyWidgets::awesomeRadio(inputId = ns("in_check_cn_level"), label = HTML(paste0("cnLevel", icon(""))), choices = c("all", "deep", "shallow"), selected = "all", inline = TRUE) %>%
-          bsplus::bs_embed_tooltip(title = "Level of CN changes to use. Can be 'all', 'deep' or 'shallow'. Default uses all i.e, genes with both 'shallow' or 'deep' CN changes", placement="top") %>% 
-          col_4() 
+      heading = HTML(paste0("Step 3: Select GISTIC files", as.character(select_gistic_help_icon()), sep = " ")),
+    
+      tabsetPanel(id = ns("in_tabset"), type = "hidden",
+        tabPanelBody(
+          value = "Inbuilt",
+          shinyWidgets::pickerInput(
+            inputId = ns("in_pick_gistic"), 
+            label = "Select CNV dataset", 
+            choices = seq_len(nrow(df_tcga_gistic)) ,
+            options = list(title = "Please select a GISTIC dataset"),
+            choicesOpt = list(
+              content = paste0(
+                TCGAgistic::tcga_gistic_available()[[2]],
+                " ",
+                TCGAgistic::tcga_gistic_available()[[4]] %>% paste0("<span class='label label-default' style='margin-left: 10px; font-size: xx-small' >",., "</span>"),
+                " ",
+                TCGAgistic::tcga_gistic_available()[[1]] %>% paste0("<span class='label label-default' style='margin-left: 10px; font-size: xx-small' >",., "</span>"),
+                " ",
+                "TCGA" %>% paste0("<span class='label label-default' style='margin-left: 10px; font-size: xx-small' >",., "</span>")
+                
+              ) 
+            ))    
+          ),
+        tabPanelBody(
+          value = "Custom",
+          fileInput(inputId = ns("in_file_gistic"), label = "Select your GISTIC rds")
+         ),
       )
     ),
+    
     icon_down_arrow(),br(),
     # Step 5: Ensure Your Variant Dataset Sample Names Match Your CNV (GISTIC) Sample Names ------------------------------------------------------------------
     shinyWidgets::panel(
       heading = "Step 5: Ensure your SNV vs CNV (GISTIC) sample names match",
-      plotOutput(outputId = ns("out_plot_sample_name_overlap"), height = "300px", width="auto")
+      plotOutput(outputId = ns("out_plot_sample_name_overlap"), height = "300px", width="auto") %>% shinycssloaders::withSpinner()
     ),
     icon_down_arrow(break_after = TRUE),
     
@@ -102,7 +110,18 @@ mod_cnv_server <- function(id, maf_data_pool){
     #observe({ maf_dataset_wrapper_validated() ; maf() })
     maf <- reactive({ maf_dataset_wrapper_validated()$loaded_data })
 
-
+    use_inbuilt_gistic <- reactive({input[["in_bttn_preloaded_or_user"]] == "Inbuilt"})
+    
+    # Choose where to get your user input from
+    observeEvent(use_inbuilt_gistic(), isolate({
+      if(!use_inbuilt_gistic()){
+        updateTabsetPanel(session = session, inputId = "in_tabset", selected = "Custom")
+        #shinyjs::hide(id = input[["in_pick_gistic"]])
+      }
+      else if(use_inbuilt_gistic())
+        updateTabsetPanel(session = session, inputId = "in_tabset", selected = "Inbuilt")
+    }))
+    
     
 
     # Select Gistic Files -----------------------------------------------------
@@ -110,37 +129,61 @@ mod_cnv_server <- function(id, maf_data_pool){
     #   input[['in_file_gistic_data']]$datapath
     #   })
     
-    all_files_supplied <- reactive({
-      in_file_ids <- c("in_file_lesions", "in_file_amp", "in_file_del",  "in_file_scores")
-      #browser()
-      all(vapply(in_file_ids, function(id) { !is.null(input[[id]]) && nchar(input[[id]]$datapath) > 0}, FUN.VALUE = logical(1)))
+    gistic_selected <- reactive({
+      !is.null(input[["in_pick_gistic"]]) && nchar(input[["in_pick_gistic"]]) > 0
     })
 
     
     gistic <- reactive({
-      validate(need(all_files_supplied(), message = "Please supply gistic files"))
-      gistic_ <- tryCatch(
-        expr = { 
-          maftools::readGistic(
-            gisticAllLesionsFile = input[["in_file_lesions"]]$datapath,
-            gisticAmpGenesFile = input[["in_file_amp"]]$datapath, 
-            gisticDelGenesFile = input[["in_file_del"]]$datapath,
-            gisticScoresFile = input[["in_file_scores"]]$datapath, 
-            cnLevel = input[["in_check_cn_level"]], 
-            isTCGA = input[["in_check_is_tcga"]],
-          )
-        },
-        error = function(err){
-          shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = tags$span(tags$code(as.character(err))))
-          validate("Failed to Read Gistic")
-        },
-        warning = function(warn){
-          shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = tags$span(tags$code(as.character(warn))))
-          validate("Failed to Read Gistic")
-        }
+      
+      # If we use inbuilt gistic
+      if(use_inbuilt_gistic()){
+        validate(need(gistic_selected(), message = "Please select a gistic dataset"))
+        gistic_ <- tryCatch(
+          expr = { 
+            
+            index <- as.numeric(input[["in_pick_gistic"]])
+            cohort <- df_tcga_gistic[["Cohort"]][index]
+            source <- df_tcga_gistic[["Source"]][index]
+            cnLevel <- df_tcga_gistic[["CopyNumberLevel"]][index]
+            
+            gistic_ <- TCGAgistic::tcga_gistic_load(cohort = cohort, source = source, cnLevel = cnLevel, verbose = FALSE)
+          },
+          error = function(err){
+            shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = tags$span(tags$code(as.character(err))))
+            validate("Failed to Read Gistic")
+          },
+          warning = function(warn){
+            shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = tags$span(tags$code(as.character(warn))))
+            validate("Failed to Read Gistic")
+          }
+          
+        )
+        return(gistic_)
+      }
+      # If we use user-supplied gistic
+      else{
+        validate(need(!is.null(input[["in_file_gistic"]]$datapath), message = "Please supply a valid GISTIC2 rds file"))
         
-      )
-      return(gistic_)
+        gistic_ <- tryCatch(
+         expr = { 
+           readRDS(file = input[["in_file_gistic"]]$datapath)
+         },
+         error = function(err){
+           shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = tags$span(tags$code(as.character(err))))
+           validate("Please supply a valid Gistic RDS")
+         },
+         warning = function(warn){
+           shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = tags$span(tags$code(as.character(warn))))
+           validate("Please supply a valid Gistic RDS")
+         }
+       ) 
+        return(gistic_)
+    
+      }
+        
+      
+      
     })
   
     
@@ -148,7 +191,7 @@ mod_cnv_server <- function(id, maf_data_pool){
     
     output$out_plot_sample_name_overlap <- renderPlot({
       validate(need(!is.null(maf()), message = "Dataset failed to load"))
-      maftools_maf_and_gistic_sample_name_overlap_venn(maf = maf(), gistic = gistic())
+      maftools_maf_and_gistic_sample_name_overlap_venn(maf = maf(), gistic = gistic()) 
     })
     
     

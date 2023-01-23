@@ -48,8 +48,9 @@ Imports:
     utilitybeltrna,
     PCAWGmutations,
     pheatmap,
-    pkgload
-Remotes: 
+    pkgload,
+    TCGAgistic (>= 0.0.0.9000)
+Remotes:  
     selkamand/utilitybeltassertions,
     selkamand/utilitybeltshiny,
     selkamand/utilitybeltlists,
@@ -58,7 +59,8 @@ Remotes:
     ebailey78/shinyBS,
     CCICB/somaticflags,
     CCICB/PCAWGmutations
-    selkamand/mutalisk
+    selkamand/mutalisk,
+    CCICB/TCGAgistic
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.1
