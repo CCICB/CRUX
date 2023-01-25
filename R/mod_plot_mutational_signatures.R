@@ -31,7 +31,7 @@ mod_plot_mutational_signatures_ui <- function(id){
       
       fluidRow(
         shiny::selectInput(ns("in_select_facet_column"), label = "Facet by", choices = NA, selectize = TRUE) %>% column(width = 3),
-        shiny::numericInput(ns("in_num_facet_ncol"),label = "Number of columns", value = 1, min = 1, step = 1) %>% column(width = 3),
+        #shiny::numericInput(ns("in_num_facet_ncol"),label = "Number of columns", value = 1, min = 1, step = 1) %>% column(width = 3),
         shiny::numericInput(ns("in_num_fontsize_strip"),label = "Fontsize: strip titles", value = 18, min = 0.01, step = 2) %>% column(width = 3),
         shiny::numericInput(ns("in_num_fontsize_axis_titles"),label = "Fontsize: axis titles", value = 18, min = 0.01, step = 2) %>% column(width = 3)
       ),
@@ -75,9 +75,11 @@ mod_plot_mutational_signatures_server <- function(id, mutalisk_df){
         lump_type = input$in_select_lump_type,
         facet_column = selected_facet_column(),
         legend = input$in_select_legend, legend_direction = "horizontal",
-        facet_ncol = input$in_num_facet_ncol,
+        #facet_ncol = input$in_num_facet_ncol,
         fontsize_strip = input$in_num_fontsize_strip,
-        fontsize_axis_title = input$in_num_fontsize_axis_titles, lump_min = input$in_num_lump_min, topn = input$in_num_topn
+        fontsize_axis_title = input$in_num_fontsize_axis_titles, 
+        lump_min = input$in_num_lump_min,
+        topn = input$in_num_topn
       ))
     } 
     })

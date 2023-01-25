@@ -19,33 +19,34 @@ mod_mutational_signatures_ui <- function(id){
     icon_down_arrow(), br(),
     
     shinyWidgets::panel(
-      heading = "Step 2: Select Mutalisk Directory: ",
-      wellPanel("You can generate this folder as follows: ",
+      heading = "Step 2: Select Mutalisk Files: ",
+      wellPanel("You can generate these files as follows: ",
                 tags$ol(
                   tags$li("Go to ", tags$strong("External Tools => Export Data for Mutalisk")),
                   tags$li("Follow instructions to run mutational signature analysis"),
                   tags$li("Once the results are ready, Select",  tags$strong("Mutational Signature (Best only)"), " then click:", tags$strong("Get the selected result for all samples at once")),
-                  tags$li("Unzip the file, and then select the directory using the button below")
+                  tags$li("Unzip the file, then click 'browse' below.  select all <strong>.txt</strong> files in the unzipped mutalisk folder")
                 )
                 ),
-      mod_shinydir_import_ui(id = ns("in_choose_dir"), label = "Choose Mutalisk Directory", title = "Choose Mutalisk Directory"),
+      fileInput(inputId = ns("in_mutalisk_files"), label = "Mutalisk Files", multiple = TRUE, accept = ".txt", width = "100%", placeholder = "Please select all Mutalisk Reports")
+      #mod_shinydir_import_ui(id = ns("in_choose_dir"), label = "Choose Mutalisk Directory", title = "Choose Mutalisk Directory"),
     ),
     
     shinyWidgets::panel(
       heading = "Step 3: Check Sample IDs match",
       uiOutput(outputId = ns("out_ui_samples_match"))
-    ), 
-    
-    icon_down_arrow(), br(),
-    
-    shinyWidgets::panel(
-      heading = "Step 4: Review Tabular Data",
-      mod_render_downloadabledataframe_ui(ns("mutalisk_df")),
-      br()
     ),
     
     icon_down_arrow(), br(),
     
+    shinyWidgets::panel(
+     heading = "Step 4: Review Tabular Data",
+     mod_render_downloadabledataframe_ui(ns("mutalisk_df")),
+     br()
+    ),
+
+    icon_down_arrow(), br(),
+
     shinyWidgets::panel(
       heading="Step 5: Visualise Signature Contributions",
       mod_plot_mutational_signatures_ui(ns("mod_plot_mutsig"))
@@ -76,40 +77,66 @@ mod_mutational_signatures_server <- function(id, maf_data_pool){
     })
     
     # Get path to mutalisk directory
-    mutalisk_dir <- mod_shinydir_import_server(id="in_choose_dir")
+    mutalisk_files <- reactive({
+      validate(need(!is.null(input[["in_mutalisk_files"]]$datapath), message = "Please select mutalisk files"))
+      return(input[["in_mutalisk_files"]]$datapath)
+      })
     
     # Parse directory contents and create a dataframe
     mutalisk_df <- reactive({
-      validate(need(file.exists(mutalisk_dir()), message = "Please select a mutalisk output directory"))
-      tryCatch({mutalisk::mutalisk_best_signature_directory_to_dataframe(directory = mutalisk_dir(), metadata = sample_metadata_df())
+      validate(need(!is.null(mutalisk_files()), message = "Please select mutalisk output files"))
+      validate(need(!is.null(sample_metadata_df()), message = "Please select mutalisk output files"))
+      
+      
+      df_mutalisk <- tryCatch({
+          browser()
+          df_mutalisk_ <- mutalisk::mutalisk_to_dataframe(mutalisk_files = mutalisk_files(), sample_names_from_file_contents = TRUE)
+          df_mutalisk_ <- mutalisk::mutalisk_dataframe_add_metadata(df_mutalisk_, sample_metadata = sample_metadata_df())
+          return(df_mutalisk_)
       },
       error=function(e){
-        m = "Failed to parse mutalisk files. Are you sure the directory you selected was mutalisk output?"
+        shinyWidgets::sendSweetAlert(
+          session = session, 
+          title = "Failed to Read Mutalisk Input",
+          type = "error", text = tags$code(as.character(e))
+        )
         #error_message = paste0(as.character(e), collapse = ";")
         #full_error_message = paste(m, error_message, sep="\n")
         validate(m)
       }
       )
+      browser()
+      return(df_mutalisk)
     })
     
     # Check samples in selected dataset match whats in mutalisk_dir
-    dataset_matches_directory <- reactive({
-      mutalisk_samples=unique(mutalisk_df()$SampleID)
+    samples_undescribed_by_mutalisk <- reactive({
+      mutalisk_samples = unique(mutalisk_df()$SampleID)
       dataset_samples = unique(maftools::getSampleSummary(maf())[["Tumor_Sample_Barcode"]])
-      if (all(mutalisk_samples %in% dataset_samples)){
-        return(TRUE)
-      }
-      else 
-        return(FALSE)
+      dataset_samples[!dataset_samples %in% mutalisk_samples]
+      })
+    
+    dataset_matches_mutalisk <- reactive({
+      length(samples_undescribed_by_mutalisk) == 0
     })
     
     
     output$out_ui_samples_match <- renderUI({
-      if(dataset_matches_directory()){
+      if(dataset_matches_mutalisk()){
         html_alert("Sample IDs in mutalisk folder are all represented in the selcted dataset!",status = "success")
       }
       else{
-        html_alert(paste0("Not all samples in dataset have mutational profile information. Are you sure you've selected the dataset you ran mutalisk on?"),status = "danger")
+        html_alert(
+          tags$span(
+            "Not all samples in dataset have mutational profile information. Are you sure you've selected the dataset you ran mutalisk on?",
+            "\nMissing mutalisk data for ", tags$strong(length(samples_undescribed_by_mutalisk()))," samples",
+            ifelse(
+              length(samples_undescribed_by_mutalisk()) < 10, 
+              yes = paste0(samples_undescribed_by_mutalisk(), collapse = ","),
+              no = ""
+            ),
+            collapes = "\n"),
+          status = "danger")
       }
     })
     

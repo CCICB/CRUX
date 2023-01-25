@@ -52,10 +52,12 @@ mod_render_downloadabledataframe_server <- function(id, tabular_data_object, bas
   moduleServer(id,
                function(input, output, session){
                  
-                 datatable_object <- reactive({ 
-                   validate(need(!is.null(tabular_data_object()), message_if_tabular_data_is_null)) 
-                   tabular_data_object()})
                  
+                 datatable_object <- reactive({ 
+                   validate(need(!is.null(tabular_data_object()), message = message_if_tabular_data_is_null)) 
+                   tabular_data_object()
+                   })
+                
                  output$cond <- reactive({
                    !is.null(datatable_object()) %>% return()
                  })
