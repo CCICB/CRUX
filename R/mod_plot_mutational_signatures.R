@@ -30,13 +30,13 @@ mod_plot_mutational_signatures_ui <- function(id){
       ),
       
       fluidRow(
-        shiny::selectInput(ns("in_select_facet_column"), label = "Facet by", choices = NA, selectize = TRUE) %>% column(width = 3),
+        shinyWidgets::pickerInput(ns("in_select_facet_column"), label = "Facet by", choices = NULL, options = shinyWidgets::pickerOptions(windowPadding = c(40, 0, 20, 0), liveSearch = TRUE)) %>% column(width = 3),
         #shiny::numericInput(ns("in_num_facet_ncol"),label = "Number of columns", value = 1, min = 1, step = 1) %>% column(width = 3),
         shiny::numericInput(ns("in_num_fontsize_strip"),label = "Fontsize: strip titles", value = 18, min = 0.01, step = 2) %>% column(width = 3),
         shiny::numericInput(ns("in_num_fontsize_axis_titles"),label = "Fontsize: axis titles", value = 18, min = 0.01, step = 2) %>% column(width = 3)
       ),
       
-      shiny::selectInput(ns("in_select_legend"),label = "Legend Position", choices = c("right",  "left", "top", "bottom"), multiple = FALSE),
+      shiny::selectizeInput(ns("in_select_legend"),label = "Legend Position", choices = c("right",  "left", "top", "bottom"), multiple = FALSE),
       moduleDownloadPlotUI(id = ns("mod_download"))
     )
   )
@@ -50,7 +50,7 @@ mod_plot_mutational_signatures_server <- function(id, mutalisk_df){
     ns <- session$ns
     
     mutalisk_validated_df <- reactive({
-      validate(need(!is.null(mutalisk_df()), message = "Please select a dataset"))
+      validate(need(!is.null(mutalisk_df()), message = "Please select valid mutalisk files"))
       mutalisk_df()
     })
     
@@ -59,7 +59,7 @@ mod_plot_mutational_signatures_server <- function(id, mutalisk_df){
     })
     
     observeEvent(mutalisk_df(), {
-      shiny::updateSelectInput(inputId = "in_select_facet_column", choices = c("No faceting", columnnames()))
+      shinyWidgets::updatePickerInput(session = session, inputId = "in_select_facet_column", choices = c("No faceting", columnnames()))
     })
     
     selected_facet_column <- reactive({

@@ -11,6 +11,7 @@ mod_mutational_signatures_ui <- function(id){
   ns <- NS(id)
   tagList(
     
+    
     shinyWidgets::panel(
       heading = "Step 1: Select Dataset",
       mod_select_maf_dataset_wrapper_ui(id = ns("mod_select_maf"), panel = FALSE)
@@ -30,14 +31,14 @@ mod_mutational_signatures_ui <- function(id){
                 ),
       fileInput(inputId = ns("in_mutalisk_files"), label = "Mutalisk Files", multiple = TRUE, accept = ".txt", width = "100%", placeholder = "Please select all Mutalisk Reports")
       #mod_shinydir_import_ui(id = ns("in_choose_dir"), label = "Choose Mutalisk Directory", title = "Choose Mutalisk Directory"),
-    ),
+    ), icon_down_arrow(break_after = TRUE),
     
     shinyWidgets::panel(
       heading = "Step 3: Check Sample IDs match",
       uiOutput(outputId = ns("out_ui_samples_match"))
     ),
     
-    icon_down_arrow(), br(),
+    icon_down_arrow(break_after = TRUE),
     
     shinyWidgets::panel(
      heading = "Step 4: Review Tabular Data",
@@ -45,7 +46,7 @@ mod_mutational_signatures_ui <- function(id){
      br()
     ),
 
-    icon_down_arrow(), br(),
+    icon_down_arrow(break_after = TRUE),
 
     shinyWidgets::panel(
       heading="Step 5: Visualise Signature Contributions",
@@ -88,8 +89,7 @@ mod_mutational_signatures_server <- function(id, maf_data_pool){
       validate(need(!is.null(sample_metadata_df()), message = "Please select mutalisk output files"))
       
       
-      df_mutalisk <- tryCatch({
-          browser()
+      tryCatch({
           df_mutalisk_ <- mutalisk::mutalisk_to_dataframe(mutalisk_files = mutalisk_files(), sample_names_from_file_contents = TRUE)
           df_mutalisk_ <- mutalisk::mutalisk_dataframe_add_metadata(df_mutalisk_, sample_metadata = sample_metadata_df())
           return(df_mutalisk_)
@@ -100,13 +100,10 @@ mod_mutational_signatures_server <- function(id, maf_data_pool){
           title = "Failed to Read Mutalisk Input",
           type = "error", text = tags$code(as.character(e))
         )
-        #error_message = paste0(as.character(e), collapse = ";")
-        #full_error_message = paste(m, error_message, sep="\n")
-        validate(m)
+        return(NULL)
       }
       )
-      browser()
-      return(df_mutalisk)
+      return(NULL)
     })
     
     # Check samples in selected dataset match whats in mutalisk_dir

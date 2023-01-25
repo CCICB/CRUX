@@ -45,7 +45,7 @@ mod_render_downloadabledataframe_ui <- function(id, downloadbttn_label="", class
 #' @param filter Position of filter search box: one of 'top', 'bottom' or 'none'  (string)
 #'
 #'
-mod_render_downloadabledataframe_server <- function(id, tabular_data_object, basename, rownames=FALSE, colnames=TRUE, filter="top", message_if_tabular_data_is_null = "Loading data ..."){
+mod_render_downloadabledataframe_server <- function(id, tabular_data_object, basename, rownames=FALSE, colnames=TRUE, filter="top", message_if_tabular_data_is_null = "Please select valid mutalisk files"){
   assertthat::assert_that(filter %in% c("top", "bottom", "none"), msg = "mod_render_downloadabledataframe_server: filter argument should be one of 'top', 'bottom' or 'none'")
   
   utilitybeltshiny::assert_reactive(tabular_data_object)
