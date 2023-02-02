@@ -24,11 +24,11 @@ mod_plot_oncogenic_pathways_server <- function(id, maf){
     function(input, output, session){
       
       #Validate
-      maf_validated <- reactive({ validate(need(!is.null(maf()),message = "Loading ..." )); return(maf()) })
+      maf_validated <- reactive({ validate(need(!is.null(maf()),message = "Please select a dataset" )); return(maf()) })
       
       #Plot
       plot_oncogenic_pathways <- reactive({ 
-        validate(need(!is.null(maf_validated()),message = "Loading ... ")); 
+        validate(need(!is.null(maf_validated()),message = "Please select a dataset ")); 
         function() { maftools::OncogenicPathways(maf = maf_validated(), fontSize = input$in_num_font ) } })
       
       output$out_plot_oncogenic_pathways <- renderPlot({plot_oncogenic_pathways()()})

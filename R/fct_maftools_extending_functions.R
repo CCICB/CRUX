@@ -212,17 +212,14 @@ maftools_remove_dubious_genes <- function(maf, genelist = somaticflags::somaticf
 }
 
 maf_data_set_wrapper_remove_dubious_genes <- function(maf_dataset_wrapper, genelist){
-  if(is.na(maf_dataset_wrapper$loaded_data)){
-    message("maf_data_set_wrapper_remove_dubious_genes: MAF not loaded ... returning original maf_dataset_wrapper")
-    return(maf_dataset_wrapper)
+  if(!is_maf(maf_dataset_wrapper$loaded_data)){
+    stop("maf_data_set_wrapper_remove_dubious_genes: MAF not loaded ... quitting early")
   }
-  else if(class(maf_dataset_wrapper$loaded_data) == "MAF"){
+  else{
     message("Filtering dubious genes from maf_dataset_wrapper")
     maf_dataset_wrapper$loaded_data <-  maftools_remove_dubious_genes(maf_dataset_wrapper$loaded_data)
     return(maf_dataset_wrapper)
   }
-  else
-    stop("maf_data_set_wrapper_remove_dubious_genes: maf_dataset_wrapper$loaded_data is neither NA, nor a MAF")
 }
 
 
@@ -296,7 +293,31 @@ maftools_number_of_samples <- function(maf){
   return(as.numeric(maf@summary[["summary"]][3])) 
 }
 
+maftools_anonymise_maf <- function(maf){
+  message("Anonymising data")
+  all_sample_ids <- levels(maftools::getSampleSummary(maf)[[1]])
+  anonymised_ids <- sample(x = paste0("Sample", seq_along(all_sample_ids)), replace = FALSE, size = length(all_sample_ids))
+  
+  for (name in slotNames(maf)){
+    if(!"Tumor_Sample_Barcode" %in% colnames(slot(maf, name))) next()
+    slot(maf, name)[["Tumor_Sample_Barcode"]] <- anonymised_ids[match(slot(maf, name)[["Tumor_Sample_Barcode"]], all_sample_ids)]
+  }
+  
+  return(maf)
+}
 
+maf_data_set_wrapper_anonymise_maf <- function(maf_dataset_wrapper){
+  if(!is_maf(maf_dataset_wrapper$loaded_data))
+    stop("maf_data_set_wrapper_anonymise_maf: MAF not loaded ... quitting early")
+  else {
+    maf_dataset_wrapper$loaded_data <- maftools_anonymise_maf(maf_dataset_wrapper$loaded_data)
+    return(maf_dataset_wrapper)
+  }
+}
+
+is_maf <- function(object){
+  length(object) == 1 && inherits(object, "MAF")
+}
 
 #' Extract geneset
 #' 

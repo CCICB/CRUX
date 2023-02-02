@@ -35,7 +35,8 @@ mod_mutational_signatures_ui <- function(id){
     
     shinyWidgets::panel(
       heading = "Step 3: Check Sample IDs match",
-      uiOutput(outputId = ns("out_ui_samples_match"))
+      #uiOutput(outputId = ns("out_ui_samples_match")),
+      plotOutput(outputId = ns("out_plot_sample_overlap_venn"))
     ),
     
     icon_down_arrow(break_after = TRUE),
@@ -62,36 +63,42 @@ mod_mutational_signatures_server <- function(id, maf_data_pool){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    # Get dataset
+    # Get maf dataset wrapper
     maf_dataset_wrapper <- mod_select_maf_dataset_wrapper_server(id = "mod_select_maf", maf_data_pool = maf_data_pool)
     
     # Get maf
     maf <- reactive({
-      validate(need(!is.null(maf_dataset_wrapper()), message = "Please select a dataset"))
+      #validate(need(!is.null(maf_dataset_wrapper()), message = "Please select a dataset"))
       maf_dataset_wrapper()$loaded_data
     })
     
     # Get sample level metadata
     sample_metadata_df <- reactive({
-      maftools::getClinicalData(maf()) %>%
+      
+      if(is.null(maf()))
+         return(NULL)
+      else {
+        maftools::getClinicalData(maf()) %>%
         dplyr::rename(SampleID = Tumor_Sample_Barcode)
+      }
     })
     
-    # Get path to mutalisk directory
+    # Get paths to mutalisk files
     mutalisk_files <- reactive({
       validate(need(!is.null(input[["in_mutalisk_files"]]$datapath), message = "Please select mutalisk files"))
       return(input[["in_mutalisk_files"]]$datapath)
-      })
+    })
     
     # Parse directory contents and create a dataframe
     mutalisk_df <- reactive({
       validate(need(!is.null(mutalisk_files()), message = "Please select mutalisk output files"))
-      validate(need(!is.null(sample_metadata_df()), message = "Please select mutalisk output files"))
+      #validate(need(!is.null(sample_metadata_df()), message = "Please select a dataset output files"))
       
       
       tryCatch({
           df_mutalisk_ <- mutalisk::mutalisk_to_dataframe(mutalisk_files = mutalisk_files(), sample_names_from_file_contents = TRUE)
-          df_mutalisk_ <- mutalisk::mutalisk_dataframe_add_metadata(df_mutalisk_, sample_metadata = sample_metadata_df())
+          if(!is.null(sample_metadata_df())) df_mutalisk_ <- mutalisk::mutalisk_dataframe_add_metadata(df_mutalisk_)
+          
           return(df_mutalisk_)
       },
       error=function(e){
@@ -107,33 +114,45 @@ mod_mutational_signatures_server <- function(id, maf_data_pool){
     })
     
     # Check samples in selected dataset match whats in mutalisk_dir
-    samples_undescribed_by_mutalisk <- reactive({
-      mutalisk_samples = unique(mutalisk_df()$SampleID)
-      dataset_samples = unique(maftools::getSampleSummary(maf())[["Tumor_Sample_Barcode"]])
-      dataset_samples[!dataset_samples %in% mutalisk_samples]
+    mutalisk_samples = reactive({
+      mutalisk_df()$SampleID
+      })
+    maf_dataset_samples = reactive({
+      validate(need(!is.null(maf()), message = "No dataset selected in Step 1. All mutalisk samples will be visualised"))
+      unique(maftools::getSampleSummary(maf())[["Tumor_Sample_Barcode"]])
       })
     
-    dataset_matches_mutalisk <- reactive({
-      length(samples_undescribed_by_mutalisk) == 0
+    samples_undescribed_by_mutalisk <- reactive({
+      maf_dataset_samples()[!maf_dataset_samples() %in% mutalisk_samples()]
+      })
+    
+    samples_described_by_both_mutalisk_and_maf <- reactive({
+      intersect(maf_dataset_samples(), mutalisk_samples()) 
+      })
+    
+    samples_undescribed_by_maf <- reactive({
+      mutalisk_samples()[!mutalisk_samples() %in% maf_dataset_samples()]
     })
     
+    dataset_matches_mutalisk <- reactive({
+      length(samples_undescribed_by_mutalisk()) == 0 & length(samples_undescribed_by_maf()) == 0
+    })
+    
+    output$out_plot_sample_overlap_venn <- renderPlot({
+      ggvenn::ggvenn(list("Mutalisk" = mutalisk_samples(), "MAF" = maf_dataset_samples()))
+      })
     
     output$out_ui_samples_match <- renderUI({
+      
       if(dataset_matches_mutalisk()){
-        html_alert("Sample IDs in mutalisk folder are all represented in the selcted dataset!",status = "success")
+        html_alert("Perfect match between mutalisk samples and the selected dataset!",status = "success")
       }
       else{
         html_alert(
           tags$span(
-            "Not all samples in dataset have mutational profile information. Are you sure you've selected the dataset you ran mutalisk on?",
-            "\nMissing mutalisk data for ", tags$strong(length(samples_undescribed_by_mutalisk()))," samples",
-            ifelse(
-              length(samples_undescribed_by_mutalisk()) < 10, 
-              yes = paste0(samples_undescribed_by_mutalisk(), collapse = ","),
-              no = ""
-            ),
-            collapes = "\n"),
+            "Incomplete match between mutalisk samples and dataset samples. Only ", length(samples_described_by_both_mutalisk_and_maf()),"/",length(maf_dataset_samples()), " samples will will be analysed (those described in both CRUX dataset and mutalisk files)"),
           status = "danger")
+
       }
     })
     

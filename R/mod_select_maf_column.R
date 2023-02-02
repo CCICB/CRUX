@@ -23,7 +23,7 @@ mod_select_maf_column_server <- function(id, maf){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    maf_validated <- reactive({ validate(need(!is.null(maf()),message = "Loading ..." )); return(maf()) })
+    maf_validated <- reactive({ validate(need(!is.null(maf()),message = "Please select a dataset" )); return(maf()) })
     
     maf_columns.v <- reactive({
       maf_validated()@data %>% 
@@ -35,7 +35,7 @@ mod_select_maf_column_server <- function(id, maf){
     })
     
     in_pick_maf_column <- reactive({ 
-      validate(need(!is.null(input[["in_pick_maf_column"]]),message = "Loading ..." )); return(input[["in_pick_maf_column"]]) })
+      validate(need(!is.null(input[["in_pick_maf_column"]]),message = "Please select a dataset" )); return(input[["in_pick_maf_column"]]) })
     
     return(in_pick_maf_column)
   })
@@ -75,7 +75,7 @@ mod_select_maf_clinical_data_column_server <- function(id, maf, forced_to_pick_a
     ns <- session$ns
     
     maf_columns.v <- reactive({
-      validate(need(!is.null(maf()),message = "Loading ..." ));
+      validate(need(!is.null(maf()),message = "Please select a dataset" ));
       message("Picking Columns") 
       maf() %>% maftools::getClinicalData() %>% 
         colnames()

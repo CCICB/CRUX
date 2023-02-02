@@ -45,10 +45,10 @@ app_ui <- function(request) {
           #shinydashboard::menuItem("Single Cohort Statistics", tabName = "PanCohortStatistics", icon = icon("chart-bar")),
           shinydashboard::menuItem("Compare Cohorts", tabName = "CompareCohorts", icon = icon("balance-scale-left")),
           shinydashboard::menuItem("Single Sample Analysis", tabName = "SampleLevelAnalysis", icon = icon("microscope")), # maybe th icon?
-          shinydashboard::menuItem("Expression", tabName = "Expression", icon = icon("th"), #badgeLabel = "Coming Soon", badgeColor = "maroon", 
-                                   shinydashboard::menuSubItem(text = "Import", tabName = "ExpressionImport", icon = icon("file-upload")),
-                                   shinydashboard::menuSubItem(text = "Visualise", tabName = "ExpressionAnalysis", icon = icon("th"))
-                                   ), # maybe th icon?
+          # shinydashboard::menuItem("Expression", tabName = "Expression", icon = icon("th"), #badgeLabel = "Coming Soon", badgeColor = "maroon", 
+          #                          shinydashboard::menuSubItem(text = "Import", tabName = "ExpressionImport", icon = icon("file-upload")),
+          #                          shinydashboard::menuSubItem(text = "Visualise", tabName = "ExpressionAnalysis", icon = icon("th"))
+          #                          ), # maybe th icon?
           shinydashboard::menuItem("Utilities", tabName = "Utilities", icon = icon("toolbox"), 
                                    shinydashboard::menuSubItem(text = "Subset", tabName = "Subset", icon = icon("star-half-alt")),
                                    shinydashboard::menuSubItem(text = "Merge", tabName = "Merge", icon = icon("layer-group"))
@@ -75,8 +75,8 @@ app_ui <- function(request) {
           
           shinydashboard::tabItem(tabName = "CopyNumberAnalysis", mod_cnv_ui(id = "mod_cnv_level_analysis")),
           shinydashboard::tabItem(tabName = "SampleLevelAnalysis", mod_sample_level_analysis_ui(id = "mod_sample_level_analysis")),
-          shinydashboard::tabItem(tabName = "ExpressionImport", mod_expression_import_ui(id = "mod_expression_import")),
-          shinydashboard::tabItem(tabName = "ExpressionAnalysis", mod_expression_analysis_ui(id = "mod_expression_analysis")),
+          #shinydashboard::tabItem(tabName = "ExpressionImport", mod_expression_import_ui(id = "mod_expression_import")),
+          #shinydashboard::tabItem(tabName = "ExpressionAnalysis", mod_expression_analysis_ui(id = "mod_expression_analysis")),
           shinydashboard::tabItem(tabName = "ExternalTools", mod_external_tools_ui(id= "mod_external_tools")),
           #shinydashboard::tabItem(tabName = "Utilities", moduleUtilitiesUI(id = "mod_utilities")),
           shinydashboard::tabItem(tabName = "Subset", mod_utility_subset_ui(id = "mod_subset")),

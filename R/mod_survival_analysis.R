@@ -80,8 +80,11 @@ mod_survival_analysis_server <- function(id, maf_data_pool){
 
     # Step 1: Select Dataset --------------------------------------------------
     maf_dataset_wrapper <- mod_select_maf_dataset_wrapper_server(id = "mod_select_dataset_wrapper", maf_data_pool = maf_data_pool, label =  "Step 1: Select Dataset")
-    maf <- reactive({ message("Loaded data changed"); maf_dataset_wrapper()$loaded_data })
-    clinical_data <- reactive({ validate(need(!is.null(maf()), message = "maf not loaded")); maf() %>% maftools::getClinicalData()})
+    maf <- reactive({ 
+      validate(need(!is.null(maf_dataset_wrapper()), message = "Please select a dataset"))
+      maf_dataset_wrapper()$loaded_data 
+      })
+    clinical_data <- reactive({ validate(need(!is.null(maf()), message = "Please select a dataset")); maf() %>% maftools::getClinicalData()})
     
     # Step 2: Select metadata columns containing survival info ------------------------------------------------------------------
     column_time_to_event <- mod_select_maf_clinical_data_column_server(id = "in_pick_time_to_event", maf = maf, message_when_none_are_selected = "Please select column describing time to event")
@@ -90,11 +93,9 @@ mod_survival_analysis_server <- function(id, maf_data_pool){
     # Step 3: Configure Analysis ----------------------------------------------------------------
     is_tcga <- mod_is_tcga_checkbox_server("mod_is_tcga_checkbox", maf_dataset_wrapper)
     
-    
 
     # Step 4: View tabular results ----------------------------------------------------
     prognostic_gene_df <- reactive({ 
-      #browser()
       validate(need(time_column_passes_sanitychecks(column_time_to_event(), clinical_data()), message = "Please select valid time column"))
       validate(need(event_column_passes_sanitychecks(column_event_status(), clinical_data()), message = "Please select valid event column"))
       
@@ -120,7 +121,7 @@ mod_survival_analysis_server <- function(id, maf_data_pool){
 
     # Step 5: Configure survival curve visualisation -------------------------------
     genes <- reactive({ validate(need(!is.null(maf()), message = "Loading dataset")); maf() %>% maftools::getGeneSummary() })
-    most_interesting_choice <- reactive({prognostic_gene_df()[[1,1]] %>% strsplit(split = "_") %>% unlist()})
+    most_interesting_choice <- reactive({ prognostic_gene_df()[[1,1]] %>% strsplit(split = "_") %>% unlist()})
     
     observe({
       shinyWidgets::updatePickerInput(session = session, inputId = "in_pick_geneset", choices = genes(), selected = most_interesting_choice())
@@ -152,7 +153,6 @@ time_column_passes_sanitychecks <- function(column_name, clinical_dataframe){
 event_column_passes_sanitychecks <- function(column_name, clinical_dataframe){
   vec <- clinical_dataframe[[column_name]]
   n_levels <- vec %>% unique() %>% length()
-  
   
   
   if(n_levels < 2 || n_levels > 3 ){ # Ensure number of leveles is 2 or 3 (0 - censored, 1 - event, NA / "" - no observation)

@@ -22,7 +22,7 @@ mod_is_tcga_checkbox_server <- function(id, maf_dataset_wrapper){
     ns <- session$ns
     # Automaticly guess if its a TCGA dataset but allow user to override not 
     observe({ 
-      #validate(need(maf_dataset_wrapper()$))
+      validate(need(!is.null(maf_dataset_wrapper()), message = "Please select a dataset"))
       if(grepl("TCGA", toupper(maf_dataset_wrapper()$name_of_data_source)))
         shinyWidgets::updateAwesomeCheckbox(session = session, inputId = "in_check_is_tcga", value = TRUE)
       else 

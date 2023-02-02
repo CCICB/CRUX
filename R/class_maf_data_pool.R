@@ -12,6 +12,7 @@
 #'
 #' @examples
 #' maf_data_pool <- CRUX:::new_maf_data_pool()
+#' @export
 new_maf_data_pool <- function() {
   #Dev options
   classname="maf_data_pool"

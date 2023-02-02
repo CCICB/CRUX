@@ -74,6 +74,7 @@ tcga_dataset_to_data_pool <- function(tcga_study_abbreviation, maf_data_pool, so
 #' @family DataToWrapper
 #' @examples
 #' CRUX:::tcga_datasets_to_data_pool(CRUX:::new_maf_data_pool(), source = "Firehose")
+#' @export
 tcga_datasets_to_data_pool <- function(maf_data_pool, source = "Firehose"){
   assert_that_class_is_maf_data_pool(maf_data_pool)
   utilitybeltassertions::assert_non_empty_string(source)
