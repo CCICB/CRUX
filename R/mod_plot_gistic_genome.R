@@ -46,17 +46,17 @@ mod_plot_gistic_genome_server <- function(id, gistic, maf){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    #maf_validated <- reactive({ validate(need(!is.null(maf()), message = "Loading ..." )); return(maf()) })
+    #maf_validated <- reactive({ validate(need(!is.null(maf()), message = "Please select a dataset" )); return(maf()) })
     
     mutGenes <- reactive({
-      validate(need(!is.null(maf()), message = "Loading ..."))
+      validate(need(!is.null(maf()), message = "Please select a dataset ..."))
       genelist <- maf() %>%
         maftools::getGeneSummary() %>%
         dplyr::pull(Hugo_Symbol) %>%
         sort() %>%
         unique()
 
-      # validate(need(!is.null(gistic()), message = "Loading ..."))
+      # validate(need(!is.null(gistic()), message = "Please select a dataset"))
       # gistic()@gene.summary[[1]] %>%
       #   sort() %>% 
       #   unique()
@@ -64,7 +64,7 @@ mod_plot_gistic_genome_server <- function(id, gistic, maf){
     observeEvent(mutGenes(), { shinyWidgets::updatePickerInput(session = session, inputId = "in_pick_mutgenes", choices = mutGenes(), selected = character(0))})
     
     cytobands <- reactive({
-      validate(need(!is.null(gistic()), message = "Loading ..."))
+      validate(need(!is.null(gistic()), message = "Please select a dataset"))
       maftools::getCytobandSummary(gistic()) %>% 
         dplyr::pull(Cytoband) %>%
         sort() %>%

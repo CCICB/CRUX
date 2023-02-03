@@ -62,7 +62,7 @@ moduleEnrichmentAnalysisServer <- function(id, maf_data_pool){
                  
                  # Select Data -------------------------------------------------------------
                  maf_data_wrapper = mod_select_maf_dataset_wrapper_server(id = "mod_select_dataset_from_maf_data_pool", maf_data_pool)
-                 maf <- reactive({ validate(need(!is.null(maf_data_wrapper()),message = "Loading ..." )); return(maf_data_wrapper()$loaded_data) })
+                 maf <- reactive({ validate(need(!is.null(maf_data_wrapper()),message = "Please select a dataset ..." )); return(maf_data_wrapper()$loaded_data) })
                  
                  
                  has_clinical_data <- reactive({ return(ncol(maf()@clinical.data) > 1) })
@@ -89,8 +89,8 @@ moduleEnrichmentAnalysisServer <- function(id, maf_data_pool){
                 # Step 3: Check Clinical Feature ------------------------------------------
                 output$out_html_is_feature_appropriateness_alerts <- renderText({
                   #Check 1: Number of levels
-                  validate(need(!is.null(clinical_feature_selected()), message = "Loading ... "))
-                  validate(need(!is.null(maf()), message = "Loading ... "))
+                  validate(need(!is.null(clinical_feature_selected()), message = "Please select a dataset ... "))
+                  validate(need(!is.null(maf()), message = "Please select a dataset ... "))
                   #browser()
                   clinical_feature_values <- maftools::getClinicalData(maf())[[clinical_feature_selected()]]
                   
@@ -111,9 +111,9 @@ moduleEnrichmentAnalysisServer <- function(id, maf_data_pool){
                       session = session, 
                       inputId = "in_confirm_run_anyway", 
                       title = "Run analysis?", 
-                      text = "Selected clinical feature has >10 levels. Running the analysis may take several minutes and requires a large amount of data if meaninful conclusions are to be derived. Run anyway?", 
+                      text = "Selected clinical feature has >10 levels. Running the analysis may take several minutes and requires a large amount of data if meaningful conclusions are to be derived. Run anyway?", 
                       type = "warning")
-                    return(html_alert("Selected clinical feature has >10 levels. Running the analysis may take several minutes and requires a large amount of data if meaninful conclusions are to be derived", status = "warning")) 
+                    return(html_alert("Selected clinical feature has >10 levels. Running the analysis may take several minutes and requires a large amount of data if meaningful conclusions are to be derived", status = "warning")) 
                     }
                   else {
                     analysis_ready_to_proceed(TRUE)
@@ -123,8 +123,8 @@ moduleEnrichmentAnalysisServer <- function(id, maf_data_pool){
                   })
                  
                  output$out_html_feature_value_are_frequent_enough <- renderText({
-                   validate(need(!is.null(clinical_feature_selected()), message = "Loading ... "))
-                   validate(need(!is.null(maf()), message = "Loading ... "))
+                   validate(need(!is.null(clinical_feature_selected()), message = "Please select a dataset ... "))
+                   validate(need(!is.null(maf()), message = "Please select a dataset ... "))
                    min_samples_warning_threshold = 4
                    
                    min_samples_of_any_level <- maftools_clinical_data_lowest_number_of_samples_per_level(maf(), clinical_feature_selected())
@@ -134,8 +134,8 @@ moduleEnrichmentAnalysisServer <- function(id, maf_data_pool){
                  })
                  
                  output$out_plot_feature_distribution <- renderPlot({
-                   validate(need(!is.null(clinical_feature_selected()), message = "Loading ... "))
-                   validate(need(!is.null(maf()), message = "Loading ... "))
+                   validate(need(!is.null(clinical_feature_selected()), message = "Please select a dataset ... "))
+                   validate(need(!is.null(maf()), message = "Please select a dataset ... "))
                    maftools_clinical_data_visually_summarise(maf = maf(), clinical_feature = clinical_feature_selected())
                    })
                  

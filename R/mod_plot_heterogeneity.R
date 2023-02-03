@@ -41,9 +41,9 @@ mod_plot_heterogeneity_server <- function(id, maf, tsb){
     
     
     # Reactive Validation -----------------------------------------------------
-    maf_validated <- reactive({ validate(need(!is.null(maf()),message = "Loading ..." )); return(maf()) })
-    tsb_validated <- reactive({ validate(need(!is.null(tsb()),message = "Loading ..." )); return(tsb()) })
-    in_check_useSyn <- reactive({ validate(need(!is.null(input[["in_check_useSyn"]]),message = "Loading ..." )); return(input[["in_check_useSyn"]]) })
+    maf_validated <- reactive({ validate(need(!is.null(maf()),message = "Please select a dataset" )); return(maf()) })
+    tsb_validated <- reactive({ validate(need(!is.null(tsb()),message = "Please select a dataset" )); return(tsb()) })
+    in_check_useSyn <- reactive({ validate(need(!is.null(input[["in_check_useSyn"]]),message = "Please select a dataset" )); return(input[["in_check_useSyn"]]) })
     
     
     # Reactive Vals -----------------------------------------------------------
@@ -122,7 +122,7 @@ mod_plot_heterogeneity_server <- function(id, maf, tsb){
     
     # Manaully Select VAF Column ----------------------------------------------------------
     vaf_column_unvalidated <- mod_select_maf_column_server(id = "mod_select_vaf_column", maf = maf)
-    vaf_column <- reactive({ validate(need(!is.null(vaf_column_unvalidated()),message = "Loading ..." )); return(vaf_column_unvalidated()) })
+    vaf_column <- reactive({ validate(need(!is.null(vaf_column_unvalidated()),message = "Please select a dataset" )); return(vaf_column_unvalidated()) })
     
     # het_manual <- reactive({
     #   maftools::inferHeterogeneity(maf = maf_validated(), tsb = tsb_validated(), useSyn = in_check_useSyn(), vafCol = vaf_column_final()) 

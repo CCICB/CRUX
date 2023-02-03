@@ -70,8 +70,8 @@ mod_plot_rainfall_server <- function(id, maf, tsb){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    maf_validated <- reactive({ validate(need(!is.null(maf()),message = "Loading ..." )); return(maf()) })
-    tsb_validated <- reactive({ validate(need(!is.null(tsb()),message = "Loading ..." )); return(tsb()) })
+    maf_validated <- reactive({ validate(need(!is.null(maf()),message = "Please select a dataset" )); return(maf()) })
+    tsb_validated <- reactive({ validate(need(!is.null(tsb()),message = "Please select a dataset" )); return(tsb()) })
     refbuild <- reactive({ validate(need(!is.null(input$in_radio_ref), message = "Loading reference genome chromosome sizes" )); return(input$in_radio_ref) })
     
     # Plotting Function -------------------------------------------------------

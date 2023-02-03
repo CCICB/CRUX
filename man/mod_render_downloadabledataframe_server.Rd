@@ -11,7 +11,7 @@ mod_render_downloadabledataframe_server(
   rownames = FALSE,
   colnames = TRUE,
   filter = "top",
-  message_if_tabular_data_is_null = "Loading data ..."
+  message_if_tabular_data_is_null = "Please select valid mutalisk files"
 )
 }
 \arguments{
