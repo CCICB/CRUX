@@ -14,12 +14,14 @@ mod_merge_ui <- function(id){
       id = ns("merge_dataset_ui"),
     
       # Select Datasets ---------------------------------------------------------
-      mod_select_datasets_from_maf_data_pool_and_return_maf_dataset_wrapper_ui(id=ns("mod_select_datasets_return_list_of_maf_dataset_wrappers"), label = "Merge", panel_heading = "Step 1: Select Datasets"),
-      
       shinyWidgets::panel(
-        html_alert("Please note merging of datasets will not merge their rnaseq data, the new maf_data_wrapper will have no attached RNAseq data (feature will be added soon)", status = "info")
-        ),
-  
+        heading = "Step 1: Select Datasets to Merge",
+        mod_mod_select_maf_datasets_wrapper_ui(id=ns("mod_select_datasets_return_list_of_maf_dataset_wrappers")),
+      ), icon_down_arrow(break_after = TRUE),
+      # shinyWidgets::panel(
+      #   html_alert("Please note merging of datasets will not merge their rnaseq data, the new maf_data_wrapper will have no attached RNAseq data (feature will be added soon)", status = "info")
+      #   ),
+      # 
       # Get Dataset Info ----------------------------------------------------------------
       shinyWidgets::panel(
         heading = "Step 2: Review Operation",
@@ -30,10 +32,11 @@ mod_merge_ui <- function(id){
           plotOutput(outputId = ns("out_plot_tsb_overlap")) %>% shinycssloaders::withSpinner(proxy.height = "200px")
         )
         ),
+      icon_down_arrow(break_after = TRUE),
       
       # Summary of Merged Maf ---------------------------------------------------
       mod_single_cohort_summary_tables_ui(id = ns("mod_merged_maf_summary"), panel_heading = "Step 3: Review Dataset Summary"),
-      
+      icon_down_arrow(break_after = TRUE),
   
       # Add to Data Pool --------------------------------------------------------
       shinyWidgets::panel(
@@ -53,28 +56,21 @@ mod_merge_server <- function(id, maf_data_pool){
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-    #button_clicked <- reactive(input[["in_button_run_action"]])
-    #maf_list <- mod_select_datasets_from_maf_data_pool_server(id = "mod_select_dataset", maf_data_pool = maf_data_pool)
-    
-    #list_of_mafs = mod_select_datasets_from_maf_data_pool_and_return_maf_server(id = "mod_select_datasets_return_list_of_mafs", maf_data_pool = maf_data_pool)
-
-
     
     # Select Datasets ---------------------------------------------------------
-    list_of_maf_dataset_wrappers <- mod_select_datasets_from_maf_data_pool_and_return_maf_dataset_wrapper_server(id="mod_select_datasets_return_list_of_maf_dataset_wrappers", maf_data_pool = maf_data_pool)
+    list_of_maf_dataset_wrappers <- mod_mod_select_maf_datasets_wrapper_server(id="mod_select_datasets_return_list_of_maf_dataset_wrappers", maf_data_pool = maf_data_pool)
 
 
     
     # Get Dataset Info ----------------------------------------------------------------
     list_of_mafs <- reactive({
-      
       validate(need(!is.null(list_of_maf_dataset_wrappers()), message = "Please Select Datasets to Merge"))
       purrr::map(list_of_maf_dataset_wrappers(), function(maf_dataset_wrapper) return(maf_dataset_wrapper$loaded_data))
     })
     
     list_of_tsbs <- reactive({
       validate(need(!is.null(list_of_mafs()), message = "Please Select Datasets to Merge"))
-      tsb.ls = purrr::map(list_of_mafs(), function(maf) { clin_data=maftools::getClinicalData(maf); clin_data[["Tumor_Sample_Barcode"]] } )
+      tsb.ls = purrr::map(list_of_mafs(), function(maf) { sample_data=maftools::getSampleSummary(maf); sample_data[["Tumor_Sample_Barcode"]] } )
       names(tsb.ls) <- short_names.v()
       return(tsb.ls)
     })

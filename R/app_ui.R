@@ -17,6 +17,9 @@ app_ui <- function(request) {
     #Use ShinyJS
     shinyjs::useShinyjs(),
     
+    # Use updated Fontawesome
+    #tags$style("@import url(https://use.fontawesome.com/releases/v6.2.0/css/all.css);"),
+    
     #Use animations
     #shinyanimate::withAnim(),
     
