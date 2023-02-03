@@ -66,8 +66,6 @@ data_sources_formatted <- function(maf_data_pool_df){
 
 #' Select Dataset, Return maf_dataset_wrapper
 #'
-#' @inheritParams mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_ui
-#' @inheritParams mod_select_dataset_from_maf_data_pool_pickerinput_server
 #' 
 #' @description wraps mod_select_dataset_from_maf_data_pool_pickerinput_server.
 #' Instead of simply returning a unique_name, this function will:

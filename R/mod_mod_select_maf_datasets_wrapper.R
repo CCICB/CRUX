@@ -7,7 +7,7 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
-mod_mod_select_maf_datasets_wrapper_ui <- function(id){
+mod_select_maf_datasets_wrapper_ui <- function(id){
   ns <- NS(id)
   tagList(
     shinyWidgets::multiInput(
@@ -25,7 +25,7 @@ mod_mod_select_maf_datasets_wrapper_ui <- function(id){
 #' @return a list of maf_dataset_wrappers, or NULL if none are selected
 #'
 #' @noRd 
-mod_mod_select_maf_datasets_wrapper_server <- function(id, maf_data_pool){
+mod_select_maf_datasets_wrapper_server <- function(id, maf_data_pool){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
@@ -102,7 +102,7 @@ mod_mod_select_maf_datasets_wrapper_server <- function(id, maf_data_pool){
 }
     
 ## To be copied in the UI
-# mod_mod_select_maf_datasets_wrapper_ui("mod_select_maf_datasets_wrapper_1")
+# mod_select_maf_datasets_wrapper_ui("mod_select_maf_datasets_wrapper_1")
     
 ## To be copied in the server
-# mod_mod_select_maf_datasets_wrapper_server("mod_select_maf_datasets_wrapper_1")
+# mod_select_maf_datasets_wrapper_server("mod_select_maf_datasets_wrapper_1")

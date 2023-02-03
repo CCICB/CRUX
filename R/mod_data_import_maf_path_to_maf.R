@@ -111,7 +111,7 @@ mod_data_import_maf_path_to_maf_server <- function(id, maf_path, clinicalData){
 }
     
 ## To be copied in the UI
-# mod_mod_data_import_maf_path_to_maf_ui("mod_data_import_maf_path_to_maf_ui_1")
+# mod_data_import_maf_path_to_maf_ui("mod_data_import_maf_path_to_maf_ui_1")
     
 ## To be copied in the server
-# mod_mod_data_import_maf_path_to_maf("mod_data_import_maf_path_to_maf_ui_1")
+# mod_data_import_maf_path_to_maf("mod_data_import_maf_path_to_maf_ui_1")

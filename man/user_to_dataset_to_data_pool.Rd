@@ -31,9 +31,6 @@ Other DataToWrapper:
 \code{\link{tcga_dataset_to_data_pool}()},
 \code{\link{tcga_dataset_to_maf_dataset_wrapper}()},
 \code{\link{tcga_datasets_to_data_pool}()},
-\code{\link{user_data_filepath_to_class_maf_dataset_wrapper}()},
-\code{\link{zero_dataset_to_data_pool}()},
-\code{\link{zero_dataset_to_maf_dataset_wrapper}()},
-\code{\link{zero_datasets_to_data_pool}()}
+\code{\link{user_data_filepath_to_class_maf_dataset_wrapper}()}
 }
 \concept{DataToWrapper}

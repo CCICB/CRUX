@@ -26,8 +26,7 @@ mod_compare_cohorts_ui <- function(id){
         # conditionalPanel(
         #   condition = "input.in_radiogroup_select_type_of_data_import == 'two_datasets'", 
         #   ns = ns,
-          #mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_ui(ns("select_dataset1"), panel = FALSE),
-          #mod_select_dataset_from_maf_data_pool_pickerinput_and_return_maf_ui(ns("select_dataset2"), panel = FALSE),
+          
           fluidRow(
           col_6(mod_select_maf_dataset_wrapper_ui(ns("select_dataset1"), panel = FALSE)),
           col_6(mod_select_maf_dataset_wrapper_ui(ns("select_dataset2"), panel = FALSE))
@@ -103,7 +102,7 @@ mod_compare_cohorts_server <- function(id, maf_data_pool){
 }
     
 ## To be copied in the UI
-# mod_mod_compare_cohorts_ui("mod_compare_cohorts_ui_1")
+# mod_compare_cohorts_ui("mod_compare_cohorts_ui_1")
     
 ## To be copied in the server
-# mod_mod_compare_cohorts_server("mod_compare_cohorts_ui_1")
+# mod_compare_cohorts_server("mod_compare_cohorts_ui_1")

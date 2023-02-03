@@ -20,7 +20,7 @@ mod_sample_level_analysis_ui <- function(id){
     
     shinyWidgets::panel(
       heading="Step 2: Select Sample",
-      mod_select_tumor_sample_barcode_from_maf_ui(id = ns("mod_mod_select_tumor_sample_barcode"))
+      mod_select_tumor_sample_barcode_from_maf_ui(id = ns("mod_select_tumor_sample_barcode"))
       #mod_select_tumor_sample_from_maf_datapool()
     ),
     
@@ -54,7 +54,7 @@ mod_sample_level_analysis_server <- function(id, maf_data_pool){
       })
     
     maf <- reactive({ maf_dataset_wrappper()$loaded_data })
-    tsb <- mod_select_tumor_sample_barcode_from_maf_server(id = "mod_mod_select_tumor_sample_barcode", maf = maf)
+    tsb <- mod_select_tumor_sample_barcode_from_maf_server(id = "mod_select_tumor_sample_barcode", maf = maf)
     
     
     # Modules ------------------------------------------------------------------

@@ -58,7 +58,7 @@ mod_select_tumor_sample_barcode_from_maf_server <- function(id, maf){
 
 
 ## To be copied in the UI
-# mod_mod_select_tumor_sample_barcode_from_maf_ui("mod_select_tumor_sample_barcode_from_maf_ui_1")
+# mod_select_tumor_sample_barcode_from_maf_ui("mod_select_tumor_sample_barcode_from_maf_ui_1")
 
 ## To be copied in the server
-# mod_mod_select_tumor_sample_barcode_from_maf_server("mod_select_tumor_sample_barcode_from_maf_ui_1")
+# mod_select_tumor_sample_barcode_from_maf_server("mod_select_tumor_sample_barcode_from_maf_ui_1")
