@@ -24,7 +24,7 @@ mod_pan_cohort_statistics_ui <- function(id){
 #'
 #' @noRd 
 mod_pan_cohort_statistics_server <- function(id, maf_data_pool){
-  utilitybeltshiny::assert_reactive(maf_data_pool)
+  assertions::assert_reactive(maf_data_pool)
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 

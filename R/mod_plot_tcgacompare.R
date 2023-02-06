@@ -24,8 +24,8 @@ mod_plot_tmb_in_context_of_tcga_ui <- function(id){
 mod_plot_tmb_in_context_of_tcga_server <- function(id, maf, cohortName){
   moduleServer(id,
     function(input, output, session){
-      utilitybeltshiny::assert_reactive(maf)
-      utilitybeltshiny::assert_reactive(cohortName)
+      assertions::assert_reactive(maf)
+      assertions::assert_reactive(cohortName)
       
       tcga_cohorts <- reactive({ validate(need(expr = { 
         file.exists(system.file("extdata/files_required_for_tmb_comparison/TCGA_primary_site", package="CRUX")) & file.exists(system.file("extdata/files_required_for_tmb_comparison/TCGA_cohorts", package="CRUX")) }, 

@@ -47,7 +47,7 @@ mod_plot_gistic_oncoplot_ui <- function(id){
 #'
 #' @noRd 
 mod_plot_gistic_oncoplot_server <- function(id, gistic, maf){
-  utilitybeltshiny::assert_reactive(maf)
+  assertions::assert_reactive(maf)
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     

@@ -176,7 +176,7 @@ maf_data_pool_robust_load <- function(maf_data_pool, unique_name){
 }
 
 maf_data_pool_robust_load_apply_changes_to_reactval <- function(maf_data_pool, unique_name){
-  utilitybeltshiny::assert_reactive(maf_data_pool)
+  assertions::assert_reactive(maf_data_pool)
   utilitybeltassertions::assert_non_empty_string(unique_name)
   new_maf_data_pool <- maf_data_pool_robust_load(maf_data_pool(), unique_name)
   maf_data_pool(new_maf_data_pool)
@@ -194,7 +194,7 @@ maf_data_pool_robust_load_apply_changes_to_reactval <- function(maf_data_pool, u
 #'
 maf_data_pool_unique_name_to_maf_reactive <- function(maf_data_pool, unique_name){
   maf_data_pool_nonreactive <- isolate(maf_data_pool())
-  utilitybeltshiny::assert_reactive(maf_data_pool)
+  assertions::assert_reactive(maf_data_pool)
   utilitybeltassertions::assert_non_empty_string(unique_name)
   
   maf_data_pool_robust_load_apply_changes_to_reactval(maf_data_pool, unique_name)

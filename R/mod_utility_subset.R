@@ -77,7 +77,7 @@ mod_utility_subset_ui <- function(id){
       shinyWidgets::panel(heading = "Step 4: Add to Data Pool",
           #Metadata
           mod_data_import_step2_ui(id = ns("mod_data_import")),
-          dipsaus::actionButtonStyled(inputId = ns("in_bttn_dataset_to_data_pool"), label = "Add to Data Pool", disabled=TRUE)
+          shinyjs::disabled(actionButton(inputId = ns("in_bttn_dataset_to_data_pool"), label = "Add to Data Pool"))
       )
     )
   )
@@ -282,7 +282,10 @@ mod_utility_subset_server <- function(id, maf_data_pool){
       observeEvent(metadata()$all_valid,{
         validate(need(!is.null(subset_maf()), message = "Please Subset Data"))
         isolate({
-          dipsaus::updateActionButtonStyled(session = session, inputId = "in_bttn_dataset_to_data_pool", disabled = !(metadata()$all_valid))
+          if(metadata()$all_valid)
+            shinyjs::enable(id = "in_bttn_dataset_to_data_pool")
+          else 
+            shinyjs::disable(id = "in_bttn_dataset_to_data_pool")
           })
         })
 
@@ -319,7 +322,7 @@ mod_utility_subset_server <- function(id, maf_data_pool){
 
             shinyWidgets::sendSweetAlert(session = session, title = "Success !!", text = "Dataset has been successfully imported! ", type = "success")
             shinyjs::reset(id = "SubsetDatasetUI")
-            dipsaus::updateActionButtonStyled(session = session, inputId = "in_bttn_dataset_to_data_pool", disabled = TRUE)
+            shinyjs::disable("in_bttn_dataset_to_data_pool")
           #Reset Inputs
         })
       })

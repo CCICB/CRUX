@@ -30,8 +30,8 @@ mod_data_import_maf_path_to_maf_server <- function(id, maf_path, clinicalData){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    utilitybeltshiny::assert_reactive(maf_path)
-    utilitybeltshiny::assert_reactive(clinicalData)
+    assertions::assert_reactive(maf_path)
+    assertions::assert_reactive(clinicalData)
     
     clinical_data_path <- reactive({
       if(identical(clinicalData(), character(0))){

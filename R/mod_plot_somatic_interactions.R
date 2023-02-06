@@ -51,7 +51,7 @@ mod_plot_somatic_interactions_ui <- function(id){
 #' @param maf a maf object (maf)
 #'
 mod_plot_somatic_interactions_server <- function(id, maf){
-  utilitybeltshiny::assert_reactive(maf)
+  assertions::assert_reactive(maf)
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns

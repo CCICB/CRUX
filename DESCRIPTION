@@ -28,9 +28,7 @@ Imports:
     shinyBS (>= 0.61),
     shinycssloaders (>= 1.0.0),
     utilitybeltassertions,
-    utilitybeltshiny,
     utilitybeltgg,
-    dipsaus,
     colourpicker,
     UpSetR,
     ggvenn,
@@ -39,10 +37,10 @@ Imports:
     mutalisk (>= 0.0.0.9000),
     PCAWGmutations,
     pkgload,
-    TCGAgistic (>= 0.0.0.9000)
+    TCGAgistic (>= 0.0.0.9000),
+    assertions (>= 0.0.0.9000)
 Remotes: 
     selkamand/utilitybeltassertions,
-    selkamand/utilitybeltshiny,
     selkamand/utilitybeltgg,
     ebailey78/shinyBS,
     CCICB/somaticflags,

@@ -19,7 +19,7 @@ mod_edit_dataset_ui <- function(id){
 #'
 #' @noRd 
 mod_edit_dataset_server <- function(id, maf_data_pool){
-  utilitybeltshiny::assert_reactive(maf_data_pool)
+  assertions::assert_reactive(maf_data_pool)
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns

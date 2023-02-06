@@ -18,7 +18,7 @@ mod_select_tumor_sample_barcode_from_maf_ui <- function(id, label="Tumor Sample 
 #'
 #' @noRd 
 mod_select_tumor_sample_barcode_from_maf_server <- function(id, maf){
-  utilitybeltshiny::assert_reactive(maf)
+  assertions::assert_reactive(maf)
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns

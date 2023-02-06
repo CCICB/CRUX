@@ -18,7 +18,7 @@ mod_select_maf_column_ui <- function(id, label = "Select Property"){
 #'
 #' @noRd 
 mod_select_maf_column_server <- function(id, maf){
-  utilitybeltshiny::assert_reactive(maf)
+  assertions::assert_reactive(maf)
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns
@@ -69,7 +69,7 @@ mod_select_maf_clinical_data_column_ui <- function(id, label = "Select Property"
 #'
 #' @noRd 
 mod_select_maf_clinical_data_column_server <- function(id, maf, forced_to_pick_at_least_1=TRUE, message_when_none_are_selected = "Please Select a Clinical Feature ..."){
-  utilitybeltshiny::assert_reactive(maf)
+  assertions::assert_reactive(maf)
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns
