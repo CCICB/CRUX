@@ -1,11 +1,11 @@
-#' Install dependencies
-#'
-#' @export
-#'
-install_dependencies <- function(){
-  BiocManager::install("PoisonAlien/TCGAmutations")
-  #BiocManager::install("maftools")
-}
+#' #' Install dependencies
+#' #'
+#' #' @export
+#' #'
+#' install_dependencies <- function(){
+#'   BiocManager::install("PoisonAlien/TCGAmutations")
+#'   #BiocManager::install("maftools")
+#' }
 
 create_mac_binary <- function(){
   

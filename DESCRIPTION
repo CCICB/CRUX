@@ -37,7 +37,6 @@ Imports:
     UpSetR,
     ggvenn,
     shinydashboard,
-    BiocManager,
     somaticflags (>= 0.0.0.9000),
     mutalisk (>= 0.0.0.9000),
     utilitybeltrna,
