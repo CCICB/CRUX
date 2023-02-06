@@ -58,8 +58,8 @@ mod_plot_heterogeneity_server <- function(id, maf, tsb){
           maftools::inferHeterogeneity(maf = maf_validated(), tsb = tsb_validated(), useSyn = in_check_useSyn(), minVaf = input$in_num_vaf_min, maxVaf = input$in_num_vaf_max)
         },
         error = function(err){
-          err=as.character(err)
-          if(stringr::str_detect(string = err, pattern = "Use vafCol to manually specify vaf column name")){
+          err=paste0(as.character(err), collapse = "\n")
+          if(grepl(x = err, pattern = "Use vafCol to manually specify vaf column name")){
             #validate("Can't automatically identify column specifying the vaf. Please manually specify the vaf column name")
             return(NULL)
           }

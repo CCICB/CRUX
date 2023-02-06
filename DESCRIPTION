@@ -16,7 +16,6 @@ Imports:
     rlang,
     shinyWidgets,
     shinyjs,
-    stringr,
     tibble,
     tidyr,
     shiny (>= 1.5.0),
