@@ -12,10 +12,10 @@ mod_pan_cohort_statistics_ui <- function(id){
   tagList(
     shinyWidgets::panel(
       #heading="Step 1: Select Dataset",
-      heading="Select Dataset",
+      heading="Step 1: Select Dataset",
       mod_select_maf_dataset_wrapper_ui(ns("in_picker_dataset"), panel = FALSE),
       # mod_select_maf_dataset_wrapper_server(ns("mod_select_dataset"))
-    ),
+    ), icon_down_arrow(break_after = TRUE),
     mod_single_cohort_summary_tables_and_plots_ui(id = ns("tables_and_plots"))
   )
 }
