@@ -33,8 +33,8 @@ mod_plot_heterogeneity_ui <- function(id){
 #'
 #' @noRd 
 mod_plot_heterogeneity_server <- function(id, maf, tsb){
-  utilitybeltshiny::assert_reactive(maf)
-  utilitybeltshiny::assert_reactive(tsb)
+  assertions::assert_reactive(maf)
+  assertions::assert_reactive(tsb)
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns
@@ -58,13 +58,13 @@ mod_plot_heterogeneity_server <- function(id, maf, tsb){
           maftools::inferHeterogeneity(maf = maf_validated(), tsb = tsb_validated(), useSyn = in_check_useSyn(), minVaf = input$in_num_vaf_min, maxVaf = input$in_num_vaf_max)
         },
         error = function(err){
-          err=as.character(err)
-          if(stringr::str_detect(string = err, pattern = "Use vafCol to manually specify vaf column name")){
+          err=paste0(as.character(err), collapse = "\n")
+          if(grepl(x = err, pattern = "Use vafCol to manually specify vaf column name")){
             #validate("Can't automatically identify column specifying the vaf. Please manually specify the vaf column name")
             return(NULL)
           }
           else{
-            utilitybeltassertions::fmterror(err)
+            paste0(err)
             return(NULL)
           }
         }
@@ -82,8 +82,8 @@ mod_plot_heterogeneity_server <- function(id, maf, tsb){
               return()
           },
           error = function(err){
-            err=as.character(err)
-            if(stringi::stri_detect(err, regex = "object .*not found")){
+            err=paste0(as.character(err), collapse = "\n")
+            if(grepl(x=err, pattern = "object .*not found")){
              validate("Wrong VAF column selected. Try another") 
             }
             validate(err)
@@ -99,7 +99,7 @@ mod_plot_heterogeneity_server <- function(id, maf, tsb){
           ) %>%
             paste0(collapse = "")
           
-          if(stringi::stri_detect(fail_messages, regex = "Too few mutations for clustering")){
+          if(any(grepl(x=fail_messages, pattern = "Too few mutations for clustering"))){
            validate("Either the wrong VAF column was selected or there is just too few mutations for clonal heterogeneity analysis") 
           }
           else

@@ -18,7 +18,7 @@ mod_plot_oncogenic_pathways_ui <- function(id){
 }
 
 mod_plot_oncogenic_pathways_server <- function(id, maf){
-  utilitybeltshiny::assert_reactive(maf)
+  assertions::assert_reactive(maf)
   
   moduleServer(id,
     function(input, output, session){

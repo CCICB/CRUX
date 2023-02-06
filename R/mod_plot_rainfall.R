@@ -64,8 +64,8 @@ mod_plot_rainfall_ui <- function(id){
 #'
 #' @noRd 
 mod_plot_rainfall_server <- function(id, maf, tsb){
-  utilitybeltshiny::assert_reactive(maf)
-  utilitybeltshiny::assert_reactive(tsb)
+  assertions::assert_reactive(maf)
+  assertions::assert_reactive(tsb)
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns

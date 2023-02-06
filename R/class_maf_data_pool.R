@@ -42,7 +42,7 @@ new_maf_data_pool <- function() {
 #' CRUX:::class_is_maf_data_pool("Hi")
 #' CRUX:::class_is_maf_data_pool(CRUX:::new_maf_data_pool())
 class_is_maf_data_pool <- function(object){
-    utilitybeltassertions::class_is(object = object, tested_class = "maf_data_pool")
+    assertions::assert_class(object, "maf_data_pool")
 }
 
 
@@ -56,13 +56,7 @@ class_is_maf_data_pool <- function(object){
 #'
 #' @family class_assertions
 assert_that_class_is_maf_data_pool <- function(object) {
-  
-  assertthat::assert_that(
-    utilitybeltassertions::class_is(object, tested_class = "maf_data_pool"),
-    msg = utilitybeltassertions::fmterror("Object is not a maf_data_pool. Its a: [", class(object),"]")
-    )
-  
-  
+  assertions::assert_class(object, "maf_data_pool")
 }
 
 #' Add to MAF Data Pool
@@ -78,8 +72,8 @@ assert_that_class_is_maf_data_pool <- function(object) {
 maf_data_pool_add_dataset <- function(maf_dataset_wrapper, maf_data_pool) {
   assert_that_class_is_maf_dataset_wrapper(maf_dataset_wrapper)
   assert_that_class_is_maf_data_pool(maf_data_pool)
-  #browser()
-  assertthat::assert_that(maf_data_pool_unique_name_is_available(maf_data_pool = maf_data_pool, unique_name = maf_dataset_wrapper$unique_name), msg = utilitybeltassertions::fmterror("'unique_name' of maf_dataset_wrapper, [", maf_dataset_wrapper$unique_name, "] is already present in maf_data_pool"))
+  
+  assertions::assert(maf_data_pool_unique_name_is_available(maf_data_pool = maf_data_pool, unique_name = maf_dataset_wrapper$unique_name), msg = paste0("'unique_name' of maf_dataset_wrapper, [", maf_dataset_wrapper$unique_name, "] is already present in maf_data_pool"))
   maf_data_pool[[length(maf_data_pool)+1]] <- maf_dataset_wrapper
   return(maf_data_pool)
 }
@@ -154,10 +148,10 @@ maf_data_pool_to_simple_dataframe <- function(maf_data_pool){
     "Filepath"
   )
   
-  assertthat::assert_that(length(columns_to_include) == length(new_column_names))
+  assertions::assert_equal(length(columns_to_include) == length(new_column_names))
   
   columns_not_in_full_data_pool_df.v<- columns_to_include[!columns_to_include %in% names(full_data_pool_df)]
-  assertthat::assert_that(length(columns_not_in_full_data_pool_df.v) == 0, msg = utilitybeltassertions::fmterror("maf_data_pool_to_simple_dataframe: columns [", paste0(columns_not_in_full_data_pool_df.v, collapse = ", "), "] were not found in full_data_pool_df"))
+  assertions::assert(length(columns_not_in_full_data_pool_df.v) == 0, msg = paste0("maf_data_pool_to_simple_dataframe: columns [", paste0(columns_not_in_full_data_pool_df.v, collapse = ", "), "] were not found in full_data_pool_df"))
   
   simplified_data_pool_df <- full_data_pool_df[columns_to_include]
   
@@ -180,14 +174,14 @@ maf_data_pool_to_simple_dataframe <- function(maf_data_pool){
 maf_data_pool_get_all_nonfunction_property_names <- function(maf_data_pool){
   #Assertions
   assert_that_class_is_maf_data_pool(maf_data_pool)
-  assertthat::assert_that(length(maf_data_pool) > 0, msg = utilitybeltassertions::fmterror("maf_data_pool_get_all_nonfunction_property_names: cannot identify nonfunctional columns if maf_data_pool is empty!"))
+  assertions::assert(length(maf_data_pool) > 0, msg = paste0("maf_data_pool_get_all_nonfunction_property_names: cannot identify nonfunctional columns if maf_data_pool is empty!"))
   
   #Main
   are_functions = purrr::map_lgl(maf_data_pool[[1]], is.function)
   nonfunctional_parameters = names(are_functions)[!are_functions]
   
   #More Assertions
-  assertthat::assert_that(length(nonfunctional_parameters) > 0, msg = utilitybeltassertions::fmterror("maf_data_pool_get_all_nonfunction_property_names: could not find any properties that weren't functions"))
+  assertthat::assert_that(length(nonfunctional_parameters) > 0, msg = paste0("maf_data_pool_get_all_nonfunction_property_names: could not find any properties that weren't functions"))
   
   #Return
   return(nonfunctional_parameters)
@@ -211,7 +205,7 @@ maf_data_pool_get_unique_names <- function(maf_data_pool) {
   
   if (length(maf_data_pool)==0) return(character(0))
   
-  unique_names <- utilitybeltlists::list_of_lists_retrieve_second_level_property(
+  unique_names <- list_of_lists_retrieve_second_level_property(
       list_of_lists = maf_data_pool, 
       name_of_property = "unique_name", 
       function_for_sublist_assertion = class_is_maf_dataset_wrapper
@@ -220,6 +214,7 @@ maf_data_pool_get_unique_names <- function(maf_data_pool) {
   assertthat::assert_that(length(unique_names) == length(maf_data_pool), msg= "Output of ")
   return(unique_names)
 }
+
 
 
 #' Check availability of a name in the data pool
@@ -270,7 +265,7 @@ maf_data_pool_make_name_unique <- function(maf_data_pool, name, max_number_of_at
     }
   }
   
-  message(utilitybeltassertions::fmterror("[maf_data_pool_make_name_unique] Attempted to create a unique name ",max_number_of_attempts, " times and failed. Make sure max_number_of_attempts is large enough (> 10). If its already large, this error means have an INSANE number of datasets present (unlikely), or somethings wrong with how I'm setting the seed"))
+  message(paste0("[maf_data_pool_make_name_unique] Attempted to create a unique name ",max_number_of_attempts, " times and failed. Make sure max_number_of_attempts is large enough (> 10). If its already large, this error means have an INSANE number of datasets present (unlikely), or somethings wrong with how I'm setting the seed"))
 }
 
 
@@ -289,7 +284,7 @@ maf_data_pool_get_index_from_unique_name <- function(maf_data_pool, unique_name)
   assert_that_class_is_maf_data_pool(maf_data_pool)
   utilitybeltassertions::assert_non_empty_string(unique_name)
   index_of_matching_entry = which(maf_data_pool_get_unique_names(maf_data_pool = maf_data_pool) == unique_name)
-  assertthat::assert_that(length(index_of_matching_entry) != 0, msg = utilitybeltassertions::fmterror("maf_data_pool_get_data_wrapper_from_unique_name: Searching [", substitute(maf_data_pool), "] for elements with the unique_name: ['", unique_name, "'], yielded no results"))
+  assertthat::assert_that(length(index_of_matching_entry) != 0, msg = paste0("maf_data_pool_get_data_wrapper_from_unique_name: Searching [", substitute(maf_data_pool), "] for elements with the unique_name: ['", unique_name, "'], yielded no results"))
   return(index_of_matching_entry)
 }
 
@@ -306,10 +301,41 @@ maf_data_pool_get_data_wrapper_from_unique_name <- function(maf_data_pool, uniqu
   assert_that_class_is_maf_data_pool(maf_data_pool)
   utilitybeltassertions::assert_non_empty_string(unique_name)
   index_of_matching_entry = which(maf_data_pool_get_unique_names(maf_data_pool = maf_data_pool) == unique_name)
-  assertthat::assert_that(length(index_of_matching_entry) != 0, msg = utilitybeltassertions::fmterror("maf_data_pool_get_data_wrapper_from_unique_name: Searching [", substitute(maf_data_pool), "] for elements with the unique_name: ['", unique_name, "'], yielded no results"))
+  assertthat::assert_that(length(index_of_matching_entry) != 0, msg = paste0("maf_data_pool_get_data_wrapper_from_unique_name: Searching [", substitute(maf_data_pool), "] for elements with the unique_name: ['", unique_name, "'], yielded no results"))
   return(maf_data_pool[[index_of_matching_entry]])
 }
 
 
 
+
+# List editing Utils ------------------------------------------------------
+
+
+
+is_list_of_lists <- function (object) 
+{
+  if (!is.list(object)) {
+    return(FALSE)
+  }
+  purrr::map_lgl(object, .f = is.list) %>% all() %>% return()
+}
+
+list_of_lists_retrieve_second_level_property <- function (list_of_lists, name_of_property, function_for_sublist_assertion = function(x) {
+  return(TRUE)
+}) 
+{
+  assertthat::assert_that(is.function(function_for_sublist_assertion))
+  assertthat::assert_that(assertthat::is.string(name_of_property))
+  assertthat::assert_that(is_list_of_lists(list_of_lists))
+  assertthat::assert_that(length(list_of_lists) > 0)
+  main_result <- purrr::map(.x = list_of_lists, .f = function(second_level_objects) {
+    assertthat::assert_that(function_for_sublist_assertion(second_level_objects))
+    assertthat::assert_that(magrittr::is_in(name_of_property, 
+                                            names(second_level_objects)))
+    return(second_level_objects[[name_of_property]])
+  }) %>% unlist
+  assertthat::assert_that(length(main_result) == length(list_of_lists))
+  assertthat::assert_that(!is.list(main_result))
+  return(main_result)
+}
 

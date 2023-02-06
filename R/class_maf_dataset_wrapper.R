@@ -62,16 +62,16 @@ new_maf_dataset_wrapper <- function(maf_data_pool, display_name, short_name, uni
   utilitybeltassertions::assert_non_empty_string(start_status)
   assertthat::assert_that(assertthat::is.flag(is_dataset_downloadable))
   assertthat::assert_that(assertthat::is.flag(is_dataset_loadable))
-  assertthat::assert_that(start_status %in% status_options, msg = utilitybeltassertions::fmterror("new_maf_dataset_wrapper: start_status [", start_status,"] must be one of [", paste0(status_options, collapse = ", "), "]"))
+  assertthat::assert_that(start_status %in% status_options, msg = paste0("new_maf_dataset_wrapper: start_status [", start_status,"] must be one of [", paste0(status_options, collapse = ", "), "]"))
   utilitybeltassertions::assert_non_empty_string(data_description)
   assertthat::assert_that(is.function(function_to_download_data))
   assertthat::assert_that(is.function(function_to_load_data))
-  assertthat::assert_that(utilitybeltassertions::fun_count_arguments(function_to_load_data) == 1, msg = utilitybeltassertions::fmterror("new_maf_dataset_wrapper: function_to_load_data must take exactly 1 argument (so when running it we can use the filepath of the local file. You do NOT HAVE to use the argument, just make a spot for it :)"))
+  assertthat::assert_that(utilitybeltassertions::fun_count_arguments(function_to_load_data) == 1, msg = paste0("new_maf_dataset_wrapper: function_to_load_data must take exactly 1 argument (so when running it we can use the filepath of the local file. You do NOT HAVE to use the argument, just make a spot for it :)"))
   utilitybeltassertions::assert_non_empty_string(name_of_data_source)
   assertthat::assert_that(is.na(derived_from) | class_is_maf_dataset_wrapper(derived_from)) 
-  assertthat::assert_that(is.na(clinical_data) || is.data.frame(clinical_data), msg= utilitybeltassertions::fmterror("new_maf_dataset_wrapper: Clinical_data must be a dataframe or NULL. It cannot be a: ", class(clinical_data)))
+  assertthat::assert_that(is.na(clinical_data) || is.data.frame(clinical_data), msg= paste0("new_maf_dataset_wrapper: Clinical_data must be a dataframe or NULL. It cannot be a: ", class(clinical_data)))
   assertthat::assert_that(identical(loaded_data, NA) || utilitybeltassertions::class_is(loaded_data, "MAF"))
-  assertthat::assert_that(is.na(rnaseq_filepath) | (assertthat::is.string(rnaseq_filepath) && file.exists(rnaseq_filepath)), msg = utilitybeltassertions::fmterror("new_maf_dataset_wrapper: rnaseq_filepath must be either NA, or a string leading to a valid filepath"))
+  assertthat::assert_that(is.na(rnaseq_filepath) | (assertthat::is.string(rnaseq_filepath) && file.exists(rnaseq_filepath)), msg = paste0("new_maf_dataset_wrapper: rnaseq_filepath must be either NA, or a string leading to a valid filepath"))
   assertthat::assert_that(is.na(number_of_samples) | assertthat::is.number(number_of_samples), msg = paste0("new_maf_dataset_wrapper: number_of_samples must be either NA or a number, not a: ", class(number_of_samples)))
   
   #Make unique_name actually unique
@@ -133,7 +133,7 @@ class_is_maf_dataset_wrapper <- function(object){
 assert_that_class_is_maf_dataset_wrapper <- function(object) {
   assertthat::assert_that(
     class_is_maf_dataset_wrapper(object),
-    msg = utilitybeltassertions::fmterror("Object is not a maf_dataset_wrapper Its a: [", class(object),"]")
+    msg = paste0("Object is not a maf_dataset_wrapper Its a: [", class(object),"]")
   )
 }
 
@@ -176,7 +176,7 @@ maf_data_pool_robust_load <- function(maf_data_pool, unique_name){
 }
 
 maf_data_pool_robust_load_apply_changes_to_reactval <- function(maf_data_pool, unique_name){
-  utilitybeltshiny::assert_reactive(maf_data_pool)
+  assertions::assert_reactive(maf_data_pool)
   utilitybeltassertions::assert_non_empty_string(unique_name)
   new_maf_data_pool <- maf_data_pool_robust_load(maf_data_pool(), unique_name)
   maf_data_pool(new_maf_data_pool)
@@ -194,7 +194,7 @@ maf_data_pool_robust_load_apply_changes_to_reactval <- function(maf_data_pool, u
 #'
 maf_data_pool_unique_name_to_maf_reactive <- function(maf_data_pool, unique_name){
   maf_data_pool_nonreactive <- isolate(maf_data_pool())
-  utilitybeltshiny::assert_reactive(maf_data_pool)
+  assertions::assert_reactive(maf_data_pool)
   utilitybeltassertions::assert_non_empty_string(unique_name)
   
   maf_data_pool_robust_load_apply_changes_to_reactval(maf_data_pool, unique_name)

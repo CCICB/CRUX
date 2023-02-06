@@ -15,12 +15,12 @@ text_is_non_zero_string <- function(text, test_custom_function = NULL){
     assertthat::assert_that(is.function(test_custom_function))
     assertthat::assert_that(
       utilitybeltassertions::fun_count_arguments(test_custom_function) >= 1, 
-      msg = utilitybeltassertions::fmterror("textInput_input_is_non_zero_string: test_custom_function function must take at least 1 argument (the value of the textInput Object)"))
+      msg = paste0("textInput_input_is_non_zero_string: test_custom_function function must take at least 1 argument (the value of the textInput Object)"))
     
     other_test <- test_custom_function(text)
   }
   
-  if(!assertthat::is.flag(valid) | !assertthat::is.flag(other_test) ) 
+  if(!assertions::is_flag(valid) | !assertions::is_flag(other_test)) 
     return(FALSE)
   else
     return(valid)

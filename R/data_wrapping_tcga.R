@@ -15,7 +15,7 @@ tcga_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, tcga_study_abbrev
   
   utilitybeltassertions::assert_non_empty_string(tcga_study_abbreviation, msg = "tcga_study_abbreviation must be a string >0 characters long")
   #browser()
-  assertthat::assert_that(tcga_study_abbreviation %in% tcga_available_df[["Study_Abbreviation"]], msg = utilitybeltassertions::fmterror("Failed to find tcga_study_abbreviation [", tcga_study_abbreviation, "] in TCGAmutations database. Check maftools::tcgaAvailable() for a list of valid abbreviations"))
+  assertthat::assert_that(tcga_study_abbreviation %in% tcga_available_df[["Study_Abbreviation"]], msg = paste0("Failed to find tcga_study_abbreviation [", tcga_study_abbreviation, "] in TCGAmutations database. Check maftools::tcgaAvailable() for a list of valid abbreviations"))
   #browser()
   
   
@@ -78,10 +78,10 @@ tcga_dataset_to_data_pool <- function(tcga_study_abbreviation, maf_data_pool, so
 tcga_datasets_to_data_pool <- function(maf_data_pool, source = "Firehose"){
   assert_that_class_is_maf_data_pool(maf_data_pool)
   utilitybeltassertions::assert_non_empty_string(source)
-  assertthat::assert_that(source %in% c("Firehose", "MC3"), msg = utilitybeltassertions::fmterror("[tcga_datasets_to_data_pool]: '", source, "' is not a valid TCGA source. Valid options are MC3 or Firehose"))
+  assertthat::assert_that(source %in% c("Firehose", "MC3"), msg = paste0("[tcga_datasets_to_data_pool]: '", source, "' is not a valid TCGA source. Valid options are MC3 or Firehose"))
   valid_tcga_abbreviations.v <- maftools::tcgaAvailable()[ !is.na(maftools::tcgaAvailable()[[source]]), "Study_Abbreviation"] %>% unlist()
   
-  assertthat::assert_that(length(valid_tcga_abbreviations.v) > 0, msg = utilitybeltassertions::fmterror("No TCGA data was found from the source: [",source,"]. Options valid options are MC3 or Firehose"))
+  assertthat::assert_that(length(valid_tcga_abbreviations.v) > 0, msg = paste0("No TCGA data was found from the source: [",source,"]. Options valid options are MC3 or Firehose"))
     
   for (tcga_abbreviation in valid_tcga_abbreviations.v) {
     maf_data_pool <- tcga_dataset_to_data_pool(tcga_study_abbreviation = tcga_abbreviation, maf_data_pool = maf_data_pool, source=source)

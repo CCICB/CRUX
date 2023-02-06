@@ -21,8 +21,8 @@ moduleSubsetByClinicalFeaturesUI <- function(id, panel_title="Define Cohorts"){
 #'
 #'
 moduleSubsetByClinicalFeaturesServer <- function(id, maf, clinicalData){
-  utilitybeltshiny::assert_reactive(maf)
-  utilitybeltshiny::assert_reactive(clinicalData)
+  assertions::assert_reactive(maf)
+  assertions::assert_reactive(clinicalData)
   
   moduleServer(id,
     function(input, output, session){

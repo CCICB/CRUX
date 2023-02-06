@@ -48,7 +48,7 @@ mod_plot_pfam_domains_ui <- function(id){
 #'
 #' @noRd 
 mod_plot_pfam_domains_server <- function(id, maf){
-  utilitybeltshiny::assert_reactive(maf)
+  assertions::assert_reactive(maf)
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns

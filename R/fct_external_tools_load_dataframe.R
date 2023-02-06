@@ -197,12 +197,16 @@ external_tools_convert_maf_to_oncodrive_return_dataframe <- function(maf){
   maf %>% 
     maftools_get_all_data() %>%
     dplyr::select(Chromosome, Start_Position, Reference_Allele, Tumor_Seq_Allele2, Tumor_Sample_Barcode) %>% 
-    dplyr::arrange(suppressWarnings(readr::parse_number(Chromosome)), Chromosome, Start_Position) %>% 
+    dplyr::arrange(suppressWarnings(parse_number(Chromosome)), Chromosome, Start_Position) %>% 
     dplyr::rename(chr=Chromosome, pos=Start_Position, ref=Reference_Allele, alt=Tumor_Seq_Allele2, sample=Tumor_Sample_Barcode) %>%
     return()
 }
 
-
+#' A function that parses numbers from strings
+#'
+parse_number <- function(x){
+  as.numeric(sub(x = x, pattern = "^.*?([0-9]+).*?$", replacement = "\\1"))
+}
 
 #' Load tool metadata into environment. Returns 
 #' 
@@ -265,7 +269,7 @@ external_tools_convert_maf_to_bbglab_return_dataframe <- function(maf){
   maf %>% 
     maftools_get_all_data() %>%
     dplyr::select(Chromosome, Start_Position, Reference_Allele, Tumor_Seq_Allele2, Tumor_Sample_Barcode) %>% 
-    dplyr::arrange(readr::parse_number(as.character(Chromosome)), Chromosome, Start_Position) %>% 
+    dplyr::arrange(parse_number(as.character(Chromosome)), Chromosome, Start_Position) %>% 
     dplyr::rename(chr=Chromosome, pos=Start_Position, ref=Reference_Allele, alt=Tumor_Seq_Allele2, sample=Tumor_Sample_Barcode) %>%
     return()
 }
@@ -1026,9 +1030,6 @@ external_tools_load_tumormap <- function(external_tools_df = data.frame()){
 #   
 #   similarity/total
 # }
-
-#dist = maftools::tcgaLoad("ACC") %>% external_tools_convert_maf_to_tumormap_return_dataframe() %>% dplyr::select(-1) %>% t() %>% dist(method = "binary")
-#(dist) %>% as.matrix() %>% as.data.frame() %>% tibble::rownames_to_column("Sample") %>% data.table::fwrite(file = "~/Downloads/ACC.test.tsv", sep = "\t", quote = FALSE, row.names = TRUE, col.names = TRUE
 
 
 # MSigDB ------------------------------------------------------------------

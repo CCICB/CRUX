@@ -94,7 +94,7 @@ data_sources_formatted <- function(maf_data_pool_df){
 #' 
 #' @return maf_dataset_wrapper.
 mod_select_maf_dataset_wrapper_server <- function(id, maf_data_pool, label = "Dataset"){
-  utilitybeltshiny::assert_reactive(maf_data_pool)
+  assertions::assert_reactive(maf_data_pool)
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns

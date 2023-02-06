@@ -9,10 +9,10 @@ mod_render_downloadabledataframe_ui <- function(id, downloadbttn_label="", class
       id = "Big Container", style = "display: flex; height: auto; align-items: center",
       div(
         style = 'width: 97%; display: inline-block',
-        utilitybeltshiny::conditionalUI(shinycssloader, tagList(
+        conditionalUI(shinycssloader, tagList(
           DT::dataTableOutput(outputId = ns("out_dt_maf"), width = "inherit", height = "auto") %>% shinycssloaders::withSpinner(proxy.height = "200px")
         )),
-        utilitybeltshiny::conditionalUI(shinycssloader==FALSE, tagList(
+        conditionalUI(shinycssloader==FALSE, tagList(
           DT::dataTableOutput(outputId = ns("out_dt_maf"), width = "inherit", height = "auto")
         )),
         br()
@@ -48,7 +48,7 @@ mod_render_downloadabledataframe_ui <- function(id, downloadbttn_label="", class
 mod_render_downloadabledataframe_server <- function(id, tabular_data_object, basename, rownames=FALSE, colnames=TRUE, filter="top", message_if_tabular_data_is_null = "Please select valid mutalisk files"){
   assertthat::assert_that(filter %in% c("top", "bottom", "none"), msg = "mod_render_downloadabledataframe_server: filter argument should be one of 'top', 'bottom' or 'none'")
   
-  utilitybeltshiny::assert_reactive(tabular_data_object)
+  assertions::assert_reactive(tabular_data_object)
   moduleServer(id,
                function(input, output, session){
                  
@@ -95,3 +95,33 @@ mod_render_downloadabledataframe_server <- function(id, tabular_data_object, bas
 
 # Copy in server
 # mod_render_downloadabledataframe_server("some_id", optional_argument)
+
+
+# utils -------------------------------------------------------------------
+
+#' Conditional UI
+#'
+#' This function takes some UI element and a compiletime-evaluated expression 
+#' and returns the UI element ONLY if the condition is true
+#' 
+#' @param expression compile-time evaluated expression (no server/reactive variables)
+#' @param ui_element the UI element to display if expression = TRUE
+#'
+#' @return if expression==TRUE: taglist wrapping passed UI element. If expression == FALSE, empty taglist
+#'
+#' @examples
+#' # In UI:
+#' somevariable=TRUE
+#' shinyWidgets::panel(heading="constitutivepanel",
+#'                     conditionalUI(somevariable, shinyWidgets::panel(somevariable, heading="ConditionalPanel")),
+#'                     
+#'                     shiny::h1("constitutive title"),
+#'                     shiny::p("constitutive paragraph")
+#' )
+conditionalUI <- function (expression, ui_element) 
+{
+  assertthat::assert_that(is.logical(expression), msg = "expression needs to be logical")
+  if (expression) 
+    return(shiny::tagList(ui_element))
+  else return(shiny::tagList())
+}

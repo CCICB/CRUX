@@ -42,7 +42,7 @@ mod_merge_ui <- function(id){
       shinyWidgets::panel(
         heading = "Step 4: Add to Data Pool",
         mod_data_import_step2_ui(id = ns("mod_set_metadata")),
-        dipsaus::actionButtonStyled(inputId = ns("in_bttn_add_to_data_pool"), label = "Add to Data Pool", disabled=TRUE, type = 'danger')
+        shinyjs::disabled(actionButton(inputId = ns("in_bttn_add_to_data_pool"), label = "Add to Data Pool"))
       )
     )
   )
@@ -52,7 +52,7 @@ mod_merge_ui <- function(id){
 #'
 #' @noRd 
 mod_merge_server <- function(id, maf_data_pool){
-  utilitybeltshiny::assert_reactive(maf_data_pool)
+  assertions::assert_reactive(maf_data_pool)
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns
@@ -151,10 +151,12 @@ mod_merge_server <- function(id, maf_data_pool){
     
     observeEvent(metadata(), {
       if(!is.null(merged_maf()) && metadata()$all_valid ==TRUE){
-        dipsaus::updateActionButtonStyled(session = session, inputId = "in_bttn_add_to_data_pool", type = "success", disabled = FALSE)
+        shinyjs::enable(id = "in_bttn_add_to_data_pool")
       }
-      else
-        dipsaus::updateActionButtonStyled(session = session, inputId = "in_bttn_add_to_data_pool", type = "danger", disabled = TRUE)
+      else{
+        #shiny::updateActionButton(session = session, inputId = "in_bttn_add_to_data_pool", label = "Add to Data Pool (metadata required)")
+        shinyjs::disable(id = "in_bttn_add_to_data_pool")
+      }
       })
     
     
@@ -189,7 +191,7 @@ mod_merge_server <- function(id, maf_data_pool){
         
         shinyWidgets::sendSweetAlert(session = session, title = "Success !!", text = "Dataset has been successfully imported! ", type = "success")
         shinyjs::reset(id = "merge_dataset_ui")
-        dipsaus::updateActionButtonStyled(session = session, inputId = "in_bttn_add_to_data_pool", disabled = TRUE)
+        shinyjs::disable(id = "in_bttn_add_to_data_pool")
         
         #Reset Inputs
       })

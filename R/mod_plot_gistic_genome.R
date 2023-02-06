@@ -40,8 +40,8 @@ mod_plot_gistic_genome_ui <- function(id){
 #'
 #' @noRd 
 mod_plot_gistic_genome_server <- function(id, gistic, maf){
-  utilitybeltshiny::assert_reactive(gistic)
-  utilitybeltshiny::assert_reactive(maf)
+  assertions::assert_reactive(gistic)
+  assertions::assert_reactive(maf)
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns

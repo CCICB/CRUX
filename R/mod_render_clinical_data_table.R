@@ -25,7 +25,7 @@ mod_render_clinical_data_table_ui <- function(id){
 mod_render_clinical_data_table_server <- function(id, maf){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-    utilitybeltshiny::assert_reactive(maf)
+    assertions::assert_reactive(maf)
     
     clinical_data_df <- reactive({
       validate(need(!is.null(maf()), message = "Please import a valid maf / tumor-level metadata file"))
