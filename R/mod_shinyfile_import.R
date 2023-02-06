@@ -6,7 +6,6 @@
 #' @param tooltip_text The content of the tooltip (string / HTML)
 #' @param tooltip_placement Where the tooltip should appear relative to its target (top, bottom, left, or right). Defaults to "right"
 #' @param trigger What action should cause the tooltip to appear? (hover, focus, click, or manual). Defaults to "hover". 
-#' @inheritParams shinyFiles::shinyFilesButton
 #'
 #'
 #' @importFrom shiny NS tagList 
@@ -15,7 +14,6 @@ mod_shinyfile_import_ui <- function(id, title, label, multiple=FALSE, buttonType
   
   tagList(
     shiny::fileInput(inputId = ns("id_shinyfiles_button"), label = title, multiple = multiple, buttonLabel = label),
-    #shinyFiles::shinyFilesButton(id = ns("id_shinyfiles_button"), title = title, multiple = multiple, label=label, buttonType = buttonType, style = style, viewtype = viewtype),
     shinyBS::bsTooltip(id = ns("id_shinyfiles_button"), title = tooltip_text, placement = tooltip_placement, trigger = trigger)
   )
 }
