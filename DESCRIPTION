@@ -69,4 +69,5 @@ BugReports: https://github.com/selkamand/CRUX.git/issues
 Depends:
     R (>= 3.5)
 Suggests: 
+    R.utils,
     usethis
