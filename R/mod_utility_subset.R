@@ -235,7 +235,8 @@ mod_utility_subset_server <- function(id, maf_data_pool){
                 maftools_fix_clinical_data_types()
               },
             error = function(err){
-              if(stringr::str_detect(err, pattern = "Subsetting has resulted in zero non-synonymous variants"))
+              err <- as.character(err)
+              if(stringr::str_detect(as.character(err), pattern = "Subsetting has resulted in zero non-synonymous variants"))
                 validate("Subsetting has resulted in zero non-synonymous variants")
               else if (stringr::str_detect(err, pattern = "None of the samples meet the clinical query"))
                validate("None of the samples meet the clinical query")
