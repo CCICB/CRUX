@@ -395,7 +395,7 @@ maftools_extract_geneset_by_altered_samples <- function(maf, topn = 100){
 #' maf <- maftools::tcgaLoad("GBM", source = "Firehose") 
 #' maftools_cluster_samples(maf)
 maftools_cluster_samples <- function(maf, custom_genelist_to_cluster_by = NULL, number_of_genes = 50, genes_to_annotate=NULL, annotate_most_altered_genes=TRUE, topn_genes = 5, metadata_columns=NULL, include_silent_mutations = FALSE, show_rownames = FALSE, show_colnames=FALSE, annotation_legend=TRUE, fontsize=10){
-  
+  rlang::check_installed("pheatmap", reason = "to run somatic clustering")
   
   genes_in_maf <- maf %>% 
     maftools_get_all_data(include_silent_mutations = include_silent_mutations) %>% 
