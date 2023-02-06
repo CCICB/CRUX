@@ -12,7 +12,7 @@
 #'
 #' @family DataToWrapper
 user_data_filepath_to_class_maf_dataset_wrapper <- function(filepath, clinicalData=NA, maf_data_pool, display_name, short_name, description = "User specified file", data_source = "USER", loaded_data=NA){
-  assertthat::assert_that(assertthat::is.string(filepath), msg = utilitybeltassertions::fmterror("user_data_filepath_to_class_maf_dataset_wrapper: filepath must be a string (single length character vector), Not a: ", class(filepath)))
+  assertthat::assert_that(assertthat::is.string(filepath), msg = paste0("user_data_filepath_to_class_maf_dataset_wrapper: filepath must be a string (single length character vector), Not a: ", class(filepath)))
   
   assertthat::assert_that(file.exists(filepath))
   

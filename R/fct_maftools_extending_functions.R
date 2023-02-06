@@ -62,7 +62,7 @@ maftools_clinical_data_get_levels <- function(maf, clinical_feature){
   utilitybeltassertions::assert_non_empty_string(clinical_feature)
   clindata <- maftools::getClinicalData(maf)
   
-  assertthat::assert_that(clinical_feature %in% colnames(clindata), msg = utilitybeltassertions::fmterror("[maftools_clinical_data_get_levels] the clinical feature '", clinical_feature, "' was not found in clinical data"))
+  assertthat::assert_that(clinical_feature %in% colnames(clindata), msg = paste0("[maftools_clinical_data_get_levels] the clinical feature '", clinical_feature, "' was not found in clinical data"))
   dplyr::n_distinct(clindata[[clinical_feature]]) %>%
     return()
 }
@@ -70,7 +70,7 @@ maftools_clinical_data_get_levels <- function(maf, clinical_feature){
 maftools_clinical_data_lowest_number_of_samples_per_level <- function(maf, clinical_feature){
   utilitybeltassertions::assert_non_empty_string(clinical_feature)
   clindata <- maftools::getClinicalData(maf)
-  assertthat::assert_that(clinical_feature %in% colnames(clindata), msg = utilitybeltassertions::fmterror("[maftools_clinical_data_get_levels] the clinical feature '", clinical_feature, "' was not found in clinical data"))
+  assertthat::assert_that(clinical_feature %in% colnames(clindata), msg = paste0("[maftools_clinical_data_get_levels] the clinical feature '", clinical_feature, "' was not found in clinical data"))
   min(table(clindata[[clinical_feature]])) %>%
     return()
 }

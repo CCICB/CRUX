@@ -14,7 +14,7 @@
 pcawg_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, pcawg_study_abbreviation){
   pcawg_available_df <- PCAWGmutations::pcawg_available()
   utilitybeltassertions::assert_non_empty_string(pcawg_study_abbreviation)
-  assertthat::assert_that(pcawg_study_abbreviation %in% pcawg_available_df[[1]], msg = utilitybeltassertions::fmterror("Failed to find pcawg_study_abbreviation [", pcawg_study_abbreviation, "] in pcawgmutations database. Check pcawg_available() for a list of valid abbreviations"))
+  assertthat::assert_that(pcawg_study_abbreviation %in% pcawg_available_df[[1]], msg = paste0("Failed to find pcawg_study_abbreviation [", pcawg_study_abbreviation, "] in pcawgmutations database. Check pcawg_available() for a list of valid abbreviations"))
   
   full_study_name = pcawg_study_abbreviation # Change later
   sample_number = pcawg_available_df %>% 

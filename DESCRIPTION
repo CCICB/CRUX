@@ -38,7 +38,8 @@ Imports:
     PCAWGmutations,
     pkgload,
     TCGAgistic (>= 0.0.0.9000),
-    assertions (>= 0.0.0.9000)
+    assertions (>= 0.0.0.9000),
+    cli
 Remotes: 
     selkamand/utilitybeltassertions,
     selkamand/utilitybeltgg,

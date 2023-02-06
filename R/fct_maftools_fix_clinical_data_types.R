@@ -15,7 +15,7 @@
 #' new_maf = CRUX:::maftools_fix_clinical_data_types(maf)
 #' str(maftools::getClinicalData(new_maf))
 maftools_fix_clinical_data_types <- function(maf){
-  assertthat::assert_that(utilitybeltassertions::class_is(maf, "MAF"))
+  assertions::assert_class(maf, "MAF")
   maf@clinical.data <- type.convert(maf@clinical.data, as.is=TRUE)
   return(maf)
 }

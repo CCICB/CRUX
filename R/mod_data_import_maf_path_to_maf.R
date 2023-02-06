@@ -51,26 +51,28 @@ mod_data_import_maf_path_to_maf_server <- function(id, maf_path, clinicalData){
       try_result <- tryCatch(
         expr = {
           maf_ <- maftools::read.maf(maf_path(), clinicalData = clinical_data_path())
-          message(utilitybeltassertions::fmtsuccess("Maf File Read Succesfully"))
+          cli::cli_alert_success("Maf File Read Succesfully")
           return(maf_)
         },
         error = function(err){
+          err <- paste0(as.character(err), collapse = "\n")
           #Check if error is due to maf or clinical data file
           maf_is_valid = is_valid_clinicalfeaturefile(clinicalData = NULL, maf = maf_path())
           if(maf_is_valid)
-            message(utilitybeltassertions::fmtwarning("Attempt to read clinicalData failed, returning null. Error message: \n", err))
+            message(cli::cli_alert_warning("Attempt to read clinicalData failed, returning null. Error message: {err}"))
           else 
-            message(utilitybeltassertions::fmtwarning("Attempt to read maf failed, returning null. Error message: \n", err))
+            message(cli::cli_alert_warning("Attempt to read maf failed, returning null. Error message: {err}"))
           
           return(NULL)
         },
         warning = function(warn){
+          warn <- paste0(as.character(warn), collapse = "\n")
           maf_is_valid = is_valid_clinicalfeaturefile(clinicalData = NULL, maf = maf_path())
           
           if(maf_is_valid)
-            message(utilitybeltassertions::fmtwarning("Attempt to read clinicalData failed, returning null. Error message: \n", warn))
+            cli::cli_alert_warning("Attempt to read clinicalData failed, returning null. Error message: {warn}")
           else 
-            message(utilitybeltassertions::fmtwarning("Attempt to read maf failed, returning null. Error message: \n", warn))
+            message(cli::cli_alert_warning("Attempt to read maf failed, returning null. Error message: {warn}"))
           return(NULL)
         }
       )

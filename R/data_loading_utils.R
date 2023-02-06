@@ -29,9 +29,9 @@ maf_data_set_wrapper_load_data <- function(maf_dataset_wrapper){
   #assert_that_class_is_maf_data_pool(maf_data_pool)
   assert_that_class_is_maf_dataset_wrapper(maf_dataset_wrapper)
   updated_maf_dataset_wrapper <- maf_dataset_wrapper
-  assertthat::assert_that(maf_dataset_wrapper$status=="not_loaded", msg = utilitybeltassertions::fmterror("Can only load data if status is: not_loaded. Status is currently: ", maf_dataset_wrapper$status))
+  assertthat::assert_that(maf_dataset_wrapper$status=="not_loaded", msg = paste0("Can only load data if status is: not_loaded. Status is currently: ", maf_dataset_wrapper$status))
   updated_maf_dataset_wrapper$loaded_data <- maf_dataset_wrapper$load_data(maf_dataset_wrapper$local_path_to_data)
-  assertthat::assert_that(utilitybeltassertions::class_is(updated_maf_dataset_wrapper$loaded_data, tested_class = "MAF"), msg = utilitybeltassertions::fmterror("maf_data_set_wrapper_load_data: load function did not load an MAF object"))
+  assertthat::assert_that(utilitybeltassertions::class_is(updated_maf_dataset_wrapper$loaded_data, tested_class = "MAF"), msg = paste0("maf_data_set_wrapper_load_data: load function did not load an MAF object"))
   updated_maf_dataset_wrapper$status <- "ready"
   return(updated_maf_dataset_wrapper)
 }
@@ -52,7 +52,7 @@ maf_data_set_wrapper_load_data <- function(maf_dataset_wrapper){
 maf_data_set_wrapper_unload_data <- function(maf_dataset_wrapper){
   assert_that_class_is_maf_dataset_wrapper(maf_dataset_wrapper)
   updated_maf_dataset_wrapper <- maf_dataset_wrapper
-  assertthat::assert_that(maf_dataset_wrapper$status=="ready", msg = utilitybeltassertions::fmterror("Can only unload data unless its already loaded (status == 'ready'). Status is currently:", maf_dataset_wrapper$status))
+  assertthat::assert_that(maf_dataset_wrapper$status=="ready", msg = paste0("Can only unload data unless its already loaded (status == 'ready'). Status is currently:", maf_dataset_wrapper$status))
   updated_maf_dataset_wrapper$loaded_data <- NA
   updated_maf_dataset_wrapper$status <- "not_loaded"
   return(updated_maf_dataset_wrapper)
