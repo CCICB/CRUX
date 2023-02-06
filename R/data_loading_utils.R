@@ -268,13 +268,7 @@ maf_data_wrapper_has_rnaseq_data <- function(maf_dataset_wrapper){
     return(FALSE)
 }
 
-# my_tsne <- function(rnaseq_df){
-#   rnaseq_df %>% 
-#     dplyr::select(Tumor_Sample_Barcode, Hugo_Symbol, TPM)  %>% 
-#     tidyr::pivot_wider(names_from = Hugo_Symbol, values_from = TPM) %>% 
-#     tibble::column_to_rownames(var = "Tumor_Sample_Barcode") %>% 
-#     Rtsne::Rtsne(perplexity = 2)  
-# }
+
 
 #' Add RNAseq -- maf_data_pool version
 #' 

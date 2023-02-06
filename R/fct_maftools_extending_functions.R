@@ -145,7 +145,6 @@ maftools_flagged_genes <- function(){
 
 maftools_gistic = function(gistic){
   gistic@data
-  #gistic@cnMatrix %>%  as.data.frame() %>% tibble::rownames_to_column("Cytoband") %>% tidyr::pivot_longer(2:ncol(.),names_to = "Sample", values_to = "MutationType") %>% dplyr::tibble() 
 }
 
 #' Convert chromosomes 23 and 24 to x and y in maf object. This will convert  
