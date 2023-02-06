@@ -82,8 +82,8 @@ mod_plot_heterogeneity_server <- function(id, maf, tsb){
               return()
           },
           error = function(err){
-            err=as.character(err)
-            if(stringi::stri_detect(err, regex = "object .*not found")){
+            err=paste0(as.character(err), collapse = "\n")
+            if(grepl(x=err, pattern = "object .*not found")){
              validate("Wrong VAF column selected. Try another") 
             }
             validate(err)
@@ -99,7 +99,7 @@ mod_plot_heterogeneity_server <- function(id, maf, tsb){
           ) %>%
             paste0(collapse = "")
           
-          if(stringi::stri_detect(fail_messages, regex = "Too few mutations for clustering")){
+          if(any(grepl(x=fail_messages, pattern = "Too few mutations for clustering"))){
            validate("Either the wrong VAF column was selected or there is just too few mutations for clonal heterogeneity analysis") 
           }
           else
