@@ -29,7 +29,6 @@ Imports:
     shinycssloaders (>= 1.0.0),
     utilitybeltassertions,
     utilitybeltshiny,
-    utilitybeltlists,
     utilitybeltgg,
     dipsaus,
     colourpicker,
@@ -44,7 +43,6 @@ Imports:
 Remotes: 
     selkamand/utilitybeltassertions,
     selkamand/utilitybeltshiny,
-    selkamand/utilitybeltlists,
     selkamand/utilitybeltgg,
     selkamand/utilitybeltrna,
     ebailey78/shinyBS,

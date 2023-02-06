@@ -211,7 +211,7 @@ maf_data_pool_get_unique_names <- function(maf_data_pool) {
   
   if (length(maf_data_pool)==0) return(character(0))
   
-  unique_names <- utilitybeltlists::list_of_lists_retrieve_second_level_property(
+  unique_names <- list_of_lists_retrieve_second_level_property(
       list_of_lists = maf_data_pool, 
       name_of_property = "unique_name", 
       function_for_sublist_assertion = class_is_maf_dataset_wrapper
@@ -220,6 +220,7 @@ maf_data_pool_get_unique_names <- function(maf_data_pool) {
   assertthat::assert_that(length(unique_names) == length(maf_data_pool), msg= "Output of ")
   return(unique_names)
 }
+
 
 
 #' Check availability of a name in the data pool
@@ -312,4 +313,35 @@ maf_data_pool_get_data_wrapper_from_unique_name <- function(maf_data_pool, uniqu
 
 
 
+
+# List editing Utils ------------------------------------------------------
+
+
+
+is_list_of_lists <- function (object) 
+{
+  if (!is.list(object)) {
+    return(FALSE)
+  }
+  purrr::map_lgl(object, .f = is.list) %>% all() %>% return()
+}
+
+list_of_lists_retrieve_second_level_property <- function (list_of_lists, name_of_property, function_for_sublist_assertion = function(x) {
+  return(TRUE)
+}) 
+{
+  assertthat::assert_that(is.function(function_for_sublist_assertion))
+  assertthat::assert_that(assertthat::is.string(name_of_property))
+  assertthat::assert_that(is_list_of_lists(list_of_lists))
+  assertthat::assert_that(length(list_of_lists) > 0)
+  main_result <- purrr::map(.x = list_of_lists, .f = function(second_level_objects) {
+    assertthat::assert_that(function_for_sublist_assertion(second_level_objects))
+    assertthat::assert_that(magrittr::is_in(name_of_property, 
+                                            names(second_level_objects)))
+    return(second_level_objects[[name_of_property]])
+  }) %>% unlist
+  assertthat::assert_that(length(main_result) == length(list_of_lists))
+  assertthat::assert_that(!is.list(main_result))
+  return(main_result)
+}
 
