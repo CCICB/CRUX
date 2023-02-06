@@ -20,22 +20,6 @@ mod_shinyfile_import_ui(
 \arguments{
 \item{id, input, output, session}{Internal parameters for {shiny}.}
 
-\item{title}{The heading of the dialog box that appears when the button is
-pressed}
-
-\item{label}{The text that should appear on the button}
-
-\item{multiple}{A logical indicating whether or not it should be possible to
-select multiple files}
-
-\item{buttonType}{The Bootstrap button markup used to colour the button.
-Defaults to 'default' for a neutral appearance but can be changed for another
-look. The value will be pasted with 'btn-' and added as class.}
-
-\item{style}{Additional styling added to the button (e.g., "margin-top: 25px;")}
-
-\item{viewtype}{View type to use in the file browser. One of "detail" (default), "list", or "icon"}
-
 \item{tooltip_text}{The content of the tooltip (string / HTML)}
 
 \item{tooltip_placement}{Where the tooltip should appear relative to its target (top, bottom, left, or right). Defaults to "right"}
