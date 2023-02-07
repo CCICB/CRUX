@@ -31,14 +31,14 @@ app_ui <- function(request) {
     shinydashboard::dashboardPage(
       header = shinydashboard::dashboardHeader(title = HTML(as.character(tags$strong("CRUX"))), shinydashboard::dropdownMenu(type = "notifications", headerText = "DNA")), 
       sidebar = shinydashboard::dashboardSidebar(
-        shinydashboard::sidebarMenu(
+        shinydashboard::sidebarMenu(id = "tabs",
           shinydashboard::menuItem("Home", tabName = "Home", icon = icon("home"), selected = TRUE),
           shinydashboard::menuItem("Data", tabName = "Data", icon = icon("table"),
                                    shinydashboard::menuSubItem(text = "Available Data", tabName = "DataPool", icon = icon("database")),
                                    shinydashboard::menuSubItem(text = "Import Data", tabName = "DataImport", icon = icon("file-upload"))
                                    ),
           shinydashboard::menuItem(
-            "Single Cohort Genomics", tabName = "Home", icon = icon("dna"),
+            "Single Cohort Genomics", tabName = "SingleCohortGenomics", icon = icon("dna"),
             shinydashboard::menuSubItem("Cohort Summary", tabName = "PanCohortStatistics", icon = icon("chart-bar")),
             shinydashboard::menuSubItem("Enrichment", tabName = "Enrichment", icon = icon("dna")),
             shinydashboard::menuSubItem("Survival Analysis", tabName = "Survival", icon = icon("heartbeat")),

@@ -15,7 +15,7 @@ app_server <- function( input, output, session ) {
   maf_data_pool <- reactiveVal(starting_maf_data_pool) #starting_maf_data_pool read in from RDS outside server function
   
   mod_home_server("mod_home")
-  mod_datapool_viewer_server(id = "mod_datapool_viewer", maf_data_pool = maf_data_pool)
+  mod_datapool_viewer_server(id = "mod_datapool_viewer", maf_data_pool = maf_data_pool, parent_session = session)
   mod_data_import_server(id = "mod_data_import", maf_data_pool = maf_data_pool)
   mod_pan_cohort_statistics_server(id = "mod_pan_cohort_statistics", maf_data_pool)
   mod_compare_cohorts_server(id = "mod_compare_cohorts", maf_data_pool = maf_data_pool)

@@ -148,7 +148,7 @@ maf_data_pool_to_simple_dataframe <- function(maf_data_pool){
     "Filepath"
   )
   
-  assertions::assert_equal(length(columns_to_include) == length(new_column_names))
+  assertions::assert_equal(length(columns_to_include), length(new_column_names))
   
   columns_not_in_full_data_pool_df.v<- columns_to_include[!columns_to_include %in% names(full_data_pool_df)]
   assertions::assert(length(columns_not_in_full_data_pool_df.v) == 0, msg = paste0("maf_data_pool_to_simple_dataframe: columns [", paste0(columns_not_in_full_data_pool_df.v, collapse = ", "), "] were not found in full_data_pool_df"))
