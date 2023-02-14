@@ -10,6 +10,10 @@ You can import your own data, or use public TCGA or PCAWG datasets.
 > CRUX is now live at https://ccicb.shinyapps.io/crux/
 
 
+> **Note**
+> For analysing sensitive datasets, we reccomend installing CRUX binaries, or installing it as an R package so you can run CRUX on a system of your choice.
+
+
 ## Manual
 A **manual** describing the installation and use of **CRUX** can be found [**here**](https://crux-docs.readthedocs.io/en/latest/index.html)
 
