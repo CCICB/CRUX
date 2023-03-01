@@ -2,6 +2,8 @@
 
 ![r-universe](https://CCICB.r-universe.dev/badges/CRUX)
 
+[![r-universe status badge](https://selkamand.r-universe.dev/badges/CRUX.git)](https://selkamand.r-universe.dev/ui#package:CRUX.git)
+
 ## Description
 
 A shiny app that simplifies cohort-level, tertiary cancer analysis. You can import your own data, or use public TCGA or PCAWG datasets.
