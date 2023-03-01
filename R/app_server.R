@@ -1,7 +1,7 @@
 
 # Code runs once, result shared for all users -------------------------------------------
 # To update default_data_pool.Rds, run / edit update_starting_maf_data_pool()
-starting_maf_data_pool <- readRDS(system.file(package = "CRUX", "/default_data_pool.Rds"))
+starting_maf_data_pool <- readRDS(system.file(package = "CRUX", "default_data_pool.Rds"))
 
 #' The application server-side
 #' 
