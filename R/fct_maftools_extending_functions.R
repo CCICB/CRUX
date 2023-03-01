@@ -329,7 +329,7 @@ is_maf <- function(object){
 #' @return  The names of genes mutated in the most samples (character vector). 
 #'
 #' @examples
-#' CRUX::maftools_extract_geneset_by_altered_samples(maftools::tcgaLoad("GBM"), topn=50)
+#' CRUX:::maftools_extract_geneset_by_altered_samples(maftools::tcgaLoad("GBM"), topn=50)
 maftools_extract_geneset_by_altered_samples <- function(maf, topn = 100){
   genes_by_number_of_altered_samples <- maf %>%
     maftools::getGeneSummary() %>%

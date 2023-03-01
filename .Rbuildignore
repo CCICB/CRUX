@@ -7,3 +7,7 @@
 gdac.*
 mutalisk_lusc_tcga.*
 example_data
+dev
+CODE_OF_CONDUCT.md
+LICENSE.md
+.rscignore

@@ -27,11 +27,11 @@ test_that("pcawg_load works", {
     )
   
   expect_error(
-    PCAWGmutations::pcawg_load("Bone-Cart"),
+    invisible(PCAWGmutations::pcawg_load("Bone-Cart", verbose = FALSE)),
     NA)
   
   expect_s4_class(
-    PCAWGmutations::pcawg_load("Bone-Cart"),
+    PCAWGmutations::pcawg_load("Bone-Cart", verbose = FALSE),
     "MAF")
   
 })

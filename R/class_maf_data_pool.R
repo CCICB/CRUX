@@ -42,7 +42,7 @@ new_maf_data_pool <- function() {
 #' CRUX:::class_is_maf_data_pool("Hi")
 #' CRUX:::class_is_maf_data_pool(CRUX:::new_maf_data_pool())
 class_is_maf_data_pool <- function(object){
-    assertions::assert_class(object, "maf_data_pool")
+    inherits(x = object, what = "maf_data_pool")
 }
 
 

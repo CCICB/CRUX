@@ -15,6 +15,3 @@ Dataframe containing at least three columns, named "Tumor_Sample_Barcode", "Hugo
 \description{
 Read RNAseq file
 }
-\examples{
-CRUX:::read_rnaseq_file(system.file("example_data/blca_rnaseq.tsv", package = "CRUX"))
-}

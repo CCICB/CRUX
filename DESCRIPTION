@@ -36,10 +36,10 @@ Imports:
     somaticflags (>= 0.0.0.9000),
     mutalisk (>= 0.0.0.9000),
     PCAWGmutations,
-    pkgload,
     TCGAgistic (>= 0.0.0.9000),
     assertions (>= 0.0.0.9000),
-    cli
+    cli,
+    htmltools
 Remotes: 
     selkamand/utilitybeltassertions,
     selkamand/utilitybeltgg,
@@ -59,4 +59,5 @@ Suggests:
     mclust,
     pheatmap,
     R.utils,
+    testthat,
     usethis

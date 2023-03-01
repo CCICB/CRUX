@@ -21,7 +21,21 @@ test_that("external_tools_convert_maf_to_bbglab", {
   
 })
 
-test_that("CRUX::external_tool_metadata dataset is up to date", {
+test_that("external_tool_metadata dataset is up to date", {
   #if this fails try running external_tools_update_builtin_dataset()
-  expect_equal(external_tools_load_all_tools(), CRUX::external_tool_metadata)
+  
+  # We remove maf_conversion_function since function environment will be different (CRUX vs GLOBAL)
+  live_external_tool_metadata <- subset(external_tools_load_all_tools(), select = -c(maf_conversion_function))
+  stored_external_tool_metadata <- subset(external_tool_metadata, select = -c(maf_conversion_function))
+  
+  expect_equal(live_external_tool_metadata, stored_external_tool_metadata)
+  
+  # Check bodies and names of functions
+  live_function_strings <- unlist(external_tools_load_all_tools()[["maf_conversion_function"]]) %>%
+    lapply(deparse1)
+  
+  stored_function_strings <- unlist(external_tool_metadata[["maf_conversion_function"]]) %>%
+    lapply(deparse1)
+  
+  expect_equal(live_function_strings, stored_function_strings)
 })

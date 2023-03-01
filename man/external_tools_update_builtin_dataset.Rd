@@ -7,6 +7,6 @@
 external_tools_update_builtin_dataset()
 }
 \description{
-Takes the output of external_tools_load_all_tools and saves it to CRUX/data as the dataset: \strong{CRUX::external_tool_metadata}.
+Takes the output of external_tools_load_all_tools and saves it to CRUX/data as the dataset: \strong{external_tool_metadata}.
 This saved dataset is what is used by the app. If you make change to any external_tools_load_... function, you must rerun this function.
 }
