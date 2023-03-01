@@ -48,6 +48,7 @@ Remotes:
     CCICB/PCAWGmutations,
     selkamand/mutalisk,
     CCICB/TCGAgistic
+    selkamand/assertions
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
