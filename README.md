@@ -28,7 +28,7 @@ There are **no** dependencies other than having a browser (Chrome, Firefox, Edge
 
 1.  Check R \> 3.5.0 is installed (run `sessionInfo()`)
 
-2.  Install CRUX: `install.packages("CRUX", repos = "https://ropensci.r-universe.dev")`
+2.  Install CRUX: `install.packages('CRUX', repos = c('https://ccicb.r-universe.dev', 'https://cloud.r-project.org'))`
 
 3.  Run the CRUX app: `CRUX::run_app()`
 
