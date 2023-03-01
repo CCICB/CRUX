@@ -1,6 +1,6 @@
 # CRUX
 
-![r-universe](https://CCICB.r-universe.dev/badges/CRUX)
+[![r-universe status badge](https://ccicb.r-universe.dev/badges/CRUX)](https://selkamand.r-universe.dev/ui#package:CRUX)
 
 ## Description
 
