@@ -19,6 +19,7 @@ Similar tomaf_data_wrapper_get_rnaseq_df but only returns expression data for sa
 }
 \examples{
 # Prepare Data
+\dontrun{
 rna_path = system.file("example_data/blca_rnaseq.tsv", package = "CRUX")
 maf_data_wrapper = CRUX:::tcga_dataset_to_maf_dataset_wrapper(CRUX:::new_maf_data_pool(), "BLCA")
 
@@ -27,5 +28,6 @@ maf_data_wrapper_with_RNA = CRUX:::maf_data_wrapper_add_rnaseq(maf_data_wrapper,
 
 # Retrieve RNA data for samples with mutation data
 CRUX:::maf_data_wrapper_get_rnaseq_data_for_samples_with_mutation_data(maf_data_wrapper_with_RNA)
+}
 
 }

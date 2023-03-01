@@ -7,7 +7,7 @@
 external_tools_get_property_by_tool_name(
   tool_name,
   property_to_retrieve,
-  external_tools_df = CRUX::external_tool_metadata
+  external_tools_df = external_tool_metadata
 )
 }
 \arguments{
@@ -43,7 +43,7 @@ external_tools_get_property_by_tool_name
 
 See \code{?external_tools_add_tool_to_dataframe} for more info on these properties
 
-run \code{CRUX::external_tool_metadata} to see the built in tool metadata dataframe
+run \code{external_tool_metadata} to see the built in tool metadata dataframe
 }
 \examples{
 CRUX:::external_tools_get_property_by_tool_name(tool_name = "OncodriveFML", "website")

@@ -105,8 +105,6 @@ maf_data_pool_unload_data <- function(maf_data_pool, unique_name){
 #' @return Dataframe containing at least three columns, named "Tumor_Sample_Barcode", "Hugo_Symbol" and "TPM". May optionally include columns named "Fold_Change" and "Transcript" (dataframe)
 #'
 #'
-#' @examples
-#' CRUX:::read_rnaseq_file(system.file("example_data/blca_rnaseq.tsv", package = "CRUX"))
 read_rnaseq_file <- function(rnaseq_file){
   
   assertthat::assert_that(assertthat::is.string(rnaseq_file), msg = "[read_rnaseq_file] expected rnaseq_file to be a string")
@@ -224,6 +222,7 @@ maf_data_wrapper_get_rnaseq_df <- function(maf_dataset_wrapper){
 #' 
 #' @examples
 #' # Prepare Data
+#' \dontrun{
 #' rna_path = system.file("example_data/blca_rnaseq.tsv", package = "CRUX")
 #' maf_data_wrapper = CRUX:::tcga_dataset_to_maf_dataset_wrapper(CRUX:::new_maf_data_pool(), "BLCA")
 #' 
@@ -232,6 +231,7 @@ maf_data_wrapper_get_rnaseq_df <- function(maf_dataset_wrapper){
 #' 
 #' # Retrieve RNA data for samples with mutation data
 #' CRUX:::maf_data_wrapper_get_rnaseq_data_for_samples_with_mutation_data(maf_data_wrapper_with_RNA)
+#' }
 #' 
 maf_data_wrapper_get_rnaseq_data_for_samples_with_mutation_data <- function(maf_dataset_wrapper){
   if (!maf_data_wrapper_has_rnaseq_data(maf_dataset_wrapper)) { message("Dataset has no associated expression data. Returning NULL"); return(NULL) }

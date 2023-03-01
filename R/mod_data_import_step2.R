@@ -12,7 +12,7 @@
 mod_data_import_step2_ui <- function(id){
   ns <- NS(id)
     
-    #shinyWidgets::panel(heading = "Metadata",
+
   tagList(
       fluidRow(
         col_4(
@@ -34,7 +34,7 @@ mod_data_import_step2_ui <- function(id){
         )
       )
   )
-  #)
+
 }
     
 #' data_import_step_2 Server Functions

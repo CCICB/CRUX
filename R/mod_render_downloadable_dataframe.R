@@ -113,7 +113,7 @@ mod_render_downloadabledataframe_server <- function(id, tabular_data_object, bas
 #' # In UI:
 #' somevariable=TRUE
 #' shinyWidgets::panel(heading="constitutivepanel",
-#'                     conditionalUI(somevariable, shinyWidgets::panel(somevariable, heading="ConditionalPanel")),
+#'                     CRUX:::conditionalUI(somevariable, shinyWidgets::panel(somevariable, heading="ConditionalPanel")),
 #'                     
 #'                     shiny::h1("constitutive title"),
 #'                     shiny::p("constitutive paragraph")
