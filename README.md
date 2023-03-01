@@ -28,9 +28,12 @@ There are **no** dependencies other than having a browser (Chrome, Firefox, Edge
 
 #### Linux / Windows / MAC (from source code)
 Requires R > 3.5.0 is installed
+
 ```
-# Install tool
-BiocManager::install("PoisonAlien/TCGAmutations")
+# Install the `remotes` package
+install.packages("remotes")
+
+# Install CRUX
 remotes::install_github("CCICB/CRUX")
 ```
 
