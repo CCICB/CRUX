@@ -11,3 +11,4 @@ dev
 CODE_OF_CONDUCT.md
 LICENSE.md
 .rscignore
+_disable_autoload.R
