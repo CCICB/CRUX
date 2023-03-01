@@ -1112,6 +1112,6 @@ external_tools_load_all_tools <- function(){
 #'
 external_tools_update_builtin_dataset <- function(){
   external_tool_metadata = external_tools_load_all_tools()
-  usethis::use_data(external_tool_metadata, overwrite = TRUE, internal = TRUE) 
+  usethis::use_data(external_tool_metadata, overwrite = TRUE) 
 }
 
