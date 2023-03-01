@@ -27,20 +27,17 @@ Download the [**latest release**](https://github.com/CCICB/CRUX/releases) and fo
 There are **no** dependencies other than having a browser (Chrome, Firefox, Edge or Safari)
 
 #### Linux / Windows / MAC (from source code)
-Requires R > 3.5.0 is installed
 
-```
-# Install the `remotes` package
-install.packages("remotes")
+1. Check R > 3.5.0 is installed (run `sessionInfo()`)
 
-# Install CRUX
-remotes::install_github("CCICB/CRUX")
-```
+2. (Windows Only) Install [Rtools](https://cran.r-project.org/bin/windows/Rtools/) if you don't already have it.
 
-To start the app, run:
-```
-run_app()
-```
+3. Install the `remotes` package:  `install.packages("remotes")`
+
+4. Install CRUX: `remotes::install_github("CCICB/CRUX")`
+
+5. Run the CRUX app: `CRUX::run_app()`
+
 
 # Funding
 This project was supported by grant 1165556 awarded through the 2018 Priority-driven Collaborative Cancer Research Scheme and co-funded by Cancer Australia and My Room. We would also like to acknowledge Luminesce Alliance – Innovation for Children’s Health for its contribution and support. Luminesce Alliance, is a not-for-profit cooperative joint venture between the Sydney Children’s Hospitals Network, the Children’s Medical Research Institute, and the Children’s Cancer Institute. It has been established with the support of the NSW Government to coordinate and integrate paediatric research. Luminesce Alliance is also affiliated with the University of Sydney and the University of New South Wales Sydney.
