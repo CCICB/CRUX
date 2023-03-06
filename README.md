@@ -24,7 +24,7 @@ Download the [**latest release**](https://github.com/CCICB/CRUX/releases) and fo
 
 There are **no** dependencies other than having a browser (Chrome, Firefox, Edge or Safari)
 
-#### Linux / Windows / MAC (from source code)
+#### Install as an R package (Linux / Windows / MAC)
 
 1.  Check R \> 3.5.0 is installed (run `sessionInfo()`)
 
