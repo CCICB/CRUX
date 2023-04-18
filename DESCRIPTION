@@ -61,4 +61,5 @@ Suggests:
     pheatmap,
     R.utils,
     testthat,
-    usethis
+    usethis,
+    curl

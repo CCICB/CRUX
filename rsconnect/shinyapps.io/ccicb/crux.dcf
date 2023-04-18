@@ -5,7 +5,7 @@ account: ccicb
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 8062789
-bundleId: 7102195
+bundleId: 7102666
 url: https://ccicb.shinyapps.io/crux/
-when: 1681783826.75352
-lastSyncTime: 1681783826.75355
+when: 1681790971.44039
+lastSyncTime: 1681790971.4404
