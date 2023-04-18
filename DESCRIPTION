@@ -34,7 +34,7 @@ Imports:
     ggvenn,
     shinydashboard,
     somaticflags (>= 0.0.0.9000),
-    mutalisk (>= 0.0.0.9000),
+    mutaliskRutils (>= 0.0.0.9000),
     PCAWGmutations,
     TCGAgistic (>= 0.0.0.9000),
     assertions (>= 0.0.0.9000),
@@ -46,7 +46,7 @@ Remotes:
     ebailey78/shinyBS,
     CCICB/somaticflags,
     CCICB/PCAWGmutations,
-    selkamand/mutalisk,
+    selkamand/mutaliskRutils,
     CCICB/TCGAgistic
     selkamand/assertions
 Encoding: UTF-8

@@ -55,7 +55,7 @@ mod_plot_mutational_signatures_server <- function(id, mutalisk_df){
     })
     
     columnnames <- reactive({
-      mutalisk::mutalisk_dataframe_metadata_column_names(mutalisk_validated_df())
+      mutaliskRutils::mutalisk_dataframe_metadata_column_names(mutalisk_validated_df())
     })
     
     observeEvent(mutalisk_df(), {
@@ -70,7 +70,7 @@ mod_plot_mutational_signatures_server <- function(id, mutalisk_df){
     })
     
     plot_stacked_bar <- reactive({ function() { 
-      print(mutalisk::plot_stacked_bar(
+      print(mutaliskRutils::plot_stacked_bar(
         mutalisk_dataframe = mutalisk_validated_df(),
         lump_type = input$in_select_lump_type,
         facet_column = selected_facet_column(),

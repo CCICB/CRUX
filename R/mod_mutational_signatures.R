@@ -96,8 +96,8 @@ mod_mutational_signatures_server <- function(id, maf_data_pool){
       
       
       tryCatch({
-          df_mutalisk_ <- mutalisk::mutalisk_to_dataframe(mutalisk_files = mutalisk_files(), sample_names_from_file_contents = TRUE)
-          if(!is.null(sample_metadata_df())) df_mutalisk_ <- mutalisk::mutalisk_dataframe_add_metadata(df_mutalisk_)
+          df_mutalisk_ <- mutaliskRutils::mutalisk_to_dataframe(mutalisk_files = mutalisk_files(), sample_names_from_file_contents = TRUE)
+          if(!is.null(sample_metadata_df())) df_mutalisk_ <- mutaliskRutils::mutalisk_dataframe_add_metadata(df_mutalisk_)
           
           return(df_mutalisk_)
       },
