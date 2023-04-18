@@ -45,7 +45,7 @@ mod_data_import_ui <- function(id){
       shiny::fluidRow(
         shiny::textInput(inputId = ns("in_text_displayname"), label = "Display Name", placeholder = "High Grade Glioma" ,width = "100%") %>% col_4(),
         shiny::textInput(inputId = ns("in_text_shortname"), label = "Short Name", placeholder = "HGG", width = "100%") %>% col_4(),
-        shiny::textInput(inputId = ns("in_text_data_source"), label = "Source", placeholder = "ZERO Program", width = "100%") %>% col_4(),
+        shiny::textInput(inputId = ns("in_text_data_source"), label = "Source", placeholder = "TCGA", width = "100%") %>% col_4(),
         shiny::textInput(inputId = ns("in_text_description"), label = "Descripton", placeholder = "High Grade Glioma from a paediatric cohort with survival <30%", width = "100%") %>% col_12()
       )
     ),icon_down_arrow(break_after=TRUE),

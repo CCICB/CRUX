@@ -334,6 +334,7 @@ external_tools_load_cbioportal_mutation_mapper <- function(external_tools_df = d
 }
 
 
+
 # Signal 2 ----------------------------------------------------------------
 
 external_tools_convert_maf_to_signal2_return_dataframe <- function(maf){
@@ -581,7 +582,7 @@ external_tools_load_maf_to_cravat <- function(external_tools_df = data.frame()){
 external_tools_convert_maf_to_crux_maf <- function(maf_dataset_wrapper, filepath){
   
   maf <- maf_dataset_wrapper$loaded_data
-  maf_data <-  maf@data
+  maf_data <-  maftools_get_all_data(maf, include_silent_mutations = TRUE)
   clinical_data <- maftools::getClinicalData(maf)
 
   dataset_name <- maf_dataset_wrapper$display_name
@@ -634,6 +635,94 @@ external_tools_load_crux_export <- function(external_tools_df = data.frame()){
     extension = "zip"
   )
 }
+
+
+# CVCDAP ------------------------------------------------------------------
+external_tools_convert_maf_to_cvcdap_maf <- function(maf_dataset_wrapper, filepath){
+  
+  maf <- maf_dataset_wrapper$loaded_data
+  maf_data <-  maftools_get_all_data(maf, include_silent_mutations = TRUE)
+  clinical_data <- maftools::getClinicalData(maf)
+  
+  
+  # Transform data
+  names(maf_data) <- dplyr::case_when(
+    names(maf_data) == "Tumor_Sample_Barcode" ~ "Sample_ID",
+    names(maf_data) == "Protein_Change" ~ "HGVSp_Short",
+    names(maf_data) == "Tumor_Seq_Allele2" ~ "Mutant_Allele",
+    names(maf_data) == "t_depth" ~ "t_ref_count",
+    TRUE ~ names(maf_data)
+  )
+  
+  # Add 
+  
+  names(clinical_data) <- ifelse(
+    names(clinical_data) == "Tumor_Sample_Barcode", 
+    yes="Sample_ID", 
+    no=names(clinical_data)
+  )
+  
+  if(!"Homozygosity" %in% colnames(maf_data)){
+    maf_data["Homozygosity"] <- NA
+  }
+
+
+  
+    dataset_name <- maf_dataset_wrapper$display_name
+    
+    tmpdir <- tempdir()
+    outfile_path_maf <- paste0(tmpdir,'/', dataset_name, ".maf")
+    outfile_path_clinical <- paste0(tmpdir, '/', dataset_name, ".clinical.tsv")
+    
+    # Choose filenames
+    data.table::fwrite(
+      maf_data,
+      file = outfile_path_maf, 
+      sep="\t", 
+      col.names = TRUE, 
+      row.names = FALSE,
+      append = FALSE,
+      na = "NA"
+    )
+    
+    data.table::fwrite(
+      clinical_data,
+      file = outfile_path_clinical, 
+      sep="\t", 
+      col.names = TRUE, 
+      row.names = FALSE,
+      append = FALSE
+    )
+    
+    files <- c(outfile_path_maf, outfile_path_clinical)
+    utils::zip(filepath, files, flags = "-j")
+    
+    # Delete files in tempdirectory
+    unlink(x = files)
+
+}
+
+external_tools_load_cvcdap_export <- function(external_tools_df = data.frame()){
+  external_tools_add_tool_to_dataframe(
+    external_tools_df = external_tools_df, 
+    tool_name = "CVCDAP",
+    tool_id = "CVCDAP",
+    tool_group = "Center for Cancer Bioinformatics (Peking)",
+    tool_class = "Data Exploration",
+    instructions = as.character(
+      tags$ol(
+        tags$li("Upload your files to the CVCDAP 'Upload your Project' module"),
+        tags$li("Follow CVCDAP instructions to explore the dataset"),
+      )
+    ),
+    tool_description = "Export MAF file and clinical data for use with CVCDAP",
+    website = "https://omics.bjcancer.org/cvcdap/home.do",
+    doi = "https://doi.org/10.1093/nar/gkaa423",
+    maf_conversion_function = external_tools_convert_maf_to_cvcdap_maf,
+    extension = "zip"
+  )
+}
+
 
 # Pecan Protein Paint (Simple) -----------------------------------------------------
 # external_tools_convert_maf_to_proteinpaint_simple_return_dataframe <- function(maf, gene){
@@ -1098,6 +1187,7 @@ external_tools_load_all_tools <- function(){
     external_tools_load_xena() %>%
     external_tools_load_ucsc() %>%
     external_tools_load_crux_export() %>% 
+    external_tools_load_cvcdap_export() %>%
     #external_tools_load_tumormap() %>%
     return()
 }
