@@ -10,7 +10,7 @@
 #'
 #'
 #' @examples
-#' CRUX:::download_maf(maftools::tcgaLoad("GBM"), "tcga_gbm.maf")
+#' \dontrun{CRUX:::download_maf(maftools::tcgaLoad("GBM"), "tcga_gbm.maf")}
 download_maf <- function(maf, file){
   data.table::fwrite(
     x = data.table::rbindlist(list(maf@data, maf@maf.silent), use.names = TRUE, fill = TRUE), 

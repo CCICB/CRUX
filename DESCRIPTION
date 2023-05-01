@@ -47,7 +47,7 @@ Remotes:
     CCICB/somaticflags,
     CCICB/PCAWGmutations,
     selkamand/mutaliskRutils,
-    CCICB/TCGAgistic
+    CCICB/TCGAgistic,
     selkamand/assertions
 Encoding: UTF-8
 LazyData: true
