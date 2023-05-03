@@ -1,4 +1,4 @@
-# CRUX
+# CRUX <img src="man/figures/logo.png" align="right" height="104" />
 
 [![r-universe status badge](https://ccicb.r-universe.dev/badges/CRUX)](https://selkamand.r-universe.dev/ui#package:CRUX)
 
