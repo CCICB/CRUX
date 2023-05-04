@@ -34,7 +34,7 @@ app_server <- function( input, output, session ) {
   
   # Manual
   mod_manual_server(id="mod_manual")
-  
+
   #Stop Program when browser is closed
   session$onSessionEnded(function() {
     message("Closing App")

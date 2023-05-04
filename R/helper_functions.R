@@ -68,4 +68,8 @@ filename_remove_extension_maf <- function(filename){
 }
 
 
+is_na_scalar <- function(x){
+  length(x) == 1 && is.na(x)
+}
+
 
