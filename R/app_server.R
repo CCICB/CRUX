@@ -1,13 +1,18 @@
 
 # Code runs once, result shared for all users -------------------------------------------
+
 # To update default_data_pool.Rds, run / edit update_starting_maf_data_pool()
 starting_maf_data_pool <- readRDS(system.file(package = "CRUX", "default_data_pool.Rds"))
+
+external_tool_metadata <- external_tools_load_all_tools()
+
 
 #' The application server-side
 #' 
 #' @param input,output,session Internal parameters for {shiny}. 
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @include fct_external_tools_load_dataframe.R
 #' @noRd
 app_server <- function( input, output, session ) {
   
