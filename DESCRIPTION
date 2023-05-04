@@ -49,6 +49,8 @@ Remotes:
     selkamand/mutaliskRutils,
     CCICB/TCGAgistic,
     selkamand/assertions,
+    Bioconductor/Rhtslib,
+    Bioconductor/DNAcopy,
     PoisonAlien/maftools@72208f2
 Encoding: UTF-8
 LazyData: true
@@ -63,4 +65,6 @@ Suggests:
     R.utils,
     testthat,
     usethis,
+    Rhtslib,
+    DNAcopy,
     curl
