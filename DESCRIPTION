@@ -50,7 +50,7 @@ Remotes:
     CCICB/TCGAgistic,
     selkamand/assertions,
     Bioconductor/Rhtslib,
-    Bioconductor/DNAcopy,
+    chaos66ren/DNAcopy,
     PoisonAlien/maftools@72208f2
 Encoding: UTF-8
 LazyData: true
