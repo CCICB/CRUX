@@ -19,19 +19,32 @@ A **manual** describing the installation and use of **CRUX** can be found [**her
 
 ## Installation
 
-#### Windows / MAC
+#### OPTION 1: Use the CRUX web app
+
+CRUX is now live at <https://ccicb.shinyapps.io/crux/>
+
+This is the best way to quickly test out CRUX. To analyse sensitive datasets, we reccomend installing the desktop version of CRUX
+
+#### OPTION 2: Download Desktop Version of CRUX for Windows / MAC
 
 Download the [**latest release**](https://github.com/CCICB/CRUX/releases) and follow the instructions for your operating system.
 
 There are **no** dependencies other than having a browser (Chrome, Firefox, Edge or Safari)
 
-#### Install as an R package (Linux / Windows / MAC)
+#### OPTION 3: Install as an R package (Linux / Windows / MAC)
 
 1.  Check R \> 3.5.0 is installed (run `sessionInfo()`)
 
-2.  Install CRUX: `install.packages('CRUX', repos = c('https://ccicb.r-universe.dev', 'https://cloud.r-project.org'), dependencies = TRUE)`
-
-3.  Run the CRUX app: `CRUX::run_app()`
+2. For some versions of R you may need to install maftools before installing CRUX
+```
+install.packages('BiocManager')
+BiocManager::install('PoisonAlien/maftools@72208f2')
+```
+3.  Install CRUX by running: 
+```
+install.packages('CRUX', repos = c('https://ccicb.r-universe.dev', 'https://cloud.r-project.org'), dependencies = TRUE)
+```
+4.  Run the CRUX app: `CRUX::run_app()`
 
 # Funding
 
