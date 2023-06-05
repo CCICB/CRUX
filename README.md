@@ -1,7 +1,9 @@
 # CRUX <img src="man/figures/logo.png" align="right" height="104" />
 
- [![R-CMD-check](https://github.com/CCICB/CRUX/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CCICB/CRUX/actions/workflows/R-CMD-check.yaml)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/CCICB/CRUX/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CCICB/CRUX/actions/workflows/R-CMD-check.yaml)
 [![r-universe status badge](https://ccicb.r-universe.dev/badges/CRUX)](https://selkamand.r-universe.dev/ui#package:CRUX)
+<!-- badges: end -->
 
 ## Description
 
