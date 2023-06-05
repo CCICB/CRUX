@@ -1,0 +1,44 @@
+CRUX depends on many other packages. Their individual licenses are described below
+
+########################################################################################
+
+MIT
+- PCAWGmutations
+- TCGAgistic
+- UpSetR
+- assertions
+- bsplus
+- cli
+- colourpicker
+- forcats
+- ggplot2
+- ggvenn
+- golem
+- maftools
+- magrittr
+- mutaliskRutils
+- purrr
+- rlang
+- shinycssloaders
+- shinyjs
+- somaticflags
+- tibble
+- tidyr
+- utilitybeltassertions
+- utilitybeltgg
+
+GPL-2
+- htmltools
+- shinydashboard
+- cowplot
+
+
+GPL-3
+- assertthat
+- shinyBS
+- shinyWidgets
+- DT
+- shiny
+
+MPL-2.0 
+- data.table

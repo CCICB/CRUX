@@ -13,3 +13,4 @@ LICENSE.md
 .rscignore
 _disable_autoload.R
 ^\.github$
+^LICENSE\.md$
