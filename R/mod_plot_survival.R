@@ -27,7 +27,7 @@ mod_plot_survival_ui <- function(id){
 #' @param time name of column in clinical data describing time to event (reactive string)
 #' @param status name of column in clinical data describing event status (reactive string)
 #' @param or should samples be classified as mutant if ANY gene in geneset is mutated (default is ALL must be mutated) (reactive flag)
-
+#' @param is_tcga is sample from TCGA? (flag)
 mod_plot_survival_server <- function(id, maf, geneset, time, status, or, is_tcga){
   moduleServer( id, function(input, output, session){
     ns <- session$ns

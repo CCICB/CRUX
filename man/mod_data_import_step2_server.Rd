@@ -12,6 +12,17 @@ mod_data_import_step2_server(
   default_description = reactive(NULL)
 )
 }
+\arguments{
+\item{id}{Internal parameters for {shiny}.}
+
+\item{default_data_source}{default data source value}
+
+\item{default_display_name}{default display name value}
+
+\item{default_short_name}{default short name  value}
+
+\item{default_description}{default description value}
+}
 \value{
 named list with elements: 
 \enumerate{

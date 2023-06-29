@@ -7,6 +7,8 @@
 pcawg_dataset_to_maf_dataset_wrapper(maf_data_pool, pcawg_study_abbreviation)
 }
 \arguments{
+\item{maf_data_pool}{the data pool to add the dataset wrapper to (maf_data_pool)}
+
 \item{pcawg_study_abbreviation}{Name of PCAWG study. Use pcawg_available to see options (string)}
 }
 \value{

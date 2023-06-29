@@ -20,7 +20,10 @@ It is only the maf object that is loaded. RNA data stays sitting in a file until
 }
 \examples{
 #Generate wrapper
-my_data <- CRUX:::tcga_dataset_to_maf_dataset_wrapper(maf_data_pool = CRUX:::new_maf_data_pool(), tcga_study_abbreviation = "ACC")
+my_data <- CRUX:::tcga_dataset_to_maf_dataset_wrapper(
+  maf_data_pool = CRUX:::new_maf_data_pool(), 
+  tcga_study_abbreviation = "ACC"
+)
 
 #Load data
 my_data <- CRUX:::maf_data_set_wrapper_load_data(my_data)

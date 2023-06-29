@@ -2,7 +2,7 @@
 #'
 #' @description A shiny Module. Renders clinica data attached to a maf object in the form of a datatable  
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @param id Internal parameters for {shiny}.
 #'
 #'
 #' @importFrom shiny NS tagList 
@@ -16,9 +16,8 @@ mod_render_clinical_data_table_ui <- function(id){
 
 #' Title
 #'
-#' @inheritParams mod_render_clinical_data_table_ui
 #' @param maf maf object (reactive)
-#'
+#' @param id Internal parameters for {shiny}.
 #' @return Nothing. Run for its side effects
 #'
 #'

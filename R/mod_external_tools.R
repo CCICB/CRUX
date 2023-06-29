@@ -108,7 +108,10 @@ mod_external_tools_ui <- function(id){
 
 #' external_tools Server Functions
 #'
-#'
+#' @inheritParams external_tools_add_tool_to_dataframe
+#' @inheritParams maf_data_pool_add_dataset
+#' @param id Internal parameters for {shiny}.
+#' 
 mod_external_tools_server <- function(id, maf_data_pool){
   moduleServer( id, function(input, output, session){
     ns <- session$ns

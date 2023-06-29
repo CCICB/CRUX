@@ -11,7 +11,7 @@ mod_shinyfiles_get_maf_path_ui <- function(id){
   ns <- NS(id)
   tagList(
     div(style = "width: 100%",
-        mod_shinyfile_import_ui(id = ns("id_shinyfiles_maf"), title = "Import MAF", multiple = FALSE, label = "Import MAF", buttonType = "primary", 
+        mod_shinyfile_import_ui(id = ns("id_shinyfiles_maf"), title = "Import MAF", multiple = FALSE, label = "Import MAF", 
                                 tooltip_text = "Import a MAF file. If you are not familiar with this filetype, see help => faq"),
     )
   )
@@ -19,8 +19,10 @@ mod_shinyfiles_get_maf_path_ui <- function(id){
     
 #' shinyfiles_get_maf_path Server Functions
 #'
-#' @inheritParams mod_shinyfile_import_server
+#' @param id Internal parameters for {shiny}.
+#' 
 #' @inherit mod_shinyfile_import_server return
+#' 
 mod_shinyfiles_get_maf_path_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns

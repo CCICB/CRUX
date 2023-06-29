@@ -15,13 +15,13 @@ moduleDownloadPlotServer(
 \arguments{
 \item{id}{Module ID. Must be identical to moduleDownloadPlotUI}
 
+\item{session_parent}{Session object of the calling module (used to extract plot details)}
+
 \item{plotOutputId}{"ID of the rendered plot"}
 
 \item{plotting_function}{"function that when run with no arguments will create the plot. Can make by wrapping the plot call in its own function. e.g. for plot(mtcars) you could do:  plotting_function <- reactive ({ function() {plot(mtcars)} }) then pass 'plotting_function()'"}
 
 \item{default_filename}{default basename of downloaded file (string; non-reactive)}
-
-\item{parent}{Session object of the calling module (used to extract plot details)}
 }
 \description{
 Saves Plots as SVG.

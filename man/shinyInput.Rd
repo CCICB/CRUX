@@ -12,6 +12,10 @@ shinyInput(FUN, n, id, label, ...)
 \item{n}{number of inputs to be created}
 
 \item{id}{ID prefix for each input}
+
+\item{label}{label of shiny object (string)}
+
+\item{...}{additaional arguments passed to FUN}
 }
 \description{
 Programmatically create a Shiny input

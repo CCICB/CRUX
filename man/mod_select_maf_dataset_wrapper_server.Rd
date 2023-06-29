@@ -7,19 +7,24 @@
 \usage{
 mod_select_maf_dataset_wrapper_server(id, maf_data_pool, label = "Dataset")
 }
+\arguments{
+\item{id}{Internal parameters for {shiny}.}
+
+\item{maf_data_pool}{the data pool to add the dataset wrapper to (maf_data_pool)}
+
+\item{label}{label (string)
+\enumerate{ 
+\item Load the specified dataset into memory if required.
+\item Update maf_data_pool (a reactiveVal) to indicate the dataset has been loaded.
+\item Return the relevant maf_dataset_wrapper. See \strong{Accessing Properties} section for details.
+}}
+}
 \value{
 maf_dataset_wrapper.
 }
 \description{
 wraps mod_select_dataset_from_maf_data_pool_pickerinput_server.
 Instead of simply returning a unique_name, this function will:
-
-
-\enumerate{ 
-\item Load the specified dataset into memory if required.
-\item Update maf_data_pool (a reactiveVal) to indicate the dataset has been loaded.
-\item Return the relevant maf_dataset_wrapper. See \strong{Accessing Properties} section for details.
-}
 }
 \section{Accessing Properties (Quick Reference)}{
 

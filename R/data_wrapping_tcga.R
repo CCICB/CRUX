@@ -8,7 +8,10 @@
 #'
 #' @family DataToWrapper
 #' @examples
-#' ACC_maf_dataset_wrapper <- CRUX:::tcga_dataset_to_maf_dataset_wrapper(CRUX:::new_maf_data_pool(), "ACC")
+#' ACC_maf_dataset_wrapper <- CRUX:::tcga_dataset_to_maf_dataset_wrapper(
+#'   CRUX:::new_maf_data_pool(), 
+#'   "ACC"
+#' )
 tcga_dataset_to_maf_dataset_wrapper <- function(maf_data_pool, tcga_study_abbreviation, source = "Firehose"){
   #browser()
   tcga_available_df <- maftools::tcgaAvailable()

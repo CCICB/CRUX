@@ -6,16 +6,11 @@
 # Functions ---------------------------------------------------------------
 #' plotforest: Wraps around maftools::forestPlot to more explicitly handle pval VS fdr option and allow both to be passed while onl using the value set by bool 'threshold_on_fdr'
 #'
-#' @param mafCompareRes 
-#' @param pVal 
-#' @param fdr 
-#' @param color 
-#' @param geneFontSize 
-#' @param lineWidth 
-#' @param titleSize 
-#'
-#'
-#'
+#' @inheritParams maftools::forestPlot
+#' 
+#' @param threshold_on_fdr should we threshold on FDR (TRUE) or on pValue (false) (flag)
+#' 
+#' 
 plotforest <- function(mafCompareRes, pVal = 0.05, fdr = 0.05, threshold_on_fdr, color=NULL, geneFontSize = 1.2, lineWidth = 2.2, titleSize = 1.2){
   message("running")
   if (threshold_on_fdr)

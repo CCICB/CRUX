@@ -7,9 +7,9 @@
 maftools_get_all_data(maf, include_silent_mutations = T)
 }
 \arguments{
-\item{maf}{}
+\item{maf}{maf object}
 
-\item{include_silent_mutations}{}
+\item{include_silent_mutations}{include silent mutations (flag)}
 }
 \value{
 a data.frame in MAF form where each variant has a separate row (data.frame)

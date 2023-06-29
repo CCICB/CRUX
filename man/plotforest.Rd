@@ -16,19 +16,21 @@ plotforest(
 )
 }
 \arguments{
-\item{mafCompareRes}{}
+\item{mafCompareRes}{results from \code{\link[maftools]{mafCompare}}}
 
-\item{pVal}{}
+\item{pVal}{p-value threshold. Default 0.05.}
 
-\item{fdr}{}
+\item{fdr}{fdr threshold. Default NULL. If provided uses adjusted pvalues (fdr).}
 
-\item{color}{}
+\item{threshold_on_fdr}{should we threshold on FDR (TRUE) or on pValue (false) (flag)}
 
-\item{geneFontSize}{}
+\item{color}{vector of two colors for the lines. Default 'maroon' and 'royalblue'}
 
-\item{lineWidth}{}
+\item{geneFontSize}{Font size for gene symbols. Default 0.8}
 
-\item{titleSize}{}
+\item{lineWidth}{line width for CI bars. Default 1}
+
+\item{titleSize}{font size for titles. Default 1.2}
 }
 \description{
 plotforest: Wraps around maftools::forestPlot to more explicitly handle pval VS fdr option and allow both to be passed while onl using the value set by bool 'threshold_on_fdr'

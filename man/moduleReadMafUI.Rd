@@ -25,8 +25,6 @@ moduleReadMafUI(
 \item{label_maf}{label of maf input field ["maf"]}
 
 \item{label_clinical_data}{label of clinicalData input field ["clinical data"]}
-
-\item{label_name}{"label of the cohort name field"}
 }
 \description{
 Read MAF UI function

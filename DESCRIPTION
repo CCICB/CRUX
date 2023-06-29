@@ -3,7 +3,7 @@ Title: Easily explore patterns of somatic variation in cancer using 'CRUX'
 Version: 0.0.0.9000
 Authors@R: person('Sam', 'El-Kamand', email = 'selkamand@ccia.org.au', role = c('cre', 'aut'))
 Description: Shiny app for exploring somatic variation in cancer. Powered by maftools.
-License: GPL-3
+License: GPL-3 + file LICENSE
 biocViews:
 Imports:
     dplyr (>= 1.0.0),
@@ -36,10 +36,12 @@ Imports:
     somaticflags (>= 0.0.0.9000),
     mutaliskRutils (>= 0.0.0.9000),
     PCAWGmutations,
+    methods,
     TCGAgistic (>= 0.0.0.9000),
-    assertions (>= 0.0.0.9000),
+    assertions,
     cli,
-    htmltools
+    htmltools,
+    curl
 Remotes: 
     selkamand/utilitybeltassertions,
     selkamand/utilitybeltgg,
@@ -48,7 +50,6 @@ Remotes:
     CCICB/PCAWGmutations,
     selkamand/mutaliskRutils,
     CCICB/TCGAgistic,
-    selkamand/assertions,
     PoisonAlien/maftools@72208f2
 Encoding: UTF-8
 LazyData: true
@@ -62,8 +63,7 @@ Suggests:
     pheatmap,
     R.utils,
     testthat,
-    usethis,
-    curl
+    usethis
 Collate: 
     'GLOBALS.R'
     'app_config.R'

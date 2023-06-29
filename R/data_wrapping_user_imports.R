@@ -6,7 +6,8 @@
 #' @inheritParams maftools::read.maf
 #' @param filepath 	tab delimited MAF file. File can also be gz compressed. Required. Alternatively, you can also provide already read MAF file as a dataframe.
 #' @inheritParams new_maf_dataset_wrapper
-#'
+#' @param description description (string)
+#' @param data_source data source (string)
 #' @return maf_dataset_wrapper
 #' 
 #'
@@ -50,6 +51,10 @@ user_data_filepath_to_class_maf_dataset_wrapper <- function(filepath, clinicalDa
 #' @inheritParams tcga_dataset_to_maf_dataset_wrapper
 #' @inheritParams maf_data_pool_add_dataset
 #' @inheritParams maftools::read.maf
+#' @inheritParams new_maf_dataset_wrapper
+#' @param filepath path to maf file
+#' @param description dataset description
+#' @param data_source data source
 #' 
 #' @return returns a data pool object with extra dataset added (maf_data_pool)
 #'

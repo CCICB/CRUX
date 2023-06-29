@@ -7,6 +7,8 @@
 mod_data_import_maf_path_to_maf_server(id, maf_path, clinicalData)
 }
 \arguments{
+\item{id}{Internal parameters for {shiny}.}
+
 \item{maf_path}{Path to maf file  (string) (reactive)}
 
 \item{clinicalData}{Clinical data associated with each sample/Tumor_Sample_Barcode in MAF. Could be a text file or a data.frame. Default NULL.}

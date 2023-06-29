@@ -7,29 +7,40 @@
 mod_plot_lollipop_ui(id)
 }
 \arguments{
-\item{mafCompareRes}{}
-
-\item{pVal}{}
-
-\item{fdr}{}
-
-\item{color}{}
-
-\item{geneFontSize}{}
-
-\item{lineWidth}{}
-
-\item{titleSize}{}
+\item{id}{Internal parameters for {shiny}.}
 }
 \description{
 plotforest: Wraps around maftools::forestPlot to more explicitly handle pval VS fdr option and allow both to be passed while onl using the value set by bool 'threshold_on_fdr'
 }
 \examples{
-plotforest <- function(mafCompareRes, pVal = 0.05, fdr = 0.05, threshold_on_fdr, color=NULL, geneFontSize = 1.2, lineWidth = 2.2, titleSize = 1.2){
+plotforest <- function(
+    mafCompareRes,
+    pVal = 0.05,
+    fdr = 0.05,
+    threshold_on_fdr,
+    color=NULL,
+    geneFontSize = 1.2,
+    lineWidth = 2.2,
+    titleSize = 1.2
+ ){
   message("running")
   if (threshold_on_fdr)
-    maftools::forestPlot(mafCompareRes = mafCompareRes, fdr = fdr, color = color, geneFontSize = geneFontSize, lineWidth = lineWidth, titleSize = titleSize)
-  else
-    maftools::forestPlot(mafCompareRes = mafCompareRes, pVal = pVal,color = color, geneFontSize = geneFontSize, lineWidth = lineWidth, titleSize = titleSize)
+    maftools::forestPlot(
+      mafCompareRes = mafCompareRes,
+      fdr = fdr,
+      color = color,
+      geneFontSize = geneFontSize,
+      lineWidth = lineWidth,
+      titleSize = titleSize
+     )
+  else{
+    maftools::forestPlot(
+      mafCompareRes = mafCompareRes,
+      pVal = pVal,color = color,
+      geneFontSize = geneFontSize,
+      lineWidth = lineWidth,
+      titleSize = titleSize
+    )
+   }
 }
 }

@@ -17,7 +17,10 @@ Uses the functions in maf_dataset_wrapper to load data into the loaded_data elem
 }
 \examples{
 #Generate wrapper
-my_data <- CRUX:::tcga_dataset_to_maf_dataset_wrapper(maf_data_pool = CRUX:::new_maf_data_pool(), tcga_study_abbreviation = "ACC")
+my_data <- CRUX:::tcga_dataset_to_maf_dataset_wrapper(
+  maf_data_pool = CRUX:::new_maf_data_pool(), 
+  tcga_study_abbreviation = "ACC"
+)
 
 #Load data
 my_data <- CRUX:::maf_data_set_wrapper_load_data(my_data)

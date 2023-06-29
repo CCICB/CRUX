@@ -2,7 +2,16 @@
 # Code runs once, result shared for all users -------------------------------------------
 
 # To update default_data_pool.Rds, run / edit update_starting_maf_data_pool()
-starting_maf_data_pool <- readRDS(system.file(package = "CRUX", "default_data_pool.Rds"))
+path_to_default_data_pool <- function(){
+  system.file(package = "CRUX", "default_data_pool.Rds")
+}
+
+if(nchar(path_to_default_data_pool() > 0)){
+  starting_maf_data_pool <- readRDS(path_to_default_data_pool())
+}else{ 
+  starting_maf_data_pool <- NULL
+}
+
 
 external_tool_metadata <- external_tools_load_all_tools()
 

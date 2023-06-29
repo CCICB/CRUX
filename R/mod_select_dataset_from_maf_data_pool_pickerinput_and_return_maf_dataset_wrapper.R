@@ -70,7 +70,9 @@ data_sources_formatted <- function(maf_data_pool_df){
 #' @description wraps mod_select_dataset_from_maf_data_pool_pickerinput_server.
 #' Instead of simply returning a unique_name, this function will:
 #' 
-#' 
+#' @inheritParams maf_data_pool_add_dataset
+#' @param id Internal parameters for {shiny}.
+#' @param label label (string)
 #' \enumerate{ 
 #' \item Load the specified dataset into memory if required.
 #' \item Update maf_data_pool (a reactiveVal) to indicate the dataset has been loaded.

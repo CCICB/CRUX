@@ -26,6 +26,10 @@ user_data_filepath_to_class_maf_dataset_wrapper(
 
 \item{short_name}{Abbreviated dataset name (string)}
 
+\item{description}{description (string)}
+
+\item{data_source}{data source (string)}
+
 \item{loaded_data}{the loaded R object (MAF or NA)}
 }
 \value{

@@ -28,6 +28,9 @@ mod_datapool_viewer_ui <- function(id){
 #' @param FUN function to create the input
 #' @param n number of inputs to be created
 #' @param id ID prefix for each input
+#' @param label label of shiny object (string)
+#' @param ... additaional arguments passed to FUN
+
 shinyInput <- function(FUN, n, id, label, ...) {
   
   # for each of n, create a new input using the FUN function and convert

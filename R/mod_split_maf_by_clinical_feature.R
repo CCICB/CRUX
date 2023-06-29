@@ -13,12 +13,11 @@ moduleSubsetByClinicalFeaturesUI <- function(id, panel_title="Define Cohorts"){
 
 
 #' moduleSubsetByClinicalFeaturesServer
-#'
-#' @param id 
-#' @param maf 
-#'
+#' 
+#' @param id Internal parameters for {shiny}.
+#' @param maf reactive maf object
+#' @param clinicalData clinical data object (reactive)
 #' @return named list: 'maf1' (type maf), 'maf2' (type string), 
-#'
 #'
 moduleSubsetByClinicalFeaturesServer <- function(id, maf, clinicalData){
   assertions::assert_reactive(maf)

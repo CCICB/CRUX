@@ -3,7 +3,7 @@
 #' @description GUI for taking a filepath returning a maf object.
 #' Includes a panel containing the MAF file summary or an error message if the supplied path does not point to a valid maf.
 #' 
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @param id Internal parameters for {shiny}.
 #'
 #' @importFrom shiny NS tagList 
 mod_data_import_maf_path_to_maf_ui <- function(id){
@@ -22,6 +22,7 @@ mod_data_import_maf_path_to_maf_ui <- function(id){
     
 #' mod_data_import_step1 Server Functions
 #' 
+#' @param id Internal parameters for {shiny}.
 #' @param maf_path Path to maf file  (string) (reactive) 
 #' @inheritParams maftools::read.maf
 #' @returns maf object if read was successful. NULL if it was not (MAF) (reactive)
@@ -45,7 +46,7 @@ mod_data_import_maf_path_to_maf_server <- function(id, maf_path, clinicalData){
     maf <- reactive({
       if(length(maf_path()) != 1) return(NULL)
       if(is.null(maf_path())) return(NULL)
-      if(class(maf_path()) != "character") return(NULL)
+      if(!is.character(maf_path())) return(NULL)
 
       # browser()
       try_result <- tryCatch(

@@ -47,7 +47,8 @@ mod_plot_somatic_interactions_ui <- function(id){
 }
 
 #' somatic_interactions Server Functions
-#'
+#' 
+#' @param id Internal parameters for {shiny}.
 #' @param maf a maf object (maf)
 #'
 mod_plot_somatic_interactions_server <- function(id, maf){

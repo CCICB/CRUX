@@ -2,8 +2,8 @@
 #'
 #' Input a maf object. Returns table containing ALL MAF data. Nonsynonymous AND synonymous
 #'
-#' @param maf 
-#' @param include_silent_mutations 
+#' @param maf maf object
+#' @param include_silent_mutations include silent mutations (flag)
 #'
 #' @return a data.frame in MAF form where each variant has a separate row (data.frame)
 #'
@@ -77,7 +77,11 @@ maftools_clinical_data_lowest_number_of_samples_per_level <- function(maf, clini
 
 #' Plot Clinical Data
 #' Plot a particular column of clinical DATA.
+#'
 #' @param maf MAF object (MAF)
+#' @param threshold threshold (number)
+#' @param selected_items selectd items
+#' @param distance_from_bar how far should text be from the bar (number)
 #' @param clinical_feature Name of a clinical feature (string)
 #'
 #' @return ggplot / grob
@@ -387,6 +391,8 @@ maftools_extract_geneset_by_altered_samples <- function(maf, topn = 100){
 #' @param include_silent_mutations consider a gene mutated even if the only mutations present are silent (bool) 
 #' @param show_rownames show sample names on rows (bool)
 #' @param show_colnames show sample names on columns  (bool)
+#' @param annotation_legend show annotation legend (flag)
+#' @param fontsize font size (number)
 #'
 #' @return pheatmap object
 #' @export
