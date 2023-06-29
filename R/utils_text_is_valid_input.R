@@ -20,7 +20,7 @@ text_is_non_zero_string <- function(text, test_custom_function = NULL){
     other_test <- test_custom_function(text)
   }
   
-  if(!assertions::is_flag(valid) | !assertions::is_flag(other_test)) 
+  if(!assertthat::is.flag(valid) | !assertthat::is.flag(other_test)) 
     return(FALSE)
   else
     return(valid)
