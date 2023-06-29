@@ -3,7 +3,7 @@ Title: Easily explore patterns of somatic variation in cancer using 'CRUX'
 Version: 0.0.0.9000
 Authors@R: person('Sam', 'El-Kamand', email = 'selkamand@ccia.org.au', role = c('cre', 'aut'))
 Description: Shiny app for exploring somatic variation in cancer. Powered by maftools.
-License: GPL (>= 3)
+License: GPL-3
 biocViews:
 Imports:
     dplyr (>= 1.0.0),
