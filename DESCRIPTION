@@ -40,7 +40,8 @@ Imports:
     TCGAgistic (>= 0.0.0.9000),
     assertions,
     cli,
-    htmltools
+    htmltools,
+    curl
 Remotes: 
     selkamand/utilitybeltassertions,
     selkamand/utilitybeltgg,
@@ -62,8 +63,7 @@ Suggests:
     pheatmap,
     R.utils,
     testthat,
-    usethis,
-    curl
+    usethis
 Collate: 
     'GLOBALS.R'
     'app_config.R'
