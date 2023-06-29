@@ -18,6 +18,8 @@ mod_plot_survival_server(id, maf, geneset, time, status, or, is_tcga)
 \item{status}{name of column in clinical data describing event status (reactive string)}
 
 \item{or}{should samples be classified as mutant if ANY gene in geneset is mutated (default is ALL must be mutated) (reactive flag)}
+
+\item{is_tcga}{is sample from TCGA? (flag)}
 }
 \description{
 plot_survival Server Functions

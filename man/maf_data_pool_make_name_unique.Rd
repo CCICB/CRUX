@@ -13,9 +13,9 @@ maf_data_pool_make_name_unique(
 \arguments{
 \item{maf_data_pool}{The data pool of interest  (maf_data_pool)}
 
-\item{max_number_of_attempts}{max number of attempts (whole number)}
+\item{name}{name to make unique (string)}
 
-\item{unique_name}{some string you want to check is not currently used as the 'unique_name' of any object in the datapool (string).}
+\item{max_number_of_attempts}{max number of attempts (whole number)}
 }
 \value{
 a unique name (string)

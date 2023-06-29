@@ -7,7 +7,7 @@
 mod_render_clinical_data_table_ui(id)
 }
 \arguments{
-\item{id, input, output, session}{Internal parameters for {shiny}.}
+\item{id}{Internal parameters for {shiny}.}
 }
 \description{
 A shiny Module. Renders clinica data attached to a maf object in the form of a datatable

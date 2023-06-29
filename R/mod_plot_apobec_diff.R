@@ -26,6 +26,8 @@ mod_plot_apobec_diff_ui <- function(id){
     
 #' plot_apobec_diff Server Functions
 #' @inheritParams maftools::plotApobecDiff
+#' @param id Internal parameters for {shiny}.
+#' 
 mod_plot_apobec_diff_server <- function(id, maf, tnm){
   moduleServer( id, function(input, output, session){
     ns <- session$ns

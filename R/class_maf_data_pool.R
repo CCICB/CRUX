@@ -243,9 +243,8 @@ maf_data_pool_unique_name_is_available <- function(maf_data_pool, unique_name){
 #' Will throw an error if it can't find a unique name
 #'
 #' @param maf_data_pool The data pool of interest  (maf_data_pool) 
-#' @param unique_name some string you want to check is not currently used as the 'unique_name' of any object in the datapool (string). 
 #' @param max_number_of_attempts max number of attempts (whole number) 
-#' 
+#' @param name name to make unique (string)
 #' @return a unique name (string)
 #'
 maf_data_pool_make_name_unique <- function(maf_data_pool, name, max_number_of_attempts=50){

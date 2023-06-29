@@ -7,7 +7,7 @@
 mod_data_import_maf_path_to_maf_ui(id)
 }
 \arguments{
-\item{id, input, output, session}{Internal parameters for {shiny}.}
+\item{id}{Internal parameters for {shiny}.}
 }
 \description{
 GUI for taking a filepath returning a maf object.

@@ -9,16 +9,21 @@ mod_shinyfile_import_ui(
   title,
   label,
   multiple = FALSE,
-  buttonType = "dark",
-  style = NULL,
-  viewtype = "detail",
   tooltip_text = "",
   tooltip_placement = "right",
   trigger = "hover"
 )
 }
 \arguments{
-\item{id, input, output, session}{Internal parameters for {shiny}.}
+\item{id}{Internal parameters for {shiny}.}
+
+\item{title}{The content of the tooltip.}
+
+\item{label}{Display label for the control, or \code{NULL} for no label.}
+
+\item{multiple}{Whether the user should be allowed to select and upload
+multiple files at once. \strong{Does not work on older browsers, including
+Internet Explorer 9 and earlier.}}
 
 \item{tooltip_text}{The content of the tooltip (string / HTML)}
 

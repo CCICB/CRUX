@@ -41,6 +41,12 @@ mod_data_import_step2_ui <- function(id){
 #' 
 #' Returns a list of user-filled metadata. Do \strong{NOT} evaluate any of the properties before checking all_valid == TRUE (list) (reactive).
 #' 
+#' @param default_data_source default data source value 
+#' @param default_display_name  default display name value 
+#' @param default_short_name default short name  value 
+#' @param default_description default description value 
+#' @param id Internal parameters for {shiny}.
+#'
 #' @return named list with elements: 
 #' \enumerate{
 #' \item all_valid (bool)

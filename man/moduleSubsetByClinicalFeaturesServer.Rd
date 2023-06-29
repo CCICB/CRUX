@@ -7,9 +7,11 @@
 moduleSubsetByClinicalFeaturesServer(id, maf, clinicalData)
 }
 \arguments{
-\item{id}{}
+\item{id}{Internal parameters for {shiny}.}
 
-\item{maf}{}
+\item{maf}{reactive maf object}
+
+\item{clinicalData}{clinical data object (reactive)}
 }
 \value{
 named list: 'maf1' (type maf), 'maf2' (type string),

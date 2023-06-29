@@ -17,6 +17,12 @@ maftools_clinical_data_visually_summarise(
 \item{maf}{MAF object (MAF)}
 
 \item{clinical_feature}{Name of a clinical feature (string)}
+
+\item{threshold}{threshold (number)}
+
+\item{selected_items}{selectd items}
+
+\item{distance_from_bar}{how far should text be from the bar (number)}
 }
 \value{
 ggplot / grob

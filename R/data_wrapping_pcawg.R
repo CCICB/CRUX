@@ -4,6 +4,7 @@
 
 #' Create dataset wrapper from pcawg dataset
 #'
+#' @inheritParams maf_data_pool_add_dataset
 #' @param pcawg_study_abbreviation Name of PCAWG study. Use pcawg_available to see options (string)
 #'
 #' @return maf_dataset_wrapper object

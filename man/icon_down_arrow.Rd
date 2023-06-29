@@ -10,6 +10,8 @@ icon_down_arrow(fontsize = "40px", alignment = "center", break_after = FALSE)
 \item{fontsize}{a valid css fontsize, e.g. 60px (string)}
 
 \item{alignment}{One of 'left', 'right', 'center' or 'inherit'(string)}
+
+\item{break_after}{insert a linebreak after icon (flag)}
 }
 \value{
 centered down arrow fluidrow()

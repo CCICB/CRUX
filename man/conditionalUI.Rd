@@ -21,10 +21,14 @@ and returns the UI element ONLY if the condition is true
 \examples{
 # In UI:
 somevariable=TRUE
-shinyWidgets::panel(heading="constitutivepanel",
-                    CRUX:::conditionalUI(somevariable, shinyWidgets::panel(somevariable, heading="ConditionalPanel")),
+shinyWidgets::panel(
+  heading="constitutivepanel",
+  CRUX:::conditionalUI(
+    somevariable, 
+    shinyWidgets::panel(somevariable, heading="ConditionalPanel")
+  ),
                     
-                    shiny::h1("constitutive title"),
-                    shiny::p("constitutive paragraph")
+  shiny::h1("constitutive title"),
+  shiny::p("constitutive paragraph")
 )
 }

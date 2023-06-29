@@ -22,6 +22,9 @@
 #' @param derived_from the maf_dataset_wrapper_object from which the new object was derived. If the dataset was obtained directly from an online source, leave as NA (maf_dataset_wrapper or NA)
 #' @param loaded_data the loaded R object (MAF or NA)
 #' @param number_of_samples the number of samples in the cohort (integer)
+#' @param is_dataset_loadable is dataset loadable (flag)
+#' @param clinical_data the clinical data of the object 
+#' @param rnaseq_filepath the path to the rnaseq data (string)
 #' @return an object of type maf_dataset_wrapper (maf_dataset_wrapper)
 #' 
 #' @section All Properties:
@@ -210,8 +213,8 @@ maf_data_pool_unique_name_to_maf_reactive <- function(maf_data_pool, unique_name
 #' Takes a unique name and returns the maf object associated with said entry in the maf_data_pool. 
 #' Involves loading the dataset but does NOT actually update the maf_data_pool.
 #'
-#' @param maf_data_pool 
-#' @param unique_name 
+#' @inheritParams maf_data_pool_add_dataset
+#' @param unique_name unique name (string)
 #'
 #' @return return loaded data (maf object, nonreactive)
 #'

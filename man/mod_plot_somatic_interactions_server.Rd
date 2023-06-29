@@ -7,6 +7,8 @@
 mod_plot_somatic_interactions_server(id, maf)
 }
 \arguments{
+\item{id}{Internal parameters for {shiny}.}
+
 \item{maf}{a maf object (maf)}
 }
 \description{

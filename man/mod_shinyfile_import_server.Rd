@@ -6,6 +6,9 @@
 \usage{
 mod_shinyfile_import_server(id)
 }
+\arguments{
+\item{id}{Internal parameters for {shiny}.}
+}
 \value{
 chosen filepath (string) (reactive). If multiple = TRUE, it returns a character vector instead of a string. When no file is selected, returns character(0)
 }

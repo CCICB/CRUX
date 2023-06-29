@@ -7,9 +7,9 @@
 maf_data_pool_unique_name_to_maf_nonreactive(maf_data_pool, unique_name)
 }
 \arguments{
-\item{maf_data_pool}{}
+\item{maf_data_pool}{the data pool to add the dataset wrapper to (maf_data_pool)}
 
-\item{unique_name}{}
+\item{unique_name}{unique name (string)}
 }
 \value{
 return loaded data (maf object, nonreactive)

@@ -4,7 +4,7 @@
 #' 
 #' @param alignment One of 'left', 'right', 'center' or 'inherit'(string)
 #' @param fontsize a valid css fontsize, e.g. 60px (string)
-#'
+#' @param break_after insert a linebreak after icon (flag)
 #' @return centered down arrow fluidrow()
 #'
 #'

@@ -7,7 +7,7 @@
 moduleReadMafServer(id)
 }
 \arguments{
-\item{id}{}
+\item{id}{Internal parameters for {shiny}.}
 }
 \value{
 named list containing 'maf' (type maf), 'cohortName' (type string), 'clinicalData' (type df), 'clinicalDataSupplied' (bool),

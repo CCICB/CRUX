@@ -131,6 +131,7 @@ external_tools_get_property_by_tool_name <- function(tool_name, property_to_retr
 #' 
 #' Loads metadata for the OncodriveFML tool into a global variable \strong{GLOBAL_external_tools_dataframe}
 #'
+#' @inheritParams external_tools_add_tool_to_dataframe
 #' @return external_tools_df with metadata of tool appeneded (data.frame)
 #'
 #'
@@ -164,6 +165,8 @@ external_tools_load_bbglab_oncodrive_fml <- function(external_tools_df = data.fr
 #' 
 #' Appends  metadata for the OncodriveCLUSTL tool onto external_tools_df
 #'
+#'
+#' @inheritParams external_tools_add_tool_to_dataframe
 #' @return external_tools_df with metadata of tool appeneded (data.frame)
 #'
 #'
@@ -204,6 +207,7 @@ external_tools_convert_maf_to_oncodrive_return_dataframe <- function(maf){
 
 #' A function that parses numbers from strings
 #'
+#' @param x character vector you want to parse numbers from
 parse_number <- function(x){
   as.numeric(sub(x = x, pattern = "^.*?([0-9]+).*?$", replacement = "\\1"))
 }
@@ -212,6 +216,7 @@ parse_number <- function(x){
 #' 
 #' Appends  metadata for the "Cancer Genome Interpreter (cgi) tool onto external_tools_df
 #'
+#' @inheritParams external_tools_add_tool_to_dataframe
 #' @return external_tools_df with metadata of tool appeneded (data.frame)
 #'
 #'
@@ -242,8 +247,7 @@ external_tools_load_bbglab_cgi <- function(external_tools_df = data.frame()){
 #' Convets MAF object to BBGLab Cancer Genome Interpreter Input (Genomic tabular format) then writes to a file.
 #' Works as a maf_conversion_function. Please don't change arguments
 #'
-#'
-#' @param maf (MAF)
+#' @inheritParams maf_data_pool_add_dataset
 #' @param filepath (string)
 #'
 #' @return Run for side effects (writes bbglab datamframe to file)
@@ -861,7 +865,8 @@ get_amino_acid_changes = function(maf_df, return_genomic_description_if_no_prote
 #' Load tool metadata into global variable
 #' 
 #' Appends  metadata for the OncodriveCLUSTL tool onto external_tools_df
-#'
+#' @inheritParams external_tools_add_tool_to_dataframe
+#' 
 #' @return external_tools_df with metadata of tool appeneded (data.frame)
 #'
 #'

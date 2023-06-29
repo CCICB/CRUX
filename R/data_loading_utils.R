@@ -13,7 +13,10 @@
 #' 
 #' @examples
 #' #Generate wrapper
-#' my_data <- CRUX:::tcga_dataset_to_maf_dataset_wrapper(maf_data_pool = CRUX:::new_maf_data_pool(), tcga_study_abbreviation = "ACC")
+#' my_data <- CRUX:::tcga_dataset_to_maf_dataset_wrapper(
+#'   maf_data_pool = CRUX:::new_maf_data_pool(), 
+#'   tcga_study_abbreviation = "ACC"
+#' )
 #' 
 #' #Load data
 #' my_data <- CRUX:::maf_data_set_wrapper_load_data(my_data)
@@ -175,7 +178,7 @@ assert_rnaseq_df_is_formatted_correctly <- function(rnaseq_df){
 #' Add rnaseq data to maf_dataset_wrapper object
 #'
 #' @param maf_dataset_wrapper any maf object (maf_dataset_wrapper)
-#' @param rnaseq_df Dataframe containing at least three columns, named "Tumor_Sample_Barcode", "Hugo_Symbol" and "TPM". May optionally include columns named "Fold_Change" and "Transcript". See ?read_rnaseq_file (dataframe) 
+#' @param rnaseq_path path to rnaseq dataset (string) 
 #' @return the input maf_dataset_wrapper with rnaseq_path in rnaseq_filepath slot
 #'
 #'
@@ -227,7 +230,10 @@ maf_data_wrapper_get_rnaseq_df <- function(maf_dataset_wrapper){
 #' maf_data_wrapper = CRUX:::tcga_dataset_to_maf_dataset_wrapper(CRUX:::new_maf_data_pool(), "BLCA")
 #' 
 #' # Add RNA data
-#' maf_data_wrapper_with_RNA = CRUX:::maf_data_wrapper_add_rnaseq(maf_data_wrapper, rnaseq_path = rna_path) 
+#' maf_data_wrapper_with_RNA = CRUX:::maf_data_wrapper_add_rnaseq(
+#'   maf_data_wrapper, 
+#'   rnaseq_path = rna_path
+#' ) 
 #' 
 #' # Retrieve RNA data for samples with mutation data
 #' CRUX:::maf_data_wrapper_get_rnaseq_data_for_samples_with_mutation_data(maf_data_wrapper_with_RNA)

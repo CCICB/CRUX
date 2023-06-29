@@ -43,7 +43,7 @@ mod_render_downloadabledataframe_ui <- function(id, downloadbttn_label="", class
 #' @param rownames download with rownames (flag)
 #' @param colnames download with colnames (flag)
 #' @param filter Position of filter search box: one of 'top', 'bottom' or 'none'  (string)
-#'
+#' @param message_if_tabular_data_is_null message if tabular data is null (string)
 #'
 mod_render_downloadabledataframe_server <- function(id, tabular_data_object, basename, rownames=FALSE, colnames=TRUE, filter="top", message_if_tabular_data_is_null = "Please select valid mutalisk files"){
   assertthat::assert_that(filter %in% c("top", "bottom", "none"), msg = "mod_render_downloadabledataframe_server: filter argument should be one of 'top', 'bottom' or 'none'")
@@ -112,11 +112,15 @@ mod_render_downloadabledataframe_server <- function(id, tabular_data_object, bas
 #' @examples
 #' # In UI:
 #' somevariable=TRUE
-#' shinyWidgets::panel(heading="constitutivepanel",
-#'                     CRUX:::conditionalUI(somevariable, shinyWidgets::panel(somevariable, heading="ConditionalPanel")),
+#' shinyWidgets::panel(
+#'   heading="constitutivepanel",
+#'   CRUX:::conditionalUI(
+#'     somevariable, 
+#'     shinyWidgets::panel(somevariable, heading="ConditionalPanel")
+#'   ),
 #'                     
-#'                     shiny::h1("constitutive title"),
-#'                     shiny::p("constitutive paragraph")
+#'   shiny::h1("constitutive title"),
+#'   shiny::p("constitutive paragraph")
 #' )
 conditionalUI <- function (expression, ui_element) 
 {

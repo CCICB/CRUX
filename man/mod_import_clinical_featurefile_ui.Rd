@@ -7,7 +7,7 @@
 mod_import_clinical_featurefile_ui(id)
 }
 \arguments{
-\item{id, input, output, session}{Internal parameters for {shiny}.}
+\item{id}{Internal parameters for {shiny}.}
 }
 \description{
 A shiny Module.

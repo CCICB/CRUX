@@ -72,7 +72,7 @@ mod_single_cohort_summary_plots_server <- function(id, maf, cohortName) {
       mod_plot_tmb_in_context_of_tcga_server(id = "id_plot_tcga", maf = maf, cohortName = cohortName)
       mod_plot_oncoplot_server(id="mod_oncoplot", maf)
       mod_plot_oncogenic_pathways_server(id ="mod_oncopathways", maf = maf)
-      mod_plot_oncogenic_pathways_focused_server(id = "mod_oncopathways_specific", maf = maf)
+      mod_plot_oncogenic_pathways_focused_server(id = "mod_oncopathways_specific", maf1 = maf)
       mod_plot_lollipop_server(id = "mod_plot_lollipop", maf = maf, name_cohort = cohortName)
       mod_plot_somatic_interactions_server(id = "mod_somatic_interactions", maf = maf)
       mod_plot_pfam_domains_server(id = "mod_pfam_domains", maf=maf)
@@ -85,7 +85,7 @@ mod_single_cohort_summary_plots_server <- function(id, maf, cohortName) {
 
 #' wrapper for running multiple mod_single_cohort_summary_tables_ui modules
 #'
-#' @param id 
+#' @param id Internal parameters for {shiny}.
 #'
 #'
 #'
@@ -102,7 +102,7 @@ mod_single_cohort_summary_tables_and_plots_ui <- function(id){
 
 #' wrapper for running multiple mod_single_cohort_summary_tables_server modules
 #'
-#' @param id 
+#' @param id Internal parameters for {shiny}.
 #' @param maf maf object (reactive)
 #' @param cohortName cohort Name (string, reactive)
 #'

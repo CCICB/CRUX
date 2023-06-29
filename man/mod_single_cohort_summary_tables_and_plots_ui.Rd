@@ -7,7 +7,7 @@
 mod_single_cohort_summary_tables_and_plots_ui(id)
 }
 \arguments{
-\item{id}{}
+\item{id}{Internal parameters for {shiny}.}
 }
 \description{
 wrapper for running multiple mod_single_cohort_summary_tables_ui modules

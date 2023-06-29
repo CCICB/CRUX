@@ -2,14 +2,14 @@
 #'
 #' @description A shiny Module.
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @param id Internal parameters for {shiny}.
 #'
 #'
 #' @importFrom shiny NS tagList 
 mod_shinyfiles_get_clinical_featurefile_path_ui <- function(id){
   ns <- NS(id)
   tagList(
-        mod_shinyfile_import_ui(id = ns("id_shinyfiles_clinical_featurfile"), title = "Import Metadata", buttonType = "primary", multiple = FALSE, label = "Import Metadata", tooltip_text = "Import Clinical Feature File. If you wish to add tumor-level metadata (e.g. treatment response) but aren't sure how to create the file you need, see Help => FAQ")
+        mod_shinyfile_import_ui(id = ns("id_shinyfiles_clinical_featurfile"), title = "Import Metadata", multiple = FALSE, label = "Import Metadata", tooltip_text = "Import Clinical Feature File. If you wish to add tumor-level metadata (e.g. treatment response) but aren't sure how to create the file you need, see Help => FAQ")
   )
 }
     
@@ -18,7 +18,8 @@ mod_shinyfiles_get_clinical_featurefile_path_ui <- function(id){
 #' Server code for getting path to clinical feature file using shinyfiles button.
 #' No QC done here. Make sure file is valid when creating MAF object from maf + clinical feature file
 #'
-#' @inheritParams mod_shinyfile_import_server
+#' @param id Internal parameters for {shiny}.
+#' 
 #' @inherit mod_shinyfile_import_server return
 mod_shinyfiles_get_clinical_featurefile_path_server <- function(id){
   moduleServer( id, function(input, output, session){

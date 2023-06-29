@@ -6,6 +6,11 @@
 \usage{
 mod_external_tools_server(id, maf_data_pool)
 }
+\arguments{
+\item{id}{Internal parameters for {shiny}.}
+
+\item{maf_data_pool}{the data pool to add the dataset wrapper to (maf_data_pool)}
+}
 \description{
 external_tools Server Functions
 }

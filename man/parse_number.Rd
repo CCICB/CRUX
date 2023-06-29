@@ -6,6 +6,9 @@
 \usage{
 parse_number(x)
 }
+\arguments{
+\item{x}{character vector you want to parse numbers from}
+}
 \description{
 A function that parses numbers from strings
 }

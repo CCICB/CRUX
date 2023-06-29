@@ -39,6 +39,10 @@ maftools_cluster_samples(
 \item{show_rownames}{show sample names on rows (bool)}
 
 \item{show_colnames}{show sample names on columns  (bool)}
+
+\item{annotation_legend}{show annotation legend (flag)}
+
+\item{fontsize}{font size (number)}
 }
 \value{
 pheatmap object

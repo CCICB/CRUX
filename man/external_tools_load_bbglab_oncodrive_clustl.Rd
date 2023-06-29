@@ -6,6 +6,9 @@
 \usage{
 external_tools_load_bbglab_oncodrive_clustl(external_tools_df = data.frame())
 }
+\arguments{
+\item{external_tools_df}{the dataframe to add tool metadata to. By default, will create and return a new dataframe}
+}
 \value{
 external_tools_df with metadata of tool appeneded (data.frame)
 }

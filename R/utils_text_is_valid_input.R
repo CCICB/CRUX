@@ -2,8 +2,8 @@
 #'
 #' must be in server
 #'
-#' @param input_id id of the textInput object (string)
 #' @param test_custom_function a function which takes the value of the textInput and returns TRUE/FALSE depending on whether it meets expectations. If supplied, textInput value must be a non-emptystring AND pass the custom function's test(function)
+#' @param text input text to assert is a string (string)
 #' @return True if valid text is found in. FALSE if it is not (flag)
 #'
 text_is_non_zero_string <- function(text, test_custom_function = NULL){

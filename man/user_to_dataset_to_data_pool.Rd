@@ -18,7 +18,19 @@ user_to_dataset_to_data_pool(
 \arguments{
 \item{maf_data_pool}{the data pool to add the dataset wrapper to (maf_data_pool)}
 
+\item{filepath}{path to maf file}
+
 \item{clinicalData}{Clinical data associated with each sample/Tumor_Sample_Barcode in MAF. Could be a text file or a data.frame. Default NULL.}
+
+\item{display_name}{Name that the end-user will see (string)}
+
+\item{short_name}{Abbreviated dataset name (string)}
+
+\item{description}{dataset description}
+
+\item{data_source}{data source}
+
+\item{loaded_data}{the loaded R object (MAF or NA)}
 }
 \value{
 returns a data pool object with extra dataset added (maf_data_pool)

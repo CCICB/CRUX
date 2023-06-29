@@ -5,7 +5,6 @@
 #' @param panel_name "panel name (required)"
 #' @param cohort_name "panel name (required)"
 #' @param label_cohort_name "name of the cohort (required)"
-#' @param label_name "label of the cohort name field"
 #' @param label_maf label of maf input field ["maf"]
 #' @param label_clinical_data label of clinicalData input field ["clinical data"]
 #'
@@ -43,7 +42,7 @@ moduleReadMafUI <- function(id, panel_name, cohort_name, label_cohort_name = "na
 
 #' Read MAF server function
 #'
-#' @param id 
+#' @param id Internal parameters for {shiny}.
 #'
 #' @return named list containing 'maf' (type maf), 'cohortName' (type string), 'clinicalData' (type df), 'clinicalDataSupplied' (bool),
 #'

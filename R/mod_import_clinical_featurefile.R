@@ -2,7 +2,7 @@
 #'
 #' @description A shiny Module.
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @param id Internal parameters for {shiny}.
 #'
 #'
 #' @importFrom shiny NS tagList 
@@ -17,9 +17,10 @@ mod_import_clinical_featurefile_ui <- function(id){
 #' import_clinical_featurefile Server Functions
 #' 
 #' @description  Imports a clinical feature file. 
-#' @inheritParams mod_import_clinical_featurefile_ui
-#' @param maf a reactive maf object which the supplied clinical feature file is associated with
+#' @param id Internal parameters for {shiny}.
+#' @param maf_path path to maf file (reactive string)
 #' @return  the object with metadata from a clinical feature
+#' 
 mod_import_clinical_featurefile_server <- function(id, maf_path){
   moduleServer( id, function(input, output, session){
     ns <- session$ns

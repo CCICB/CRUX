@@ -9,7 +9,7 @@ maf_data_wrapper_add_rnaseq(maf_dataset_wrapper, rnaseq_path)
 \arguments{
 \item{maf_dataset_wrapper}{any maf object (maf_dataset_wrapper)}
 
-\item{rnaseq_df}{Dataframe containing at least three columns, named "Tumor_Sample_Barcode", "Hugo_Symbol" and "TPM". May optionally include columns named "Fold_Change" and "Transcript". See ?read_rnaseq_file (dataframe)}
+\item{rnaseq_path}{path to rnaseq dataset (string)}
 }
 \value{
 the input maf_dataset_wrapper with rnaseq_path in rnaseq_filepath slot

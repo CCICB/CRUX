@@ -26,6 +26,8 @@ mod_render_downloadabledataframe_server(
 \item{colnames}{download with colnames (flag)}
 
 \item{filter}{Position of filter search box: one of 'top', 'bottom' or 'none'  (string)}
+
+\item{message_if_tabular_data_is_null}{message if tabular data is null (string)}
 }
 \description{
 Title

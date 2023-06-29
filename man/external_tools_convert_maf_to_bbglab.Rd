@@ -7,9 +7,9 @@
 external_tools_convert_maf_to_bbglab(maf_dataset_wrapper, filepath)
 }
 \arguments{
-\item{filepath}{(string)}
+\item{maf_dataset_wrapper}{object to add to the data pool (maf_dataset_wrapper)}
 
-\item{maf}{(MAF)}
+\item{filepath}{(string)}
 }
 \value{
 Run for side effects (writes bbglab datamframe to file)

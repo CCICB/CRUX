@@ -44,6 +44,8 @@ new_maf_dataset_wrapper(
 
 \item{function_to_download_data}{a function that when run will download the required data return the path to which it was downloaded if successful. Will return NA if it failed (function that returns string or NA). If is_dataset_downloadable is false, this is ignored (just use default)}
 
+\item{is_dataset_loadable}{is dataset loadable (flag)}
+
 \item{function_to_load_data}{a function that takes 'local_path_to_data' as its argument and returns the loaded maf object when complete. 
 The function needs to take a single argument, but it doesn't actually have to use it. 
 For example, when loading tcga data using the TCGAmutations package, this function could be \strong{function(filepath){maftools::tcgaLoad()}}. 
@@ -53,11 +55,15 @@ This function completely ignores the filepath argument but you NEED to include i
 
 \item{local_path_to_data}{a path to data which will be configured based on function_to_download_data. If this option is configured ahead of time (string)}
 
+\item{clinical_data}{the clinical data of the object}
+
 \item{datatype_of_stored_object}{type of stored data object. Not used for anything right now, just interesting metadata. examples are \*.Rds or \*.mafs (string)}
 
 \item{derived_from}{the maf_dataset_wrapper_object from which the new object was derived. If the dataset was obtained directly from an online source, leave as NA (maf_dataset_wrapper or NA)}
 
 \item{loaded_data}{the loaded R object (MAF or NA)}
+
+\item{rnaseq_filepath}{the path to the rnaseq data (string)}
 
 \item{number_of_samples}{the number of samples in the cohort (integer)}
 }
