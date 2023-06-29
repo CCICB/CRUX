@@ -23,3 +23,7 @@ utils::globalVariables(
 #' @import utils
 imports <- function() {
 }
+
+curly <- function(){
+  curl::curl_escape('bob') 
+}
