@@ -3,6 +3,9 @@
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/CCICB/CRUX/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CCICB/CRUX/actions/workflows/R-CMD-check.yaml)
 [![r-universe status badge](https://ccicb.r-universe.dev/badges/CRUX)](https://selkamand.r-universe.dev/ui#package:CRUX)
+[![](https://img.shields.io/github/languages/code-size/CCICB/CRUX.svg)](https://github.com/CCICB/CRUX)
+[![](https://img.shields.io/github/last-commit/CCICB/CRUX.svg)](https://github.com/CCICB/CRUX/commits/main)
+[![Closed issues](https://img.shields.io/github/issues-closed/CCICB/CRUX.svg)](https://github.com/CCICB/CRUX/issues?q=is%3Aissue+is%3Aclosed)
 <!-- badges: end -->
 
 ## Description
