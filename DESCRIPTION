@@ -159,6 +159,7 @@ Collate:
     'utils-pipe.R'
     'utils_bool_to_colour.R'
     'utils_installation.R'
+    'utils_links.R'
     'utils_spacer.R'
     'utils_text_is_valid_input.R'
     'utils_validating_clinical_feature_files.R'

@@ -21,7 +21,9 @@ mod_data_import_ui <- function(id) {
           width = "100%",
           "MAF files are tabular files that store a list of mutations. 
           To learn more about how to get your data in MAF format: ",
-          link(url = "https://crux-docs.readthedocs.io/en/latest/usage/importing_data.html", newtab = TRUE, text = "see here")
+          link(url = "https://crux-docs.readthedocs.io/en/latest/usage/importing_data.html", newtab = TRUE, text = "see here"),
+          tags$br(),
+          shiny::downloadLink(outputId = ns('out_download_mafdemo'), label = "Download Demo MAF"),
         ) %>% column(width = 9)
       )
     ),
@@ -37,7 +39,9 @@ mod_data_import_ui <- function(id) {
           width = "100%",
           "Clinical data associated with each sample/Tumor_Sample_Barcode in MAF. Could be a csv/tsv file.
           To learn more about how to prepare your clinical annotations file: ",
-          link(url = "https://crux-docs.readthedocs.io/en/latest/usage/importing_data.html", newtab = TRUE, text = "see here")
+          link(url = "https://crux-docs.readthedocs.io/en/latest/usage/importing_data.html", newtab = TRUE, text = "see here"),
+          tags$br(),
+          shiny::downloadLink(outputId = ns('out_download_clindemo'), label = "Download Demo Annotations", class = "info"),
         ) %>% column(width = 9)
       )
     ),
@@ -156,5 +160,19 @@ mod_data_import_server <- function(id, maf_data_pool){
       )
       }))
     
+    
+      # Download Buttons / Text
+      output$out_download_mafdemo <- downloadHandler(filename = "demo.maf", content = function(file){
+          system.file("example_data/APL_primary_and_relapse.maf", package="CRUX") %>%
+            data.table::fread() %>%
+            data.table::fwrite(file, sep = "\t")
+        })
+      
+      output$out_download_clindemo <- downloadHandler(filename = "demo_clinical_features.tsv", content = function(file){
+        system.file("example_data/APL_primary_and_relapse.clinical_features.tsv", package="CRUX") %>%
+          data.table::fread() %>%
+          data.table::fwrite(file, sep = "\t")
+      })
+      
   })
 }
