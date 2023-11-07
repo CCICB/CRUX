@@ -80,6 +80,7 @@ Collate:
     'fct_TCGAmutations_load_with_typed_metadata.R'
     'fct_centered_down_arrow.R'
     'fct_download_maf.R'
+    'fct_filetype_guesser.R'
     'fct_gistic.R'
     'fct_maftools_extending_functions.R'
     'fct_maftools_fix_clinical_data_types.R'
