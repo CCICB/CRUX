@@ -7,7 +7,7 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
-mod_data_import_ui <- function(id){
+mod_data_import_ui <- function(id) {
   ns <- NS(id)
   
   # Step 1
@@ -17,13 +17,15 @@ mod_data_import_ui <- function(id){
       fluidRow(
         shiny::fileInput(inputId = ns("in_file_maf"), label = "Select MAF file") %>% col_3(),
         shinydashboard::box(
-          title = "Mutation Annotation Format (MAF) Files",width = "100%",
-          "
-          MAF files are tabular files that storing a list of mutations. 
-          To learn more about how to get your data in MAF format: see here.
-          ") %>% column(width = 9)
-      ),
-    ), icon_down_arrow(break_after=TRUE),
+          title = "Mutation Annotation Format (MAF) Files",
+          width = "100%",
+          "MAF files are tabular files that store a list of mutations. 
+          To learn more about how to get your data in MAF format: ",
+          link(url = "https://crux-docs.readthedocs.io/en/latest/usage/importing_data.html", newtab = TRUE, text = "see here")
+        ) %>% column(width = 9)
+      )
+    ),
+    icon_down_arrow(break_after = TRUE),
     
     # Step 2
     shinyWidgets::panel(
@@ -31,31 +33,34 @@ mod_data_import_ui <- function(id){
       fluidRow(
         shiny::fileInput(inputId = ns("in_file_clindata"), label = "Select Clinical Annotations File") %>% col_3(),
         shinydashboard::box(
-          title = "Clinical Annotation Files", width = "100%",
-          "
-          Clinical data associated with each sample/Tumor_Sample_Barcode in MAF. Could be a csv/tsv file.
-          To learn more about how to prepare your clinical annotations file: see here.
-          ") %>% column(width = 9)
-      ),
-    ),icon_down_arrow(break_after=TRUE),
+          title = "Clinical Annotation Files",
+          width = "100%",
+          "Clinical data associated with each sample/Tumor_Sample_Barcode in MAF. Could be a csv/tsv file.
+          To learn more about how to prepare your clinical annotations file: ",
+          link(url = "https://crux-docs.readthedocs.io/en/latest/usage/importing_data.html", newtab = TRUE, text = "see here")
+        ) %>% column(width = 9)
+      )
+    ),
+    icon_down_arrow(break_after = TRUE),
     
     # Step 3
     shinyWidgets::panel(
       heading = tags$span(tags$strong("Step 3: "), "Add Cohort Level Metadata"),
       shiny::fluidRow(
-        shiny::textInput(inputId = ns("in_text_displayname"), label = "Display Name", placeholder = "High Grade Glioma" ,width = "100%") %>% col_4(),
+        shiny::textInput(inputId = ns("in_text_displayname"), label = "Display Name", placeholder = "High Grade Glioma", width = "100%") %>% col_4(),
         shiny::textInput(inputId = ns("in_text_shortname"), label = "Short Name", placeholder = "HGG", width = "100%") %>% col_4(),
         shiny::textInput(inputId = ns("in_text_data_source"), label = "Source", placeholder = "TCGA", width = "100%") %>% col_4(),
-        shiny::textInput(inputId = ns("in_text_description"), label = "Descripton", placeholder = "High Grade Glioma from a paediatric cohort with survival <30%", width = "100%") %>% col_12()
+        shiny::textInput(inputId = ns("in_text_description"), label = "Description", placeholder = "High Grade Glioma from a pediatric cohort with survival <30%", width = "100%") %>% col_12()
       )
-    ),icon_down_arrow(break_after=TRUE),
+    ),
+    icon_down_arrow(break_after = TRUE),
     
     # Step 4
     shinyWidgets::panel(
       heading = "Step 4: Import Data!",
       shiny::actionButton(
-        inputId = ns("in_bttn_import"), 
-        label = "Import", 
+        inputId = ns("in_bttn_import"),
+        label = "Import",
         width = "100%",
         icon = icon("file-import"),
         class = "btn btn-primary"
