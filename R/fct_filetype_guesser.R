@@ -10,8 +10,28 @@
 guess_genomic_mutation_filetype <- function(path){
   
   # Read First Row of Header Only
-  df <- data.table::fread(path, nrows = 0)
-  cols <- colnames(df)
+  df_header <- data.table::fread(path, nrows = 0)
+  df_header_start_chrom <- tryCatch(
+    expr = { 
+      data.table::fread(path, nrows = 0, skip = "CHROM")   
+    },
+    error = function(err){
+      return(character(0))
+    }
+  )
+  
+  df_header_start_hugo <-tryCatch(
+    expr = { 
+      data.table::fread(path, nrows = 0, skip = "Hugo_Symbol")
+    },
+    error = function(err){
+      return(character(0))
+    }
+  )
+  
+  cols <- colnames(df_header)
+  cols_hugo <- colnames(df_header_start_hugo)
+  cols_chrom <- colnames(df_header_start_chrom)
   cols_pre_dot  <- sub(x=cols, pattern = "\\..*$", replacement = "") # e.g.  Func.refGene OR Func.ensGene will become Func. 
   
   # Definitions of what to expect in MAFs / ANNOVAR files / VCF
@@ -19,13 +39,15 @@ guess_genomic_mutation_filetype <- function(path){
                      "End_Position", "Reference_Allele", "Tumor_Seq_Allele2", "Variant_Classification", 
                      "Variant_Type")
   annovar_cols = c("Chr", "Start", "End", "Ref", "Alt", "Func", "Gene", "GeneDetail", "ExonicFunc", "AAChange")
+
   
-  vcf_cols = "##fileformat=VCFv4.2"
+  vcf_cols = c("#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO", 
+               "FORMAT")
   
   filetype = dplyr::case_when(
-    all(maf_cols %in% cols) ~ "MAF",  
+    all(maf_cols %in% cols_hugo) ~ "MAF",  
     all(annovar_cols %in% cols_pre_dot) ~ "ANNOVAR",
-    all(vcf_cols %in% cols) ~ "VCF",
+    all(vcf_cols %in% cols_chrom) ~ "VCF",
     TRUE ~ "OTHER"
     )
   
