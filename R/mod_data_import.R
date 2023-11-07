@@ -10,7 +10,7 @@
 mod_data_import_ui <- function(id) {
   ns <- NS(id)
 
-  # Step 1
+  # Step 1: Choose Input Data Type
   tagList(
     shinyWidgets::panel(
       heading = tags$span(tags$strong("Step 1: "), "Choose Input Data Type"),
@@ -31,6 +31,8 @@ mod_data_import_ui <- function(id) {
       )
     ),
     icon_down_arrow(break_after = TRUE),
+    
+    # Step 2: Import Mutation Data
     shinyWidgets::panel(
       heading = tags$span(tags$strong("Step 2: "), "Import Mutation Data"),
       fluidRow(
@@ -80,7 +82,7 @@ mod_data_import_ui <- function(id) {
     ),
     icon_down_arrow(break_after = TRUE),
 
-    # Step 2
+     # Step 3: Import Clinical Annotations
     shinyWidgets::panel(
       heading = tags$span(tags$strong("Step 3: "), "Import Clinical Annotations"),
       fluidRow(
@@ -100,9 +102,9 @@ mod_data_import_ui <- function(id) {
     ),
     icon_down_arrow(break_after = TRUE),
 
-    # Step 3
+    # Step 4: Add Cohort Level Metadata
     shinyWidgets::panel(
-      heading = tags$span(tags$strong("Step 3: "), "Add Cohort Level Metadata"),
+      heading = tags$span(tags$strong("Step 4: "), "Add Cohort Level Metadata"),
       shiny::fluidRow(
         shiny::textInput(inputId = ns("in_text_displayname"), label = "Display Name", placeholder = "High Grade Glioma", width = "100%") %>% col_4(),
         shiny::textInput(inputId = ns("in_text_shortname"), label = "Short Name", placeholder = "HGG", width = "100%") %>% col_4(),
@@ -112,9 +114,9 @@ mod_data_import_ui <- function(id) {
     ),
     icon_down_arrow(break_after = TRUE),
 
-    # Step 4
+    # Step 5: Import Data
     shinyWidgets::panel(
-      heading = "Step 4: Import Data!",
+      heading = "Step 5: Import Data!",
       shiny::actionButton(
         inputId = ns("in_bttn_import"),
         label = "Import",
@@ -143,10 +145,6 @@ mod_data_import_server <- function(id, maf_data_pool) {
         nchar(input$in_text_description) > 0
     })
 
-    # expected_filetype <- reactive({
-    #   input$in_radio_input_data_type
-    # })
-    
     # Define clindata path as a reactive value so we can reset it
     rv <- reactiveValues()
     observe({ 
@@ -154,7 +152,7 @@ mod_data_import_server <- function(id, maf_data_pool) {
       rv$path_clindata <- input[["in_file_clindata"]]$datapath 
       })
 
-    # Clear selected clinical annotations on reset clicked
+    # Clear selected clinical annotations when reset button clicked
     observeEvent(input$in_action_clear_clindata, handlerExpr = isolate({
       shinyjs::reset(id = "in_file_clindata")
       rv$path_clindata <- NULL
@@ -163,7 +161,6 @@ mod_data_import_server <- function(id, maf_data_pool) {
 
     # When clicking the button 'add to data pool'
     observeEvent(input$in_bttn_import, isolate({
-
 
       # Check a maf file has been supplied
       if (is.null(input[["in_file_mutations"]]$datapath)) {
@@ -243,7 +240,7 @@ mod_data_import_server <- function(id, maf_data_pool) {
     }))
 
 
-    # Download Buttons / Text
+    # Download Handlers
     output$out_download_mafdemo <- downloadHandler(filename = "demo.maf", content = function(file) {
       system.file("example_data/APL_primary_and_relapse.maf", package = "CRUX") %>%
         data.table::fread() %>%
