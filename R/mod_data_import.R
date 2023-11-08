@@ -18,7 +18,7 @@ mod_data_import_ui <- function(id) {
         shinyWidgets::awesomeRadio(
           inputId = ns("in_radio_input_data_type"),
           label = "Genomic Data Filetype",
-          choices = c("MAF", "ANNOVAR", "VCF"),
+          choices = c("MAF", "ANNOVAR", "VCF (in development)" = "VCF"),
           selected = "MAF",
           inline = TRUE,
           checkbox = TRUE
