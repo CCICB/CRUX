@@ -25,9 +25,7 @@ mod_plot_oncoplot_ui <- function(id){
         numericInput(inputId = ns("in_num_sepwd_genes"), label = "Size of lines separating genes", min=0.01, step = 0.1, value = 0.5)  %>% col_3(),
         numericInput(inputId = ns("in_num_sepwd_samples"), label = "Size of lines separating samples", min=0.01, step = 0.1, value = 0.25)  %>% col_3()
       ),
-      
       hr(),
-      
       fluidRow(
         numericInput(inputId = ns("in_num_fontsize"), label = "Fontsize", min=0, step = 0.1, value = 1.2) %>% col_3(),
         numericInput(inputId = ns("in_num_fontsize_title"), label = "Fontsize: Title", min=0, step = 0.1, value = 1.5) %>% col_3(),
@@ -45,7 +43,7 @@ mod_plot_oncoplot_ui <- function(id){
       
       hr(),
       fluidRow(
-        moduleGetColumnNameUI(ns("mod_select_clinical_feature"))  %>% col_3(),
+        mod_select_maf_clinical_data_column_ui(ns("mod_select_clinical_feature"), multiple = TRUE, label = "Clinical Features")  %>% col_3(),
         shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_sort_by_annotation"), label = "Sort by annotation", value = FALSE) %>% col_3(style="margin-top: 24px"),
         shinyWidgets::awesomeCheckbox(inputId = ns("in_checkbox_use_custom_genes"), label = "Custom genes", value = FALSE) %>% col_3(style="margin-top: 24px"),
         conditionalPanel(condition = "input.in_checkbox_use_custom_genes", ns=ns, mod_select_genes_ui(id = ns("mod_select_custom_genelist"), label = "Genes to plot",multiple = TRUE)) %>% col_3()
@@ -65,7 +63,12 @@ mod_plot_oncoplot_server <- function(id, maf){
                    return(maftools::getClinicalData(maf()))
                  })
                  
-                 clinical_data_selected <- moduleGetColumnNameServer(id = "mod_select_clinical_feature", named_data = clinicalData, label = "Clinical Feature", multiple_selectable = T)
+                 clinical_data_selected <- mod_select_maf_clinical_data_column_server(
+                   id = "mod_select_clinical_feature", 
+                   maf=maf,
+                   checkmark = 'oncoplottable',
+                   forced_to_pick_at_least_1 = FALSE
+                   )
                  
                  custom_genelist <- mod_select_genes_server("mod_select_custom_genelist", maf = maf)
                  #output$out_ui_genelist <- renderUI({ shinyWidgets::pickerInput( inputId = session$ns("in_pick_gene"), label = "Gene", choices = c(maf()@data$Hugo_Symbol) %>% sort %>% unique(), options = shinyWidgets::pickerOptions(liveSearch = T, actionsBox = T), multiple = T) })

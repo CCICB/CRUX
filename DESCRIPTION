@@ -65,6 +65,7 @@ Suggests:
     testthat,
     usethis
 Collate: 
+    'CRUX-package.R'
     'GLOBALS.R'
     'app_config.R'
     'fct_external_tools_load_dataframe.R'
