@@ -12,9 +12,13 @@ read_maf_flexible(
 )
 }
 \arguments{
-\item{path_mutations}{path to a MAF / ANNOVAR file}
+\item{path_mutations}{path to mutation file (string)}
 
 \item{refBuild}{which reference version is being used}
+
+\item{path_clindata}{path to clinical annotation file (string)}
+
+\item{filetype}{what type of filetype do we expect (string). If "AUTO" will automatically guess the filetype using [guess_genomic_mutation_filetype()]}
 }
 \value{
 one of MAF, ANNOVAR, VCF, OTHER

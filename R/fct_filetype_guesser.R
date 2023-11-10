@@ -85,6 +85,9 @@ annovar_guess_reference_table <- function(path){
 #'
 #' @param path_mutations path to a MAF / ANNOVAR file
 #' @param refBuild which reference version is being used
+#' @param path_mutations path to mutation file (string)
+#' @param path_clindata path to clinical annotation file (string)
+#' @param filetype what type of filetype do we expect (string). If "AUTO" will automatically guess the filetype using [guess_genomic_mutation_filetype()]
 #'
 #' @return one of MAF, ANNOVAR, VCF, OTHER
 #'

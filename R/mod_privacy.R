@@ -18,7 +18,7 @@ mod_privacy_ui <- function(id){
       link(url="https://www.ncbi.nlm.nih.gov/books/NBK553131/", text = tags$strong("Protected Health Information (PHI)")),
       " has been removed before bringing the data into CRUX, or any other 3rd party analysis tool.",
       tags$br(),tags$br(),
-      "If using CRUX from the shinyapps.io web server, be aware that shinyapps.io is hosted on Amazon’s Web Services in the us-east-1 region and the infrastructure used is not the HIPAA-compliant stack.",
+      "If using CRUX from the shinyapps.io web server, be aware that shinyapps.io is hosted on Amazon's Web Services in the us-east-1 region and the infrastructure used is not the HIPAA-compliant stack.",
       "Please see ",link(url = "https://docs.posit.co/shinyapps.io/security-and-compliance.html", text="shinyapps.io documentation")," for more information on the server infrastructure. If HIPAA compliance is required CRUX can be easily installed onto devices of your own choosing."
       )
   )
