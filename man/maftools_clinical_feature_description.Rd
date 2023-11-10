@@ -20,3 +20,7 @@ a data.frame with 3 columns. annotation (feature name); type (whether feature is
 \description{
 Get a data.frame describing each clinical feature of a MAF
 }
+\details{
+Rule for pass/fail checks: 
+To be 'oncoplottable' there must be <= 100 non-missing levels OR the feature must be numeric
+}

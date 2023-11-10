@@ -47,7 +47,7 @@ app_server <- function( input, output, session ) {
   mod_cnv_server(id = "mod_cnv_level_analysis", maf_data_pool)
   
   # Manual
-  mod_manual_server(id="mod_manual")
+  mod_help_server(id="mod_help")
 
   #Stop Program when browser is closed
   session$onSessionEnded(function() {
