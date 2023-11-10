@@ -14,7 +14,10 @@ TCGAmutations_load_with_typed_metadata <- function(study, source="Firehose"){
   utilitybeltassertions::assert_non_empty_string(source)
   
   maf = maftools::tcgaLoad(study = study, source = source)
+  
   maftools_fix_clinical_data_types(maf) %>%
     maftools_fix_tcga_survival_curve_metadata() %>%
+    maftools_add_brca_subtype() %>% 
     return()
 }
+
