@@ -96,12 +96,12 @@ maftools_clinical_data_visually_summarise <- function(maf, clinical_feature = "T
   
   
   if(is.numeric(feature.v)){
-    p = feature.v %>% ggplot2::qplot(alpha = 0.8, fill = "bla") + 
+    p = feature.v %>% ggplot2::qplot(alpha = 1, fill = "bla") + 
       ggplot2::xlab(clinical_feature) + 
       ggplot2::ylab("Count") + 
       utilitybeltgg::theme_fivethirtyeight_two() +
       ggplot2::scale_fill_manual(values="steelblue") +
-      utilitybeltgg::theme_no_legend() 
+      utilitybeltgg::theme_legend_none() 
     if(!is.null(threshold) && is.numeric(threshold))
       p = p + ggplot2::geom_vline(xintercept = threshold, linetype = "dashed")
     return(p)
@@ -113,25 +113,25 @@ maftools_clinical_data_visually_summarise <- function(maf, clinical_feature = "T
       forcats::fct_lump_n(n=topn, ties.method = "first", other_level = paste0("Other (n=", dplyr::n_distinct(.)-topn,")")) %>%
       forcats::fct_infreq() %>%
       forcats::fct_rev() %>%
-      ggplot2::qplot(fill="bla", alpha = 0.8) +
+      ggplot2::qplot(fill="bla", alpha = 1) +
       ggplot2::coord_flip()  +
       ggplot2::ylab("Count") +
       ggplot2::xlab(clinical_feature) +
       utilitybeltgg::theme_fivethirtyeight_two() +
       ggplot2::scale_fill_manual(values="steelblue") +
-      utilitybeltgg::theme_no_legend() +
-      utilitybeltgg::geom_barplot_counts(distance_from_bar = distance_from_bar, color = "mediumvioletred", alpha = 0.9) +
+      utilitybeltgg::theme_legend_none() +
+      utilitybeltgg::geom_barplot_counts(distance_from_bar = distance_from_bar, color = "mediumvioletred", alpha = 1, orientation = 'v') +
       ggplot2::ggtitle("Original Dataset")
     
     #browser()
     if(!is.null(selected_items) && all(selected_items %in% feature.v)){
       #feature_filter_flag.v <- 
       #feature_filter_flag.v <- ifelse(feature_filter_flag.v, yes = "Passes Filter", no="Fails Filter")
-      p2 <- ggplot2::qplot(x=feature.v %in% selected_items, fill="bla", alpha = 0.8) +
+      p2 <- ggplot2::qplot(x=feature.v %in% selected_items, fill="bla", alpha = 1) +
         utilitybeltgg::theme_fivethirtyeight_two() + 
         ggplot2::scale_fill_manual(values="steelblue") +
-        utilitybeltgg::theme_no_legend() +
-        utilitybeltgg::geom_barplot_counts(distance_from_bar = distance_from_bar, color = "mediumvioletred", alpha = 0.9) +
+        utilitybeltgg::theme_legend_none() +
+        utilitybeltgg::geom_barplot_counts(distance_from_bar = distance_from_bar, color = "mediumvioletred", alpha = 1, orientation = 'v') +
         ggplot2::xlab("Passes Filter") + ggplot2::ggtitle("Effect of Filter")
       #return(p2)
       p <- cowplot::plot_grid(p, p2)
