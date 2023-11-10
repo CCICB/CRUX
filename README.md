@@ -20,7 +20,6 @@ A shiny app that simplifies cohort-level, tertiary cancer analysis. You can impo
 
 A **manual** describing the installation and use of **CRUX** can be found [**here**](https://crux-docs.readthedocs.io/en/latest/index.html)
 
-<https://readthedocs.org/projects/crux-docs/badge/?version=latest&style=plastic>
 
 ## Installation
 
