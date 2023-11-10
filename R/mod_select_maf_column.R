@@ -68,21 +68,22 @@ mod_select_maf_clinical_data_column_ui <- function(id, label = "Select Property"
 #' select_maf_column Server Functions
 #'
 #' @noRd 
-mod_select_maf_clinical_data_column_server <- function(id, maf, forced_to_pick_at_least_1=TRUE, message_when_none_are_selected = "Please Select a Clinical Feature ..."){
+mod_select_maf_clinical_data_column_server <- function(id, maf, forced_to_pick_at_least_1=TRUE, message_when_none_are_selected = "Please Select a Clinical Feature ...", checkmark = "none"){
   assertions::assert_reactive(maf)
   
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    maf_columns.v <- reactive({
+    maf_annotation_df <- reactive({
       validate(need(!is.null(maf()),message = "Please select a dataset" ));
       message("Picking Columns") 
-      maf() %>% maftools::getClinicalData() %>% 
-        colnames()
+      maftools_clinical_feature_description(maf(), checkmark = checkmark)
     })
     
-    observeEvent(maf_columns.v(), {
-      shinyWidgets::updatePickerInput(session = session, inputId = "in_pick_maf_column", choices = maf_columns.v(), selected = character(0))
+    observeEvent(maf_annotation_df(), {
+      shinyWidgets::updatePickerInput(session = session, inputId = "in_pick_maf_column", choices = maf_annotation_df()[['annotation']], selected = character(0), choicesOpt = list(
+        content = maf_annotation_df()[['content']]
+        ))
     })
     
     in_pick_maf_column <- reactive({ 

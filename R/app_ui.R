@@ -57,7 +57,8 @@ app_ui <- function(request) {
                                    shinydashboard::menuSubItem(text = "Merge", tabName = "Merge", icon = icon("layer-group"))
                                    ),
           shinydashboard::menuItem("External Tools", tabName = "ExternalTools", icon = icon("sign-out-alt")),
-          shinydashboard::menuItem("Manual", tabName = "Manual", icon = icon("book"))
+          shinydashboard::menuItem("Help", tabName = "Help", icon = icon("book")),
+          shinydashboard::menuItem("Privacy", tabName = "Privacy", icon = icon("shield"))
         )
         ),
       
@@ -84,7 +85,8 @@ app_ui <- function(request) {
           #shinydashboard::tabItem(tabName = "Utilities", moduleUtilitiesUI(id = "mod_utilities")),
           shinydashboard::tabItem(tabName = "Subset", mod_utility_subset_ui(id = "mod_subset")),
           shinydashboard::tabItem(tabName = "Merge", mod_merge_ui(id = "mod_merge")),
-          shinydashboard::tabItem(tabName = "Manual", mod_manual_ui(id="mod_manual"))
+          shinydashboard::tabItem(tabName = "Help", mod_help_ui(id="mod_help")),
+          shinydashboard::tabItem(tabName = "Privacy", mod_privacy_ui(id="mod_privacy"))
         )
       )
     )

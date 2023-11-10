@@ -530,3 +530,81 @@ maftools_add_clinical_data <- function(maf, clindata_path){
   maf@clinical.data <- dplyr::left_join(x = maf@clinical.data, y = clindata_df)
   return(maf)
 }
+
+#' Turn Text into A Badge
+#'
+#' @param vec a vector of terms to make into a badge
+#' @param fontsize  fontsize of badge text
+#' @param fontweight fontweight of badge text
+#' @param color_background background colour. Can be a single value or a vector the same length as vec.
+#' @param color_text text colour. Can be a single value or a vector the same length as vec.
+#'
+#' @return string with html encoding for the badge
+#'
+badgify <- function(vec, fontweight = c('bold', 'bolder', 'normal', 'inherit', 'initial', 'lighter', 'unset'), fontsize = c('xx-small', 'x-small', 'small', 'medium', 'large', 'unset', 'inherit'), color_background = '#d2d6de', color_text ='#444'){
+  fontsize = rlang::arg_match(fontsize)
+  vec %>%
+    paste0(
+      "<span class='label label-default' style='margin-left: 10px; font-size: ",
+      fontsize,"; background-color: ", color_background, "; color: '",color_text, 
+      ">",.," </span>"
+    )
+}
+
+
+#' Get a data.frame describing each clinical feature of a MAF
+#'
+#' @param maf a maftools maf object
+#' @param checkmark should a pass/fail checkmark icon be added before the annotations name. (none = no pass/fail checkmark; oncoplottable = whether feature can be added to an oncoplot)
+#'
+#' @return a data.frame with 3 columns. annotation (feature name); type (whether feature is numeric/categorical); levels (number of distinct, non-na values); content (html string with names + badges with additional information)
+#'
+#' @details
+#' 
+#' Rule for pass/fail checks: 
+#' To be 'oncoplottable' there must be <= 100 non-missing levels OR the feature must be numeric
+#' 
+maftools_clinical_feature_description <- function(maf, checkmark = c('none','oncoplottable')){
+  checkmark = rlang::arg_match(checkmark)
+  
+  df_clin = maf@clinical.data
+  
+  
+  if(ncol(df_clin) == 1)
+    return(NULL)
+    
+  df_clin <- dplyr::select(df_clin, -'Tumor_Sample_Barcode') 
+  
+  ls_feature_description <- lapply(df_clin, function(vec){
+    type <- if(is.numeric(vec) ) "numeric" else "categorical"
+    n_unique <- dplyr::n_distinct(na.omit(vec))
+    plottable <- !n_unique > 100 | type == "numeric"
+    return(list("type" = type, "levels" = n_unique, "oncoplottable" = plottable))
+  })
+  
+  df_feature_description =  as.data.frame(do.call(what = rbind, args = ls_feature_description))
+  
+  df_feature_description[['annotation']] <- rownames(df_feature_description)
+  rownames(df_feature_description) <- NULL
+  
+  # Build Content Column for Badges
+  df_feature_description[['content']] <- paste(
+    df_feature_description[['annotation']], 
+    badgify(df_feature_description[['type']], fontsize = "x-small", color_background = ifelse(df_feature_description[['type']] == "numeric", yes = "#507ace", no = "#cea450"), color_text = "white"),
+    badgify(df_feature_description[['levels']], fontsize = "x-small")
+    )
+  
+  # Optionally 
+  if(checkmark == "oncoplottable"){
+    df_feature_description[['content']] <- paste(
+    ifelse(df_feature_description[["oncoplottable"]], 
+           as.character(icon(name = 'square-check', class = 'fa-solid', style = 'color: green; margin: 5px')),
+           as.character(icon(name = 'triangle-exclamation', style = 'color: red; margin: 5px'))
+           ),
+    df_feature_description[['content']]
+    )
+  }
+
+  return(df_feature_description)
+  
+}
