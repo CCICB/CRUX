@@ -137,6 +137,7 @@ Collate:
     'mod_plot_tcgacompare.R'
     'mod_plot_titv.R'
     'mod_plot_tsne.R'
+    'mod_privacy.R'
     'mod_render_clinical_data_table.R'
     'mod_render_downloadable_dataframe.R'
     'mod_sample_level_analysis.R'

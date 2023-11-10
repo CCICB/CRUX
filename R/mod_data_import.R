@@ -9,7 +9,7 @@
 #' @importFrom shiny NS tagList
 mod_data_import_ui <- function(id) {
   ns <- NS(id)
-
+  
   # Step 1: Choose Input Data Type
   tagList(
     shinyWidgets::panel(
@@ -18,7 +18,7 @@ mod_data_import_ui <- function(id) {
         shinyWidgets::awesomeRadio(
           inputId = ns("in_radio_input_data_type"),
           label = "Genomic Data Filetype",
-          choices = c("MAF", "ANNOVAR", "VCF (in development)" = "VCF"),
+          choices = c('MAF', 'ANNOVAR', 'VCF (in development)' = 'VCF'),
           selected = "MAF",
           inline = TRUE,
           checkbox = TRUE
@@ -26,7 +26,11 @@ mod_data_import_ui <- function(id) {
         shinydashboard::box(
           title = "Choose your input filetype",
           width = "100%",
-          "CRUX supports 2 different filetypes for describing your cohorts mutation data. MAFs and ANNOVAR files"
+          "CRUX supports 2 different filetypes for describing your cohorts mutation data. MAFs and ANNOVAR files.",
+          tags$br(),tags$br(),
+          shinyWidgets::alert(status = 'info', icon("circle-info"), "Please ensure your datasets do not include ", 
+          link(url="https://www.ncbi.nlm.nih.gov/books/NBK553131/", text = tags$strong("Protected Health Information (PHI)")),
+          ". See the ",tags$strong("privacy module"), "for more information")
         ) %>% column(width = 9)
       )
     ),
