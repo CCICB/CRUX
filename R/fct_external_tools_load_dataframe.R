@@ -1,11 +1,7 @@
-## To add a new tool
-
-
 # Instructions for adding tools -------------------------------------------
 # [1] Write a 'maf conversion function'. see ?external_tools_add_tool_to_dataframe for details on the format
 # [2] Write a function for adding the tool to an existing dataframe: see `external_tools_load_bbglab_oncodrive_fml` for an example
 # [3] Add the function from [2] to external_tools_load_all_tools
-# [4] run `devtools::load_all()` in console, then run external_tools_update_builtin_dataset() to update the dataframe that our external tool module pulls from
 
 
 
@@ -148,7 +144,8 @@ external_tools_load_bbglab_oncodrive_fml <- function(external_tools_df = data.fr
       tags$ol(
         tags$li("Make a free BBGLab OncodriveFML account by clicking 'Log In ==> Sign Up'"),
         tags$li("Import the file exported by CRUX into the 'Mutations file' slot and select the type of sequencing used to generate your dataset"),
-        tags$li("Configure as required and run")
+        tags$li("Configure as required and run.  For inbuilt ", tags$strong("TCGA")," datasets set ",tags$strong("Sequencing")," to ",tags$strong("Whole exome"),
+                ". For ", tags$strong("PCAWG"), " datasets set sequencing to ",tags$strong("Sequencing")," to ",tags$strong("Whole genome"))
       )
     ),
     tool_description = "A method to analyze the pattern of somatic mutations across tumors in both coding and non-coding genomic regions to identify signals of positive selection",
@@ -234,7 +231,10 @@ external_tools_load_bbglab_cgi <- function(external_tools_df = data.frame()){
     doi = "https://genomemedicine.biomedcentral.com/articles/10.1186/s13073-018-0531-8",
     instructions = as.character(
       tags$ol(
-        tags$li("Click 'Add file +' and upload exported file"),
+        tags$li("Click '",tags$strong("Add file +"),"' and upload exported file"),
+        tags$li("Use the ", tags$strong("Cancer Type"), "section to select the disease matching your dataset. If an exact match is not available, choose the general cancer group that best describes your dataset (e.g. Hematologic Malignancies / Solid Tumors )"),
+        tags$li("Select the Reference Genome. For TCGA/PCAWG datasets built into CRUX, set to ", tags$strong("hg19"), '. For your own datasets, will depend on your bioinformatics pipeline (ask whoever ran your pipelines whether hg19/hg38 was used)'),
+        tags$li("If you see a warning about having reached the maximum number of jobs allowed without being logged in, consider creating a free account & logging in, then repeat steps above"),
         tags$li("Click 'Run'")
       )),
     maf_conversion_function = external_tools_convert_maf_to_bbglab,
