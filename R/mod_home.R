@@ -41,10 +41,26 @@ mod_home_ui <- function(id){
 #' home Server Functions
 #'
 #' @noRd 
-mod_home_server <- function(id){
+mod_home_server <- function(id, parent_session){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
- 
+    
+    observeEvent(input$in_bttn_action_publicdata, {
+      shinydashboard::updateTabItems(session = parent_session, inputId = "tabs", selected = "DataPool")
+      })
+    
+    observeEvent(input$in_bttn_action_virtual_cohorts, {
+      shinydashboard::updateTabItems(session = parent_session, inputId = "tabs", selected = "Subset")
+    })
+    
+    observeEvent(input$in_bttn_action_userdata, {
+      shinydashboard::updateTabItems(session = parent_session, inputId = "tabs", selected = "DataImport")
+    })
+    
+    observeEvent(input$in_bttn_action_export, {
+      shinydashboard::updateTabItems(session = parent_session, inputId = "tabs", selected = "ExternalTools")
+    })
+    
   })
 }
     
