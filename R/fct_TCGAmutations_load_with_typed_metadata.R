@@ -18,6 +18,7 @@ TCGAmutations_load_with_typed_metadata <- function(study, source="Firehose"){
   maftools_fix_clinical_data_types(maf) %>%
     maftools_fix_tcga_survival_curve_metadata() %>%
     maftools_add_brca_subtype() %>% 
+    maftools_set_difficult_aachanges_to_empty_strings() %>%
     return()
 }
 

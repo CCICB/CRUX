@@ -54,3 +54,10 @@ maftools_add_brca_subtype <- function(maf){
     }
   return(maf)
 }
+
+
+
+maftools_set_difficult_aachanges_to_empty_strings <- function(maf){
+  maf@data$Protein_Change <- ifelse(grepl(x=maf@data$Protein_Change, pattern = "\\*[A-Z]+\\*.*[0-9]"), yes =  "", maf@data$Protein_Change)
+  return(maf)
+}
