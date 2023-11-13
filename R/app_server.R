@@ -6,7 +6,11 @@ path_to_default_data_pool <- function(){
   system.file(package = "CRUX", "default_data_pool.Rds")
 }
 
+message('Testing whether system.file works: [', system.file(package = "CRUX"), ']')
+
 if(nchar(path_to_default_data_pool() > 0)){
+  message('Loading CRUX Starting Datapool from: ', path_to_default_data_pool())
+  
   starting_maf_data_pool <- readRDS(path_to_default_data_pool())
 }else{ 
   starting_maf_data_pool <- NULL
