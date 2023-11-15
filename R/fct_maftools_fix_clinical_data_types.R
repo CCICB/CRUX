@@ -46,7 +46,7 @@ maftools_add_brca_subtype <- function(maf){
       pr_status <- maf@clinical.data[[progesterone]]
       er_status <- maf@clinical.data[[estrogen]]
       
-      maf@clinical.data[['subtype']] <- dplyr::case_when(
+      maf@clinical.data[['triple_negative_ER_PR_HER2_status']] <- dplyr::case_when(
         her2_status == "Negative" &  pr_status == "Negative" & er_status == "Negative" ~ "Triple Negative",
         her2_status == 'Positive' | pr_status == "Positive" | er_status == "Positive" ~ "Not Triple Negative",
         TRUE ~ "Ambiguous" # If any of the recepter/her2 statuses are indeterminate or equivocal
