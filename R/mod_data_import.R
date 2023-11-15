@@ -182,7 +182,8 @@ mod_data_import_server <- function(id, maf_data_pool) {
         shinyWidgets::sendSweetAlert(
           session = session,
           title = "Missing metadata",
-          text = "Fill out all cohort level metadata fields",
+          text = tags$div("Please fill out all fields in ",tags$strong("Step 4: Add cohort level metadata")),
+          html = TRUE,
           type = "warning"
         )
         return(NULL)
