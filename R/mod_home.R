@@ -32,7 +32,7 @@ mod_home_ui <- function(id){
     
     shinyWidgets::panel(heading = "Using CRUX", style = "height: 700px", status = "primary",
       #img(src="img/workflows.png", style = "width: auto; height: 650px; display: block; margin: auto", align = "center")
-      img(src="img/landing_page_subset.png", style = "width: auto; height: 650px; display: block; margin: auto", align = "center")
+      img(src="img/landing_page_subset.png", style = "width: 90%; height: auto; display: block; margin: auto", align = "center")
     ) %>% column(width = 8)
     )
   )
