@@ -32,6 +32,8 @@ mod_plot_survival_server <- function(id, maf, geneset, time, status, or, is_tcga
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    message('[4] Rendering Prognostic Gene Table')
+    
     stopifnot(is.reactive(maf))
     stopifnot(is.reactive(geneset))
     stopifnot(is.reactive(time))
@@ -50,10 +52,12 @@ mod_plot_survival_server <- function(id, maf, geneset, time, status, or, is_tcga
     
     output$out_plot <- renderPlot({
       tryCatch(
-        expr = { 
+        expr = {
+          message('[5] Returning Trycatch Plot')
           plotting_function()()
         },
         error = function(err){
+          message('[6] Plotting Function returned ERROR')
           if(grepl("There is only 1 group", err))
             validate(paste0("No samples have ", ifelse(or(), "any", "all"), " of the genes: ", paste0(geneset(), collapse = ","), " mutated"))
           else

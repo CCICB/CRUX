@@ -99,7 +99,8 @@ mod_survival_analysis_server <- function(id, maf_data_pool){
       validate(need(time_column_passes_sanitychecks(column_time_to_event(), clinical_data()), message = "Please select valid time column"))
       validate(need(event_column_passes_sanitychecks(column_event_status(), clinical_data()), message = "Please select valid event column"))
       
-      tryCatch(
+      message('[1] Running maftools::survGroup')
+      result = tryCatch(
         expr = { 
           maftools::survGroup(
             maf = maf(), 
@@ -114,7 +115,7 @@ mod_survival_analysis_server <- function(id, maf_data_pool){
           validate(paste0("Couldn't run survival analysis. This usually means either the wrong `event` or `time` columns were selected, or these columns are formatted incorrectly. Please see the manual for examples. \nFull Error Message: ",as.character(err)))
         }
       )
-      
+      return(result)
     })
     output$out_dt_prognostic_genesets <- DT::renderDataTable({ prognostic_gene_df() })
     
