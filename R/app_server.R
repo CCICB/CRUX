@@ -1,4 +1,3 @@
-
 # Code runs once, result shared for all users -------------------------------------------
 
 # To update default_data_pool.Rds, run / edit update_starting_maf_data_pool()
@@ -18,6 +17,10 @@ if(nchar(path_to_default_data_pool() > 0)){
 
 
 external_tool_metadata <- external_tools_load_all_tools()
+
+
+# Server Options
+options(shiny.maxRequestSize=50*1024^2) # Increase upload filesize limit from 5 to 50mb
 
 
 #' The application server-side
