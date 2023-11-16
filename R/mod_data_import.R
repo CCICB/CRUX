@@ -40,7 +40,7 @@ mod_data_import_ui <- function(id) {
     shinyWidgets::panel(
       heading = tags$span(tags$strong("Step 2: "), "Import Mutation Data"),
       fluidRow(
-        shiny::fileInput(inputId = ns("in_file_mutations"), label = "Select Mutation File") %>% col_3(),
+        shiny::fileInput(inputId = ns("in_file_mutations"), label = "Select Mutation File", accept = c(".maf", ".txt", ".vcf", '.gz')) %>% col_3(),
         shiny::conditionalPanel(
           condition = "input.in_radio_input_data_type == 'MAF'", 
           ns = ns,
