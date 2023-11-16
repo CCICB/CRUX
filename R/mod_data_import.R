@@ -90,7 +90,7 @@ mod_data_import_ui <- function(id) {
     shinyWidgets::panel(
       heading = tags$span(tags$strong("Step 3: "), "Import Clinical Annotations"),
       fluidRow(
-        shiny::fileInput(inputId = ns("in_file_clindata"), label = HTML("Select Clinical Annotations File (", as.character(shiny::actionLink(inputId = ns("in_action_clear_clindata"), label = "reset")), ")")) %>% col_3(),
+        shiny::fileInput(inputId = ns("in_file_clindata"), accept = c(".tsv", ".txt", ".csv"), label = HTML("Select Clinical Annotations File (", as.character(shiny::actionLink(inputId = ns("in_action_clear_clindata"), label = "reset")), ")")) %>% col_3(),
         shinydashboard::box(
           title = "Clinical Annotation Files",
           width = "100%",
