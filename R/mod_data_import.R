@@ -148,6 +148,8 @@ mod_data_import_server <- function(id, maf_data_pool) {
         nchar(input$in_text_data_source) > 0 &
         nchar(input$in_text_description) > 0
     })
+    
+    expected_mutation_filetype <- reactive({input$in_radio_input_data_type})
 
     # Define clindata path as a reactive value so we can reset it
     rv <- reactiveValues()
@@ -213,9 +215,9 @@ mod_data_import_server <- function(id, maf_data_pool) {
         message <- if (!is.null(input[["in_file_clindata"]])) "and clinical metadata " else " "
         shinyWidgets::sendSweetAlert(
           session = session,
-          title = "Failed to Read MAF",
+          title = paste0("Failed to Read Mutation File"),
           text = tags$div(
-            "Please ensure MAF file ", message, "is formatted correctly.", tags$br(), tags$br(), tags$code(maf)
+            "Please ensure ",expected_mutation_filetype()," file/s ", message, "are formatted correctly.", tags$br(), tags$br(), tags$code(maf)
           ),
           html = TRUE,
           type = "warning"
