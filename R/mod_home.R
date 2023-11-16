@@ -1,3 +1,5 @@
+
+
 #' home UI Function
 #'
 #' @description A shiny Module.
@@ -9,30 +11,27 @@
 #' @importFrom shiny NS tagList 
 mod_home_ui <- function(id){
   ns <- NS(id)
+  button_style = "fill"
   tagList(
     fluidRow(
       shinyWidgets::panel(status = "primary", style = 'height: 700px',
         heading = "Getting Started",
-        shinyWidgets::actionBttn(inputId = ns('in_bttn_action_publicdata'), label = "Explore Public Datasets", block = TRUE, color = 'royal'),
-        tags$br(),
+        shinyWidgets::actionBttn(inputId = ns('in_bttn_action_publicdata'), label = "Explore Public Datasets", block = TRUE, color = 'royal', style = button_style),
         shinydashboard::box("Explore the genetics of ",tags$strong("57"), " cancer cohorts from the ",tags$strong("TCGA"), " or ",tags$strong("PCAWG")," initiatives.", width = "100%"),
         tags$br(),
-        shinyWidgets::actionBttn(inputId = ns('in_bttn_action_virtual_cohorts'), label = "Create Virtual Cohorts", block = TRUE, color = 'success'),
-        tags$br(),
+        shinyWidgets::actionBttn(inputId = ns('in_bttn_action_virtual_cohorts'), label = "Create Virtual Cohorts", block = TRUE, color = 'success', style = button_style),
         shinydashboard::box("Create virtual cohorts by subsetting public or imported cancer cohorts by ",tags$strong("mutational")," or ", tags$strong("clinical")," features", width = "100%"),
         tags$br(),
-        shinyWidgets::actionBttn(inputId = ns('in_bttn_action_userdata'), label = "Explore Your Own Datasets", block = TRUE, color = 'primary'),
-        tags$br(),
+        shinyWidgets::actionBttn(inputId = ns('in_bttn_action_userdata'), label = "Explore Your Own Datasets", block = TRUE, color = 'primary', style = button_style),
         shinydashboard::box("Import custom ", tags$strong("whole genome,")," ",tags$strong("whole exome,"),"or ",tags$strong("targeted sequencing")," datasets that describe your cancer type of interest. ", width = "100%"),
         tags$br(),
-        shinyWidgets::actionBttn(inputId = ns('in_bttn_action_export'), label = "Export Data", block = TRUE, color = 'warning'),
-        tags$br(),
+        shinyWidgets::actionBttn(inputId = ns('in_bttn_action_export'), label = "Export Data", block = TRUE, color = 'warning', style = button_style),
         shinydashboard::box("Export mutational data for use in 3rd party analysis tools, including ",tags$strong("variant annotators, driver gene identifiers,"), "and ",tags$strong("interactive visualisation tools"), width = "100%")
       ) %>% column(width = 4),
     
     shinyWidgets::panel(heading = "Using CRUX", style = "height: 700px", status = "primary",
       #img(src="img/workflows.png", style = "width: auto; height: 650px; display: block; margin: auto", align = "center")
-      img(src="img/landing_page_subset.png", style = "width: 90%; height: auto; display: block; margin: auto", align = "center")
+      img(src="img/landing_page_subset.png", style = "width: auto; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; display: block; margin: auto", align = "center")
     ) %>% column(width = 8)
     )
   )

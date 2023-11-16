@@ -40,7 +40,7 @@ mod_data_import_ui <- function(id) {
     shinyWidgets::panel(
       heading = tags$span(tags$strong("Step 2: "), "Import Mutation Data"),
       fluidRow(
-        shiny::fileInput(inputId = ns("in_file_mutations"), label = "Select Mutation File") %>% col_3(),
+        shiny::fileInput(inputId = ns("in_file_mutations"), label = "Select Mutation File", accept = c(".maf", ".txt", ".vcf", '.gz')) %>% col_3(),
         shiny::conditionalPanel(
           condition = "input.in_radio_input_data_type == 'MAF'", 
           ns = ns,
@@ -90,7 +90,7 @@ mod_data_import_ui <- function(id) {
     shinyWidgets::panel(
       heading = tags$span(tags$strong("Step 3: "), "Import Clinical Annotations"),
       fluidRow(
-        shiny::fileInput(inputId = ns("in_file_clindata"), label = HTML("Select Clinical Annotations File (", as.character(shiny::actionLink(inputId = ns("in_action_clear_clindata"), label = "reset")), ")")) %>% col_3(),
+        shiny::fileInput(inputId = ns("in_file_clindata"), accept = c(".tsv", ".txt", ".csv"), label = HTML("Select Clinical Annotations File (", as.character(shiny::actionLink(inputId = ns("in_action_clear_clindata"), label = "reset")), ")")) %>% col_3(),
         shinydashboard::box(
           title = "Clinical Annotation Files",
           width = "100%",
@@ -148,6 +148,8 @@ mod_data_import_server <- function(id, maf_data_pool) {
         nchar(input$in_text_data_source) > 0 &
         nchar(input$in_text_description) > 0
     })
+    
+    expected_mutation_filetype <- reactive({input$in_radio_input_data_type})
 
     # Define clindata path as a reactive value so we can reset it
     rv <- reactiveValues()
@@ -213,9 +215,9 @@ mod_data_import_server <- function(id, maf_data_pool) {
         message <- if (!is.null(input[["in_file_clindata"]])) "and clinical metadata " else " "
         shinyWidgets::sendSweetAlert(
           session = session,
-          title = "Failed to Read MAF",
+          title = paste0("Failed to Read Mutation File"),
           text = tags$div(
-            "Please ensure MAF file ", message, "is formatted correctly.", tags$br(), tags$br(), tags$code(maf)
+            "Please ensure ",expected_mutation_filetype()," file/s ", message, "are formatted correctly.", tags$br(), tags$br(), tags$code(maf)
           ),
           html = TRUE,
           type = "warning"
