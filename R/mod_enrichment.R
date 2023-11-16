@@ -11,7 +11,8 @@ moduleEnrichmentAnalysisUI <- function(id){
                icon_down_arrow(),br(),
                
                shinyWidgets::panel(heading = "Step 2: Configure Analysis",
-                                   uiOutput(outputId = ns("out_pick_clinical_feature")),
+                                   #uiOutput(outputId = ns("out_pick_clinical_feature")),
+                                   mod_select_maf_clinical_data_column_ui(id = ns('mod_pick_clinical_features'), label = "Clinical Feature", ),
                                    numericInput(inputId = ns("in_num_minmut"), label = "Minimum Number of Mutations", value = 5, min = 0, step = 1)
                ),
                icon_down_arrow(),br(),
@@ -67,23 +68,14 @@ moduleEnrichmentAnalysisServer <- function(id, maf_data_pool){
                  
                  has_clinical_data <- reactive({ return(ncol(maf()@clinical.data) > 1) })
                  
-                 clinical_features <- reactive({ 
-                   validate(need(has_clinical_data(), message = "Please upload clinical feature file"))
-                   maf() %>% maftools::getClinicalData() %>% dplyr::summarise(dplyr::across(.fns = function(x) length(unique(x)))) %>% tidyr::pivot_longer(cols = everything()) %>% dplyr::filter(value > 1) %>% dplyr::pull(name) %>% purrr::keep(.!="Tumor_Sample_Barcode") %>% return() 
-                   
-                 })
+                 clinical_feature_selected <- mod_select_maf_clinical_data_column_server(id = "mod_pick_clinical_features", maf = maf, forced_to_pick_at_least_1 = FALSE)
+                 
                  minmut <- reactive({
                    sample_number <-maf()@summary %>% dplyr::filter(ID=="Samples") %>% dplyr::pull(2) %>% as.numeric()
                    validate(need(input$in_num_minmut <= sample_number, message = "MinMut must be less than the # of samples"))
                    return(input$in_num_minmut)
                  })
                  
-                 output$out_pick_clinical_feature <- renderUI({ shinyWidgets::pickerInput(inputId = session$ns("in_pick_clinical_features"), label = "Clinical Feature", choices = clinical_features(), multiple = F, options = shinyWidgets::pickerOptions(liveSearch = T)) })
-                 
-                 clinical_feature_selected <- reactive({ 
-                   validate(need(has_clinical_data(), message = "Please upload clinical feature file"))
-                   input$in_pick_clinical_features 
-                 })
                  
                  
                 # Step 3: Check Clinical Feature ------------------------------------------

@@ -546,7 +546,7 @@ badgify <- function(vec, fontweight = c('bold', 'bolder', 'normal', 'inherit', '
   vec %>%
     paste0(
       "<span class='label label-default' style='margin-left: 10px; font-size: ",
-      fontsize,"; background-color: ", color_background, "; color: '",color_text, 
+      fontsize,"; background-color: ", color_background, "; color: ", color_text, "'", 
       ">",.," </span>"
     )
 }
