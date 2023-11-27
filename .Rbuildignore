@@ -11,7 +11,7 @@ dev
 CODE_OF_CONDUCT.md
 LICENSE.md
 .rscignore
-_disable_autoload.R
 ^\.github$
 ^LICENSE\.md$
 NOTICE
+^_disable_autoload\.R$
