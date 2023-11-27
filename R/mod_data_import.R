@@ -167,7 +167,7 @@ mod_data_import_server <- function(id, maf_data_pool) {
 
     # When clicking the button 'add to data pool'
     observeEvent(input$in_bttn_import, isolate({
-
+      
       # Check a maf file has been supplied
       if (is.null(input[["in_file_mutations"]]$datapath)) {
         shinyWidgets::sendSweetAlert(
@@ -192,8 +192,12 @@ mod_data_import_server <- function(id, maf_data_pool) {
       }
 
 
+      
       # Try and read maf file
       # If it fails, save error message to maf variable instead
+      
+      # But first start the modal spinner
+      shinybusy::show_modal_spinner(text = "Importing your data ...", session = session)
       maf <- tryCatch(
         {
           read_maf_flexible(
@@ -222,6 +226,9 @@ mod_data_import_server <- function(id, maf_data_pool) {
           html = TRUE,
           type = "warning"
         )
+        
+        # Remove modal Spinner error in reading MAF
+        shinybusy::remove_modal_spinner(session = session)
         return(NULL)
       }
 
@@ -236,7 +243,10 @@ mod_data_import_server <- function(id, maf_data_pool) {
         loaded_data = maf
       )
       maf_data_pool(updated_maf_data_pool)
-
+      
+      # Remove Modal Spinner
+      shinybusy::remove_modal_spinner(session = session)
+      
       # Send success message
       shinyWidgets::sendSweetAlert(
         session = session,

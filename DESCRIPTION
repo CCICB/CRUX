@@ -41,7 +41,8 @@ Imports:
     assertions,
     cli,
     htmltools,
-    curl
+    curl,
+    shinybusy
 Remotes: 
     selkamand/utilitybeltassertions,
     selkamand/utilitybeltgg,

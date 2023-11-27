@@ -35,9 +35,8 @@ guess_genomic_mutation_filetype <- function(path){
   cols_pre_dot  <- sub(x=cols, pattern = "\\..*$", replacement = "") # e.g.  Func.refGene OR Func.ensGene will become Func. 
   
   # Definitions of what to expect in MAFs / ANNOVAR files / VCF
-  maf_cols <- c("Tumor_Sample_Barcode", "Hugo_Symbol", "Chromosome", "Start_Position", 
-                     "End_Position", "Reference_Allele", "Tumor_Seq_Allele2", "Variant_Classification", 
-                     "Variant_Type")
+  maf_cols <- c("Tumor_Sample_Barcode", "Hugo_Symbol", "Chromosome", "Start_Position", #"End_Position",
+                "Reference_Allele", "Tumor_Seq_Allele2", "Variant_Classification", "Variant_Type")
   annovar_cols = c("Chr", "Start", "End", "Ref", "Alt", "Func", "Gene", "GeneDetail", "ExonicFunc", "AAChange")
 
   
@@ -94,7 +93,6 @@ annovar_guess_reference_table <- function(path){
 read_maf_flexible <- function(path_mutations, refBuild = NULL, path_clindata = NULL, filetype = c("AUTO", 'ANNOVAR', 'MAF')){
   filetype <- rlang::arg_match(filetype)
   auto_guessed_filetype <- guess_genomic_mutation_filetype(path_mutations)
-  
   
   if(filetype == "AUTO")
     filetype <- auto_guessed_filetype
