@@ -218,6 +218,7 @@ mod_external_tools_server <- function(id, maf_data_pool){
     #Download
     output$out_downloadbttn_exported_data <- downloadHandler(filename = filename, function(file){
       validate(need(!is.null(maf()), message = "Please select a dataset ... "))
+      shinybusy::show_modal_spinner(text = "Importing your data ...", session = session)
       conversion_function = external_tools_get_property_by_tool_name(tool_name = tool_name(), property_to_retrieve = "maf_conversion_function")
       requires_gene_name = external_tools_get_property_by_tool_name(tool_name = tool_name(), property_to_retrieve = "requires_gene_selection")
       
@@ -225,6 +226,8 @@ mod_external_tools_server <- function(id, maf_data_pool){
         conversion_function(maf_dataset_wrapper(), file, selected_gene())
       else
         conversion_function(maf_dataset_wrapper(), file)
+      
+      shinybusy::remove_modal_spinner(session = session)
     })
     
   })
