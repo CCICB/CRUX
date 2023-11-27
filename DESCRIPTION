@@ -41,7 +41,8 @@ Imports:
     assertions,
     cli,
     htmltools,
-    curl
+    curl,
+    shinybusy
 Remotes: 
     selkamand/utilitybeltassertions,
     selkamand/utilitybeltgg,
@@ -67,6 +68,7 @@ Suggests:
 Collate: 
     'CRUX-package.R'
     'GLOBALS.R'
+    '_disable_autoload.R'
     'app_config.R'
     'fct_external_tools_load_dataframe.R'
     'app_server.R'
