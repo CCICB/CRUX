@@ -175,11 +175,11 @@ mod_cnv_server <- function(id, maf_data_pool){
             gistic_ <- TCGAgistic::tcga_gistic_load(cohort = cohort, source = source, cnLevel = cnLevel, verbose = FALSE)
           },
           error = function(err){
-            shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = tags$span(tags$code(as.character(err))))
+            shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = err2html(err))
             validate("Failed to Read Gistic")
           },
           warning = function(warn){
-            shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = tags$span(tags$code(as.character(warn))))
+            shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text =  err2html(warn))
             validate("Failed to Read Gistic")
           }
           
@@ -197,11 +197,11 @@ mod_cnv_server <- function(id, maf_data_pool){
              shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = tags$span(tags$code("RDS file does not encode a GISTIC object.")))
          },
          error = function(err){
-           shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = tags$span(tags$code(as.character(err))))
+           shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = err2html(err))
            validate("Please supply a valid Gistic RDS")
          },
          warning = function(warn){
-           shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = tags$span(tags$code(as.character(warn))))
+           shinyWidgets::sendSweetAlert(session = session, title = "Failed to Read Gistic", text = err2html(warn))
            validate("Please supply a valid Gistic RDS")
          }
        ) 

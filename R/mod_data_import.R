@@ -221,7 +221,9 @@ mod_data_import_server <- function(id, maf_data_pool) {
           session = session,
           title = paste0("Failed to Read Mutation File"),
           text = tags$div(
-            "Please ensure ",expected_mutation_filetype()," file/s ", message, "are formatted correctly.", tags$br(), tags$br(), tags$code(maf)
+            "Please ensure ",expected_mutation_filetype()," file/s ", message, "are formatted correctly.", 
+            tags$br(), tags$br(), 
+            err2html(maf)
           ),
           html = TRUE,
           type = "warning"

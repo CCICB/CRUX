@@ -162,6 +162,7 @@ Collate:
     'update_starting_maf_data_pool.R'
     'utils-pipe.R'
     'utils_bool_to_colour.R'
+    'utils_error_messages.R'
     'utils_installation.R'
     'utils_links.R'
     'utils_spacer.R'
