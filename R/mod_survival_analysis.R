@@ -102,8 +102,18 @@ mod_survival_analysis_server <- function(id, maf_data_pool){
       message('[1] Running maftools::survGroup')
       result = tryCatch(
         expr = { 
+          
+          # In case selected 'time_to_event' column is non-numeric: convert to numeric and warn the user
+          mymaf = maf()
+          vec_time_to_event <- mymaf@clinical.data[[column_time_to_event()]]
+          mymaf@clinical.data[[column_time_to_event()]] <- as.numeric(vec_time_to_event)
+          if(!is.numeric(vec_time_to_event)){
+            shinyWidgets::sendSweetAlert(session = session, title = 'Incorrect type', text = 'The "Time to Event" column selected is non-numeric, please ensure you have the right column',type = 'warning')
+          }
+          
+          # Perform Survival analysis
           maftools::survGroup(
-            maf = maf(), 
+            maf = mymaf, 
             top = input$in_num_genes_to_include, 
             geneSetSize = input$in_num_geneset_size, 
             minSamples = input$in_num_minsamples, 
@@ -143,11 +153,12 @@ mod_survival_analysis_server <- function(id, maf_data_pool){
     
 time_column_passes_sanitychecks <- function(column_name, clinical_dataframe){
   vec <- clinical_dataframe[[column_name]]
-  
-  if(!is.numeric(vec))
-    return(FALSE)
-  else
-    return(TRUE)
+
+  return(TRUE)  
+  # if(!is.numeric(vec))
+  #   return(FALSE)
+  # else
+  #   return(TRUE)
 }
 
 
