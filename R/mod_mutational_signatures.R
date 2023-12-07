@@ -105,7 +105,7 @@ mod_mutational_signatures_server <- function(id, maf_data_pool){
         shinyWidgets::sendSweetAlert(
           session = session, 
           title = "Failed to Read Mutalisk Input",
-          type = "error", text = tags$code(as.character(e))
+          type = "error", text = err2html(e) 
         )
         return(NULL)
       }
